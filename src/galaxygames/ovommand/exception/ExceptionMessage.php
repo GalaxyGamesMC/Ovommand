@@ -9,7 +9,7 @@ enum ExceptionMessage : string{
     case MSG_DUPLICATED_NAME_IN_OTHER_TYPE = "{enumName} is already existed as an {enumType}";
     case MSG_PARAMETER_INVALID_VALUE = "Invalid value '{value}' for parameter #{position}";
     case MSG_PARAMETER_NO_VALUE = "No arguments are required for this command";
-    case MSG_PARAMETER_INVALID_FLAG = "Invalid flag '{flag}, valid flags: (0, 1)";
+    case MSG_PARAMETER_INVALID_FLAG = "Invalid flag '{flag}', valid flags: (0, 1)";
     case PARAMETER_NEGATIVE_ORDER = "You cannot register parameter at negative positions #{position}";
     case PARAMETER_DETACHED_ORDER = "There were no parameters before #{position}";
     case PARAMETER_DESTRUCTED_ORDER = "You cannot register a required Parameter after an optional parameter";
