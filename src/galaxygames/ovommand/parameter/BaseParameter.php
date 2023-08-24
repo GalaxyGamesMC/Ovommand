@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand;
+namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\enum\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
