@@ -14,7 +14,6 @@ enum ExceptionMessage : string{
     case PARAMETER_DETACHED_ORDER = "There were no parameters before #{position}";
     case PARAMETER_DESTRUCTED_ORDER = "You cannot register a required Parameter after an optional parameter";
 
-
     public function getErrorMessage(array $tags) : string{
         $msg = $this->value;
         foreach ($tags as $tag => $value) {
