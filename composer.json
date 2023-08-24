@@ -1,0 +1,14 @@
+{
+  "name": "galaxygames/ovommand",
+  "description": "Add command overloads",
+  "minimum-stability": "dev",
+  "require": {
+    "muqsit/simple-packet-handler": "dev-pm5"
+  },
+  "extra": {
+    "virion": {
+      "spec": "3.0",
+      "namespace-root": "galaxygames\\ovommand"
+    }
+  }
+}
