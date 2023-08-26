@@ -9,6 +9,4 @@ class SoftEnumParameter extends BaseParameter{
     public function getNetworkType() : ParameterTypes{
         return ParameterTypes::ENUM;
     }
-
-
 }
