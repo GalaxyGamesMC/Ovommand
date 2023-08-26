@@ -1,0 +1,15 @@
+autocomplete:
+all
+group
+/say
+cmd:
+/say all @target <text: string>
+/say group <text: string>
+
+->
+* all and group is either sub cmd or enum, if enum but registered -> hard enum. Otherwise
+* <text: string> is a parameter
+
+/say
+
+no such things as sub cmd? so to make it better, should sub cmd have another sub cmd?
