@@ -8,7 +8,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 trait CommandEnumTrait{
     protected array $values;
 
-    public function __construct(protected string $name, string ...$values){
+    public function __construct(protected string $name, string|array ...$values){
         $this->values = $this->collapseArray($values);
     }
 
