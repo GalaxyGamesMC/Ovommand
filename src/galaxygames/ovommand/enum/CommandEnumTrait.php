@@ -27,6 +27,22 @@ trait CommandEnumTrait{
      * @return array
      */
     final public function collapseArray(array $arr) : array{
-        return array_unique(iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr)), false));
+        return array_unique(iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr)), false), SORT_REGULAR);
     }
+
+    final public function collapseArrayKeepStringKeys(array $arr) : array{
+        $re = [];
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
+        foreach ($iterator as $key => $value) {
+            if (!in_array($value, $re, true)) {
+                if (is_string($key)) {
+                    $re[$key] = $value;
+                } else {
+                    $re[] = $value;
+                }
+            }
+        }
+        return $re;
+    }
+    //Todo: this whole mess can be removed if the interface only make it access to value or none!
 }

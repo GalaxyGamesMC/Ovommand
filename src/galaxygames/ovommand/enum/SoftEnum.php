@@ -3,13 +3,53 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\enum;
 
+use galaxygames\ovommand\utils\Utils;
 use pocketmine\network\mcpe\NetworkBroadcastUtils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
 
 class SoftEnum{
-    use CommandEnumTrait;
+    protected array $values;
+    protected bool $isBinding = false;
+
+    public function __construct(protected string $name, array $values){
+        if (array_is_list($values)) {
+            $this->values = Utils::collapseArray($values);
+        } else {
+            $this->isBinding = true;
+        }
+        $this->values = Utils::collapseArray($values);
+    }
+
+    private function initBindingValues
+
+    final public function getName() : string{
+        return $this->name;
+    }
+
+    /**
+     * flatten array, and at make the values unique.
+     *
+     * @param array $arr
+     *
+     * @return array
+     */
+
+    final public static function collapseArrayKeepStringKeys(array $arr) : array{
+        $re = [];
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
+        foreach ($iterator as $key => $value) {
+            if (!in_array($value, $re, true)) {
+                if (is_string($key)) {
+                    $re[$key] = $value;
+                } else {
+                    $re[] = $value;
+                }
+            }
+        }
+        return $re;
+    }
 
 	public function encode() : CommandEnum{
 		return new CommandEnum($this->name, $this->values, true);
@@ -53,4 +93,8 @@ class SoftEnum{
 			UpdateSoftEnumPacket::create($this->name, $values, $type)
 		]);
 	}
+
+    public function isBinding() : bool{
+        return $this->isBinding;
+    }
 }

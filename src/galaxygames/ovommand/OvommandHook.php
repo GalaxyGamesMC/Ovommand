@@ -7,6 +7,7 @@ use CortexPE\Commando\traits\IArgumentable;
 use galaxygames\libcommand\parameter\CommandParameters;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
+use galaxygames\ovommand\fetus\IParametable;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\command\Command;
 use pocketmine\entity\Attribute;
@@ -27,7 +28,7 @@ final class OvommandHook{
     protected static PluginBase $plugin;
     protected static EnumManager $enumManager;
 
-    private static array $parameters = [];
+    private static array $parameterAttributes = [];
     private static array $permissions = [];
 
     public static function register(PluginBase $plugin) : bool{
@@ -38,7 +39,16 @@ final class OvommandHook{
             //$pluginManager = Server::getInstance()->getPluginManager();
             try {
 //                foreach ($server->getCommandMap()->getCommands() as $name => $command) {
+//                    if ($command instanceof BaseCommand) {
+//                        $ref = new ReflectionClass($command);
+//                        foreach ($ref->getAttributes(CommandParameters::class) as $attribute) {
+//                            //TODO: /** @var CommandAttribute $attribute */
+//                            $attribute = $attribute->newInstance();
 //
+//                            $this->parameters[$name][] = $parameters->hasSoftEnum() ? $parameters : $parameters->encode();
+//                            $this->permissions[$name][] = $parameters->getPermission();
+//                        }
+//                    }
 //                }
 
                 $pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event) {
@@ -60,24 +70,28 @@ final class OvommandHook{
                         if (!isset(self::$parameters[$name])) {
                             continue;
                         }
-                        $cmd = Server::getInstance()->getCommandMap()->getCommand($name);
-                        if ($cmd instanceof BaseCommand) {
-                            $commandData->overloads =
-                        }
-                        $newOverloads = [];
-                        foreach (self::$parameters[$name] as $index => $parameter) {
-                            $permission = self::$permissions[$name][$index];
-                            if ($permission !== null && !$player->hasPermission($permission)) {
-                                continue;
+                        $command = Server::getInstance()->getCommandMap()->getCommand($name);
+                        if ($command instanceof BaseCommand) {
+                            foreach ($command->getConstraints() as $constraint) {
+                                //TODO: Add constraints
                             }
-//                            if (is_array($parameter)) {
-//                                foreach ($parameter as $p) {
-//                                    $newOverloads[] = new CommandOverload(false, $p instanceof CommandParameters ? $p->encode() : [$p]);
-//                                }
-//                            }
-                            $newOverloads[] = new CommandOverload(false, $parameter instanceof CommandParameters ? $parameter->encode() : $parameter);
+                            $commandData->overloads = self::generateOverloads($command);
+                            continue;
                         }
-                        $commandData->overloads = $newOverloads;
+//                        $newOverloads = [];
+//                        foreach (self::$parameters[$name] as $index => $parameter) {
+//                            $permission = self::$permissions[$name][$index];
+//                            if ($permission !== null && !$player->hasPermission($permission)) {
+//                                continue;
+//                            }
+////                            if (is_array($parameter)) {
+////                                foreach ($parameter as $p) {
+////                                    $newOverloads[] = new CommandOverload(false, $p instanceof CommandParameters ? $p->encode() : [$p]);
+////                                }
+////                            }
+//                            $newOverloads[] = new CommandOverload(false, $parameter instanceof CommandParameters ? $parameter->encode() : $parameter);
+//                        }
+//                        $commandData->overloads = $newOverloads;
                     }
                 });
             } catch (\ReflectionException $e) {
@@ -95,7 +109,7 @@ final class OvommandHook{
      *
      * @return CommandOverload[]
      */
-    public static function generateOverloads(BaseCommand $command) : array{
+    private static function generateOverloads(BaseCommand $command) : array{
         $overloads = [];
 
         foreach($command->getSubCommands() as $label => $subCommand) {
@@ -130,8 +144,8 @@ final class OvommandHook{
         return $overloads;
     }
 
-    private static function generateOverloadList(IArgumentable $argumentable): array {
-        $input = $argumentable->getArgumentList();
+    private static function generateOverloadList(IParametable $parametable) : array{
+        $input = $parametable->getParameterList();
         $combinations = [];
         $outputLength = array_product(array_map("count", $input));
         $indexes = [];
