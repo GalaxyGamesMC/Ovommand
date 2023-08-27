@@ -17,7 +17,6 @@ use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
-use ReflectionClass;
 
 final class OvommandHook{
     protected static bool $registered = false;
@@ -63,7 +62,7 @@ final class OvommandHook{
                         return;
                     }
                     foreach ($packet->commandData as $name => $commandData) {
-                        if (!isset(self::$parameters[$name])) {
+                        if (!isset(self::$parameterAttributes[$name])) {
                             continue;
                         }
                         $command = Server::getInstance()->getCommandMap()->getCommand($name);
@@ -109,7 +108,7 @@ final class OvommandHook{
         $overloads = [];
 
         foreach($command->getSubCommands() as $label => $subCommand) {
-            if(!$subCommand->testPermissionSilent($cs) || $subCommand->getName() !== $label){ // hide aliases
+            if(!$subCommand->testPermissionSilent(...) || $subCommand->getName() !== $label){ // hide aliases
                 continue;
             }
             foreach($subCommand->getConstraints() as $constraint){
@@ -155,7 +154,7 @@ final class OvommandHook{
                 $param = $set[$k] = clone $input[$k][$index]->getNetworkParameterData();
 
                 if(isset($param->enum) && $param->enum instanceof CommandEnum){
-                    $refClass = new ReflectionClass(CommandEnum::class);
+                    $refClass = new \ReflectionClass(CommandEnum::class);
                     //					$refProp = $refClass->getProperty("enumName");
                     //					$refProp->setAccessible(true);
                     //					$refProp->setValue($param->enum, "enum#" . spl_object_id($param->enum));
