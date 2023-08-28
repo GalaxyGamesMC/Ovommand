@@ -6,6 +6,7 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\enum\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
+use pocketmine\command\CommandSender;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 
 abstract class BaseParameter{
@@ -32,6 +33,10 @@ abstract class BaseParameter{
     }
 
     abstract public function getNetworkType() : ParameterTypes;
+
+    abstract public function canParse(string $in) : bool;
+
+    abstract public function parse(string $in) : mixed;
 
     public function setFlag(int $flag) : void{
         $this->flag = match($flag) {

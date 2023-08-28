@@ -9,4 +9,12 @@ class IntParameter extends BaseParameter{
     public function getNetworkType() : ParameterTypes{
         return ParameterTypes::INT;
     }
+
+    public function canParse(string $in) : bool{
+        return (bool) preg_match("/^-?\d+$/", $in);
+    }
+
+    public function parse(string $in) : int{
+        return (int) $in;
+    }
 }

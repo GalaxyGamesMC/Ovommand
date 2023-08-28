@@ -22,7 +22,18 @@ class SoftEnum{
         $this->values = Utils::collapseArray($values);
     }
 
-    private function initBindingValues
+    public function parse(string $in) : mixed{
+        if ($this->isBinding) {
+            if (isset($this->values[$in])) {
+                return $this->values[$in];
+            }
+            throw new \RuntimeException("TODO"); //Todo: new exceptions
+        }
+        if (in_array($in, $this->values, true)) {
+            return $in;
+        }
+        throw new \RuntimeException("TODO"); //Todo: new exceptions
+    }
 
     final public function getName() : string{
         return $this->name;
