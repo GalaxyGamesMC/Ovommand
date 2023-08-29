@@ -110,6 +110,16 @@ class Coordinates{
         return (new Vector3($x, $y, $z))->normalize();
     }
 
+    private function addLength(Vector3 $vector, int|float $num) : Vector3{
+        $len = $vector->length();
+        if (!($len > 0)) {
+            $len = 0;
+        }
+        $normal = $vector->normalize();
+        $normal->multiply($len + $num);
+        return $normal;
+    }
+
     private function parseLocal(Entity $entity) : ?Position{
 //        $forwardSide = $entity->getHorizontalFacing();
 //        $leftSide = Facing::rotateY($forwardSide, false);
@@ -121,7 +131,8 @@ class Coordinates{
         //shit, the adding was into its length...
 //        $forward = $entity->getDirectionVector();
 //        $up = $this->getEntityUpDirection($entity);
-
+//        $pos = $entity->getPosition();
+//        $forward = $this->addLength($entity->getDirectionVector(), $this->z);
         return null;
     }
 }
