@@ -99,7 +99,7 @@ class Coordinates{
         return $pos;
     }
 
-    private function getEntityUpDirection(Entity $entity) : Vector3{
+    private function getUpSideDirection(Entity $entity) : Vector3{
         $pitch = $entity->getLocation()->pitch + 90;
         $yaw = $entity->getLocation()->yaw;
         $y = -sin(deg2rad($pitch));
@@ -108,6 +108,15 @@ class Coordinates{
         $z = $xz * sin(deg2rad($yaw));
 
         return (new Vector3($x, $y, $z))->normalize();
+    }
+
+    private function getLeftSideDirection(Entity $entity) : Vector3{
+        $pitch = $entity->getLocation()->pitch;
+        $yaw = $entity->getLocation()->yaw + 90; //Left?
+        $y = -sin(deg2rad($pitch));
+        $xz = cos(deg2rad($pitch));
+        $x = -$xz * sin(deg2rad($yaw));
+        $z = $xz * sin(deg2rad($yaw));
     }
 
     private function addLength(Vector3 $vector, int|float $num) : Vector3{
@@ -120,7 +129,7 @@ class Coordinates{
         return $normal;
     }
 
-    private function parseLocal(Entity $entity) : ?Position{
+    private function parseLocal(Entity $entity) : Position{
 //        $forwardSide = $entity->getHorizontalFacing();
 //        $leftSide = Facing::rotateY($forwardSide, false);
 //        $facing = $entity->getDirectionVector();
@@ -133,6 +142,19 @@ class Coordinates{
 //        $up = $this->getEntityUpDirection($entity);
 //        $pos = $entity->getPosition();
 //        $forward = $this->addLength($entity->getDirectionVector(), $this->z);
-        return null;
+
+        $forward = $entity->getDirectionVector();
+        $up = $this->getUpSideDirection($entity);
+        $left = $this->getLeftSideDirection($entity);
+
+        $forward = $this->addLength($forward, $this->z);
+        $up = $this->addLength($up, $this->y);
+        $left = $this->addLength($left, $this->x);
+
+        $pos = $entity->getPosition()
+            ->addVector($forward)
+            ->addVector($up)
+            ->addVector($left);
+        return Position::fromObject($pos, $entity->getWorld());
     }
 }
