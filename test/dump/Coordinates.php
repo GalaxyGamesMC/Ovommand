@@ -5,9 +5,11 @@ namespace galaxygames\ovommand\parameter\parse;
 
 use pocketmine\command\CommandExecutor;
 use pocketmine\entity\Entity;
+use pocketmine\math\Facing;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
 use pocketmine\world\World;
+use Vector;
 
 class Coordinates{
     public const TYPE_DEFAULT = 0; //plain number
@@ -63,13 +65,21 @@ class Coordinates{
             if (!$executor instanceof Entity) {
                 throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
             }
-            if ($this->hasCaret) {
-                if ($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL) {
-                    throw new \InvalidArgumentException("Unexpected! All must be caret");
-                }
-                return $this->parseLocal($executor);
-            }
-            return $this->parseRelative($executor);
+        }
+        if ($this->hasCaret && ($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL)) {
+            throw new \InvalidArgumentException("Unexpected! All must be caret");
+        }
+        $pos = $executor?->getPosition() ?? new Position($this->x, $this->y, $this->z, $world);
+        if  ($this->hasCaret()) {
+            $forwardSide = $executor->getHorizontalFacing();
+            $leftSide = Facing::rotateY($forwardSide, false);
+            $facing = $executor->getDirectionVector();
+            $facing->getSide($leftSide, $this->x);
+            $facing->getSide($forwardSide, $this->z);
+            $facing->getSide(Facing::UP, $this->y);
+        }
+        if ($executor instanceof Entity) {
+            $pos->world = $executor->getWorld();
         }
 
         return new Position($this->x, $this->y, $this->z, $world);
@@ -107,7 +117,6 @@ class Coordinates{
         $xz = cos(deg2rad($pitch));
         $x = -$xz * sin(deg2rad($yaw));
         $z = $xz * sin(deg2rad($yaw));
-        return (new Vector3($x, $y, $z))->normalize();
     }
 
     private function addLength(Vector3 $vector, int|float $num) : Vector3{
@@ -121,6 +130,19 @@ class Coordinates{
     }
 
     private function parseLocal(Entity $entity) : Position{
+        //        $forwardSide = $entity->getHorizontalFacing();
+        //        $leftSide = Facing::rotateY($forwardSide, false);
+        //        $facing = $entity->getDirectionVector();
+        //        $facing->getSide($leftSide, $this->x);
+        //        $facing->getSide(Facing::UP, $this->y); //No :c, this is wrong but I suck at geometry
+        //        $facing->getSide($forwardSide, $this->z);
+
+        //shit, the adding was into its length...
+        //        $forward = $entity->getDirectionVector();
+        //        $up = $this->getEntityUpDirection($entity);
+        //        $pos = $entity->getPosition();
+        //        $forward = $this->addLength($entity->getDirectionVector(), $this->z);
+
         $forward = $entity->getDirectionVector();
         $up = $this->getUpSideDirection($entity);
         $left = $this->getLeftSideDirection($entity);
