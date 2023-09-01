@@ -62,7 +62,7 @@ final class Coordinates{
         return $this->x === self::TYPE_LOCAL || $this->y === self::TYPE_LOCAL || $this->z === self::TYPE_LOCAL;
     }
 
-    public function parsePosition(Entity $entity = null) : Position{
+    public function asPosition(Entity $entity = null) : Position{
         if ($this->xType !== self::TYPE_DEFAULT || $this->yType !== self::TYPE_DEFAULT || $this->zType !== self::TYPE_DEFAULT) {
 //            if (!$executor instanceof Entity) {
 //                throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
