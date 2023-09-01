@@ -7,7 +7,7 @@
 </picture>
 </a>
 
-TODO: 
+TODO:
 - [ ] make reasonable enum that handle it value correctly (string -> value)
 - [ ] feature rich, custom enum, parameters, enum-based parameters
 - [ ] attribute supports
@@ -71,3 +71,12 @@ TODO
 1. [sky-min/CommandHelper](https://github.com/sky-min/CommandHelper)
 2. [CortexPE/Commando](https://github.com/CortexPE/Commando)
 3. [GalaxyGamesMC/libcommand](https://github.com/GalaxyGamesMC/libcommand)
+
+<br><p align="center">
+<strong>We are making a server!</strong><br>
+<a href="https://thegalaxype.com">
+<img alt="ovo_logo" src="https://avatars.githubusercontent.com/u/95261113?s=200&v=4" width="50" height="50">
+</a><br>
+<sub>Stay tuned for more!!</sub>
+<a href="https://discord.gg/Ew7d7tBBPb"><sub>Discord!</sub></a>
+</p>
