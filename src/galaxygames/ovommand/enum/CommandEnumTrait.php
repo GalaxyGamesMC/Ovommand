@@ -44,5 +44,10 @@ trait CommandEnumTrait{
         }
         return $re;
     }
+
     //Todo: this whole mess can be removed if the interface only make it access to value or none!
+
+    public function hasValue(string $value) : bool{
+        return in_array($value, $this->values, true);
+    }
 }

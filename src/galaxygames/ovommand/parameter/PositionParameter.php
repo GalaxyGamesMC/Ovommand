@@ -6,6 +6,10 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
 class PositionParameter extends BaseParameter{
+    public function getName() : string{
+        return "x y z";
+    }
+
     public function getNetworkType() : ParameterTypes{
         return ParameterTypes::POSITION;
     }
@@ -14,7 +18,13 @@ class PositionParameter extends BaseParameter{
 
     }
 
-    public function parse(string $in) : mixed{}
+    public function parse(string $in) : mixed{
+
+    }
+
+    public function getSpanLength() : int{
+        return 3;
+    }
 }
 // ([~^]?)([+-]?[\d]?[\d.\d]+) https://rubular.com/r/6tkKRBfOX58PZz
 

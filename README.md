@@ -12,6 +12,9 @@ TODO:
 - [ ] feature rich, custom enum, parameters, enum-based parameters
 - [ ] attribute supports
 
+Suggests:
+- [ ] make canParse and parse into one
+
 ## A. Attribute prototype:
 Use Attributes to add metadata to Command, such as Overloads, Permissions, CommandEnum, etc
 ### 1. Parameter:

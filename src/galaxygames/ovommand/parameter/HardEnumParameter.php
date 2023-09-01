@@ -26,11 +26,23 @@ class HardEnumParameter extends BaseParameter{
         parent::__construct($name, $optional, $flag);
     }
 
+    public function getName() : string{
+        return $this->enum->getName();
+    }
+
     public function getNetworkType() : ParameterTypes{
         return ParameterTypes::ENUM;
     }
 
     public function encodeEnum() : CommandEnum{
         return $this->enum->encode();
+    }
+
+    public function canParse(string $in) : bool{
+        return $this->enum->hasValue($in);
+    }
+
+    public function parse(string $in) : mixed{
+        return $in; //TODO: change replacement
     }
 }

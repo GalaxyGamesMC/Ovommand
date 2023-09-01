@@ -6,7 +6,6 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\enum\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
-use pocketmine\command\CommandSender;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 
 abstract class BaseParameter{
@@ -38,6 +37,8 @@ abstract class BaseParameter{
 
     abstract public function parse(string $in) : mixed;
 
+//    abstract public function getPattern() : string;
+
     public function setFlag(int $flag) : void{
         $this->flag = match($flag) {
             0, 1 => $flag,
@@ -47,5 +48,9 @@ abstract class BaseParameter{
 
     public function getParameterData() : CommandParameter{
         return $this->parameterData;
+    }
+
+    public function getSpanLength() : int{
+        return 1;
     }
 }

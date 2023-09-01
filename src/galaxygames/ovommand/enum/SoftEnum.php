@@ -105,6 +105,13 @@ class SoftEnum{
 		]);
 	}
 
+    public function hasValue(string $value) : bool{
+        if ($this->isBinding) {
+            return isset($this->values[$value]);
+        }
+        return in_array($value, $this->values, true);
+    }
+
     public function isBinding() : bool{
         return $this->isBinding;
     }

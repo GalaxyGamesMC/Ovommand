@@ -10,7 +10,9 @@ use galaxygames\ovommand\enum\HardEnum;
 class BooleanParameter extends HardEnumParameter{
     protected HardEnum $enum;
 
-    public function prepare() : void{
-        $this->enum = EnumManager::getInstance()->getHardEnum(DefaultEnums::BOOLEAN);
+    public function __construct(string $name, bool $optional = false, int $flag = 0){
+        parent::__construct($name, EnumManager::getInstance()->getHardEnum(DefaultEnums::BOOLEAN), $optional, $flag);
     }
+
+    public function parse(string $in) : mixed{}
 }

@@ -24,12 +24,12 @@ class SoftEnumParameter extends BaseParameter{
         parent::__construct($name, $optional, $flag);
     }
 
-    public function getNetworkType() : ParameterTypes{
-        return ParameterTypes::ENUM;
+    public function getName() : string{
+        return $this->enum->getName();
     }
 
-    public function parse(string $in) : mixed{
-        return $this->enum->parse($in);
+    public function getNetworkType() : ParameterTypes{
+        return ParameterTypes::ENUM; //Todo: ParameterTypes::SOFT_ENUM?
     }
 
     public function getEnum() : SoftEnum{
@@ -40,5 +40,11 @@ class SoftEnumParameter extends BaseParameter{
         return $this->enum->encode();
     }
 
-    public function canParse(string $in) : bool{}
+    public function canParse(string $in) : bool{
+        return $this->enum->hasValue($in);
+    }
+
+    public function parse(string $in) : mixed{
+        return $this->enum->parse($in);
+    }
 }
