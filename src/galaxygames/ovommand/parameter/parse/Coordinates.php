@@ -62,21 +62,24 @@ final class Coordinates{
         return $this->x === self::TYPE_LOCAL || $this->y === self::TYPE_LOCAL || $this->z === self::TYPE_LOCAL;
     }
 
-    public function parsePosition(CommandExecutor $executor = null, World $world = null) : Position{
+    public function parsePosition(Entity $entity = null) : Position{
         if ($this->xType !== self::TYPE_DEFAULT || $this->yType !== self::TYPE_DEFAULT || $this->zType !== self::TYPE_DEFAULT) {
-            if (!$executor instanceof Entity) {
+//            if (!$executor instanceof Entity) {
+//                throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
+//            }
+            if ($entity === null) {
                 throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
             }
             if ($this->hasCaret) {
                 if ($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL) {
                     throw new \InvalidArgumentException("Unexpected! All must be caret");
                 }
-                return $this->parseLocal($executor);
+                return $this->parseLocal($entity);
             }
-            return $this->parseRelative($executor);
+            return $this->parseRelative($entity);
         }
 
-        return new Position($this->x, $this->y, $this->z, $world);
+        return new Position($this->x, $this->y, $this->z, $entity?->getWorld());
     }
 
     private function parseRelative(Entity $entity) : Position{

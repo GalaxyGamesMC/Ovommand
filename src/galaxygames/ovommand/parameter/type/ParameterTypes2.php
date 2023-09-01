@@ -31,7 +31,7 @@ use pocketmine\utils\EnumTrait;
 
 final class ParameterTypes2{
     use EnumTrait {
-        __construct as Enum___construct;
+        EnumTrait::__construct as Enum___construct;
     }
 
     protected static function setup() : void{
