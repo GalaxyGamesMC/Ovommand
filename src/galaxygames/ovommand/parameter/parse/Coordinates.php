@@ -127,10 +127,10 @@ final class Coordinates{
         $up = $this->addLength($up, $this->y);
         $left = $this->addLength($left, $this->x);
 
-        $pos = $entity->getPosition()
+        $vec = $entity->getPosition()
             ->addVector($forward)
             ->addVector($up)
             ->addVector($left);
-        return Position::fromObject($pos, $entity->getWorld());
+        return Position::fromObject($vec, $entity->getWorld());
     }
 }

@@ -53,4 +53,8 @@ abstract class BaseParameter{
     public function getSpanLength() : int{
         return 1;
     }
+
+    public function handleQuoteArg() : bool{
+        return true;
+    }
 }
