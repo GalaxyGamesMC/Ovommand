@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\parse;
 
-use pocketmine\command\CommandExecutor;
 use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
-use pocketmine\world\World;
 
 final class Coordinates{
     public const TYPE_DEFAULT = 0; //plain number
@@ -18,11 +16,11 @@ final class Coordinates{
     protected int $yType;
     protected int $zType;
 
-    protected bool $hasCaret = false;
-
     protected int|float $x;
     protected int|float $y;
     protected int|float $z;
+
+    protected bool $hasCaret;
 
     public function __construct(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT){
         $this->x = $x;
@@ -33,21 +31,24 @@ final class Coordinates{
             self::TYPE_DEFAULT => self::TYPE_DEFAULT,
             self::TYPE_RELATIVE => self::TYPE_RELATIVE,
             self::TYPE_LOCAL => self::TYPE_LOCAL,
-            default => throw new \RuntimeException("Unknown coordinate's x value type set in self::class")
+            default => throw new \InvalidArgumentException("Unknown coordinate's x value type set in self::class")
         };
         $this->yType = match ($yType) {
             self::TYPE_DEFAULT => self::TYPE_DEFAULT,
             self::TYPE_RELATIVE => self::TYPE_RELATIVE,
             self::TYPE_LOCAL => self::TYPE_LOCAL,
-            default => throw new \RuntimeException("Unknown coordinate's y value type set in self::class")
+            default => throw new \InvalidArgumentException("Unknown coordinate's y value type set in self::class")
         };
         $this->zType = match ($yType) {
             self::TYPE_DEFAULT => self::TYPE_DEFAULT,
             self::TYPE_RELATIVE => self::TYPE_RELATIVE,
             self::TYPE_LOCAL => self::TYPE_LOCAL,
-            default => throw new \RuntimeException("Unknown coordinate's z value type set in self::class")
+            default => throw new \InvalidArgumentException("Unknown coordinate's z value type set in self::class")
         };
-        $this->hasCaret = $this->xType === self::TYPE_LOCAL || $this->yType === self::TYPE_LOCAL || $this->zType === self::TYPE_LOCAL;
+        $this->hasCaret = $this->x === self::TYPE_LOCAL || $this->y === self::TYPE_LOCAL || $this->z === self::TYPE_LOCAL;
+        if ($this->hasCaret && !($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL)) {
+            throw new \InvalidArgumentException("Once caret, all caret"); //Todo: better msg
+        }
     }
 
     public static function fromData(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT) : self{
@@ -58,22 +59,12 @@ final class Coordinates{
         return new Coordinates(0, 0, 0, self::TYPE_RELATIVE, self::TYPE_RELATIVE, self::TYPE_RELATIVE);
     }
 
-    public function hasCaret() : bool{
-        return $this->x === self::TYPE_LOCAL || $this->y === self::TYPE_LOCAL || $this->z === self::TYPE_LOCAL;
-    }
-
     public function asPosition(Entity $entity = null) : Position{
         if ($this->xType !== self::TYPE_DEFAULT || $this->yType !== self::TYPE_DEFAULT || $this->zType !== self::TYPE_DEFAULT) {
-//            if (!$executor instanceof Entity) {
-//                throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
-//            }
             if ($entity === null) {
                 throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
             }
             if ($this->hasCaret) {
-                if ($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL) {
-                    throw new \InvalidArgumentException("Unexpected! All must be caret");
-                }
                 return $this->parseLocal($entity);
             }
             return $this->parseRelative($entity);
@@ -84,9 +75,6 @@ final class Coordinates{
 
     private function parseRelative(Entity $entity) : Position{
         $pos = $entity->getPosition();
-        if ($this->hasCaret) {
-            throw new \RuntimeException(""); //TODO: msg
-        }
         if ($this->xType === self::TYPE_RELATIVE) {
             $pos->add($this->x, 0, 0);
         }
@@ -131,9 +119,6 @@ final class Coordinates{
     }
 
     private function parseLocal(Entity $entity) : Position{
-        if (!$this->hasCaret) {
-            throw new \RuntimeException(""); //TODO: msg
-        }
         $forward = $entity->getDirectionVector();
         $up = $this->getUpSideDirection($entity);
         $left = $this->getLeftSideDirection($entity);
