@@ -31,6 +31,18 @@ class SyntaxConst{
         };
     }
 
+    public static function getSyntaxBetweenBrokenPart(string $syntax, string $brokenPart) : array{
+        $brokenPartPos = strpos($syntax, $brokenPart);
+        if ($brokenPartPos === false) {
+            throw new \RuntimeException("wut??");
+        }
+
+        return [
+            substr($syntax, 0, $brokenPartPos),
+            substr($syntax, $brokenPartPos + strlen($brokenPart))
+        ];
+    }
+
     private static function vanillaShift(string $in) : string{
         return substr($in, -9);
     }
@@ -47,10 +59,10 @@ class SyntaxConst{
             "after" => $after,
         ];
         if ($helps !== "") {
-            return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE, $translate);
+            $translate["helps"] = $helps;
+            return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
         }
-        $translate["helps"] = $helps;
-        return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
+        return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE, $translate);
     }
 
     private static function translate(string $msg, array $tags) : string{
