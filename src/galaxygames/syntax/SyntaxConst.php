@@ -58,11 +58,11 @@ class SyntaxConst{
             "broken_syntax" => $brokenSyntax,
             "after" => $after,
         ];
-        if ($helps !== "") {
-            $translate["helps"] = $helps;
-            return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
+        if ($helps === "") {
+            return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE, $translate);
         }
-        return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE, $translate);
+        $translate["helps"] = $helps;
+        return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
     }
 
     private static function translate(string $msg, array $tags) : string{
