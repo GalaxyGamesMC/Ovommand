@@ -6,7 +6,6 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\fetus\IParametable;
-use galaxygames\syntax\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -152,7 +151,7 @@ final class OvommandHook{
             /** @var CommandParameter[] $set */
             $set = [];
             foreach($indexes as $k => $index){
-                $param = $set[$k] = clone $input[$k][$index]->getNetworkParameterData();
+//                $param = $set[$k] = clone $input[$k][$index]->getNetworkParameterData();
 
                 if(isset($param->enum) && $param->enum instanceof CommandEnum){
                     $refClass = new \ReflectionClass(CommandEnum::class);

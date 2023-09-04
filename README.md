@@ -12,7 +12,7 @@ TODO:
 - [ ] feature rich, custom enum, parameters, enum-based parameters
 - [ ] attribute supports
 
-Suggests:
+Suggest:
 - [ ] make canParse and parse into one
 
 ## A. Standard prototype
