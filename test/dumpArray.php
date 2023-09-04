@@ -1,16 +1,37 @@
 <?php
 declare(strict_types=1);
-require_once "D:\phpstorm2\Ovommand\src\galaxygames\ovommand\utils\Utils.php";
-use galaxygames\ovommand\utils\Utils;
+//require_once "D:\phpstorm2\Ovommand\src\galaxygames\ovommand\utils\Utils.php";
+require_once "vendor/autoload.php";
 
-function vd(mixed $var) : void{
-    var_dump($var);
+//use galaxygames\ovommand\utils\Utils;
+
+function dumpStringList(array $arr) : array{
+    $results = [];
+
+    foreach ($arr as $v) {
+        $results[] = convertToString($v);
+    }
+    return $results;
 }
 
-$arr1 = ["1", "2", 3, 4, 5, true, "meoww", new stdClass];
+function convertToString(mixed $value) : string{
+    if (is_null($value)) {
+        return "null";
+    }
+    if (is_bool($value)) {
+        return $value ? "true" : "false";
+    }
+    if (is_object($value)) {
+        return "{#" . spl_object_id($value) . "}";
+    }
+    if (is_array($value)) {
+        return "​" . implode(";", $value) . "​";
+    }
+    return (string) $value;
+}
 
-$arr2 = ["1" => 2, "3" => 4, "new" => true, true => new stdClass()];
+$arr1 = ["1", "2", 3, 4, 5, true, null, false, [], "meoww", new stdClass];
+$arr2 = ["1" => 2, "3333333333" => 4, "new" => true, "eta" => new stdClass()];
 
-//vd(Utils::dumpForceStringList($arr1));
-vd(Utils::dumpForceStringArray($arr2));
-vd(Utils::dumpForceStringArray2($arr2));
+dump(dumpStringList($arr1));
+dump($arr1);

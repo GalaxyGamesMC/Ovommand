@@ -8,6 +8,7 @@ use stdClass;
 use function implode;
 
 class Utils{
+
     public static function parseUsages(BaseCommand $command) : string{
         $usages = ["/" . $command->generateUsageMessage()];
         foreach($command->getSubCommands() as $subCommand) {
@@ -16,6 +17,42 @@ class Utils{
         $usages = array_unique($usages);
         return implode("\n - /" . $command->getName() . " ", $usages);
     }
+
+    public static function arr(...$arr) : array{ return $arr; }
+
+    public static function collapseNonBindingEnumInputs(array $arr) : array{
+        $results = [];
+
+        foreach ($arr as $value) {
+            if (!is_string($value)) {
+                throw new \RuntimeException("Value is not a string!");
+            }
+            if (in_array($value, $results, true)) {
+                throw new \RuntimeException("Dupe value");
+            }
+            $results[] = $value;
+        }
+        return $results;
+    }
+
+    public static function validateStringValues(array $arr) : bool{
+        foreach ($arr as $v) { //TODO: add exception
+            if (!is_string($v)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /* https://www.php.net/manual/en/language.types.array.php#128741
+
+    https://3v4l.org/0Y6G4 Clas method lol!
+    https://3v4l.org/NbjSe, cannot support number keys :c
+     <?php
+        function arr(...$array){ return $array;}
+        $arr = arr(x: 1, y: 2, z: 3);
+        var_dump($arr); // ["x"=>1, "y"=>2, "z"=>3]
+     */
 
     /**
      * flatten array, and at make the values unique
@@ -27,6 +64,33 @@ class Utils{
     public static function collapseArray(array $arr) : array{
         return array_unique(iterator_to_array(new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr)), false));
     }
+
+
+
+
+//    /**
+//     * flatten array, and at make the values unique.
+//     *
+//     * @param array $arr
+//     *
+//     * @return array
+//     */
+//
+//    final public static function collapseArrayKeepStringKeys(array $arr) : array{
+//        $re = [];
+//        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
+//        foreach ($iterator as $key => $value) {
+//            if (!in_array($value, $re, true)) {
+//                if (is_string($key)) {
+//                    $re[$key] = $value;
+//                } else {
+//                    $re[] = $value;
+//                }
+//            }
+//        }
+//        return $re;
+//    }
+
 
     public static function validateNonBindingStringList(array $arr) : array{
         $re = [];
@@ -57,15 +121,15 @@ class Utils{
     }
 
     public static function dumpForceStringArray(array $arr) : array{
-            $obj = new stdClass();
-            foreach ($arr as $key => $value) {
-                $rf = $obj->{$key} ?? null;
-                if ($rf !== null) {
-                    throw new \RuntimeException("Duplicated key!");
-                }
-                $obj->{$key} = $value;
+        $obj = new stdClass();
+        foreach ($arr as $key => $value) {
+            $rf = $obj->{"" . $key} ?? null;
+            if ($rf !== null) {
+                throw new \RuntimeException("Duplicated key!");
             }
-            return (array) $obj;
+            $obj->{"" . $key} = $value;
+        }
+        return (array) $obj;
     }
 
     public static function dumpForceStringArray2(array $arr) : array{

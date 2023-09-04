@@ -6,6 +6,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\fetus\IParametable;
+use galaxygames\syntax\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;

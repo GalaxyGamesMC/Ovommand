@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
+use galaxygames\ovommand\parameter\parse\Coordinates;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
 class PositionParameter extends BaseParameter{
@@ -17,27 +18,50 @@ class PositionParameter extends BaseParameter{
     public function canParse(string $in) : bool{
     }
 
-    public function canParseArgs(array $args) : bool{
+    public function canParseArgs(array $args) : ?Coordinates{
+        if (count($args) > $this->getSpanLength()) {
+            throw new \InvalidArgumentException("Too many args");
+        }
         $unmatch = "";
-        foreach ($args as $arg) {
+        $genType = null;
+        $types = [];
+        $values = [];
+        foreach ($args as $i => $arg) {
             if (str_contains($arg, " ")) {
                 $unmatch = $arg;
-                $out = false;
                 break;
             }
             if (!preg_match("/^([~^]?[+-]?\d+(?:\.\d+)?)$/", $arg)) {
                 $unmatch = $arg;
                 break;
             }
-
+            $type = match($u = substr($arg, 0, 1)) {
+                "~" => Coordinates::TYPE_RELATIVE,
+                "^" => Coordinates::TYPE_LOCAL,
+                default => Coordinates::TYPE_DEFAULT
+            };
+            if ($genType === null) {
+                $genType = $type;
+            }
+            if ($type === Coordinates::TYPE_LOCAL && $genType !== Coordinates::TYPE_LOCAL) {
+                $unmatch = $arg;
+                break;
+            }
+            if ($genType === Coordinates::TYPE_LOCAL && $type !== Coordinates::TYPE_LOCAL) {
+                $unmatch = $arg;
+                break;
+            }
+            $value = ltrim($arg, $u);
+            $nValue = str_contains($value, ".") ? (double) $value : (int) $value;
+            $types[$i] = $type;
+            $values[$i] = $nValue;
         }
         if ($unmatch !== "") {
             $syntax = implode(" ", $args);
-            $syntax = str_replace($unmatch, ">>$unmatch<<", $syntax);
-            var_dump($syntax);
-            return false;
+            echo redmsg(dumpUnexpected($syntax, $unmatch)) . "\n";
+            return null;
         }
-        return true;
+        return Coordinates::fromData(...$values, ...$types);
     }
 
     public function parse(string $in) : mixed{

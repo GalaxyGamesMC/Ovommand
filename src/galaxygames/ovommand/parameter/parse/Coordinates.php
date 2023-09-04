@@ -39,7 +39,7 @@ final class Coordinates{
             self::TYPE_LOCAL => self::TYPE_LOCAL,
             default => throw new \InvalidArgumentException("Unknown coordinate's y value type set in self::class")
         };
-        $this->zType = match ($yType) {
+        $this->zType = match ($zType) {
             self::TYPE_DEFAULT => self::TYPE_DEFAULT,
             self::TYPE_RELATIVE => self::TYPE_RELATIVE,
             self::TYPE_LOCAL => self::TYPE_LOCAL,
@@ -57,6 +57,10 @@ final class Coordinates{
 
     public static function here() : self{
         return new Coordinates(0, 0, 0, self::TYPE_RELATIVE, self::TYPE_RELATIVE, self::TYPE_RELATIVE);
+    }
+
+    public function __toString(){
+        return "Coordinates(x=" . $this->x . ",y=" . $this->y . ",z=" . $this->z . ",xType=" . $this->xType . ",yType=" . $this->y . ",zType=" . $this->zType . ")";
     }
 
     public function asPosition(Entity $entity = null) : Position{

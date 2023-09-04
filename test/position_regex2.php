@@ -53,7 +53,7 @@ function canParseArgs(array $args) : bool{
     var_dump($types);
     return true;
 }
-$in = ["^+1.5213", "^14141.12749813","~1414.2421"]; // ~+1.5213 ^14141. 12749813 ^1414.2421
+$in = ["^+1.5213", "^14141.12749813","^1414.2421"]; // ~+1.5213 ^14141. 12749813 ^1414.2421
 canParseArgs($in);
 
 //TODO: debug msg length

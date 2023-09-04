@@ -15,7 +15,10 @@ class SoftEnum{
 
     public function __construct(protected string $name, array $values){
         if (array_is_list($values)) {
-            $this->values = Utils::collapseArray($values);
+//            \pocketmine\utils\Utils::validateArrayValueType($values, static fn(string $in));
+            if (!Utils::validateStringValues($values)) {
+                throw new \RuntimeException(""); //TODO: add exception
+            }
         } else {
             $this->isBinding = true;
         }
@@ -37,29 +40,6 @@ class SoftEnum{
 
     final public function getName() : string{
         return $this->name;
-    }
-
-    /**
-     * flatten array, and at make the values unique.
-     *
-     * @param array $arr
-     *
-     * @return array
-     */
-
-    final public static function collapseArrayKeepStringKeys(array $arr) : array{
-        $re = [];
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arr));
-        foreach ($iterator as $key => $value) {
-            if (!in_array($value, $re, true)) {
-                if (is_string($key)) {
-                    $re[$key] = $value;
-                } else {
-                    $re[] = $value;
-                }
-            }
-        }
-        return $re;
     }
 
 	public function encode() : CommandEnum{
