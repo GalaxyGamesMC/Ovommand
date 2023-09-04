@@ -15,7 +15,25 @@ TODO:
 Suggests:
 - [ ] make canParse and parse into one
 
-## A. Attribute prototype:
+## A. Standard prototype
+### 1. Commando structure
+```php
+class FirstSubCommand extends BaseSubCommand{
+    public function prepare() {
+        $this->addParameter(0, new IntParameter("coin"));
+        $this->addParameter(1, new IntParameter("etc"));
+    }
+}
+
+class TestCommand extend BaseCommand{
+    public function prepare() {
+        $this->addSubCommand(new FirstSubCommand(...));
+    }
+    // normal Commando command structure
+}
+```
+
+## B. Attribute prototype:
 Use Attributes to add metadata to Command, such as Overloads, Permissions, CommandEnum, etc
 ### 1. Parameter:
 ```php
@@ -47,27 +65,8 @@ class AttributeCommand extend Command{
 ### 3. Other ideas
 - More CommandAttribute type for adding more metadata
 - Binding metadata to standard API
-## B. Standard prototype
-### 1. Commando structure
-```php
-class FirstSubCommand extends BaseSubCommand{
-    public function prepare() {
-        $this->addParameter(0, new IntParameter("coin"));
-        $this->addParameter(1, new IntParameter("etc"));
-    }
-}
 
-class TestCommand extend BaseCommand{
-    public function prepare() {
-        $this->addSubCommand(new FirstSubCommand(...));
-    }
-    // normal Commando command structure
-}
-```
-###  2. Nested parameters, etc
-TODO
-
-### C. THIS IS A SKID
+## C. THIS IS A SKID
 1. [sky-min/CommandHelper](https://github.com/sky-min/CommandHelper)
 2. [CortexPE/Commando](https://github.com/CortexPE/Commando)
 3. [GalaxyGamesMC/libcommand](https://github.com/GalaxyGamesMC/libcommand)
