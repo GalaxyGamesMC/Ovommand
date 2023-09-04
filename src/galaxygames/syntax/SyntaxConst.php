@@ -48,7 +48,6 @@ class SyntaxConst{
     }
 
     public static function parseVanillaSyntaxMessage(string $previous, string $brokenSyntax, string $after) : Translatable{
-        // Syntax error: Unexpected "%2$s": at "%1$s>>%2$s<<%3$s"  //license strike?
         return new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenSyntax, $after]);
     }
 
