@@ -29,11 +29,9 @@ trait EnumValuesTrait{
         $this->removeValues($keys);
     }
 
-    /** @noinspection TypeUnsafeArraySearchInspection because of php anti-feature, the auto-casting int string key to int*/
     public function removeValues(array $context) : void{
-        $updates = [];
-
         if ($this->isBinding) {
+            $updates = [];
             foreach ($context as $k) {
                 if (isset($values1[$k])) {
                     unset($values1[$k]);
@@ -43,30 +41,7 @@ trait EnumValuesTrait{
         } else {
             $updates = array_diff($this->values, $context);
         }
-
-//        if ($this->isBinding) {
-//            foreach ($context as $v) {
-//                if (!(is_int($v) || is_string($v))) {
-//                    throw new \RuntimeException("Invalid type!");
-//                }
-//                if (isset($this->values[$v])) {
-//                    unset ($this->values[$v]);
-//                    $updates[] = $v;
-//                }
-//            }
-//        } else {
-//            foreach ($context as $v) {
-//                if (!(is_int($v) || is_string($v))) {
-//                    throw new \RuntimeException("Invalid type!");
-//                }
-//                if (in_array($v, $this->values)) {
-//                    array_search($this, $haystack)
-//                    unset($this->values[$v]);
-//                    $updates[] = $v;
-//                }
-//            }
-//        }
-        if (!empty($updates)) {
+        if (isset($updates)) {
             $this->update($updates, UpdateSoftEnumPacket::TYPE_REMOVE);
         }
     }
