@@ -8,14 +8,15 @@ use pocketmine\network\mcpe\NetworkBroadcastUtils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
+use pocketmine\utils\EnumTrait;
 
 class SoftEnum{
-    protected array $values;
-    protected bool $isBinding;
+    use EnumValuesTrait {
+        __construct as values__construct;
+    }
 
     public function __construct(protected string $name, array $values){
-        $this->isBinding = array_is_list($values);
-        $this->values = Utils::collapseEnumInputs($values, $this->isBinding);
+        $this->values__construct($values);
     }
 
     public function parse(string $in) : mixed{
@@ -39,26 +40,21 @@ class SoftEnum{
 		return new CommandEnum($this->name, $this->values, true);
 	}
 
-	public function addValues(string ...$values) : void{
+    public function addValue(string ...$values) : void{
+        foreach ($values as $k => $v) {
+
+        }
+    }
+
+	public function addValues(array $values) : void{
 		$newValues = [];
-		foreach ($values as $v) {
+		foreach ($values as $k => $v) {
 			if (!in_array($v, $this->values, true)) {
 				$this->values[] = $v;
 				$newValues[] = $v;
 			}
 		}
 		$this->update($newValues, UpdateSoftEnumPacket::TYPE_ADD);
-	}
-
-	public function removeValues(string ...$values) : void{
-        $removeValues = [];
-		foreach ($values as $key => $value) {
-			if (in_array($value, $this->values, true)) {
-                $removeValues[] = $value;
-				unset($this->values[$key]);
-			}
-		}
-		$this->update($removeValues, UpdateSoftEnumPacket::TYPE_REMOVE);
 	}
 
 	public function setValues(string ...$values) : void{
