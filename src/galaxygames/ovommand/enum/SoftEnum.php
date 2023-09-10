@@ -11,18 +11,11 @@ use pocketmine\Server;
 
 class SoftEnum{
     protected array $values;
-    protected bool $isBinding = false;
+    protected bool $isBinding;
 
     public function __construct(protected string $name, array $values){
-        if (array_is_list($values)) {
-//            \pocketmine\utils\Utils::validateArrayValueType($values, static fn(string $in));
-            if (!Utils::validateStringValues($values)) {
-                throw new \RuntimeException(""); //TODO: add exception
-            }
-        } else {
-            $this->isBinding = true;
-        }
-        $this->values = Utils::collapseArray($values);
+        $this->isBinding = array_is_list($values);
+        $this->values = Utils::collapseEnumInputs($values, $this->isBinding);
     }
 
     public function parse(string $in) : mixed{

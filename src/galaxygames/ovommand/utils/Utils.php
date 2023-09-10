@@ -23,14 +23,30 @@ class Utils{
     public static function collapseNonBindingEnumInputs(array $arr) : array{
         $results = [];
 
-        foreach ($arr as $value) {
-            if (!is_string($value)) {
+        foreach ($arr as $v) {
+            if (!is_string($v)) {
                 throw new \RuntimeException("Value is not a string!");
             }
-            if (in_array($value, $results, true)) {
+            if (in_array($v, $results, true)) {
                 throw new \RuntimeException("Dupe value");
             }
-            $results[] = $value;
+            $results[] = $v;
+        }
+        return $results;
+    }
+
+    public static function collapseEnumInputs(array $arr, bool $isBinding = false) : array{
+        return ($isBinding) ? self::collapseBindingEnumInputs($arr) : self::collapseNonBindingEnumInputs($arr);
+    }
+
+    public static function collapseBindingEnumInputs(array $arr) : array{
+        $results = [];
+
+        foreach ($arr as $k => $v) {
+            if (!(is_int($k) || is_string($k))) {
+                throw new \RuntimeException("Value is not a string!");
+            }
+            $results[] = $v;
         }
         return $results;
     }
