@@ -24,8 +24,24 @@ class A{
         if ($name === "getName") {
             return call_user_func_array(array($this, $this->friend ? "getFriendName" : "getEnemyName"), $arguments);
         }
+//        (new class extends stdClass{})->{$name}(); // Fatal error: Uncaught Error: Call to undefined method stdClass@anonymous::getNaame() in D:\phpstorm2\Ovommand\test\same-function_multiple_methods.php:27
+
+        trigger_error("Uncaught Error: Call to undefined method SoftEnum::{$name}() in " . __FILE__, E_USER_ERROR);
+//        throw new \RuntimeException();
+    }
+
+    public function say() : void{
+        echo "Lmao\n";
     }
 }
 
 $a = new A(true);
-echo $a->getName();
+$a->say();
+echo $a->getNamae();
+
+/* with no magic __call()
+Fatal error: Uncaught Error: Call to undefined method A::getNaame() in D:\phpstorm2\Ovommand\test\same-function_multiple_methods.php:39
+Stack trace:
+#0 {main}
+  thrown in D:\phpstorm2\Ovommand\test\same-function_multiple_methods.php on line 39
+ */

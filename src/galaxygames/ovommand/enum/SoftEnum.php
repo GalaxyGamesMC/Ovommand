@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\enum;
 
-use galaxygames\ovommand\utils\Utils;
 use pocketmine\network\mcpe\NetworkBroadcastUtils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
-use pocketmine\utils\EnumTrait;
 
 class SoftEnum{
-    use EnumValuesTrait {
-        __construct as values__construct;
-    }
 
     public function __construct(protected string $name, array $values){
+        if ($this->isBinding()) {
+            use EnumValuesTrait {
+                __construct as values__construct;
+            }
+        }
         $this->values__construct($values);
     }
 

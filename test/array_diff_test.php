@@ -34,6 +34,7 @@ $isBinding = true;
             unset($tempV2[$k]);
         }
     }
+    $updates = array_intersect($this->values, $)//,a ,dadahkdba
     $tempV2 = array_diff($tempV2, $removes);
     $total2 = microtime(true) - $start;
 

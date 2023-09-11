@@ -34,7 +34,8 @@ trait EnumValuesTrait{
                 }
             }
         } else {
-            $updates = array_diff($this->values, $context);
+            $updates = array_intersect($this->values, $context);
+            $this->values = array_diff($this->values, $updates);
         }
         if (isset($updates)) {
             $this->update($updates, UpdateSoftEnumPacket::TYPE_REMOVE);
@@ -52,11 +53,27 @@ trait EnumValuesTrait{
 
     public function addValues(array $context) : void{
         if ($this->isBinding) {
+            $updates = [];
             foreach ($context as $k => $v) {
-                if (!isset($values1[$k])) {
-                    $this->values
+                if (!isset($this->values[$k])) {
+                    $this->values[$k] = $v;
+                    $updates[] = $k;
                 }
             }
+        } else {
+            $updates = array_diff($this->values, $context);
+            $this->values = array_merge($this->values, $updates);
         }
+        if (isset($updates)) {
+            $this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
+        }
+    }
+
+    public function isBinding() : bool{
+        return $this->isBinding;
+    }
+
+    public function getValues() : array{
+        return $this->values;
     }
 }
