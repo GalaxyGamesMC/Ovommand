@@ -17,11 +17,6 @@ trait EnumValuesTrait{
     }
 
     public function removeValue(string|int $key) : void{
-        if ($this->isBinding) {
-            if (isset($this->values[$key])) {
-                unset()
-            }
-        }
         $this->removeValues([$key]);
     }
 
@@ -33,8 +28,8 @@ trait EnumValuesTrait{
         if ($this->isBinding) {
             $updates = [];
             foreach ($context as $k) {
-                if (isset($values1[$k])) {
-                    unset($values1[$k]);
+                if (isset($this->values[$k])) {
+                    unset($this->values[$k]);
                     $updates[] = $k;
                 }
             }
@@ -46,25 +41,22 @@ trait EnumValuesTrait{
         }
     }
 
-    public function addValue(...$context) : void{
-        $newValues = [];
-        foreach ($values as $k => $v) {
-            if (!in_array($v, $this->values, true)) {
-                $this->values[] = $v;
-                $newValues[] = $v;
-            }
+    public function addValue(string|int $value, mixed $bindValue = null) : void{
+        if ($this->isBinding) {
+            $this->values[$value] = $bindValue;
+        } else {
+            $this->values[] = $value;
         }
-        $this->update($newValues, UpdateSoftEnumPacket::TYPE_ADD);
+        $this->update([$value], UpdateSoftEnumPacket::TYPE_ADD);
     }
 
     public function addValues(array $context) : void{
-        $newValues = [];
-        foreach ($context as $k => $v) {
-            if (!in_array($v, $this->values, true)) {
-                $this->values[] = $v;
-                $newValues[] = $v;
+        if ($this->isBinding) {
+            foreach ($context as $k => $v) {
+                if (!isset($values1[$k])) {
+                    $this->values
+                }
             }
         }
-        $this->update($newValues, UpdateSoftEnumPacket::TYPE_ADD);
     }
 }
