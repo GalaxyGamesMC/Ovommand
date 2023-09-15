@@ -12,9 +12,6 @@ class SoftEnum{
 
     public function __construct(protected string $name, array $values){
         if ($this->isBinding()) {
-            use EnumValuesTrait {
-                __construct as values__construct;
-            }
         }
         $this->values__construct($values);
     }

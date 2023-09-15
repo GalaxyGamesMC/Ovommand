@@ -5,6 +5,10 @@ trait Enemy{
     public function getEnemyName() : string{
         return "Enemy";
     }
+
+    public function sayE() : void{
+        echo "E\n";
+    }
 }
 
 trait Friend{
@@ -25,7 +29,6 @@ class A{
             return call_user_func_array(array($this, $this->friend ? "getFriendName" : "getEnemyName"), $arguments);
         }
 //        (new class extends stdClass{})->{$name}(); // Fatal error: Uncaught Error: Call to undefined method stdClass@anonymous::getNaame() in D:\phpstorm2\Ovommand\test\same-function_multiple_methods.php:27
-
         trigger_error("Uncaught Error: Call to undefined method SoftEnum::{$name}() in " . __FILE__, E_USER_ERROR);
 //        throw new \RuntimeException();
     }
@@ -37,7 +40,8 @@ class A{
 
 $a = new A(true);
 $a->say();
-echo $a->getNamae();
+$a->sayE();
+echo $a->getName();
 
 /* with no magic __call()
 Fatal error: Uncaught Error: Call to undefined method A::getNaame() in D:\phpstorm2\Ovommand\test\same-function_multiple_methods.php:39

@@ -25,26 +25,13 @@ trait NonBindValuesTrait{
         $this->removeValues([$key]);
     }
 
-    public function removeSpreadValues(string ...$keys) : void{
+    public function removeValuesBySpreading(string ...$keys) : void{
         $this->removeValues($keys);
     }
 
     public function addValues(array $context) : void{
-//        $updates = [];
-//        foreach ($context as $k => $v) {
-//            if (!isset($this->values[$k])) {
-//                $this->values[$k] = $v;
-//                $updates[] = $k;
-//            }
-//        }
-//        if (isset($updates)) {
-//            $this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
-//        }
-        /* or use native php function :l
-        */
         $updates = array_diff($context, $this->values);
-        $this->values = [...$this->values, ...$updates];
-        //        $this->values = array_merge($this->values, $updates);
+        $this->values = [...$this->values, ...$updates]; //array_merge works too btw
         if (!empty($updates)) {
             $this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
         }
@@ -52,6 +39,19 @@ trait NonBindValuesTrait{
 
     public function addValue(string|int $value) : void{
         $this->addValues([$value]);
+    }
+
+    public function addValueBySpreading(string|int ...$context) : void{
+        $this->addValues($context);
+    }
+
+    public function setValues(array $context) : void{
+        $this->values = Utils::collapseEnumInputs($context);
+        $this->update($this->values, UpdateSoftEnumPacket::TYPE_SET);
+    }
+
+    public function setValuesBySpreading(string|int ...$context) : void{
+        $this->setValues($context);
     }
 
     abstract protected function update(array $values, int $type);
