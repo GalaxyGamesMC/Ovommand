@@ -91,7 +91,7 @@ final class Coordinates{
         return $pos;
     }
 
-    private function getUpSideDirection(Entity $entity) : Vector3{
+    public function getUpSideDirectionVector(Entity $entity) : Vector3{
         $pitch = $entity->getLocation()->pitch + 90;
         $yaw = $entity->getLocation()->yaw;
         $y = -sin(deg2rad($pitch));
@@ -102,7 +102,7 @@ final class Coordinates{
         return (new Vector3($x, $y, $z))->normalize();
     }
 
-    private function getLeftSideDirection(Entity $entity) : Vector3{
+    public function getLeftSideDirectionVector(Entity $entity) : Vector3{
         $pitch = $entity->getLocation()->pitch;
         $yaw = $entity->getLocation()->yaw + 90; //Left?
         $y = -sin(deg2rad($pitch));
@@ -124,8 +124,8 @@ final class Coordinates{
 
     private function parseLocal(Entity $entity) : Position{
         $forward = $entity->getDirectionVector();
-        $up = $this->getUpSideDirection($entity);
-        $left = $this->getLeftSideDirection($entity);
+        $up = $this->getUpSideDirectionVector($entity);
+        $left = $this->getLeftSideDirectionVector($entity);
 
         $forward = $this->addLength($forward, $this->z);
         $up = $this->addLength($up, $this->y);
