@@ -27,7 +27,8 @@ final class EnumManager{
 
 	protected function setup() : void{
 		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, 'true', 'false'));
-		$this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value));
+        $this->register(new HardEnum(DefaultEnums::GAMEMODE->value, "a", "c", "s", "sp"));
+        $this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value));
 	}
 
 	public function register(SoftEnum|HardEnum $enum, bool $overwrite = false) : void{
