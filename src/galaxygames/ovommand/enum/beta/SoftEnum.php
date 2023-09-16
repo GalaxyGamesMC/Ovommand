@@ -49,14 +49,23 @@ class SoftEnum{
     public function __call(string $name, array $arguments){
         $bind_pre = $this->isBinding() ? "bind_" : "nonbind_";
 
+        $this->{$bind_pre . "addValue"}([]);
+
+//        $result = match ($name) {
+//            "addValueBySpreading" => $this->isBinding() ? null : call_user_func_array(array($this, "addValueBySpreading"), $arguments),
+//            "removeValues" => call_user_func_array(array($this, $bind_pre . "removeValues", $arguments), $arguments),
+//            "removeValue" => call_user_func_array(array($this, $bind_pre . "removeValue", $arguments), $arguments),
+//            "removeValuesBySpreading" => call_user_func_array(array($this, $bind_pre . "removeValuesBySpreading", $arguments), $arguments),
+//            "addValue" => call_user_func_array(array($this, $bind_pre . "addValue", $arguments), $arguments),
+//            "addValues" => call_user_func_array(array($this, $bind_pre . "addValues", $arguments), $arguments),
+//            "setValues" => call_user_func_array(array($this, $bind_pre . "setValues", $arguments), $arguments),
+//            default => null,
+//        };
+
         $result = match ($name) {
-            "addValueBySpreading" => $this->isBinding() ? null : call_user_func_array(array($this, "addValueBySpreading"), $arguments),
-            "removeValues" => call_user_func_array(array($this, $bind_pre . "removeValues", $arguments), $arguments),
-            "removeValue" => call_user_func_array(array($this, $bind_pre . "removeValue", $arguments), $arguments),
-            "removeValuesBySpreading" => call_user_func_array(array($this, $bind_pre . "removeValuesBySpreading", $arguments), $arguments),
-            "addValue" => call_user_func_array(array($this, $bind_pre . "addValue", $arguments), $arguments),
-            "addValues" => call_user_func_array(array($this, $bind_pre . "addValues", $arguments), $arguments),
-            "setValues" => call_user_func_array(array($this, $bind_pre . "setValues", $arguments), $arguments),
+            "addValueBySpreading" => $this->isBinding() ? null : $this->{$bind_pre . $name}($arguments),
+            "removeValues", "removeValue", "removeValuesBySpreading",
+            "addValue", "addValues", "setValues" => $this->{$bind_pre . $name}($arguments),
             default => null,
         };
 
