@@ -16,3 +16,18 @@ no such things as sub cmd? so to make it better, should sub cmd have another sub
 
 27/08/2023:
 an enum, <para name: enum name>!
+
+
+/say all @target <text: string>
+/say all me <text: string>
+/say all you <text: string>
+/say group <text: string>
+
+-> say paras: [
+    0 => sub cmd: all [
+        0 => para: text
+        1 => sub cmd: [
+
+        ]
+    ]
+]
