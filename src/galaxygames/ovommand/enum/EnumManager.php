@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\enum;
 
 use galaxygames\ovommand\exception\EnumException;
+use pocketmine\player\GameMode;
 use pocketmine\utils\SingletonTrait;
 
 final class EnumManager{
@@ -26,9 +27,11 @@ final class EnumManager{
 	}
 
 	protected function setup() : void{
-		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, 'true', 'false'));
-        $this->register(new HardEnum(DefaultEnums::GAMEMODE->value, "a", "c", "s", "sp"));
-        $this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value));
+		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false]));
+        $this->register(new HardEnum(DefaultEnums::GAMEMODE->value, GameMode::getAll(),
+            ["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
+            ["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"]));
+//        $this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value)); // Ideas: event based closure?
 	}
 
 	public function register(SoftEnum|HardEnum $enum, bool $overwrite = false) : void{
