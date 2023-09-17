@@ -8,77 +8,66 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
 
-class SoftEnum{
+class SoftEnum extends BaseEnum{
 
-    public function __construct(protected string $name, array $values){
-        if ($this->isBinding()) {
-        }
-        $this->values__construct($values);
+    public function encode() : CommandEnum{
+        return new CommandEnum($this->name, [...$this->values, ...array_keys($this->showAliases)], true);
     }
 
-    public function parse(string $in) : mixed{
-        if ($this->isBinding) {
-            if (isset($this->values[$in])) {
-                return $this->values[$in];
+    public function removeValue(string|int $key) : void{
+        $this->removeValues([$key]);
+    }
+
+    public function removeValuesBySpreading(string ...$keys) : void{
+        $this->removeValues($keys);
+    }
+
+    public function removeValues(array $context) : void{
+        $updates = [];
+        foreach ($context as $k) {
+            if (isset($this->values[$k])) {
+                unset($this->values[$k]); // move to #1
+                $updates[] = $k;
             }
-            throw new \RuntimeException("TODO"); //Todo: new exceptions
         }
-        if (in_array($in, $this->values, true)) {
-            return $in;
-        }
-        throw new \RuntimeException("TODO"); //Todo: new exceptions
-    }
+        if (!empty($updates)) {
+            // #1
+            // $this->values = array_diff($this->values, $updates);
+            $this->hiddenAliases = array_diff($this->hiddenAliases, $updates);
+            $this->showAliases = array_diff($this->showAliases, $updates);
 
-    final public function getName() : string{
-        return $this->name;
-    }
-
-	public function encode() : CommandEnum{
-		return new CommandEnum($this->name, $this->values, true);
-	}
-
-    public function addValue(string ...$values) : void{
-        foreach ($values as $k => $v) {
-
+            $this->update($updates, UpdateSoftEnumPacket::TYPE_REMOVE);
         }
     }
 
-	public function addValues(array $values) : void{
-		$newValues = [];
-		foreach ($values as $k => $v) {
-			if (!in_array($v, $this->values, true)) {
-				$this->values[] = $v;
-				$newValues[] = $v;
-			}
-		}
-		$this->update($newValues, UpdateSoftEnumPacket::TYPE_ADD);
-	}
-
-	public function setValues(string ...$values) : void{
-		$this->values = array_unique($values);
-		$this->update($this->values, UpdateSoftEnumPacket::TYPE_SET);
-	}
-
-	/**
-	 * @param array $values
-	 * @param int   $type
-	 *
-	 * @return void
-	 */
-	protected function update(array $values, int $type) : void{
-		NetworkBroadcastUtils::broadcastPackets(Server::getInstance()->getOnlinePlayers(), [
-			UpdateSoftEnumPacket::create($this->name, $values, $type)
-		]);
-	}
-
-    public function hasValue(string $value) : bool{
-        if ($this->isBinding) {
-            return isset($this->values[$value]);
-        }
-        return in_array($value, $this->values, true);
+    public function addValue(string $value, mixed $bindValue = null) : void{
+        //Should null be default?
+        //TODO: aliases support?
+        $this->addValues([$value => $bindValue ?? $value]);
     }
 
-    public function isBinding() : bool{
-        return $this->isBinding;
+    public function addValues(array $context) : void{ //TODO: aliases support?
+        $updates = [];
+        foreach ($context as $k => $v) {
+            if (!isset($this->values[$k])) {
+                $this->values[$k] = $v;
+                $updates[] = $k;
+            }
+        }
+        if (isset($updates)) {
+            $this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
+        }
+    }
+
+    public function changeValue(string $key, mixed $value) : void{
+        if (isset($this->values[$key])) {
+            $this->values[$key] = $value;
+        }
+    }
+
+    private function update(array $values, int $type) : void{
+        NetworkBroadcastUtils::broadcastPackets(Server::getInstance()->getOnlinePlayers(), [
+            UpdateSoftEnumPacket::create($this->name, $values, $type)
+        ]);
     }
 }

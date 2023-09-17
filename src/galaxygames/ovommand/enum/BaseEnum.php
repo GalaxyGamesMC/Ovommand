@@ -18,7 +18,7 @@ abstract class BaseEnum{
      * @param array  $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
      * @param array  $showAliases The aliases for values, but they will show or have type hint ingame!
      */
-    public function __construct(protected string $name, array $values, array $hiddenAliases = [], array $showAliases = []){
+    public function __construct(protected string $name, array $values = [], array $hiddenAliases = [], array $showAliases = []){
         $this->values = Utils::collapseBindingEnumInputs($values);
         $this->setHiddenAliases($hiddenAliases);
         $this->setShowAliases($showAliases);

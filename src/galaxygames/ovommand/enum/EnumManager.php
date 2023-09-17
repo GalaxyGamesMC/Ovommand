@@ -31,7 +31,7 @@ final class EnumManager{
         $this->register(new HardEnum(DefaultEnums::GAMEMODE->value, GameMode::getAll(),
             ["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
             ["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"]));
-//        $this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value)); // Ideas: event based closure?
+        $this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value)); // Ideas: event-based closure?
 	}
 
 	public function register(SoftEnum|HardEnum $enum, bool $overwrite = false) : void{
@@ -71,9 +71,9 @@ final class EnumManager{
         return $this->hardEnums[$enumName] ?? null;
     }
 
-    /**
-     * @deprecated Old API, use either getSoftEnum or getHardEnum for your type
-     */
+//    /**
+//     * @deprecated Old API, use either getSoftEnum or getHardEnum for your type
+//     */
 	public function getEnum(string|DefaultEnums $enumName) {
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
