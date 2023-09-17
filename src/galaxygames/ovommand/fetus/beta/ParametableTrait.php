@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\fetus;
+namespace galaxygames\ovommand\fetus\beta;
 
 use galaxygames\ovommand\enum\ExceptionMessage;
 use galaxygames\ovommand\enum\HardEnum;
 use galaxygames\ovommand\enum\SoftEnum;
 use galaxygames\ovommand\exception\ParameterOrderException;
+use galaxygames\ovommand\fetus\BaseCommand;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 use pocketmine\command\CommandSender;
@@ -21,6 +22,13 @@ trait ParametableTrait{
 
     abstract public function getParameterList() : array;
 
+    public function validateParameter() : bool{
+        if (array_is_list($this->parameters)) {
+            return true;
+        }
+        return false;
+    }
+
     public function registerParameter(int $position, BaseParameter $parameter) : void {
         if ($position < 0) {
             throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => $position]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
@@ -29,14 +37,11 @@ trait ParametableTrait{
             throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => $position]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
         }
         foreach ($this->parameter[$position - 1] ?? [] as $para) {
-//            if($arg instanceof TextParameter) {
-//                throw new ParameterOrderException("No other Parameters can be registered after a TextParameter");
-//            }
             if($para->isOptional() && !$parameter->isOptional()){
                 throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
             }
         }
-        $this->parameters[$position][] = $parameter;
+        $this->parameters[$position] = $parameter;
         if(!$parameter->isOptional()) {
             $this->requiredParameterCount[$position] = true;
         }
