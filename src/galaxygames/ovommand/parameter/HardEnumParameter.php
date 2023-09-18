@@ -42,7 +42,7 @@ class HardEnumParameter extends BaseParameter{
 		return $this->enum->hasValue($in);
 	}
 
-	public function parse(string $in) : mixed{
-		return $in; //TODO: change replacement
+	public function parse(string $parameters) : mixed{
+		return $parameters; //TODO: change replacement
 	}
 }

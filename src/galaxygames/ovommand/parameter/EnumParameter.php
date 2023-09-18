@@ -6,15 +6,16 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\enum\BaseEnum;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
+use galaxygames\ovommand\enum\SoftEnum;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 class EnumParameter extends BaseParameter{
 	protected BaseEnum $enum;
 
-	public function __construct(string $name, DefaultEnums|string $enum, bool $optional = false, int $flag = 0){
+	public function __construct(string $name, DefaultEnums|string $enumName, bool $optional = false, int $flag = 0){
 		$enumManager = EnumManager::getInstance();
-		$enum = $enumManager->getEnum($enum);
+		$enum = $enumManager->getEnum($enumName);
 		if ($enum === null) {
 			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
 		}
@@ -34,11 +35,7 @@ class EnumParameter extends BaseParameter{
 		return $this->enum->encode();
 	}
 
-	public function canParse(string $in) : bool{
-		return $this->enum->hasValue($in);
-	}
-
-	public function parse(string $in) : mixed{
-		return $in; //TODO: change replacement
+	public function isSoft() : bool{
+		return $this->enum instanceof SoftEnum;
 	}
 }

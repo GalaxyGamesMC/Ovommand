@@ -13,6 +13,4 @@ class BooleanParameter extends HardEnumParameter{
 	public function __construct(string $name, bool $optional = false, int $flag = 0){
 		parent::__construct($name, EnumManager::getInstance()->getHardEnum(DefaultEnums::BOOLEAN), $optional, $flag);
 	}
-
-	public function parse(string $in) : mixed{}
 }

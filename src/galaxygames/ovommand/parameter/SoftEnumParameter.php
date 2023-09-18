@@ -44,7 +44,7 @@ class SoftEnumParameter extends BaseParameter{
 		return $this->enum->hasValue($in);
 	}
 
-	public function parse(string $in) : mixed{
-		return $this->enum->parse($in);
+	public function parse(string $parameters) : mixed{
+		return $this->enum->parse($parameters);
 	}
 }

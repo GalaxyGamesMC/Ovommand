@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
+use galaxygames\ovommand\parameter\result\BaseResult;
+use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
 class BlockPositionParameter extends BaseParameter{
@@ -10,7 +12,5 @@ class BlockPositionParameter extends BaseParameter{
 		return ParameterTypes::BLOCK_POSITION;
 	}
 
-	public function canParse(string $in) : bool{}
-
-	public function parse(string $in) : mixed{}
+	public function parse(array $parameters) : BaseResult{}
 }
