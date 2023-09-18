@@ -77,10 +77,10 @@ final class EnumManager{
 	//    /**
 	//     * @deprecated Old API, use either getSoftEnum or getHardEnum for your type
 	//     */
-	public function getEnum(string|DefaultEnums $enumName){
+	public function getEnum(string|DefaultEnums $enumName) : ?BaseEnum{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
-		return $this->enums[$enumName] ?? null;
+		return $this->hardEnums[$enumName] ?? $this->softEnums[$enumName] ?? null;
 	}
 }
