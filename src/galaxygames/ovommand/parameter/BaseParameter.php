@@ -14,6 +14,10 @@ abstract class BaseParameter{
 	protected CommandParameter $parameterData;
 	protected int $flag = 0;
 	protected ParameterTypes $parameterTypes;
+	protected const REGEX_PATTERN =
+<<<REGEXP
+*
+REGEXP; //TODO: find a way to use this?
 
 	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0,){
 		$this->setFlag($flag);
@@ -23,6 +27,8 @@ abstract class BaseParameter{
 	public function getName() : string{
 		return $this->name;
 	}
+
+	abstract public function getValueName() : string;
 
 	public function isOptional() : bool{
 		return $this->optional;

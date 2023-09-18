@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
+use galaxygames\ovommand\parameter\result\BaseResult;
+use galaxygames\ovommand\parameter\result\ErrorResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
@@ -11,7 +13,15 @@ class IntParameter extends BaseParameter{
 		return ParameterTypes::INT;
 	}
 
-	public function parse(array $parameters) : ValueResult{
-		return ValueResult::create($parameters);
+	public function parse(array $parameters) : BaseResult{
+		$f = implode("", $parameters);
+		if (is_int((int) $f)) { //TODO: is_int($f) phpstorm bugs?
+			return ValueResult::create($f);
+		}
+		return ErrorResult::create("$f is not a int number!"); //TODO: better msg
+	}
+
+	public function getValueName() : string{
+		return "int";
 	}
 }

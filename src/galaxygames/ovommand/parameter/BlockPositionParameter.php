@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BaseResult;
-use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
 class BlockPositionParameter extends BaseParameter{

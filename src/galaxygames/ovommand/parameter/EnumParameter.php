@@ -7,6 +7,9 @@ use galaxygames\ovommand\enum\BaseEnum;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\enum\SoftEnum;
+use galaxygames\ovommand\parameter\result\BaseResult;
+use galaxygames\ovommand\parameter\result\ErrorResult;
+use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
@@ -23,7 +26,7 @@ class EnumParameter extends BaseParameter{
 		parent::__construct($name, $optional, $flag);
 	}
 
-	public function getEnumName() : string{
+	public function getValueName() : string{
 		return $this->enum->getName();
 	}
 
@@ -37,5 +40,13 @@ class EnumParameter extends BaseParameter{
 
 	public function isSoft() : bool{
 		return $this->enum instanceof SoftEnum;
+	}
+
+	public function parse(array $parameters) : BaseResult{
+		$enumValue = $this->enum->getValue(implode(" ", $parameters));
+		if ($enumValue !== null) {
+			return ValueResult::create($enumValue);
+		}
+		return ErrorResult::create("Unknown value!"); //TODO: better msg
 	}
 }

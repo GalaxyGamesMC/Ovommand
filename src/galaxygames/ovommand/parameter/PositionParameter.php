@@ -9,7 +9,7 @@ use galaxygames\ovommand\parameter\type\ParameterTypes;
 use galaxygames\ovommand\syntax\SyntaxConst;
 
 class PositionParameter extends BaseParameter{
-	public function getName() : string{
+	public function getValueName() : string{
 		return "x y z";
 	}
 
@@ -22,7 +22,7 @@ class PositionParameter extends BaseParameter{
 			throw new \InvalidArgumentException("Too many args");
 		}
 		$brokenSyntax = "";
-		$genType = null;
+		$coordType = null;
 		$types = [];
 		$values = [];
 		foreach ($parameters as $i => $parameter) {
@@ -30,23 +30,23 @@ class PositionParameter extends BaseParameter{
 				$brokenSyntax = $parameter;
 				break;
 			}
-			if (!preg_match("/^([~^]?[+-]?\d+(?:\.\d+)?)$/", $parameter)) {
+			if (!preg_match("", $parameter)) {
 				$brokenSyntax = $parameter;
 				break;
 			}
-			$type = match($u = substr($parameter, 0, 1)) {
+			$type = match ($u = substr($parameter, 0, 1)) {
 				"~" => CoordinateResult::TYPE_RELATIVE,
 				"^" => CoordinateResult::TYPE_LOCAL,
 				default => CoordinateResult::TYPE_DEFAULT
 			};
-			if ($genType === null) {
-				$genType = $type;
+			if ($coordType === null) {
+				$coordType = $type;
 			}
-			if ($type === CoordinateResult::TYPE_LOCAL && $genType !== CoordinateResult::TYPE_LOCAL) {
+			if ($type === CoordinateResult::TYPE_LOCAL && $coordType !== CoordinateResult::TYPE_LOCAL) {
 				$brokenSyntax = $parameter;
 				break;
 			}
-			if ($genType === CoordinateResult::TYPE_LOCAL && $type !== CoordinateResult::TYPE_LOCAL) {
+			if ($coordType === CoordinateResult::TYPE_LOCAL && $type !== CoordinateResult::TYPE_LOCAL) {
 				$brokenSyntax = $parameter;
 				break;
 			}
