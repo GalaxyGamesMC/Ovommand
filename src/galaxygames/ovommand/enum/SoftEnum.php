@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace galaxygames\ovommand\enum;
 
@@ -45,8 +45,7 @@ class SoftEnum extends BaseEnum{
 		$this->addValues([$value => $bindValue ?? $value]);
 	}
 
-	public function addValues(array $context) : void //TODO: aliases support?
-	{
+	public function addValues(array $context) : void{  //TODO: aliases support?
 		$updates = [];
 		foreach ($context as $k => $v) {
 			if (!isset($this->values[$k])) {

@@ -1,9 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace galaxygames\ovommand\enum;
 
 use galaxygames\ovommand\exception\EnumException;
+use galaxygames\ovommand\exception\ExceptionMessage;
 use pocketmine\player\GameMode;
 use pocketmine\utils\SingletonTrait;
 
