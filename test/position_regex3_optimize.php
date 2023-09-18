@@ -3,14 +3,14 @@ declare(strict_types=1);
 require_once "D:\phpstorm2\Ovommand\src\galaxygames\ovommand\parameter\parse\Coordinates.php";
 require_once "D:\phpstorm2\Ovommand\src\galaxygames\syntax\SyntaxConst.php";
 
-use galaxygames\ovommand\parameter\parse\Coordinates;
+use galaxygames\ovommand\parameter\result\CoordinateResult;
 use galaxygames\ovommand\syntax\SyntaxConst;
 
 function redmsg(string $msg) : string{
     return "\033[01;31m " . $msg . " \033[0m";
 }
 
-function canParseArgs(array $args, bool $helper = false) : ?Coordinates{
+function canParseArgs(array $args, bool $helper = false) : ?CoordinateResult{
     if (count($args) > 3) {
         throw new \InvalidArgumentException("Too many args");
     }
@@ -29,19 +29,19 @@ function canParseArgs(array $args, bool $helper = false) : ?Coordinates{
             break;
         }
         $type = match($u = substr($arg, 0, 1)) {
-            "~" => Coordinates::TYPE_RELATIVE,
-            "^" => Coordinates::TYPE_LOCAL,
-            default => Coordinates::TYPE_DEFAULT
+            "~" => CoordinateResult::TYPE_RELATIVE,
+            "^" => CoordinateResult::TYPE_LOCAL,
+            default => CoordinateResult::TYPE_DEFAULT
         };
         if ($genType === null) {
             $genType = $type;
         }
-        if ($type === Coordinates::TYPE_LOCAL && $genType !== Coordinates::TYPE_LOCAL) {
+        if ($type === CoordinateResult::TYPE_LOCAL && $genType !== CoordinateResult::TYPE_LOCAL) {
             $unmatch = $arg;
             $helps ="^->?";
             break;
         }
-        if ($genType === Coordinates::TYPE_LOCAL && $type !== Coordinates::TYPE_LOCAL) {
+        if ($genType === CoordinateResult::TYPE_LOCAL && $type !== CoordinateResult::TYPE_LOCAL) {
             $unmatch = $arg;
             $helps = $u . "->^";
             break;
@@ -68,7 +68,7 @@ function canParseArgs(array $args, bool $helper = false) : ?Coordinates{
         echo redmsg(SyntaxConst::parseSyntax($syntax[0], $unmatch, $syntax[1], $helper ? $helps : "")) . "\n";
         return null;
     }
-    return Coordinates::fromData(...$values, ...$types);
+    return CoordinateResult::fromData(...$values, ...$types);
 }
 
 $in = ["^+1.5213111123456789", "~14141.12749813","^1414.2421"];

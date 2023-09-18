@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\parameter\parse;
+namespace galaxygames\ovommand\parameter\result;
 
 use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
 
-final class Coordinates{
+final class CoordinateResult extends BaseResult{
 	public const TYPE_DEFAULT = 0; //plain number
 	public const TYPE_RELATIVE = 1; //tilde
 	public const TYPE_LOCAL = 2; //caret notation
@@ -52,11 +52,11 @@ final class Coordinates{
 	}
 
 	public static function fromData(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT) : self{
-		return new Coordinates($x, $y, $z, $xType, $yType, $zType);
+		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType);
 	}
 
 	public static function here() : self{
-		return new Coordinates(0, 0, 0, self::TYPE_RELATIVE, self::TYPE_RELATIVE, self::TYPE_RELATIVE);
+		return new CoordinateResult(0, 0, 0, self::TYPE_RELATIVE, self::TYPE_RELATIVE, self::TYPE_RELATIVE);
 	}
 
 	public function __toString(){
@@ -71,10 +71,8 @@ final class Coordinates{
 			if ($this->hasCaret) {
 				return $this->parseLocal($entity);
 			}
-
 			return $this->parseRelative($entity);
 		}
-
 		return new Position($this->x, $this->y, $this->z, $entity?->getWorld());
 	}
 
