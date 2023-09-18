@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace galaxygames\ovommand\enum;
 
@@ -12,6 +12,7 @@ abstract class BaseEnum{
 	protected array $showAliases;
 
 	// huh, <parameterName: enumName> doesn't show up...
+
 	/**
 	 * @param string $name The name of the enum, eg: <parameterName: enumName>
 	 * @param array  $values The default values
