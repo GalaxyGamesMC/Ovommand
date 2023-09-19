@@ -8,7 +8,7 @@ use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\enum\SoftEnum;
 use galaxygames\ovommand\parameter\result\BaseResult;
-use galaxygames\ovommand\parameter\result\ErrorResult;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
@@ -47,6 +47,6 @@ class EnumParameter extends BaseParameter{
 		if ($enumValue !== null) {
 			return ValueResult::create($enumValue);
 		}
-		return ErrorResult::create("Unknown value!"); //TODO: better msg
+		return BrokenSyntaxResult::create("Unknown value!"); //TODO: better msg
 	}
 }

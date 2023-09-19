@@ -7,14 +7,16 @@ use galaxygames\ovommand\parameter\BaseParameter;
 use pocketmine\command\CommandSender;
 
 interface IParametable{
-    public function generateUsageMessage() : string;
-    public function hasParameters() : bool;
+	public function generateUsageMessage() : string;
 
-    /**
-     * @return BaseParameter[][]
-     */
-    public function getParameterList(): array;
-    public function parseParameters(array $rawArgs, CommandSender $sender) : array;
+	public function hasParameters() : bool;
 
-    public function registerParameter(int $position, BaseParameter $argument) : void;
+	/**
+	 * @return BaseParameter[][]
+	 */
+	public function getParameterList() : array;
+
+	public function parseParameters(array $rawArgs, CommandSender $sender) : array;
+
+	public function registerParameter(int $position, BaseParameter $argument) : void;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BaseResult;
-use galaxygames\ovommand\parameter\result\ErrorResult;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 use galaxygames\ovommand\syntax\SyntaxConst;
@@ -32,9 +32,9 @@ class TargetParameter extends BaseParameter{
 		$groups = [];
 		if (!preg_match("/^(?:([^\n]*@[apres])|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
-			return ErrorResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
 		}
-		return  match ($tag = $groups[1]) {
+		return match ($tag = $groups[1]) {
 			TargetResult::TARGET_ENTITIES, TargetResult::TARGET_ALL, TargetResult::TARGET_NEAREST_PLAYER, TargetResult::TARGET_RANDOM_PLAYER, TargetResult::TARGET_SELF => TargetResult::create($tag),
 			default => TargetResult::create($groups[2])
 		};
@@ -46,7 +46,7 @@ class TargetParameter extends BaseParameter{
 		$groups = [];
 		if (!preg_match("/^(?:([^\n]*@[apres])(\S*)|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
-			return ErrorResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
 		}
 		return match ($tag = $groups[1]) {
 			TargetResult::TARGET_ENTITIES, TargetResult::TARGET_ALL, TargetResult::TARGET_NEAREST_PLAYER, TargetResult::TARGET_RANDOM_PLAYER, TargetResult::TARGET_SELF => TargetResult::create($tag),
@@ -54,7 +54,5 @@ class TargetParameter extends BaseParameter{
 		};
 	}
 
-	private function parseTargetArguments(string $in) : array{
-
-	}
+	private function parseTargetArguments(string $in) : array{}
 }

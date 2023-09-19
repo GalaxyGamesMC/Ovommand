@@ -5,7 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\CoordinateResult;
-use galaxygames\ovommand\parameter\result\ErrorResult;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 use galaxygames\ovommand\syntax\SyntaxConst;
 
@@ -14,7 +14,7 @@ class BlockPositionParameter extends BaseParameter{
 		return ParameterTypes::BLOCK_POSITION;
 	}
 
-	public function parse(array $parameters) : ErrorResult|CoordinateResult{
+	public function parse(array $parameters) : BrokenSyntaxResult|CoordinateResult{
 		parent::parse($parameters);
 
 		$brokenSyntax = "";
@@ -53,7 +53,7 @@ class BlockPositionParameter extends BaseParameter{
 		}
 		if ($brokenSyntax !== "") {
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $brokenSyntax);
-			return ErrorResult::create(SyntaxConst::parseSyntax($syntax[0], $brokenSyntax, $syntax[1]));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $brokenSyntax, $syntax[1]));
 		}
 		return CoordinateResult::fromData(...$values, ...$types);
 	}

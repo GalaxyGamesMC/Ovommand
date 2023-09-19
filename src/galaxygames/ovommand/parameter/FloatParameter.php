@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BaseResult;
-use galaxygames\ovommand\parameter\result\ErrorResult;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
@@ -22,6 +22,6 @@ class FloatParameter extends BaseParameter{
 		if (is_numeric($f)) {
 			return ValueResult::create((float) $f);
 		}
-		return ErrorResult::create("$f is not a float number!"); //TODO: better msg
+		return BrokenSyntaxResult::create("$f is not a float number!"); //TODO: better msg
 	}
 }

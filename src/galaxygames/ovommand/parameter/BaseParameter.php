@@ -14,8 +14,7 @@ abstract class BaseParameter{
 	protected CommandParameter $parameterData;
 	protected int $flag = 0;
 	protected ParameterTypes $parameterTypes;
-	protected const REGEX_PATTERN =
-<<<REGEXP
+	protected const REGEX_PATTERN = <<<REGEXP
 *
 REGEXP; //TODO: find a way to use this?
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BaseResult;
-use galaxygames\ovommand\parameter\result\ErrorResult;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\parameter\type\ParameterTypes;
 
@@ -18,7 +18,7 @@ class IntParameter extends BaseParameter{
 		if (is_int((int) $f)) { //TODO: is_int($f) phpstorm bugs?
 			return ValueResult::create($f);
 		}
-		return ErrorResult::create("$f is not a int number!"); //TODO: better msg
+		return BrokenSyntaxResult::create("$f is not a int number!"); //TODO: better msg
 	}
 
 	public function getValueName() : string{
