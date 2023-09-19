@@ -126,5 +126,29 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		return $onlinePlayers[mt_rand(0, count($onlinePlayers) - 1)];
 	}
 
-	private function getNearestPlayer(Living $entity) : Player{}
+	private function getNearestPlayer(CommandSender $entity) : ?Player{
+		$online = array_values(Server::getInstance()->getOnlinePlayers());
+
+		if(!($entity instanceof Player)) {
+			if(count($online) > 0){
+				return $online[array_keys($online)[0]]->getName();
+			}
+			return null;
+		}
+
+		if (count($online) === 1) {
+			return $entity;
+		}
+		$entityPos = $entity->getPosition();
+		$selectedP = null;
+		foreach ($online as $player) {
+			if ($player->getWorld()->getDisplayName() !== "todo") {
+				continue;
+			}
+			if (!isset($selectedP) || $player->getPosition()->distanceSquared($entityPos) < $selectedP->getPosition()->distanceSquared($entityPos)) {
+				$selectedP = $player;
+			}
+		}
+		return $selectedP;
+	}
 }
