@@ -59,4 +59,8 @@ REGEXP; //TODO: find a way to use this?
 	public function handleQuoteArg() : bool{
 		return true;
 	}
+
+	public function getFlag() : int{
+		return $this->flag;
+	}
 }
