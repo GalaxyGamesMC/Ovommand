@@ -18,9 +18,8 @@ class PositionParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : ErrorResult|CoordinateResult{
-		if (count($parameters) > $this->getSpanLength()) {
-			throw new \InvalidArgumentException("Too many args");
-		}
+		parent::parse($parameters);
+
 		$brokenSyntax = "";
 		$coordType = null;
 		$types = [];
@@ -30,7 +29,7 @@ class PositionParameter extends BaseParameter{
 				$brokenSyntax = $parameter;
 				break;
 			}
-			if (!preg_match("", $parameter)) {
+			if (!preg_match("/^([~^]?[+-]?\d+(?:\.\d+)?)$/", $parameter)) {
 				$brokenSyntax = $parameter;
 				break;
 			}

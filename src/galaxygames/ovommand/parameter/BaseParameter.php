@@ -36,7 +36,11 @@ REGEXP; //TODO: find a way to use this?
 
 	abstract public function getNetworkType() : ParameterTypes;
 
-	abstract public function parse(array $parameters) : BaseResult;
+	public function parse(array $parameters) : BaseResult{
+		if (count($parameters) > $this->getSpanLength()) {
+			throw new \InvalidArgumentException("Too many args");
+		}
+	}
 
 	private function setFlag(int $flag) : void{
 		$this->flag = match ($flag) {

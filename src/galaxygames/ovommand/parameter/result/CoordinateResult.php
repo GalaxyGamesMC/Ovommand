@@ -21,11 +21,12 @@ final class CoordinateResult extends BaseResult{
 	protected int|float $z;
 
 	protected bool $hasCaret;
-
-	public function __construct(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT){
+	protected bool $isBlockPos; //TODO: deal with this later
+	public function __construct(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false){
 		$this->x = $x;
 		$this->y = $y;
 		$this->z = $z;
+		$this->isBlockPos = $isBlockPos;
 
 		$this->xType = match ($xType) {
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
