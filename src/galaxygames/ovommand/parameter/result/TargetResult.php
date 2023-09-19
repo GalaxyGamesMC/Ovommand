@@ -48,7 +48,17 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 	public function __construct(protected string $target, array $params = []){
 		if ($this->isTargetTagged()) {
 			$this->parameters = [
-				"x" => $this->castPositionValue($params["x"] ?? 0), "y" => $this->castPositionValue($params["y"] ?? 0), "z" => $this->castPositionValue($params["z"] ?? 0), "dx" => $this->castPositionValue($params["dx"] ?? 0), "dy" => $this->castPositionValue($params["dy"] ?? 0), "dz" => $this->castPositionValue($params["dz"] ?? 0), "r" => (float) ($params["r"] ?? 0), "rm" => (float) ($params["rm"] ?? 0), "rx" => (float) ($params["rx"] ?? 180), "rxm" => (float) ($params["rxm"] ?? 0), "ry" => (float) ($params["ry"] ?? 360), "rym" => (float) ($params["ry"] ?? 0), "c" => (int) ($params["c"] ?? 0), "m" => (string) ($params["c"] ?? 0), "l" => (int) ($params["l"] ?? PHP_INT_MAX), "lm" => (int) ($params["lm"] ?? 0), "name" => (string) ($params["name"] ?? null), //?
+				"x" => $this->castPositionValue($params["x"] ?? 0),
+				"y" => $this->castPositionValue($params["y"] ?? 0),
+				"z" => $this->castPositionValue($params["z"] ?? 0),
+				"dx" => $this->castPositionValue($params["dx"] ?? 0),
+				"dy" => $this->castPositionValue($params["dy"] ?? 0),
+				"dz" => $this->castPositionValue($params["dz"] ?? 0), "r" => (float) ($params["r"] ?? 0),
+				"rm" => (float) ($params["rm"] ?? 0), "rx" => (float) ($params["rx"] ?? 180),
+				"rxm" => (float) ($params["rxm"] ?? 0), "ry" => (float) ($params["ry"] ?? 360),
+				"rym" => (float) ($params["ry"] ?? 0), "c" => (int) ($params["c"] ?? 0),
+				"m" => (string) ($params["c"] ?? 0), "l" => (int) ($params["l"] ?? PHP_INT_MAX),
+				"lm" => (int) ($params["lm"] ?? 0), "name" => (string) ($params["name"] ?? null), //?
 				"type" => (string) ($params["type"] ?? null), //?
 				"tag" => (string) ($params["type"] ?? null), //?
 				"world" => $params["world"] ?? "",
