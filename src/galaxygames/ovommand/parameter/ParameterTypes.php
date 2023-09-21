@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\parameter\type;
+namespace galaxygames\ovommand\parameter;
 
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
 

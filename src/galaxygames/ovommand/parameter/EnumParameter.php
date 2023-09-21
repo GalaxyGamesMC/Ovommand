@@ -10,7 +10,6 @@ use galaxygames\ovommand\enum\SoftEnum;
 use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
-use galaxygames\ovommand\parameter\type\ParameterTypes;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 class EnumParameter extends BaseParameter{

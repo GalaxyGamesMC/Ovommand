@@ -6,12 +6,11 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\result\BaseResult;
-use galaxygames\ovommand\parameter\type\ParameterTypes;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 
 abstract class BaseParameter{
-	/** @var CommandParameter parameterData */
-	protected CommandParameter $parameterData;
+//	/** @var CommandParameter parameterData */
+//	protected CommandParameter $parameterData;
 	protected int $flag = 0;
 	protected ParameterTypes $parameterTypes;
 	protected const REGEX_PATTERN = <<<REGEXP
@@ -20,7 +19,7 @@ REGEXP; //TODO: find a way to use this?
 
 	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0,){
 		$this->setFlag($flag);
-		$this->parameterData = CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
+//		$this->parameterData = CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
 	}
 
 	public function getName() : string{
@@ -48,9 +47,9 @@ REGEXP; //TODO: find a way to use this?
 		};
 	}
 
-	public function getParameterData() : CommandParameter{
-		return $this->parameterData;
-	}
+//	public function getParameterData() : CommandParameter{
+//		return $this->parameterData;
+//	}
 
 	public function getSpanLength() : int{
 		return 1;
@@ -62,5 +61,11 @@ REGEXP; //TODO: find a way to use this?
 
 	public function getFlag() : int{
 		return $this->flag;
+	}
+
+	public function getNetworkParameterData() : CommandParameter{
+		return CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
+//		return clone $this->parameterData;
+//		return $this->parameterData;
 	}
 }

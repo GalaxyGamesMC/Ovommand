@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\parameter\BaseParameter;
-use galaxygames\ovommand\parameter\type\ParameterTypes;
-
 class ParentedParameter extends BaseParameter{
 	public function __construct(string $parent, protected BaseParameter $childParameter){
 		parent::__construct($childParameter->getName(), $childParameter->isOptional(), $childParameter->getFlag());

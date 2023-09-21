@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\parameter\result\CoordinateResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
-use galaxygames\ovommand\parameter\type\ParameterTypes;
+use galaxygames\ovommand\parameter\result\CoordinateResult;
 use galaxygames\ovommand\syntax\SyntaxConst;
 
 class PositionParameter extends BaseParameter{
