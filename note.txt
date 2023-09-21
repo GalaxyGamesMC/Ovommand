@@ -31,3 +31,5 @@ an enum, <para name: enum name>!
         ]
     ]
 ]
+
+Commando lost its parenting!
