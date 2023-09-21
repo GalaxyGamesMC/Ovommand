@@ -5,7 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\CoordinateResult;
-use galaxygames\ovommand\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\syntax\SyntaxConst;
 
 class BlockPositionParameter extends BaseParameter{
 	public function getNetworkType() : ParameterTypes{

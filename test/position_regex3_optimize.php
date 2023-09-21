@@ -4,7 +4,7 @@ require_once "D:\phpstorm2\Ovommand\src\galaxygames\ovommand\parameter\parse\Coo
 require_once "D:\phpstorm2\Ovommand\src\galaxygames\syntax\SyntaxConst.php";
 
 use galaxygames\ovommand\parameter\result\CoordinateResult;
-use galaxygames\ovommand\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\syntax\SyntaxConst;
 
 function redmsg(string $msg) : string{
     return "\033[01;31m " . $msg . " \033[0m";

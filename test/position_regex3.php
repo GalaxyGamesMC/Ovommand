@@ -4,7 +4,7 @@ require_once "D:\phpstorm2\Ovommand\src\galaxygames\ovommand\parameter\parse\Coo
 require_once "D:\phpstorm2\Ovommand\src\galaxygames\syntax\SyntaxConst.php";
 
 use galaxygames\ovommand\parameter\parse\Coordinates;
-use galaxygames\ovommand\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\syntax\SyntaxConst;
 
 SyntaxConst::setSyntax(SyntaxConst::SYNTAX_PRINT_OVO_VANILLA);
 

@@ -6,7 +6,7 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
-use galaxygames\ovommand\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\syntax\SyntaxConst;
 
 class TargetParameter extends BaseParameter{
 
