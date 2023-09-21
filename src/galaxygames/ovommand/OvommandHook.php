@@ -7,7 +7,6 @@ use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\fetus\IParametable;
 use galaxygames\ovommand\parameter\BaseParameter;
-use galaxygames\ovommand\parameter\StringEnumParameter;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\command\CommandSender;

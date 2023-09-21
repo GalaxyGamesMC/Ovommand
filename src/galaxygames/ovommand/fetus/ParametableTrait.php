@@ -29,6 +29,7 @@ trait ParametableTrait{
 			if ($overloadId < 0) {
 				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
 			}
+			//TODO: TextParameter does not allow
 			//TODO: WRONG MSG!!!!!!!!!!!!!!!!!!!!!
 			if ($overloadId > 0 && !isset($this->parameter[$overloadId - 1])) {
 				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
