@@ -16,7 +16,7 @@ interface IParametable{
 	 */
 	public function getParameterList() : array;
 
-	public function parseParameters(array $rawArgs, CommandSender $sender) : array;
+	public function parseParameters(array $rawParams, CommandSender $sender, string $commandLabel) : array;
 
-	public function registerParameter(int $position, BaseParameter $argument) : void;
+	public function registerParameter(int $overloadId, BaseParameter $parameter) : void;
 }

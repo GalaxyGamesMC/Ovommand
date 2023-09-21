@@ -17,8 +17,6 @@ trait ParametableTrait{
 
 	abstract protected function prepare() : void;
 
-	abstract public function getParameterList() : array;
-
 	public function validateParameter() : bool{
 		if (array_is_list($this->parameters)) {
 			return true;
@@ -26,61 +24,52 @@ trait ParametableTrait{
 		return false;
 	}
 
-	/**
-	 * @param BaseParameter[] $parameters
-	 *
-	 * @return void
-	 */
-	public function registerParameters(array $parameters) : void{
-		$parameters = array_values($parameters);
-		$this->parameters[] = $parameters;
-	}
-
-	public function registerParameter(int $position, BaseParameter $parameter) : void{
-		if ($position < 0) {
-			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => $position]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
-		}
-
-		if ($position > 0 && !isset($this->parameter[$position - 1])) {
-			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => $position]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
-		}
-		foreach ($this->parameter[$position - 1] ?? [] as $para) {
-			//            if($arg instanceof TextParameter) {
-			//                throw new ParameterOrderException("No other Parameters can be registered after a TextParameter");
-			//            }
-			if ($para->isOptional() && !$parameter->isOptional()) {
-				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
+	public function registerParameters(int $overloadId, BaseParameter ...$parameters) : void{
+		foreach ($parameters as $parameter) {
+			if ($overloadId < 0) {
+				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
 			}
-		}
-		$this->parameters[$position][] = $parameter;
-		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
-			if ($a->getSpanLength() === PHP_INT_MAX) { // if it takes unlimited parameters, pull it down
-				return 1;
+			//TODO: WRONG MSG!!!!!!!!!!!!!!!!!!!!!
+			if ($overloadId > 0 && !isset($this->parameter[$overloadId - 1])) {
+				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
 			}
-			return -1;
-		});
-		//usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
-		//	return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
-		//});
-		if (!$parameter->isOptional()) {
-			$this->requiredParameterCount[$position] = true;
+			if (!$parameter->isOptional()) {
+				foreach ($this->parameter[$overloadId] ?? [] as $para) {
+					if ($para->isOptional()) {
+						throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
+					}
+				}
+			}
+
+			$this->parameters[$overloadId][] = $parameter;
+			if (!$parameter->isOptional()) {
+				$this->requiredParameterCount[$overloadId] = true; //TODO: HELP, I DUNNO!
+			}
+
+			//		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
+			//			if ($a->getSpanLength() === PHP_INT_MAX) { // if it takes unlimited parameters, pull it down
+			//				return 1;
+			//			}
+			//			return -1;
+			//		});
+			//		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
+			//			return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
+			//		});
 		}
 	}
 
-	/**
-	 * @param array         $rawParams
-	 * @param CommandSender $sender
-	 *
-	 * @return array
-	 */
-	public function parseParameters(array $rawParams, CommandSender $sender) : array{
-		$paramCount = count($rawParams) - 1;
+	public function registerParameter(int $overloadId, BaseParameter $parameter) : void{
+		$this->registerParameters($overloadId, $parameter);
+	}
+
+	public function parseParameters(array $rawParams, CommandSender $sender, string $commandLabel) : array{
+		$paramCount = count($rawParams);
 		if ($paramCount !== 0 && !$this->hasParameters()) {
 			return []; //TODO: Better returns type?
 		}
-		$offset = 1;
+		$offset = 0;
 		$results = [];
-		foreach ($this->parameters as $parameters) {
+		foreach ($this->parameters as $overloadId => $parameters) {
 			$parsed = false;
 			$optional = true;
 			foreach ($parameters as $parameter) {
@@ -90,14 +79,19 @@ trait ParametableTrait{
 				}
 				$result = $parameter->parse($params);
 				if ($result instanceof BrokenSyntaxResult) {
-					$results[$parameter->getName()] = $result;
-					return $results; //TODO: how do I know if the parse failed and broken syntax will be echoed :l
+					$results = [];
+					break;
 				}
 				$offset += $len;
+				$parsed = true;
+				$results[$parameter->getName()] = $result;
+
 				if ($offset > $paramCount) {
 					break;
 				}
-				$results[$parameter->getName()] = $result;
+			}
+			if (!$parsed && !($optional && $paramCount === 0)) {
+				return [];
 			}
 		}
 		return $results;
@@ -117,7 +111,7 @@ trait ParametableTrait{
 	public function generateUsageMessage() : string{
 		$msg = $this->name . " ";
 		$params = [];
-		foreach ($this->parameters as $parameters) { //TODO: Soft Enum, Hard Enum, etc
+		foreach ($this->parameters as $parameters) {
 			$hasOptional = false;
 			$names = [];
 			foreach ($parameters as $parameter) {
@@ -134,7 +128,10 @@ trait ParametableTrait{
 		return $msg;
 	}
 
-	public function getParameters() : array{
+	/**
+	 * @return BaseParameter[][]
+	 */
+	public function getParameterList() : array{
 		return $this->parameters;
 	}
 
