@@ -63,7 +63,7 @@ trait ParametableTrait{
 		$this->registerParameters($overloadId, $parameter);
 	}
 
-	public function parseParameters(array $rawParams, CommandSender $sender, string $commandLabel) : array{
+	public function parseParameters(array $rawParams) : array{
 		$paramCount = count($rawParams);
 		if ($paramCount !== 0 && !$this->hasParameters()) {
 			return []; //TODO: Better returns type?

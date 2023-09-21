@@ -8,7 +8,7 @@ use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
 use InvalidArgumentException;
 use pocketmine\command\CommandSender;
-use pocketmine\lang\Translatable;
+use pocketmine\utils\TextFormat;
 
 trait OvommandTrait{
 	/** @var BaseConstraint[] */
@@ -19,7 +19,33 @@ trait OvommandTrait{
 	protected array $subCommands = [];
 	//	protected array $subCommandAliases = []; //todo: good?
 	protected CommandSender $currentSender;
-	protected Translatable|string $usageMessage;
+
+	final public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
+		if (!$this->testPermission($sender)) {
+			return;
+		}
+		$this->setCurrentSender($sender);
+		if (count($args) > 0) {
+			if (isset($this->subCommands[$label = $args[0]])) {
+				array_shift($args);
+				$execute = $this->subCommands[$label];
+				$execute->setCurrentSender($sender);
+				if (!$execute->testPermissionSilent($sender)) {
+					$msg = $this->getPermissionMessage();
+					if ($msg === null) {
+						$sender->sendMessage($sender->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission"));
+					} elseif (empty($msg)) {
+						$sender->sendMessage(str_replace("<permission>", $execute->getPermissions()[0], $msg));
+					}
+					return;
+				}
+				$execute->execute($sender, $label, $args);
+			}
+		} else {
+			$passArgs = $this->parseParameters($args);
+			$this->onRun($sender, $commandLabel, $passArgs);
+		}
+	}
 
 	public function registerSubCommand(BaseSubCommand $subCommand) : void{
 		if (!isset($this->subCommands[$subName = $subCommand->getName()])) {
@@ -35,10 +61,6 @@ trait OvommandTrait{
 		} else {
 			throw new InvalidArgumentException("SubCommand with same name for '$subName' already exists");
 		}
-	}
-
-	public function setUsageMessage(Translatable|string $translatable) : void{
-		$this->usageMessage = $translatable;
 	}
 
 	abstract public function prepare(CommandSender $sender, string $aliasUsed, array $args) : void;
