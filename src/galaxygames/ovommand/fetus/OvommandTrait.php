@@ -17,7 +17,7 @@ trait OvommandTrait{
 	protected BaseSubCommand|BaseCommand $parent;
 	/** @var BaseSubCommand[] $subCommands */
 	protected array $subCommands = [];
-//	protected array $subCommandAliases = []; //todo: good?
+	//	protected array $subCommandAliases = []; //todo: good?
 	protected CommandSender $currentSender;
 	protected Translatable|string $usageMessage;
 
@@ -42,6 +42,7 @@ trait OvommandTrait{
 	}
 
 	abstract public function prepare(CommandSender $sender, string $aliasUsed, array $args) : void;
+
 	abstract public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void;
 
 	public function getParent() : BaseCommand|BaseSubCommand{
