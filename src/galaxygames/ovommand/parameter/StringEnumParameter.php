@@ -13,33 +13,28 @@ use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 
-class EnumParameter extends BaseParameter{
+class StringEnumParameter extends BaseParameter{
 	protected BaseEnum $enum;
 
-	public function __construct(string $name, DefaultEnums|string $enumName, bool $optional = false, int $flag = 0){
-		$enumManager = EnumManager::getInstance();
-		$enum = $enumManager->getEnum($enumName);
-		if ($enum === null) {
-			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
-		}
-		$this->enum = $enum;
+	public function __construct(string $name, protected array $values, bool $optional = false, int $flag = 0){
 		parent::__construct($name, $optional, $flag);
 	}
 
 	public function getValueName() : string{
-		return $this->enum->getName();
+		return "enum#" . spl_object_id($this);
 	}
 
 	public function getNetworkType() : ParameterTypes{
 		return ParameterTypes::ENUM;
 	}
 
-	public function isSoft() : bool{
-		return $this->enum instanceof SoftEnum;
+	public function encodeEnum() : CommandEnum{
+		return new CommandEnum($this->getValueName(), $this->values);
 	}
 
 	public function parse(array $parameters) : BaseResult{
-		$enumValue = $this->enum->getValue(implode(" ", $parameters));
+		$in = implode(" ", $parameters);
+		$enumValue = $this->values[$in] ?? null;
 		if ($enumValue !== null) {
 			return ValueResult::create($enumValue);
 		}
@@ -47,6 +42,6 @@ class EnumParameter extends BaseParameter{
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
-		return CommandParameter::enum($this->name, $this->enum->encode(), $this->flag, $this->optional);
+		return CommandParameter::enum($this->name, $this->encodeEnum(), $this->flag, $this->optional);
 	}
 }
