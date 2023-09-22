@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\fetus;
 
 use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -45,30 +46,46 @@ abstract class Ovommand extends Command implements IParametable{
 		if (!$this->testPermission($sender)) {
 			return;
 		}
+		if (count($args) < 1) {
+			$this->onRun($sender, $commandLabel, []);
+			return;
+		}
+		$label = $args[0];
+		$preLabel .= $commandLabel . " " . $label;
 		$this->setCurrentSender($sender);
-		if (count($args) > 0) {
-			$label = $args[0];
+		if (isset($this->subCommands[$label])) {
 			array_shift($args);
-			if (isset($this->subCommands[$label])) {
-				$execute = $this->subCommands[$label];
-				$execute->setCurrentSender($sender);
-				if (!$execute->testPermissionSilent($sender)) {
-					$msg = $this->getPermissionMessage();
-					if ($msg === null) {
-						$sender->sendMessage($sender->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission"));
-					} elseif (empty($msg)) {
-						$sender->sendMessage(str_replace("<permission>", $execute->getPermissions()[0], $msg));
-					}
-					return;
+			$execute = $this->subCommands[$label];
+			$execute->setCurrentSender($sender);
+			if (!$execute->testPermissionSilent($sender)) {
+				$msg = $this->getPermissionMessage();
+				if ($msg === null) {
+					$sender->sendMessage($sender->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission"));
+					$sender->sendMessage($text = "DEBUG: " . __FILE__ . ". Line : 59");
+					echo $text . "\n";
+				} elseif (empty($msg)) {
+					$sender->sendMessage(str_replace("<permission>", $execute->getPermissions()[0], $msg));
+					$sender->sendMessage($text = "DEBUG: " . __FILE__ . ". Line : 63");
+					echo $text . "\n";
 				}
-				$execute->execute($sender, $label, $args, $preLabel . $commandLabel); //TODO: Failed logic?
-				$passArgs = $execute->parseParameters($args);
-				$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
-			} else {
-				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseVanillaSyntaxMessage($preLabel, $label, implode(" ", $args))->getText());
+				return;
 			}
+			$execute->execute($sender, $label, $args, $preLabel . $commandLabel); //TODO: Failed logic?
+			$passArgs = $execute->parseParameters($args);
+			$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
+			echo "NOT ME\n";
+			var_dump($passArgs);
+			echo "YES ME\n";
+			foreach ($passArgs as $i => $passArg) {
+				if ($passArg instanceof BrokenSyntaxResult) {
+					array_shift($args);
+					$parts = SyntaxConst::getSyntaxBetweenBrokenPart("/" . $preLabel . " " . implode(" ", $args), $passArg->getBrokenSyntax());
+					$sender->sendMessage(TextFormat::RED . SyntaxConst::parseOvommandSyntaxMessage($parts[0], $passArg->getBrokenSyntax(), $parts[1]));
+					return;
+				}
+			}
 			$this->onRun($sender, $commandLabel, $passArgs);
 		}
 	}

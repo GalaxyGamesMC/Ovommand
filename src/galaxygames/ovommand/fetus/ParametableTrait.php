@@ -7,7 +7,6 @@ use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
-use pocketmine\command\CommandSender;
 
 trait ParametableTrait{
 	/** @var BaseParameter[][] */
@@ -25,17 +24,17 @@ trait ParametableTrait{
 	}
 
 	public function registerParameters(int $overloadId, BaseParameter ...$parameters) : void{
+		if ($overloadId < 0) {
+			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
+		}
+		if ($overloadId > 0 && !isset($this->parameters[$overloadId - 1])) {
+			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
+		}
 		foreach ($parameters as $parameter) {
-			if ($overloadId < 0) {
-				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
-			}
 			//TODO: TextParameter does not allow
 			//TODO: WRONG MSG!!!!!!!!!!!!!!!!!!!!!
-			if ($overloadId > 0 && !isset($this->parameter[$overloadId - 1])) {
-				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
-			}
 			if (!$parameter->isOptional()) {
-				foreach ($this->parameter[$overloadId] ?? [] as $para) {
+				foreach ($this->parameters[$overloadId] ?? [] as $para) {
 					if ($para->isOptional()) {
 						throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 					}
@@ -70,30 +69,30 @@ trait ParametableTrait{
 		}
 		$offset = 0;
 		$results = [];
+		$parsed = false;
 		foreach ($this->parameters as $overloadId => $parameters) {
-			$parsed = false;
-			$optional = true;
+			if ($parsed) {
+				return $results;
+			}
+//			$optional = true;
 			foreach ($parameters as $parameter) {
 				$params = array_slice($rawParams, $offset, $len = $parameter->getSpanLength());
-				if (!$parameter->isOptional()) {
-					$optional = false; //TODO: COPY CAT :3
-				}
+//				if (!$parameter->isOptional()) {
+//					$optional = false; //TODO: COPY CAT :3
+//				}
 				$result = $parameter->parse($params);
 				if ($result instanceof BrokenSyntaxResult) {
 					$results[$parameter->getName()] = $result;
 					break;
 				}
 				$offset += $len;
-				$parsed = true;
 				$results[$parameter->getName()] = $result;
 
 				if ($offset > $paramCount) {
-					break;
+					continue 2;
 				}
 			}
-			if (!$parsed && !($optional && $paramCount === 0)) {
-				return [];
-			}
+			$parsed = true;
 		}
 		return $results;
 	}
