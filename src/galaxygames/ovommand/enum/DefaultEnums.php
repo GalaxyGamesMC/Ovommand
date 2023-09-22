@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\enum;
 
 enum DefaultEnums : string{
 	case BOOLEAN = "Boolean";
-	case GAMEMODE = "GameModee";
+	case VANILLA_GAMEMODE = "GameMode";
+	case GAMEMODE = "PMGameMode";
 	case ONLINE_PLAYER = "OnlinePlayers";
 }

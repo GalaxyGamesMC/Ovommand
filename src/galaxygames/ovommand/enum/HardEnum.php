@@ -9,4 +9,8 @@ class HardEnum extends BaseEnum{
 	public function encode() : CommandEnum{
 		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)]);
 	}
+
+	public function isSoft() : bool{
+		return false;
+	}
 }

@@ -33,3 +33,7 @@ an enum, <para name: enum name>!
 ]
 
 Commando lost its parenting!
+
+- Soft enums cannot spread out its value using flag 1!
+- Two enums, one soft and one hard could have a same name
+- Enum name could be set to anything, not just ascii / UTF-8

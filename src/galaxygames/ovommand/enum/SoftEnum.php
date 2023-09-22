@@ -69,4 +69,8 @@ class SoftEnum extends BaseEnum{
 			UpdateSoftEnumPacket::create($this->name, $values, $type)
 		]);
 	}
+
+	public function isSoft() : bool{
+		return true;
+	}
 }

@@ -24,26 +24,27 @@ final class EnumManager{
 
 	public function __construct(){
 		self::setInstance($this);
-		$this->setup();
+		$this->preSetup();
 	}
 
-	protected function setup() : void{
-		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false]));
+	protected function preSetup() : void{
+		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false, "null" => null]));
 		$this->register(new HardEnum(DefaultEnums::GAMEMODE->value,
 			["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 			["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
 			["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"]
 		));
-		$this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value)); // Ideas: event-based closure?
+		$this->register(new HardEnum(DefaultEnums::VANILLA_GAMEMODE->value)); //BIND VALUE?
+		$this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value));
 	}
 
-	public function register(SoftEnum|HardEnum $enum, bool $overwrite = false) : void{
+	public function register(SoftEnum|HardEnum $enum) : void{
 		$enumName = $enum->getName();
 		if (trim($enumName) === '') {
 			throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
 		}
 
-		if (!$overwrite && (isset($this->hardEnums[$enumName]) || isset($this->softEnums[$enumName]))) {
+		if (isset($this->hardEnums[$enumName]) || isset($this->softEnums[$enumName])) {
 			throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
 		}
 		if ($enum instanceof SoftEnum) {
@@ -51,7 +52,7 @@ final class EnumManager{
 				throw new EnumException(ExceptionMessage::MSG_DUPLICATED_NAME_IN_OTHER_TYPE->getErrorMessage([
 					"enumName" => $enumName, "enumType" => HardEnum::class
 				]), EnumException::ENUM_DUPLICATED_NAME_IN_OTHER_TYPE_ERROR);
-			}
+			} //TODO: Soft and Hard can have same name!
 			$this->softEnums[$enum->getName()] = $enum;
 		}
 		if ($enum instanceof HardEnum) {
@@ -78,9 +79,6 @@ final class EnumManager{
 		return $this->hardEnums[$enumName] ?? null;
 	}
 
-	//    /**
-	//     * @deprecated Old API, use either getSoftEnum or getHardEnum for your type
-	//     */
 	public function getEnum(string|DefaultEnums $enumName) : ?BaseEnum{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;

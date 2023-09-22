@@ -68,6 +68,7 @@ abstract class BaseEnum{
 	}
 
 	abstract public function encode() : CommandEnum;
+	abstract public function isSoft() : bool;
 
 	public function getRawValues() : array{
 		return $this->values;
