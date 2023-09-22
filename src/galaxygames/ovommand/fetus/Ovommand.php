@@ -75,9 +75,7 @@ abstract class Ovommand extends Command implements IParametable{
 			$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
-			echo "NOT ME\n";
 			var_dump($passArgs);
-			echo "YES ME\n";
 			foreach ($passArgs as $i => $passArg) {
 				if ($passArg instanceof BrokenSyntaxResult) {
 					array_shift($args);
