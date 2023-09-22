@@ -58,7 +58,7 @@ final class OvommandHook{
 					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER);
 					$enum?->addValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
-				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerJoinEvent $event){
+				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
 					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER);
 					$enum?->removeValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
@@ -112,7 +112,6 @@ final class OvommandHook{
 					continue 2;
 				}
 			}
-			echo "Hi!\n13212313\n";
 			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...$subCommand->getShowAliases()]), 0);
 			$overloadList = self::generateOverloadList($subCommand);
 			if (!empty($overloadList)) {
