@@ -64,34 +64,32 @@ trait ParametableTrait{
 
 	public function parseParameters(array $rawParams) : array{
 		$paramCount = count($rawParams);
+//		print ("paraCount: " . $paramCount . "\n");
 		if ($paramCount !== 0 && !$this->hasParameters()) {
 			return []; //TODO: Better returns type?
 		}
 		$offset = 0;
-		$results = [];
 		$parsed = false;
+		$results = [];
 		foreach ($this->parameters as $overloadId => $parameters) {
-			if ($parsed) {
-				return $results;
+			if (!$parsed) {
+				$offset = 0;
+				$results = [];
 			}
 			foreach ($parameters as $parameter) {
 				$params = array_slice($rawParams, $offset, $len = $parameter->getSpanLength());
-//				if (empty($params) && $parameter->isOptional()) {
-//					return $results;
-//				}
-//				$offset += $len;
-
 				$offset += $len;
-				if ($offset > $paramCount && $parameter->isOptional()) {
+				if ($offset >= $paramCount && $parameter->isOptional()) {
 					return $results;
 				}
 
+				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it would have?
+
 				$result = $parameter->parse($params);
-				if ($result instanceof BrokenSyntaxResult) {
-					$results[$parameter->getName()] = $result;
-					break;
-				}
 				$results[$parameter->getName()] = $result;
+				if ($result instanceof BrokenSyntaxResult) {
+					continue 2;
+				}
 
 				if ($offset > $paramCount) {
 					continue 2;
