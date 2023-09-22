@@ -32,7 +32,15 @@ abstract class Ovommand extends Command implements IParametable{
 		$this->usageMessage = $this->generateUsageMessage();
 	}
 
-	final public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
+	/**
+	 * @param CommandSender $sender
+	 * @param string        $commandLabel
+	 * @param array         $args
+	 * @param string        $preLabel Return a string combined of its parent labels with the current label
+	 *
+	 * @return void
+	 */
+	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
 		if (!$this->testPermission($sender)) {
 			return;
 		}
@@ -51,7 +59,7 @@ abstract class Ovommand extends Command implements IParametable{
 					}
 					return;
 				}
-				$execute->execute($sender, $label, $args);
+				$execute->execute($sender, $label, $args, $preLabel . $commandLabel);
 			}
 		} else {
 			$passArgs = $this->parseParameters($args);
