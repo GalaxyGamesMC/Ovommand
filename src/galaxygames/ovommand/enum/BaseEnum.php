@@ -8,8 +8,8 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 abstract class BaseEnum{
 	protected array $values;
-	protected array $hiddenAliases;
-	protected array $showAliases;
+	protected array $hiddenAliases = [];
+	protected array $showAliases = [];
 
 	// huh, <parameterName: enumName> doesn't show up...
 
@@ -20,7 +20,8 @@ abstract class BaseEnum{
 	 * @param array  $showAliases The aliases for values, but they will show or have type hint ingame!
 	 */
 	public function __construct(protected string $name, array $values = [], array $hiddenAliases = [], array $showAliases = []){
-		$this->values = Utils::collapseBindingEnumInputs($values);
+		$this->values = $values;
+//		$this->values = Utils::collapseBindingEnumInputs($values);
 		$this->setHiddenAliases($hiddenAliases);
 		$this->setShowAliases($showAliases);
 	}

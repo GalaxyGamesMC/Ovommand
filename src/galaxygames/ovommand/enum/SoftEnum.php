@@ -10,7 +10,7 @@ use pocketmine\Server;
 
 class SoftEnum extends BaseEnum{
 	public function encode() : CommandEnum{
-		return new CommandEnum($this->name, [...$this->values, ...array_keys($this->showAliases)], true);
+		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)], true);
 	}
 
 	public function removeValue(string|int $key) : void{
