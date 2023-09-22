@@ -86,7 +86,6 @@ trait ParametableTrait{
 					return $results;
 				}
 
-
 				$result = $parameter->parse($params);
 				if ($result instanceof BrokenSyntaxResult) {
 					$results[$parameter->getName()] = $result;
