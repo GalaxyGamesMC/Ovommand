@@ -52,9 +52,9 @@ trait ParametableTrait{
 			//			}
 			//			return -1;
 			//		}); // Sort with their spans
-			//		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
-			//			return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
-			//		}); // Sort with their alphabet
+//			usort($this->parameters[$overloadId], static function(BaseParameter $a, BaseParameter $b) : int{
+//				return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
+//			}); // Sort with their alphabet . EDIT: FLAW LOL [not work]
 		}
 	}
 
@@ -74,18 +74,18 @@ trait ParametableTrait{
 			if ($parsed) {
 				return $results;
 			}
-//			$optional = true;
 			foreach ($parameters as $parameter) {
 				$params = array_slice($rawParams, $offset, $len = $parameter->getSpanLength());
-//				if (!$parameter->isOptional()) {
-//					$optional = false; //TODO: COPY CAT :3
-//				}
+				if (empty($params) && $parameter->isOptional()) {
+					return $results;
+				}
+
+				$offset += $len;
 				$result = $parameter->parse($params);
 				if ($result instanceof BrokenSyntaxResult) {
 					$results[$parameter->getName()] = $result;
 					break;
 				}
-				$offset += $len;
 				$results[$parameter->getName()] = $result;
 
 				if ($offset > $paramCount) {
