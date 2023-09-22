@@ -29,7 +29,11 @@ final class EnumManager{
 
 	protected function setup() : void{
 		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false]));
-		$this->register(new HardEnum(DefaultEnums::GAMEMODE->value, ["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()], ["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"], ["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"]));
+		$this->register(new HardEnum(DefaultEnums::GAMEMODE->value,
+			["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
+			["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
+			["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"]
+		));
 		$this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value)); // Ideas: event-based closure?
 	}
 

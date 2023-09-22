@@ -37,9 +37,12 @@ abstract class BaseEnum{
 				throw new \RuntimeException("Unknown key!");
 			}
 			if (is_array($alias)) {
-				$this->hiddenAliases[$key] = array_unique($alias); //TODO: non string alias!
+				foreach ($alias as $a) {
+					$this->hiddenAliases[$a] = $key;
+				}
+//				$this->hiddenAliases[$alias] = array_unique($alias); //TODO: non string alias!
 			} elseif (is_int($key) || is_string($key)) {
-				$this->hiddenAliases[$key] = $alias;
+				$this->hiddenAliases[$alias] = $key;
 			} else {
 				throw new \RuntimeException("Unknown alias type!");
 			}
@@ -52,9 +55,12 @@ abstract class BaseEnum{
 				throw new \RuntimeException("Unknown key!");
 			}
 			if (is_array($alias)) {
-				$this->showAliases[$key] = array_unique($alias); //TODO: non string alias!
+				foreach ($alias as $a) {
+					$this->showAliases[$a] = $key;
+				}
+//				$this->showAliases[$key] = array_unique($alias); //TODO: non string alias!
 			} elseif (is_int($key) || is_string($key)) {
-				$this->showAliases[$key] = $alias;
+				$this->showAliases[$alias] = $key;
 			} else {
 				throw new \RuntimeException("Unknown alias type!");
 			}
@@ -68,12 +74,12 @@ abstract class BaseEnum{
 	}
 
 	public function getValue(string $key) : mixed{
-		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases ?? $key;
+		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
 		return $this->values[$parentKey] ?? null; //TODO: What if null is bound with the key :c
 	}
 
 	public function hasValue(string $key) : bool{
-		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases ?? $key;
+		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
 		return isset($this->values[$parentKey]);
 	}
 }
