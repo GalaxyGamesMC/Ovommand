@@ -7,8 +7,9 @@ use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\lang\Translatable;
 use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
 
-abstract class BaseSubCommand extends Ovommand{
+abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 	use ParametableTrait;
 	protected Translatable|string $usageMessage;
 

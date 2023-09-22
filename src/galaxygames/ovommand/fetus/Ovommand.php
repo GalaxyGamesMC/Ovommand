@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\fetus;
 
 use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
+use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
@@ -46,8 +47,9 @@ abstract class Ovommand extends Command implements IParametable{
 		}
 		$this->setCurrentSender($sender);
 		if (count($args) > 0) {
-			if (isset($this->subCommands[$label = $args[0]])) {
-				array_shift($args);
+			$label = $args[0];
+			array_shift($args);
+			if (isset($this->subCommands[$label])) {
 				$execute = $this->subCommands[$label];
 				$execute->setCurrentSender($sender);
 				if (!$execute->testPermissionSilent($sender)) {
@@ -59,7 +61,11 @@ abstract class Ovommand extends Command implements IParametable{
 					}
 					return;
 				}
-				$execute->execute($sender, $label, $args, $preLabel . $commandLabel);
+				$execute->execute($sender, $label, $args, $preLabel . $commandLabel); //TODO: Failed logic?
+				$passArgs = $execute->parseParameters($args);
+				$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
+			} else {
+				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseVanillaSyntaxMessage($preLabel, $label, implode(" ", $args))->getText());
 			}
 		} else {
 			$passArgs = $this->parseParameters($args);
@@ -69,7 +75,7 @@ abstract class Ovommand extends Command implements IParametable{
 
 	abstract public function prepare() : void;
 
-	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
+	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
 
 	public function registerSubCommand(BaseSubCommand $subCommand) : void{
 		if (!isset($this->subCommands[$subName = $subCommand->getName()])) {

@@ -52,10 +52,10 @@ trait ParametableTrait{
 			//				return 1;
 			//			}
 			//			return -1;
-			//		});
+			//		}); // Sort with their spans
 			//		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
 			//			return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
-			//		});
+			//		}); // Sort with their alphabet
 		}
 	}
 
@@ -80,7 +80,7 @@ trait ParametableTrait{
 				}
 				$result = $parameter->parse($params);
 				if ($result instanceof BrokenSyntaxResult) {
-					$results = [];
+					$results[$parameter->getName()] = $result;
 					break;
 				}
 				$offset += $len;

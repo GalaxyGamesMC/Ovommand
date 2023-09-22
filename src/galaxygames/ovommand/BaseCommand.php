@@ -18,13 +18,6 @@ abstract class BaseCommand extends Ovommand implements PluginOwned{
 		parent::__construct($name, $description, $aliases, $permission);
 	}
 
-	/**
-	 * @param CommandSender                   $sender
-	 * @param string                          $label
-	 * @param array|array<string,mixed|array> $args
-	 */
-	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
-
 	public function getOwningPlugin() : Plugin{
 		return $this->plugin;
 	}
