@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\fetus\beta;
+namespace galaxygames\ovommand\fetus;
 
+use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
-use galaxygames\ovommand\fetus\IParametable;
-use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;

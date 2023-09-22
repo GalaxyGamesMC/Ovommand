@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace galaxygames\ovommand\fetus\beta;
+namespace galaxygames\ovommand;
 
+use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\lang\Translatable;
 use pocketmine\plugin\Plugin;

@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\fetus\beta;
+namespace galaxygames\ovommand;
 
+use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
@@ -14,7 +15,7 @@ abstract class BaseCommand extends Ovommand implements PluginOwned{
 	use ParametableTrait;
 
 	public function __construct(protected Plugin $plugin, string $name, Translatable|string $description = "", array $aliases = [], Permission|string|array $permission = null){
-		parent::__construct($name, $description, $aliases);
+		parent::__construct($name, $description, $aliases, $permission);
 	}
 
 	/**
