@@ -50,7 +50,7 @@ final class OvommandHook{
 	protected static EnumManager $enumManager;
 
 	public static function register(Plugin $plugin) : bool{
-		if (!self::$registered || self::$plugin === null || !self::$plugin->isEnabled()) {
+//		if (!self::$registered || self::$plugin === null || self::$plugin->isEnabled()) {
 			self::$enumManager = EnumManager::getInstance();
 			$pluginManager = Server::getInstance()->getPluginManager();
 			try {
@@ -64,10 +64,10 @@ final class OvommandHook{
 				}, EventPriority::NORMAL, $plugin);
 
 				$interceptor = SimplePacketHandler::createInterceptor($plugin);
-				$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target){
+				$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
 					$player = $target->getPlayer();
 					if ($player === null) {
-						return;
+						return false;
 					}
 					foreach ($packet->commandData as $name => $commandData) {
 						$command = Server::getInstance()->getCommandMap()->getCommand($name);
@@ -78,8 +78,10 @@ final class OvommandHook{
 								}
 							}
 							$commandData->overloads = self::generateOverloads($player, $command);
+							echo "No? :c\n";
 						}
 					}
+					return true;
 				});
 			} catch (\ReflectionException $e) {
 				$plugin->getLogger()->notice($e->getMessage());
@@ -88,8 +90,8 @@ final class OvommandHook{
 			self::$plugin = $plugin;
 			self::$registered = true;
 			return true;
-		}
-		return false;
+//		}
+//		return false;
 	}
 
 	/**
@@ -110,6 +112,7 @@ final class OvommandHook{
 					continue 2;
 				}
 			}
+			echo "Hi!\n13212313\n";
 			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...$subCommand->getShowAliases()]), 0);
 			$overloadList = self::generateOverloadList($subCommand);
 			if (!empty($overloadList)) {
@@ -149,6 +152,7 @@ final class OvommandHook{
 			//				}
 			//			}
 
+			echo "MEOWWWWWWWW!\n13212313\n";
 			$combinations[] = new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
 

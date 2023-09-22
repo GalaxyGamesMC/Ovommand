@@ -16,8 +16,8 @@ abstract class Ovommand extends Command implements IParametable{
 	use ParametableTrait;
 
 	/** @var BaseConstraint[] */
-	protected array $constraints;
-	/** @var Ovommand[] subCommands */
+	protected array $constraints = [];
+	/** @var BaseSubCommand[] subCommands */
 	protected array $subCommands = [];
 	/** @var CommandSender */
 	protected CommandSender $currentSender;
@@ -30,7 +30,7 @@ abstract class Ovommand extends Command implements IParametable{
 			$this->setPermission($permission);
 		}
 		$this->prepare();
-		$this->usageMessage = $this->generateUsageMessage();
+//		$this->usageMessage = $this->generateUsageMessage();
 	}
 
 	/**
