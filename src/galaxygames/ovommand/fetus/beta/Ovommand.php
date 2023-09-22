@@ -1,24 +1,37 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\fetus;
+namespace galaxygames\ovommand\fetus\beta;
 
-use galaxygames\ovommand\BaseCommand;
-use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
-use InvalidArgumentException;
+use galaxygames\ovommand\fetus\IParametable;
+use galaxygames\ovommand\fetus\ParametableTrait;
+use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\lang\Translatable;
+use pocketmine\permission\Permission;
 use pocketmine\utils\TextFormat;
 
-trait OvommandTrait{
+abstract class Ovommand extends Command implements IParametable{
+	use ParametableTrait;
+
 	/** @var BaseConstraint[] */
 	protected array $constraints;
-	/** @var BaseCommand|BaseSubCommand */
-	protected BaseSubCommand|BaseCommand $parent;
-	/** @var BaseSubCommand[] $subCommands */
+	/** @var Ovommand[] subCommands */
 	protected array $subCommands = [];
-	//	protected array $subCommandAliases = []; //todo: good?
+	/** @var CommandSender */
 	protected CommandSender $currentSender;
+
+	public function __construct(string $name, string|Translatable $description = "", array $aliases = [], Permission|string|array $permission = null){
+		parent::__construct($name, $description, null, $aliases);
+
+		$this->setAliases(array_unique($aliases));
+		if ($permission !== null) {
+			$this->setPermission($permission);
+		}
+		$this->prepare();
+		$this->usageMessage = $this->generateUsageMessage();
+	}
 
 	final public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
 		if (!$this->testPermission($sender)) {
@@ -47,6 +60,10 @@ trait OvommandTrait{
 		}
 	}
 
+	abstract public function prepare() : void;
+
+	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
+
 	public function registerSubCommand(BaseSubCommand $subCommand) : void{
 		if (!isset($this->subCommands[$subName = $subCommand->getName()])) {
 			$this->subCommands[$subName] = $subCommand->setParent($this);
@@ -55,38 +72,21 @@ trait OvommandTrait{
 				if (!isset($this->subCommands[$alias])) {
 					$this->subCommands[$alias] = $subCommand;
 				} else {
-					throw new InvalidArgumentException("SubCommand with same alias for '$alias' already exists");
+					throw new \InvalidArgumentException("SubCommand with same alias for '$alias' already exists");
 				}
 			}
 		} else {
-			throw new InvalidArgumentException("SubCommand with same name for '$subName' already exists");
+			throw new \InvalidArgumentException("SubCommand with same name for '$subName' already exists");
 		}
-	}
-
-	abstract public function prepare() : void;
-
-	abstract public function onRun(CommandSender $sender, string $aliasUsed, array $args) : void;
-
-	public function getParent() : BaseCommand|BaseSubCommand{
-		return $this->parent;
-	}
-
-	public function setParent(BaseSubCommand|BaseCommand $parent) : self{
-		$this->parent = $parent;
-		return $this;
-	}
-
-	/**
-	 * @param CommandSender $currentSender
-	 *
-	 * @internal Used to pass the current sender from the parent command
-	 */
-	public function setCurrentSender(CommandSender $currentSender) : void{
-		$this->currentSender = $currentSender;
 	}
 
 	public function getCurrentSender() : CommandSender{
 		return $this->currentSender;
+	}
+
+	public function setCurrentSender(CommandSender $currentSender) : Ovommand{
+		$this->currentSender = $currentSender;
+		return $this;
 	}
 
 	public function addConstraint(BaseConstraint $constraint) : void{

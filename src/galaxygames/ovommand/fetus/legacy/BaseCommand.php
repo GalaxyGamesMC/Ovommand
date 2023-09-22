@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand;
+namespace galaxygames\ovommand\fetus\legacy;
 
 use galaxygames\ovommand\constraint\BaseConstraint;
 use galaxygames\ovommand\fetus\IParametable;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace galaxygames\ovommand;
+namespace galaxygames\ovommand\fetus\legacy;
 
 use galaxygames\ovommand\fetus\IParametable;
 use galaxygames\ovommand\fetus\OvommandTrait;
@@ -93,7 +93,7 @@ abstract class BaseSubCommand implements IParametable{
 	/**
 	 * @internal Used to pass the parent context from the parent command
 	 */
-	public function setParent(BaseSubCommand|BaseCommand $parent) : self{
+	public function setParent(BaseCommand $parent) : self{
 		$this->parent = $parent;
 		return $this;
 	}

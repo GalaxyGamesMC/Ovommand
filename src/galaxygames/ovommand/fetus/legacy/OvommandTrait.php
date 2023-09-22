@@ -1,10 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\fetus;
+namespace galaxygames\ovommand\fetus\legacy;
 
-use galaxygames\ovommand\BaseCommand;
-use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
 use InvalidArgumentException;
 use pocketmine\command\CommandSender;
