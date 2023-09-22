@@ -19,7 +19,6 @@ REGEXP; //TODO: find a way to use this?
 
 	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0,){
 		$this->setFlag($flag);
-//		$this->parameterData = CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
 	}
 
 	public function getName() : string{
@@ -47,10 +46,6 @@ REGEXP; //TODO: find a way to use this?
 		};
 	}
 
-//	public function getParameterData() : CommandParameter{
-//		return $this->parameterData;
-//	}
-
 	public function getSpanLength() : int{
 		return 1;
 	}
@@ -65,7 +60,5 @@ REGEXP; //TODO: find a way to use this?
 
 	public function getNetworkParameterData() : CommandParameter{
 		return CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
-//		return clone $this->parameterData;
-//		return $this->parameterData;
 	}
 }

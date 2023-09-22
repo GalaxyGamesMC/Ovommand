@@ -26,6 +26,7 @@ enum ParameterTypes{
 	case WILDCARD_INT;
 	case WILDCARD_TARGET;
 	case ENUM;
+	case SOFT_ENUM;
 
 	public function value() : int{
 		return match ($this) {
@@ -49,6 +50,7 @@ enum ParameterTypes{
 			self::WILDCARD_INT => AvailableCommandsPacket::ARG_TYPE_WILDCARD_INT,
 			self::WILDCARD_TARGET => AvailableCommandsPacket::ARG_TYPE_WILDCARD_TARGET,
 			self::ENUM => AvailableCommandsPacket::ARG_FLAG_ENUM,
+			self::SOFT_ENUM => AvailableCommandsPacket::ARG_FLAG_SOFT_ENUM,
 		};
 	}
 }

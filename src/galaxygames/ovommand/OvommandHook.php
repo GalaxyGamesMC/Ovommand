@@ -78,7 +78,6 @@ final class OvommandHook{
 								}
 							}
 							$commandData->overloads = self::generateOverloads($player, $command);
-							echo "No? :c\n";
 						}
 					}
 					return true;
@@ -150,8 +149,6 @@ final class OvommandHook{
 			//					$refProp->setValue($param->enum, "enum#" . spl_object_id($param->enum));
 			//				}
 			//			}
-
-			echo "MEOWWWWWWWW!\n13212313\n";
 			$combinations[] = new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
 
