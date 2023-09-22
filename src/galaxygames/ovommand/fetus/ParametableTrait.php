@@ -76,11 +76,17 @@ trait ParametableTrait{
 			}
 			foreach ($parameters as $parameter) {
 				$params = array_slice($rawParams, $offset, $len = $parameter->getSpanLength());
-				if (empty($params) && $parameter->isOptional()) {
+//				if (empty($params) && $parameter->isOptional()) {
+//					return $results;
+//				}
+//				$offset += $len;
+
+				$offset += $len;
+				if ($offset > $paramCount && $parameter->isOptional()) {
 					return $results;
 				}
 
-				$offset += $len;
+
 				$result = $parameter->parse($params);
 				if ($result instanceof BrokenSyntaxResult) {
 					$results[$parameter->getName()] = $result;
