@@ -18,19 +18,18 @@ use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use pocketmine\plugin\PluginBase;
+use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 
 final class OvommandHook{
 	protected static bool $registered = false;
-	protected static PluginBase $plugin;
+	protected static Plugin $plugin;
 	protected static EnumManager $enumManager;
 
-	public static function register(PluginBase $plugin) : bool{
+	public static function register(Plugin $plugin) : bool{
 		if (!self::$registered || self::$plugin === null || !self::$plugin->isEnabled()) {
 			self::$enumManager = EnumManager::getInstance();
-			$server = $plugin->getServer();
-			$pluginManager = $server->getPluginManager();
+			$pluginManager = Server::getInstance()->getPluginManager();
 			try {
 				$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
 					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER);

@@ -98,4 +98,8 @@ abstract class Ovommand extends Command implements IParametable{
 	public function getConstraints() : array{
 		return $this->constraints;
 	}
+
+	public function getSubCommands() : array{
+		return $this->subCommands;
+	}
 }
