@@ -61,12 +61,8 @@ abstract class Ovommand extends Command implements IParametable{
 				$msg = $this->getPermissionMessage();
 				if ($msg === null) {
 					$sender->sendMessage($sender->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission"));
-					$sender->sendMessage($text = "DEBUG: " . __FILE__ . ". Line : 59");
-					echo $text . "\n";
 				} elseif (empty($msg)) {
 					$sender->sendMessage(str_replace("<permission>", $execute->getPermissions()[0], $msg));
-					$sender->sendMessage($text = "DEBUG: " . __FILE__ . ". Line : 63");
-					echo $text . "\n";
 				}
 				return;
 			}
