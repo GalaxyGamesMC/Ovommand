@@ -28,7 +28,8 @@ final class EnumManager{
 	}
 
 	protected function preSetup() : void{
-		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false, "null" => null]));
+		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false]));
+		$this->register(new HardEnum(DefaultEnums::BOOLEAN2->value, ["true" => false, "false" => true]));
 		$this->register(new HardEnum(DefaultEnums::GAMEMODE->value,
 			["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 			["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],

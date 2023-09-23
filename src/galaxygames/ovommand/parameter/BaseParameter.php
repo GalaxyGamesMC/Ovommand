@@ -6,6 +6,7 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\result\BaseResult;
+use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 
 abstract class BaseParameter{
@@ -37,6 +38,7 @@ REGEXP; //TODO: find a way to use this?
 		if (count($parameters) > $this->getSpanLength()) {
 			throw new \InvalidArgumentException("Too many args");
 		}
+		return new ValueResult("null");
 	}
 
 	private function setFlag(int $flag) : void{

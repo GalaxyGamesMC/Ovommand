@@ -7,6 +7,7 @@ use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
+use pocketmine\Server;
 
 class TargetParameter extends BaseParameter{
 
@@ -23,7 +24,9 @@ class TargetParameter extends BaseParameter{
 
 	//TODO: edu version have aprescv, not just apres
 
-	public function getValueName() : string{}
+	public function getValueName() : string{
+		return "target";
+	}
 
 	public function parse(array $parameters) : BaseResult{
 		parent::parse($parameters);
@@ -32,6 +35,12 @@ class TargetParameter extends BaseParameter{
 		if (!preg_match("/^(?:([^\n]*@[apres])|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
 			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
+		}
+		if (isset($groups[2])) {
+			$pName = $groups[2];
+			if (Server::getInstance()->getPlayerExact($pName) === null) {
+				return BrokenSyntaxResult::create($pName);
+			}
 		}
 		return match ($tag = $groups[1]) {
 			TargetResult::TARGET_ENTITIES, TargetResult::TARGET_ALL, TargetResult::TARGET_NEAREST_PLAYER, TargetResult::TARGET_RANDOM_PLAYER, TargetResult::TARGET_SELF => TargetResult::create($tag),

@@ -6,6 +6,7 @@ namespace galaxygames\ovommand\fetus;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
 use galaxygames\ovommand\parameter\BaseParameter;
+use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 
 trait ParametableTrait{
@@ -42,9 +43,7 @@ trait ParametableTrait{
 			}
 
 			$this->parameters[$overloadId][] = $parameter;
-			if (!$parameter->isOptional()) {
-				$this->requiredParameterCount[$overloadId] = true; //TODO: HELP, I DUNNO!
-			}
+//			usort($this->parameters, $callback)
 
 			//		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
 			//			if ($a->getSpanLength() === PHP_INT_MAX) { // if it takes unlimited parameters, pull it down
@@ -66,38 +65,54 @@ trait ParametableTrait{
 		$paramCount = count($rawParams);
 //		print ("paraCount: " . $paramCount . "\n");
 		if ($paramCount !== 0 && !$this->hasParameters()) {
-			return []; //TODO: Better returns type?
+			return [];
 		}
 		$offset = 0;
 		$parsed = false;
 		$results = [];
+		/** @var BaseResult[][] $resultContainers */
+		$resultContainers = [];
+		$finalId = 0;
 		foreach ($this->parameters as $overloadId => $parameters) {
-			if (!$parsed) {
-				$offset = 0;
-				$results = [];
-			}
+			$offset = 0;
+			$results = [];
 			foreach ($parameters as $parameter) {
-				$params = array_slice($rawParams, $offset, $len = $parameter->getSpanLength());
-				$offset += $len;
-				if ($offset >= $paramCount && $parameter->isOptional()) {
-					return $results;
+				$params = array_slice($rawParams, $offset, $span = $parameter->getSpanLength());
+				echo "\$paramCount = $paramCount \n" .
+					"\$offset = $offset \n" .
+					"\$span = $span \n" .
+					"\$overloadId = $overloadId \n" .
+					"\$parameter = " . $parameter->getName() . ": " . $parameter->getValueName() . "\n" .
+					"\$params = " . print_r($params, true) . "\n\n"
+				;
+//				if (empty($params) && $parameter->isOptional()) {
+//					echo ("High1.5\n");
+//					return $results;
+//				}
+				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
+					echo ("High 1.5\n");
+					break;
+//					return $results;
 				}
+
+				$offset += $span;
 
 				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it would have?
 
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
-				if ($result instanceof BrokenSyntaxResult) {
-					continue 2;
-				}
-
-				if ($offset > $paramCount) {
+				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->parameters)) {
+					echo "$overloadId move\n";
 					continue 2;
 				}
 			}
-			$parsed = true;
+			if ($paramCount > ($pCount = count($parameters))) {
+				$results["_error"] = BrokenSyntaxResult::create(array_slice($rawParams, $pCount, $pCount + 1)[0]);
+			}
+			$resultContainers[$finalId = $overloadId] = $results;
+			echo $overloadId . " passed!\n";
 		}
-		return $results;
+		return $resultContainers[$finalId];
 	}
 
 	public function hasRequiredParameters() : bool{
