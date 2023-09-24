@@ -1,12 +1,13 @@
-# Ovommand
-<a href="https://github.com/GalaxyGamesMC/Ovommand">
-<picture align="center">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/white/ovommand_white.svg" width="100" height="100">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/black/ovommand_black.svg" width="100" height="100">
-  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/blue/ovommand_blue.svg" width="100" height="100">
-</picture>
-</a>
+<p align="center">
+<a href="https://github.com/GalaxyGamesMC/Ovommand"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/white/ovommand_white.svg" width="125" height="125">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/black/ovommand_black.svg" width="125" height="125">
+  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/blue/ovommand_blue.svg" width="125" height="125">
+</picture></a><br>
+<b>a normal framework virion designed to parse command data for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b>
+</p>
 
+# Ovommand
 TODO:
 - [ ] make reasonable enum that handle it value correctly (string -> value)
 - [ ] feature rich, custom enum, parameters, enum-based parameters
