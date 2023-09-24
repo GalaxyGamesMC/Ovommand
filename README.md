@@ -9,12 +9,12 @@
 
 # Ovommand
 TODO:
-- [ ] make reasonable enum that handle it value correctly (string -> value)
+- [x] make reasonable enum that handle it value correctly (string -> value)
 - [ ] feature rich, custom enum, parameters, enum-based parameters
 - [ ] attribute supports
 
 Suggest:
-- [ ] make canParse and parse into one
+- [x] make canParse and parse into one
 
 ## A. Standard prototype
 ### 1. Commando structure
