@@ -50,7 +50,7 @@ final class OvommandHook{
 	protected static EnumManager $enumManager;
 
 	public static function register(Plugin $plugin) : bool{
-//		if (!self::$registered || self::$plugin === null || self::$plugin->isEnabled()) {
+		if (!self::$registered || self::$plugin === null || self::$plugin->isEnabled()) {
 			self::$enumManager = EnumManager::getInstance();
 			$pluginManager = Server::getInstance()->getPluginManager();
 			try {
@@ -89,8 +89,8 @@ final class OvommandHook{
 			self::$plugin = $plugin;
 			self::$registered = true;
 			return true;
-//		}
-//		return false;
+		}
+		return false;
 	}
 
 	/**
