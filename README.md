@@ -15,6 +15,8 @@ TODO:
 
 Suggest:
 - [x] make canParse and parse into one
+- [ ] empty parameter functionality
+- [ ] allow parameter to not provide data to the auto complete
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 <details> <summary>Show table</summary>
