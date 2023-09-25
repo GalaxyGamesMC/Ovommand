@@ -16,6 +16,9 @@ TODO:
 Suggest:
 - [x] make canParse and parse into one
 
+[READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
+<details> <summary>Show table</summary>
+
 ## A. Standard prototype
 ### 1. Commando structure
 ```php
@@ -80,3 +83,4 @@ class AttributeCommand extend Command{
 <sub>Stay tuned for more!!</sub>
 <a href="https://discord.gg/Ew7d7tBBPb"><sub>Discord!</sub></a>
 </p>
+</details>
