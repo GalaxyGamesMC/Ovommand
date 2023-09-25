@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\parameter\BaseParameter;
-
 class TextParameter extends BaseParameter{
 	public function getValueName() : string{}
 

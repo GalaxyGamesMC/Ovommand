@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
