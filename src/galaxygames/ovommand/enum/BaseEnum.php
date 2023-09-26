@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\enum;
 
-use galaxygames\ovommand\utils\Utils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 abstract class BaseEnum{
@@ -14,53 +13,45 @@ abstract class BaseEnum{
 	// huh, <parameterName: enumName> doesn't show up...
 
 	/**
-	 * @param string $name The name of the enum, eg: <parameterName: enumName>
+	 * @param string $name The name of the enum, E.g. <parameterName: enumName>
 	 * @param array  $values The default values
 	 * @param array  $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
 	 * @param array  $showAliases The aliases for values, but they will show or have type hint ingame!
 	 */
-	public function __construct(protected string $name, array $values = [], array $hiddenAliases = [], array $showAliases = []){
+	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = []){
 		$this->values = $values;
 //		$this->values = Utils::collapseBindingEnumInputs($values);
-		$this->setHiddenAliases($hiddenAliases);
-		$this->setShowAliases($showAliases);
+		$this->setAliases($showAliases);
+		$this->setAliases($hiddenAliases, true);
 	}
 
 	final public function getName() : string{
 		return $this->name;
 	}
 
-	// TODO: merge or reduce these 2 following functions, change method from "public" to something else?
-	public function setHiddenAliases(array $aliases) : void{
-		foreach ($aliases as $key => $alias) {
-			if (!isset($this->values[$key])) {
-				throw new \RuntimeException("Unknown key!");
-			}
-			if (is_array($alias)) {
-				foreach ($alias as $a) {
-					$this->hiddenAliases[$a] = $key;
-				}
-//				$this->hiddenAliases[$alias] = array_unique($alias); //TODO: non string alias!
-			} elseif (is_int($key) || is_string($key)) {
-				$this->hiddenAliases[$alias] = $key;
-			} else {
-				throw new \RuntimeException("Unknown alias type!");
-			}
-		}
-	}
+	public function setAliases(array $aliases, bool $isHidden = false) : void{
+//		if ($isHidden) {
+//			$aliasesList = &$this->hiddenAliases;
+//		} else {
+//			$aliasesList = &$this->showAliases;
+//		}
+//		$aliasesList = $isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases; lol
+		$isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases;
 
-	public function setShowAliases(array $aliases) : void{
 		foreach ($aliases as $key => $alias) {
+			if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
+				throw new \RuntimeException("Alias already used for a key!");
+			}
 			if (!isset($this->values[$key])) {
 				throw new \RuntimeException("Unknown key!");
 			}
 			if (is_array($alias)) {
 				foreach ($alias as $a) {
-					$this->showAliases[$a] = $key;
+					$aliasesList[$a] = $key;
 				}
-//				$this->showAliases[$key] = array_unique($alias); //TODO: non string alias!
+				//				$this->hiddenAliases[$alias] = array_unique($alias); //TODO: non string alias!
 			} elseif (is_int($key) || is_string($key)) {
-				$this->showAliases[$alias] = $key;
+				$aliasesList[$alias] = $key;
 			} else {
 				throw new \RuntimeException("Unknown alias type!");
 			}

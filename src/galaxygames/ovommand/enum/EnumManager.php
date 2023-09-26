@@ -24,17 +24,20 @@ final class EnumManager{
 
 	public function __construct(){
 		self::setInstance($this);
-		$this->preSetup();
+		$this->initDefaultEnums();
 	}
 
-	protected function preSetup() : void{
+	protected function initDefaultEnums() : void{
 		$this->register(new HardEnum(DefaultEnums::BOOLEAN->value, ["true" => true, "false" => false]));
 		$this->register(new HardEnum(DefaultEnums::GAMEMODE->value,
 			["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
-			["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
-			["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"]
+			["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
+			["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"]
 		));
-		$this->register(new HardEnum(DefaultEnums::VANILLA_GAMEMODE->value)); //BIND VALUE?
+		$this->register(new HardEnum(DefaultEnums::VANILLA_GAMEMODE->value,
+			["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
+			["survival" => "s", "creative" => "c", "adventure" => "a"]
+		));
 		$this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value));
 	}
 
