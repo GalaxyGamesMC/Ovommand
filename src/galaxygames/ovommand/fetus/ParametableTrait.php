@@ -12,8 +12,6 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 trait ParametableTrait{
 	/** @var BaseParameter[][] */
 	protected array $parameters = [];
-	/** @var bool[] */
-	protected array $requiredParameterCount = [];
 
 	abstract protected function prepare() : void;
 
@@ -53,7 +51,7 @@ trait ParametableTrait{
 			//		}); // Sort with their spans
 //			usort($this->parameters[$overloadId], static function(BaseParameter $a, BaseParameter $b) : int{
 //				return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
-//			}); // Sort with their alphabet . EDIT: FLAW LOL [not work]
+//			}); // Sort with their alphabet. EDIT: FLAW LOL [not work]
 		}
 	}
 
@@ -63,13 +61,9 @@ trait ParametableTrait{
 
 	public function parseParameters(array $rawParams) : array{
 		$paramCount = count($rawParams);
-//		print ("paraCount: " . $paramCount . "\n");
 		if ($paramCount !== 0 && !$this->hasParameters()) {
 			return [];
 		}
-		$offset = 0;
-		$parsed = false;
-		$results = [];
 		/** @var BaseResult[][] $resultContainers */
 		$resultContainers = [];
 		$finalId = 0;
@@ -78,31 +72,14 @@ trait ParametableTrait{
 			$results = [];
 			foreach ($parameters as $parameter) {
 				$params = array_slice($rawParams, $offset, $span = $parameter->getSpanLength());
-				echo "\$paramCount = $paramCount \n" .
-					"\$offset = $offset \n" .
-					"\$span = $span \n" .
-					"\$overloadId = $overloadId \n" .
-					"\$parameter = " . $parameter->getName() . ": " . $parameter->getValueName() . "\n" .
-					"\$params = " . print_r($params, true) . "\n\n"
-				;
-//				if (empty($params) && $parameter->isOptional()) {
-//					echo ("High1.5\n");
-//					return $results;
-//				}
 				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
-					echo ("High 1.5\n");
 					break;
-//					return $results;
 				}
-
 				$offset += $span;
-
-				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it would have?
-
+				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it from doing that?
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
 				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->parameters)) {
-					echo "$overloadId move\n";
 					continue 2;
 				}
 			}
@@ -110,7 +87,6 @@ trait ParametableTrait{
 				$results["_error"] = BrokenSyntaxResult::create(array_slice($rawParams, $pCount, $pCount + 1)[0]);
 			}
 			$resultContainers[$finalId = $overloadId] = $results;
-			echo $overloadId . " passed!\n";
 		}
 		return $resultContainers[$finalId];
 	}

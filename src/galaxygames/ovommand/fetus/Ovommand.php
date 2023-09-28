@@ -71,8 +71,7 @@ abstract class Ovommand extends Command implements IParametable{
 			$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
-//			var_dump($passArgs);
-			foreach ($passArgs as $i => $passArg) {
+			foreach ($passArgs as $passArg) {
 				if ($passArg instanceof BrokenSyntaxResult) {
 					array_shift($args);
 					$parts = SyntaxConst::getSyntaxBetweenBrokenPart("/" . $preLabel . " " . implode(" ", $args), $passArg->getBrokenSyntax());
