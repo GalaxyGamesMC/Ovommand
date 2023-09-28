@@ -4,17 +4,12 @@
   "type": "library",
   "minimum-stability": "dev",
   "require": {
-    "muqsit/simple-packet-handler": "dev-pm5",
-    "sof3/pharynx": "dev-master",
-    "friendsofphp/php-cs-fixer": "^3.17.0"
+    "muqsit/simple-packet-handler": "dev-pm5"
   },
   "extra": {
     "virion": {
       "spec": "3.0",
       "namespace-root": "galaxygames\\ovommand"
     }
-  },
-  "scripts": {
-    "fix-cs": "./vendor/bin/php-cs-fixer fix"
   }
 }
