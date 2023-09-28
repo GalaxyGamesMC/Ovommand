@@ -22,7 +22,6 @@ enum ExceptionMessage : string{
 		foreach ($tags as $tag => $value) {
 			$msg = str_replace('{' . $tag . '}', $value, $msg);
 		}
-
 		return $msg;
 	}
 
