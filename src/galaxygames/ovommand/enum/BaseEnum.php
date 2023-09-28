@@ -15,7 +15,7 @@ abstract class BaseEnum{
 	// huh, <parameterName: enumName> doesn't show up...
 
 	/**
-	 * @param string $name The name of the enum, E.g. <parameterName: enumName>
+	 * @param string $name The name of the enum, E.g: [parameterName: enumName]
 	 * @param array  $values The default values
 	 * @param array  $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
 	 * @param array  $showAliases The aliases for values, but they will show or have type hint ingame!
