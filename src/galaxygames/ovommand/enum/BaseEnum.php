@@ -34,7 +34,7 @@ abstract class BaseEnum{
 	/**
 	 * @param string[] $aliases
 	 * @param bool     $isHidden
-	 * @phpstan-param array<string, string|array<int|string> $aliases
+	 * @phpstan-param array<string, string|array<string> $aliases
 	 *
 	 * @return void
 	 */
