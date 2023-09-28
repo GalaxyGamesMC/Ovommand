@@ -10,16 +10,20 @@
 # Ovommand
 TODO:
 - [x] make reasonable enum that handle it value correctly (string -> value)
-- [ ] feature rich, custom enum, parameters, enum-based parameters
-- [ ] attribute supports
+- [x] custom enum, parameters, enum-based parameters
+- [ ] feature rich
+- [ ] usage messages
+- [x] result system (parser), not that good tho :l
+- [ ] attribute supports (temp abandoned)
 
-Suggest:
+
+  Suggest:
 - [x] make canParse and parse into one
 - [ ] empty parameter functionality
-- [ ] allow parameter to not provide data to the auto complete
+- [ ] allow parameter to not provide data to the ingame auto-complete
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
-<details> <summary>Show table</summary>
+<details> <summary>Show dumps</summary>
 
 ## A. Standard prototype
 ### 1. Commando structure
