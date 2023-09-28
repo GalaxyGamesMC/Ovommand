@@ -29,14 +29,22 @@ abstract class BaseEnum{
 		return $this->name;
 	}
 
+	/**
+	 * @param string[] $aliases
+	 * @param bool     $isHidden
+	 * @phpstan-param array<string, string|array<int|string> $aliases
+	 *
+	 * @return void
+	 */
 	public function setAliases(array $aliases, bool $isHidden = false) : void{
-//		if ($isHidden) {
-//			$aliasesList = &$this->hiddenAliases;
-//		} else {
-//			$aliasesList = &$this->showAliases;
-//		}
-//		$aliasesList = $isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases; lol
+		//		if ($isHidden) {
+		//			$aliasesList = &$this->hiddenAliases;
+		//		} else {
+		//			$aliasesList = &$this->showAliases;
+		//		}
+		//		$aliasesList = $isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases; lol
 		$isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases;
+		// is this slower than using $this->hiddenAliases; and $this->showAliases itself?
 
 		foreach ($aliases as $key => $alias) {
 			if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
