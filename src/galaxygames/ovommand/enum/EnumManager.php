@@ -46,26 +46,6 @@ final class EnumManager{
 		if (trim($enumName) === '') {
 			throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
 		}
-
-//		if (isset($this->hardEnums[$enumName]) || isset($this->softEnums[$enumName])) {
-//			throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
-//		}
-//		if ($enum instanceof SoftEnum) {
-////			if (isset($this->hardEnums[$enumName])) {
-////				throw new EnumException(ExceptionMessage::MSG_DUPLICATED_NAME_IN_OTHER_TYPE->getErrorMessage([
-////					"enumName" => $enumName, "enumType" => HardEnum::class
-////				]), EnumException::ENUM_DUPLICATED_NAME_IN_OTHER_TYPE_ERROR);
-////			} //TODO: Soft and Hard can have same name!
-//			$this->softEnums[$enum->getName()] = $enum;
-//		}
-//		if ($enum instanceof HardEnum) {
-////			if (isset($this->softEnums[$enumName])) {
-////				throw new EnumException(ExceptionMessage::MSG_DUPLICATED_NAME_IN_OTHER_TYPE->getErrorMessage([
-////					"enumName" => $enumName, "enumType" => SoftEnum::class
-////				]), EnumException::ENUM_DUPLICATED_NAME_IN_OTHER_TYPE_ERROR);
-////			}
-//			$this->hardEnums[$enum->getName()] = $enum;
-//		}
 		if ($enum->isSoft()) {
 			if (isset($this->softEnums[$enumName])) {
 				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);

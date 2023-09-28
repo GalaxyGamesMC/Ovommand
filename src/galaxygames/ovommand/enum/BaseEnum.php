@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\enum;
 
+use galaxygames\ovommand\exception\EnumException;
+use galaxygames\ovommand\exception\ExceptionMessage;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 abstract class BaseEnum{
@@ -19,7 +21,7 @@ abstract class BaseEnum{
 	 * @param array  $showAliases The aliases for values, but they will show or have type hint ingame!
 	 */
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = []){
-		$this->values = $values;
+		$this->values = $values; //TODO: validate inputs
 //		$this->values = Utils::collapseBindingEnumInputs($values);
 		$this->setAliases($showAliases);
 		$this->setAliases($hiddenAliases, true);
@@ -42,26 +44,26 @@ abstract class BaseEnum{
 		//		} else {
 		//			$aliasesList = &$this->showAliases;
 		//		}
-		//		$aliasesList = $isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases; lol
 		$isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases;
 		// is this slower than using $this->hiddenAliases; and $this->showAliases itself?
 
 		foreach ($aliases as $key => $alias) {
-			if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
-				throw new \RuntimeException("Alias already used for a key!");
-			}
 			if (!isset($this->values[$key])) {
-				throw new \RuntimeException("Unknown key!");
+				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => (string)$alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
+			}
+			if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
+				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => (string)$alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
 			}
 			if (is_array($alias)) {
 				foreach ($alias as $a) {
-					$aliasesList[$a] = $key;
+					$aliasesList[$a] = (string) $key;
 				}
-				//				$this->hiddenAliases[$alias] = array_unique($alias); //TODO: non string alias!
-			} elseif (is_int($key) || is_string($key)) {
+				// TODO: type check for the alias list
+				// $this->setAliases(array_map $alias, $isHidden);
+			} elseif (is_string($alias)) {
 				$aliasesList[$alias] = $key;
 			} else {
-				throw new \RuntimeException("Unknown alias type!");
+				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string)$alias, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
 			}
 		}
 	}

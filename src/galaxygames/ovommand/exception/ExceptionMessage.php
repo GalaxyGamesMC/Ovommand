@@ -5,8 +5,11 @@ namespace galaxygames\ovommand\exception;
 
 enum ExceptionMessage : string{
 	case MSG_ENUM_EMPTY_NAME = "Enum's name cannot be empty";
-	case MSG_ENUM_FAILED_OVERLAY = "{enumName} is already registered";
-	case MSG_DUPLICATED_NAME_IN_OTHER_TYPE = "{enumName} is already existed as an {enumType}";
+	case MSG_ENUM_FAILED_OVERLAY = "Enum '{enumName}' is already registered";
+	case MSG_ENUM_ALIAS_REGISTERED = "Alias '{aliasName}' is already used for another key!";
+	case MSG_ENUM_ALIAS_UNKNOWN_KEY = "Alias '{'aliasName}' is registered to unknown key '{key}'!";
+	case MSG_ENUM_ALIAS_UNKNOWN_TYPE = "Alias '{'aliasName}' type is expected to be either string or string list, type '{type}' given!";
+	case MSG_DUPLICATED_NAME_IN_OTHER_TYPE = "'{enumName}' is already existed as an {enumType}";
 	case MSG_PARAMETER_INVALID_VALUE = "Invalid value '{value}' for parameter #{position}";
 	case MSG_PARAMETER_NO_VALUE = "No arguments are required for this command";
 	case MSG_PARAMETER_INVALID_FLAG = "Invalid flag '{flag}', valid flags: (0, 1)";
