@@ -31,7 +31,8 @@ trait NonBindValuesTrait{
 
 	public function addValues(array $context) : void{
 		$updates = array_diff($context, $this->values);
-		$this->values = [...$this->values, ...$updates]; //array_merge works too btw
+//		$this->values = [...$this->values, ...$updates]; //array_merge works too btw
+		array_push($this->values, ...$updates);
 		if (!empty($updates)) {
 			$this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
 		}
