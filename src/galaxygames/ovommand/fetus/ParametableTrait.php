@@ -29,7 +29,7 @@ trait ParametableTrait{
 		if ($overloadId > 0 && !isset($this->parameters[$overloadId - 1])) {
 			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
 		}
-		foreach ($parameters as $parameter) {
+		foreach ($parameters as $parameter) { // could get rid of this by calling validateParameter when registering command
 			//TODO: TextParameter does not allow
 			//TODO: WRONG MSG!!!!!!!!!!!!!!!!!!!!!
 			if (!$parameter->isOptional()) {
