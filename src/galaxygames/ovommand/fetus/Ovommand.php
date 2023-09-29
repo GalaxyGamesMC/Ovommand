@@ -107,6 +107,10 @@ abstract class Ovommand extends Command implements IParametable{
 		}
 	}
 
+	public function allowSendingSyntaxError() : bool{
+		return false;
+	}
+
 	public function setCurrentSender(CommandSender $currentSender) : Ovommand{
 		$this->currentSender = $currentSender;
 		return $this;

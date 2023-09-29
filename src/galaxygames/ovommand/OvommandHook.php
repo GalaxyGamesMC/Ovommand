@@ -132,23 +132,24 @@ final class OvommandHook{
 	private static function generateOverloadList(IParametable $parametable) : array{
 		$combinations = [];
 		foreach ($parametable->getOverloads() as $parameters) {
-			//T1			/** @var CommandParameter[] $params */
-			//			$params = [];
-			//			foreach ($parameters as $parameter) {
-			//				$params[] = $parameter->getNetworkParameterData();
-			//			}
-			//			$combinations[] = new CommandOverload(false, $params);
-			//
+			//T1
+			///** @var CommandParameter[] $params */
+			//$params = [];
+			//foreach ($parameters as $parameter) {
+			//	$params[] = $parameter->getNetworkParameterData();
+			//}
+			//$combinations[] = new CommandOverload(false, $params);
+
 			//T2
-			//			$params = [];
-			//			foreach ($parameters as $parameter) {
-			//				$params[] = $parameter->getNetworkParameterData();
-			//				if (($parameter instanceof StringEnumParameter) && isset($param->enum) && $param->enum instanceof CommandEnum) {
-			//					$refClass = new \ReflectionClass(CommandEnum::class);
-			//					$refProp = $refClass->getProperty("enumName");
-			//					$refProp->setValue($param->enum, "enum#" . spl_object_id($param->enum));
-			//				}
-			//			}
+			//$params = [];
+			//foreach ($parameters as $parameter) {
+			//	$params[] = $parameter->getNetworkParameterData();
+			//	if (($parameter instanceof StringEnumParameter) && isset($param->enum) && $param->enum instanceof CommandEnum) {
+			//		$refClass = new \ReflectionClass(CommandEnum::class);
+			//		$refProp = $refClass->getProperty("enumName");
+			//		$refProp->setValue($param->enum, "enum#" . spl_object_id($param->enum));
+			//	}
+			//}
 			$combinations[] = new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
 
