@@ -23,7 +23,10 @@ abstract class Ovommand extends Command implements IParametable{
 	/** @var CommandSender */
 	protected CommandSender $currentSender;
 
-	public function __construct(string $name, string|Translatable $description = "", array $aliases = [], Permission|string|array $permission = null, Translatable|string|null $usageMessage = null){
+	public function __construct(
+		string $name, Translatable|string $description = "", Permission|string|array $permission = null,
+		Translatable|string|null $usageMessage = null, array $aliases = []
+	){
 		parent::__construct($name, $description, "", $aliases);
 
 		$this->setAliases(array_unique($aliases));

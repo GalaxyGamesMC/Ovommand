@@ -14,8 +14,11 @@ use pocketmine\plugin\PluginOwned;
 abstract class BaseCommand extends Ovommand implements PluginOwned{
 	use ParametableTrait;
 
-	public function __construct(protected Plugin $plugin, string $name, Translatable|string $description = "", array $aliases = [], Permission|string|array $permission = null){
-		parent::__construct($name, $description, $aliases, $permission);
+	public function __construct(
+		protected Plugin $plugin, string $name, Translatable|string $description = "",
+		Permission|string|array $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []
+	){
+		parent::__construct($name, $description, $permission, $usageMessage, $aliases);
 	}
 
 	public function getOwningPlugin() : Plugin{

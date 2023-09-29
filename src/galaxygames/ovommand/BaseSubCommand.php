@@ -6,28 +6,27 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\lang\Translatable;
+use pocketmine\permission\Permission;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
 
 abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 	use ParametableTrait;
-	protected Translatable|string $usageMessage;
-
 	/** @var string[] */
 	private array $hiddenAliases;
+
 	/** @var string[] */
 	private array $showAliases;
-
-	/** @var string[] */
-	protected array $permissions = [];
-	private ?string $permissionMessage = null;
 	protected Ovommand $parent;
 
-	public function __construct(protected string $name, protected string|Translatable $description = "", array $hiddenAliases = [], array $showAliases = []){
-		parent::__construct($name, $this->description);
+	public function __construct(
+		string $name, protected string|Translatable $description = "", Permission|string|array $permission = null,
+		Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $showAliases = []
+	){
+		parent::__construct($name, $this->description, $permission, $usageMessage);
+
 		$this->hiddenAliases = array_unique($hiddenAliases);
 		$this->showAliases = array_unique($showAliases);
-			//$this->generateUsageMessage();
 		$this->prepare();
 	}
 
