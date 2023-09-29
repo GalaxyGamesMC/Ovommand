@@ -44,7 +44,7 @@ abstract class BaseEnum{
 		//		} else {
 		//			$aliasesList = &$this->showAliases;
 		//		}
-		$isHidden ? $aliasesList = &$this->showAliases : $aliasesList = &$this->hiddenAliases;
+		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		// is this slower than using $this->hiddenAliases; and $this->showAliases itself?
 
 		foreach ($aliases as $key => $alias) {
