@@ -9,6 +9,7 @@
 
 # Ovommand
 TODO:
+
 - [x] make reasonable enum that handle it value correctly (string -> value)
 - [x] custom enum, parameters, enum-based parameters
 - [x] feature rich
@@ -27,6 +28,10 @@ Suggest:
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
 :x:
+
+:heavy_check_mark:
+
+:white_check_mark:
 
 <details> <summary>Show dumps</summary>
 
