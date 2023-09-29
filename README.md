@@ -26,6 +26,8 @@ Suggest:
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
+:x:
+
 <details> <summary>Show dumps</summary>
 
 ## A. Standard prototype
