@@ -104,23 +104,29 @@ abstract class Ovommand extends Command implements IParametable{
 		return $msg;
 	}
 
-	abstract public function prepare() : void;
+	abstract protected function prepare() : void;
 
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
 
 	public function registerSubCommand(BaseSubCommand $subCommand) : void{
-		if (!isset($this->subCommands[$subName = $subCommand->getName()])) {
-			$this->subCommands[$subName] = $subCommand->setParent($this);
-			$aliases = [...$subCommand->getShowAliases(), ...$subCommand->getHiddenAliases()];
-			foreach ($aliases as $alias) {
-				if (!isset($this->subCommands[$alias])) {
-					$this->subCommands[$alias] = $subCommand;
-				} else {
-					throw new \InvalidArgumentException("SubCommand with same alias for '$alias' already exists");
+		$this->registerSubCommands($subCommand);
+	}
+
+	public function registerSubCommands(BaseSubCommand ...$subCommands) : void{
+		foreach ($subCommands as $subCommand) {
+			if (!isset($this->subCommands[$subName = $subCommand->getName()])) {
+				$this->subCommands[$subName] = $subCommand->setParent($this);
+				$aliases = [...$subCommand->getShowAliases(), ...$subCommand->getHiddenAliases()];
+				foreach ($aliases as $alias) {
+					if (!isset($this->subCommands[$alias])) {
+						$this->subCommands[$alias] = $subCommand;
+					} else {
+						throw new \InvalidArgumentException("SubCommand with same alias for '$alias' already exists");
+					}
 				}
+			} else {
+				throw new \InvalidArgumentException("SubCommand with same name for '$subName' already exists");
 			}
-		} else {
-			throw new \InvalidArgumentException("SubCommand with same name for '$subName' already exists");
 		}
 	}
 
