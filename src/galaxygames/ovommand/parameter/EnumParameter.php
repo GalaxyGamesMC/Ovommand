@@ -14,7 +14,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 class EnumParameter extends BaseParameter{
 	protected BaseEnum $enum;
 
-	public function __construct(string $name, DefaultEnums|string $enumName, bool $optional = false, int $flag = 0){
+	public function __construct(string $name, DefaultEnums|string $enumName, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
 		$enum = EnumManager::getInstance()->getEnum($enumName);
 		if ($enum === null) {
 			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
@@ -38,12 +38,16 @@ class EnumParameter extends BaseParameter{
 	public function parse(array $parameters) : BaseResult{
 		$enumValue = $this->enum->getValue($key = implode(" ", $parameters));
 		if ($enumValue !== null) {
-			return ValueResult::create($enumValue);
+			return ValueResult::create($this->returnRaw ? $key : $enumValue); //TODO: Best sol?
 		}
 		return BrokenSyntaxResult::create($key, expectedType: $this->enum->getName()); //TODO: better msg
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
 		return CommandParameter::enum($this->name, $this->enum->encode(), $this->flag, $this->optional);
+	}
+
+	public function isReturnRaw() : bool{
+		return $this->returnRaw;
 	}
 }
