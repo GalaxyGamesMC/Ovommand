@@ -33,6 +33,11 @@ Suggest:
 
 :white_check_mark:
 
+|checked|unchecked|crossed|
+|---|---|---|
+|&check;|_|&cross;|
+|&#x2611;|&#x2610;|&#x2612;|
+
 <details> <summary>Show dumps</summary>
 
 ## A. Standard prototype
