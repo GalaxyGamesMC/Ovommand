@@ -11,19 +11,21 @@
 TODO:
 - [x] make reasonable enum that handle it value correctly (string -> value)
 - [x] custom enum, parameters, enum-based parameters
-- [ ] feature rich
-- [ ] usage messages
+- [x] feature rich
+- [x] usage messages
 - [x] result system (parser), not that good tho :l
 - [ ] attribute supports (temp abandoned)
 
 
-  Suggest:
+Suggest:
 - [x] make canParse and parse into one
 - [ ] empty parameter functionality
 - [ ] allow parameter to not provide data to the ingame auto-complete
 - [ ] make overloadId global which will make the code shorter
+- [ ] template?
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
+
 <details> <summary>Show dumps</summary>
 
 ## A. Standard prototype
@@ -90,4 +92,5 @@ class AttributeCommand extend Command{
 <sub>Stay tuned for more!!</sub>
 <a href="https://discord.gg/Ew7d7tBBPb"><sub>Discord!</sub></a>
 </p>
+
 </details>
