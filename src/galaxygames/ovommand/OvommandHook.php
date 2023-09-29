@@ -111,7 +111,7 @@ final class OvommandHook{
 					continue 2;
 				}
 			}
-			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...$subCommand->getShowAliases()]), 0);
+			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...$subCommand->getShowAliases()]), 1);
 			$overloadList = self::generateOverloadList($subCommand);
 			if (!empty($overloadList)) {
 				foreach ($overloadList as $overload) {

@@ -27,7 +27,6 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 
 		$this->hiddenAliases = array_unique($hiddenAliases);
 		$this->showAliases = array_unique($showAliases);
-		$this->prepare();
 	}
 
 	public function isAliases(string $in) : bool{

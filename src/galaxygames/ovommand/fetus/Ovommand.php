@@ -84,6 +84,26 @@ abstract class Ovommand extends Command implements IParametable{
 		}
 	}
 
+	public function generateUsageMessage() : string{
+		$msg = $this->getName() . " ";
+		$params = [];
+		foreach ($this->overloads as $parameters) {
+			$hasOptional = false;
+			$names = [];
+			foreach ($parameters as $parameter) {
+				$names[] = $parameter->getName() . ": " . $parameter->getValueName();
+				if ($parameter->isOptional()) {
+					$hasOptional = true;
+				}
+			}
+			$names = implode("|", $names);
+			$params[] = $hasOptional ? "[" . $names . "]" : "<" . $names . ">";
+		}
+		$msg .= implode(" ", $params);
+
+		return $msg;
+	}
+
 	abstract public function prepare() : void;
 
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
