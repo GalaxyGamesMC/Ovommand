@@ -11,45 +11,50 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 
 trait ParametableTrait{
 	/** @var BaseParameter[][] */
-	protected array $parameters = [];
+	protected array $overloads = [];
 
 	abstract protected function prepare() : void;
 
-	public function validateParameter() : bool{
-		if (array_is_list($this->parameters)) {
-			return true;
-		}
-		return false;
-	}
+//	public function validateParameter() : bool{
+//		if (array_is_list($this->overloads)) {
+//			foreach ($this->overloads as $overload) {
+//				foreach ($overload as $parameter) {
+//
+//				}
+//			}
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public function registerParameters(int $overloadId, BaseParameter ...$parameters) : void{
 		if ($overloadId < 0) {
 			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
 		}
-		if ($overloadId > 0 && !isset($this->parameters[$overloadId - 1])) {
+		if ($overloadId > 0 && !isset($this->overloads[$overloadId - 1])) {
 			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
 		}
-		foreach ($parameters as $parameter) { // could get rid of this by calling validateParameter when registering command
+		foreach ($parameters as $parameter) {
 			//TODO: TextParameter does not allow
 			//TODO: WRONG MSG!!!!!!!!!!!!!!!!!!!!!
 			if (!$parameter->isOptional()) {
-				foreach ($this->parameters[$overloadId] ?? [] as $para) {
+				foreach ($this->overloads[$overloadId] ?? [] as $para) {
 					if ($para->isOptional()) {
 						throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 					}
 				}
 			}
 
-			$this->parameters[$overloadId][] = $parameter;
-//			usort($this->parameters, $callback)
+			$this->overloads[$overloadId][] = $parameter;
+//			usort($this->overloads, $callback)
 
-			//		usort($this->parameters[$position], static function(BaseParameter $a, BaseParameter $b) : int{
+			//		usort($this->overloads[$position], static function(BaseParameter $a, BaseParameter $b) : int{
 			//			if ($a->getSpanLength() === PHP_INT_MAX) { // if it takes unlimited parameters, pull it down
 			//				return 1;
 			//			}
 			//			return -1;
 			//		}); // Sort with their spans
-//			usort($this->parameters[$overloadId], static function(BaseParameter $a, BaseParameter $b) : int{
+//			usort($this->overloads[$overloadId], static function(BaseParameter $a, BaseParameter $b) : int{
 //				return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
 //			}); // Sort with their alphabet. EDIT: FLAW LOL [not work]
 		}
@@ -67,7 +72,7 @@ trait ParametableTrait{
 		/** @var BaseResult[][] $resultContainers */
 		$resultContainers = [];
 		$finalId = 0;
-		foreach ($this->parameters as $overloadId => $parameters) {
+		foreach ($this->overloads as $overloadId => $parameters) {
 			$offset = 0;
 			$results = [];
 			foreach ($parameters as $parameter) {
@@ -79,7 +84,7 @@ trait ParametableTrait{
 				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it from doing that?
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
-				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->parameters)) {
+				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->overloads)) {
 					continue 2;
 				}
 			}
@@ -92,7 +97,7 @@ trait ParametableTrait{
 	}
 
 	public function hasRequiredParameters() : bool{
-		foreach ($this->parameters as $parameters) {
+		foreach ($this->overloads as $parameters) {
 			foreach ($parameters as $parameter) {
 				if (!$parameter->isOptional()) {
 					return true;
@@ -105,7 +110,7 @@ trait ParametableTrait{
 	public function generateUsageMessage() : string{
 		$msg = $this->name . " ";
 		$params = [];
-		foreach ($this->parameters as $parameters) {
+		foreach ($this->overloads as $parameters) {
 			$hasOptional = false;
 			$names = [];
 			foreach ($parameters as $parameter) {
@@ -125,11 +130,11 @@ trait ParametableTrait{
 	/**
 	 * @return BaseParameter[][]
 	 */
-	public function getParameterList() : array{
-		return $this->parameters;
+	public function getOverloads() : array{
+		return $this->overloads;
 	}
 
-	public function hasParameters() : bool{
-		return !empty($this->parameters);
+	public function hasOverloads() : bool{
+		return !empty($this->overloads);
 	}
 }

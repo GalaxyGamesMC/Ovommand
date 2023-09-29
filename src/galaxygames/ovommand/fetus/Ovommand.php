@@ -23,15 +23,19 @@ abstract class Ovommand extends Command implements IParametable{
 	/** @var CommandSender */
 	protected CommandSender $currentSender;
 
-	public function __construct(string $name, string|Translatable $description = "", array $aliases = [], Permission|string|array $permission = null){
-		parent::__construct($name, $description, null, $aliases);
+	public function __construct(string $name, string|Translatable $description = "", array $aliases = [], Permission|string|array $permission = null, Translatable|string|null $usageMessage = null){
+		parent::__construct($name, $description, "", $aliases);
 
 		$this->setAliases(array_unique($aliases));
 		if ($permission !== null) {
 			$this->setPermission($permission);
 		}
+		if ($usageMessage !== null) {
+			$this->setUsage($usageMessage);
+		} else {
+			$this->setUsage($this->generateUsageMessage());
+		}
 		$this->prepare();
-		//		$this->usageMessage = $this->generateUsageMessage();
 	}
 
 	/**
@@ -101,10 +105,6 @@ abstract class Ovommand extends Command implements IParametable{
 		} else {
 			throw new \InvalidArgumentException("SubCommand with same name for '$subName' already exists");
 		}
-	}
-
-	public function getCurrentSender() : CommandSender{
-		return $this->currentSender;
 	}
 
 	public function setCurrentSender(CommandSender $currentSender) : Ovommand{

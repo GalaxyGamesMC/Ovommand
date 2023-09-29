@@ -9,12 +9,12 @@ use pocketmine\command\CommandSender;
 interface IParametable{
 	public function generateUsageMessage() : string;
 
-	public function hasParameters() : bool;
-
 	/**
 	 * @return BaseParameter[][]
 	 */
-	public function getParameterList() : array;
+	public function getOverloads() : array;
+
+	public function hasOverloads() : bool;
 
 	public function parseParameters(array $rawParams) : array;
 

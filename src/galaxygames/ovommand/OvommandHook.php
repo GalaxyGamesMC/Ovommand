@@ -131,7 +131,7 @@ final class OvommandHook{
 
 	private static function generateOverloadList(IParametable $parametable) : array{
 		$combinations = [];
-		foreach ($parametable->getParameterList() as $parameters) {
+		foreach ($parametable->getOverloads() as $parameters) {
 			//T1			/** @var CommandParameter[] $params */
 			//			$params = [];
 			//			foreach ($parameters as $parameter) {
