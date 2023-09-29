@@ -33,8 +33,10 @@ class SyntaxConst{
 	public static function getSyntaxBetweenBrokenPart(string $syntax, string $brokenPart) : array{
 		$brokenPartPos = strpos($syntax, $brokenPart);
 		if ($brokenPartPos === false) {
-			throw new \RuntimeException("wut??");
+//			throw new \RuntimeException("wut??");
+			$brokenPartPos = 0; //TODO: FIX THIS MESS...
 		}
+
 
 		return [
 			substr($syntax, 0, $brokenPartPos), substr($syntax, $brokenPartPos + strlen($brokenPart))
