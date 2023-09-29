@@ -13,8 +13,6 @@ trait ParametableTrait{
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
 
-	abstract protected function prepare() : void;
-
 //	public function validateParameter() : bool{
 //		if (array_is_list($this->overloads)) {
 //			foreach ($this->overloads as $overload) {

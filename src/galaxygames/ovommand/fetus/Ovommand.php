@@ -104,7 +104,7 @@ abstract class Ovommand extends Command implements IParametable{
 		return $msg;
 	}
 
-	abstract protected function prepare() : void;
+	abstract protected function setup() : void;
 
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
 
