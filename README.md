@@ -21,6 +21,7 @@ TODO:
 - [x] make canParse and parse into one
 - [ ] empty parameter functionality
 - [ ] allow parameter to not provide data to the ingame auto-complete
+- [ ] make overloadId global which will make the code shorter
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 <details> <summary>Show dumps</summary>
