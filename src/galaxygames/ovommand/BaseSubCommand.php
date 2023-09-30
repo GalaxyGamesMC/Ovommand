@@ -10,7 +10,7 @@ use pocketmine\permission\Permission;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
 
-abstract class BaseSubCommand extends Ovommand implements PluginOwned{
+abstract class BaseSubCommand extends Ovommand{
 	use ParametableTrait;
 	/** @var string[] */
 	private array $hiddenAliases;
@@ -92,8 +92,14 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 
 	public function getOwningPlugin() : Plugin{
 		$parent = $this->getParent();
+		if ($parent === null) {
+			throw new \RuntimeException("NO :C");
+		}
 		while ($parent instanceof BaseSubCommand) {
-			$parent = $parent->getParent();
+			$newParent = $parent->getParent();
+			if ($newParent !== null) {
+				$parent = $newParent;
+			}
 		}
 		return $parent->getOwningPlugin();
 	}
