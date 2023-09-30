@@ -11,9 +11,10 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\permission\Permission;
+use pocketmine\plugin\PluginOwned;
 use pocketmine\utils\TextFormat;
 
-abstract class Ovommand extends Command implements IParametable{
+abstract class Ovommand extends Command implements IParametable, PluginOwned{
 	use ParametableTrait;
 
 	/** @var BaseConstraint[] */
