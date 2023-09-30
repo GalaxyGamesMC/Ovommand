@@ -44,7 +44,7 @@ trait ParametableTrait{
 			}
 
 			$this->overloads[$overloadId][] = $parameter;
-			echo $this->getName() . " with \$overloadId: $overloadId\n{" . $parameter->getName() . ": " . $parameter->getValueName() . "}\n\n";
+//			echo $this->getName() . " with \$overloadId: $overloadId\n{" . $parameter->getName() . ": " . $parameter->getValueName() . "}\n\n";
 //			usort($this->overloads, $callback)
 
 			//		usort($this->overloads[$position], static function(BaseParameter $a, BaseParameter $b) : int{
