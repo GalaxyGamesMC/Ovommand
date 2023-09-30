@@ -30,7 +30,7 @@ abstract class BaseEnum{
 	}
 
 	/**
-	 * @phpstan-param array<string, string|array<string> $aliases
+	 * @phpstan-param array<string, string|array<string>> $aliases
 	 */
 	public function setAliases(array $aliases, bool $isHidden = false) : void{
 		//		if ($isHidden) {
