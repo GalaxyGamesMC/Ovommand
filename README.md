@@ -31,6 +31,8 @@ Discuss:
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
+[DEMO PLUGIN](https://github.com/idumpster/OvoTest)
+
 :x:
 
 :heavy_check_mark:
