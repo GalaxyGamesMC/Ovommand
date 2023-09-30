@@ -8,15 +8,18 @@ use galaxygames\ovommand\exception\ExceptionMessage;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 abstract class BaseEnum{
+	/** @var array<string, mixed> $values */
 	protected array $values;
+	/** @var string[] $hiddenAliases */
 	protected array $hiddenAliases = [];
+	/** @var string[] $showAliases */
 	protected array $showAliases = [];
 
 	/**
 	 * @param string                $name The name of the enum, E.g: [parameterName: enumName]
-	 * @param array<string, string> $values The default values
+	 * @param array<string, mixed> $values The default values
 	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show or have type hint ingame!
-	 * @param  $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
+	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
 	 */
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = []){
 		$this->values = $values; //TODO: validate inputs
@@ -42,18 +45,24 @@ abstract class BaseEnum{
 		// is this slower than using $this->hiddenAliases; and $this->showAliases itself?
 
 		foreach ($aliases as $key => $alias) {
-			if (!isset($this->values[$key])) {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => (string)$alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
-			}
-			if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => (string)$alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
-			}
 			if (is_string($alias)) {
+				if (!isset($this->values[$key])) {
+					throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => $alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
+				}
+				if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
+					throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => $alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
+				}
 				$aliasesList[$alias] = $key;
 			} elseif (is_array($alias)) {
 				foreach ($alias as $a) {
+					if (!isset($this->values[$key])) {
+						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => $a, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
+					}
 					if (!is_string($a)) {
-						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string) $a, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
+						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string) $a, "type" => gettype($a)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
+					}
+					if (isset($this->showAliases[$a]) || isset($this->hiddenAliases[$a])) {
+						throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => $a]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
 					}
 					$aliasesList[$a] = $key;
 				}
@@ -73,6 +82,9 @@ abstract class BaseEnum{
 	abstract public function encode() : CommandEnum;
 	abstract public function isSoft() : bool;
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getRawValues() : array{
 		return $this->values;
 	}
@@ -87,10 +99,16 @@ abstract class BaseEnum{
 		return isset($this->values[$parentKey]);
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getHiddenAliases() : array{
 		return $this->hiddenAliases;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getShowAliases() : array{
 		return $this->showAliases;
 	}
