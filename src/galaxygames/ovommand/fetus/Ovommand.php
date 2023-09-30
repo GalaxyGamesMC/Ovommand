@@ -5,11 +5,13 @@ namespace galaxygames\ovommand\fetus;
 
 use galaxygames\ovommand\BaseSubCommand;
 use galaxygames\ovommand\constraint\BaseConstraint;
+use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
+use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\permission\Permission;
 use pocketmine\plugin\PluginOwned;
 use pocketmine\utils\TextFormat;
@@ -25,7 +27,7 @@ abstract class Ovommand extends Command implements IParametable, PluginOwned{
 	protected CommandSender $currentSender;
 
 	public function __construct(
-		string $name, Translatable|string $description = "", Permission|string|array $permission = null,
+		string $name, Translatable|string $description = "", ?string $permission = null,
 		Translatable|string|null $usageMessage = null, array $aliases = []
 	){
 		parent::__construct($name, $description, "", $aliases);
@@ -40,12 +42,8 @@ abstract class Ovommand extends Command implements IParametable, PluginOwned{
 	}
 
 	/**
-	 * @param CommandSender $sender
-	 * @param string        $commandLabel
-	 * @param array         $args
+	 * @param string[]      $args
 	 * @param string        $preLabel Return a string combined of its parent labels with the current label
-	 *
-	 * @return void
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
 		if (!$this->testPermission($sender)) {
@@ -80,6 +78,9 @@ abstract class Ovommand extends Command implements IParametable, PluginOwned{
 		}
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function generateUsageList() : array{
 		$usages = [];
 		foreach ($this->subCommands as $k => $subCommand) {
@@ -135,6 +136,9 @@ abstract class Ovommand extends Command implements IParametable, PluginOwned{
 
 	abstract protected function setup() : void;
 
+	/**
+	 * @param BaseResult[]         $args
+	 */
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
 
 	public function registerSubCommand(BaseSubCommand $subCommand) : void{
@@ -159,6 +163,10 @@ abstract class Ovommand extends Command implements IParametable, PluginOwned{
 		}
 	}
 
+	/**
+	 * @param BaseResult[] $args
+	 * @param string[] $nonParsedArgs
+	 */
 	public function onSyntaxError(CommandSender $sender, string $commandLabel, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
@@ -187,6 +195,9 @@ abstract class Ovommand extends Command implements IParametable, PluginOwned{
 		return $this->constraints;
 	}
 
+	/**
+	 * @return BaseSubCommand[]
+	 */
 	public function getSubCommands() : array{
 		return $this->subCommands;
 	}
