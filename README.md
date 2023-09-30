@@ -24,6 +24,7 @@ Suggest:
 - [ ] allow parameter to not provide data to the ingame auto-complete
 - [ ] make overloadId global which will make the code shorter
 - [ ] template?
+- [ ] move part of Ovommand to BaseCommand
 
 Discuss:
 - [ ] The aliases shouldn't be re-set to new one or adding more if they were registered! :l
