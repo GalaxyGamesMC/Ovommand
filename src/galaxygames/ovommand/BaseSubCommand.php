@@ -67,13 +67,15 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 			$parentHeader = $newParent->getName() . " " . $parentHeader;
 			$parent = $newParent;
 		}
-		foreach ($this->subCommands as $k => $subCommand) {
-			if ($k !== $subCommand->getName()) {
-				continue;
+		if ($parent instanceof BaseCommand) {
+			foreach ($this->subCommands as $k => $subCommand) {
+				if ($k !== $subCommand->getName()) {
+					continue;
+				}
+				$subCommand->setParent($this);
 			}
-			$subCommand->setParent($this);
+			$this->setUsage("/$parentHeader " . implode("\n/$parentHeader ", $this->generateUsageList()));
 		}
-		$this->setUsage("/$parentHeader " . implode("\n/$parentHeader ", $this->generateUsageList()));
 		return $this;
 	}
 
