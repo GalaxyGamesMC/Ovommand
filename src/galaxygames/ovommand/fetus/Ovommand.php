@@ -35,7 +35,7 @@ abstract class Ovommand extends Command implements IParametable{
 		}
 		$this->setup();
 		$this->setUsage($usageMessage ?? "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList()));
-		var_dump($this->getUsage());
+//		var_dump($this->getUsage());
 	}
 
 	/**
@@ -71,8 +71,8 @@ abstract class Ovommand extends Command implements IParametable{
 				return;
 			}
 			$execute->execute($sender, $label, $args, $preLabel . $commandLabel); //TODO: Failed logic?
-			$passArgs = $execute->parseParameters($args);
-			$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
+//			$passArgs = $execute->parseParameters($args);
+//			$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
 			if ($this->onSyntaxError($sender, $commandLabel, $passArgs, $args)) {

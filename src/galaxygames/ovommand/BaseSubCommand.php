@@ -17,7 +17,7 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 
 	/** @var string[] */
 	private array $showAliases;
-	protected Ovommand $parent;
+	protected ?Ovommand $parent = null;
 
 	public function __construct(
 		string $name, protected string|Translatable $description = "", Permission|string|array $permission = null,
@@ -49,7 +49,7 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 		return $this->showAliases;
 	}
 
-	public function getParent() : Ovommand{
+	public function getParent() : ?Ovommand{
 		return $this->parent;
 	}
 
@@ -58,7 +58,22 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 	 */
 	public function setParent(Ovommand $parent) : self{
 		$this->parent = $parent;
-//		$this->usageMessage = $this->generateUsageList();
+		$parentHeader = $parent->getName() . " " . $this->getName();
+		while ($parent instanceof BaseSubCommand) {
+			$newParent = $parent->getParent();
+			if ($newParent === null) {
+				return $this;
+			}
+			$parentHeader = $newParent->getName() . " " . $parentHeader;
+			$parent = $newParent;
+		}
+		foreach ($this->subCommands as $k => $subCommand) {
+			if ($k !== $subCommand->getName()) {
+				continue;
+			}
+			$subCommand->setParent($this);
+		}
+		$this->setUsage("/$parentHeader " . implode("\n/$parentHeader ", $this->generateUsageList()));
 		return $this;
 	}
 
