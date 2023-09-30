@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\utils;
 
 use galaxygames\ovommand\BaseCommand;
-use stdClass;
-use function implode;
 
 class Utils{
 	public static function parseUsages(BaseCommand $command) : string{
@@ -138,7 +136,7 @@ class Utils{
 	}
 
 	public static function dumpForceStringArray(array $arr) : array{
-		$obj = new stdClass();
+		$obj = new \stdClass();
 		foreach ($arr as $key => $value) {
 			$rf = $obj->{"" . $key} ?? null;
 			if ($rf !== null) {
