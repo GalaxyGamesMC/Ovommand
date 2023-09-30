@@ -55,7 +55,7 @@ class PositionParameter extends BaseParameter{
 		}
 		if ($brokenSyntax !== "") {
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $brokenSyntax);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $brokenSyntax, $syntax[1]));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0] ?? "", $brokenSyntax, $syntax[1] ?? ""));
 		}
 		return CoordinateResult::fromData(...$values, ...$types);
 	}
