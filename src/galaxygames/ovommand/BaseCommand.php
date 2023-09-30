@@ -10,7 +10,7 @@ use pocketmine\permission\Permission;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
 
-abstract class BaseCommand extends Ovommand implements PluginOwned{
+abstract class BaseCommand extends Ovommand{
 	use ParametableTrait;
 
 	/**
