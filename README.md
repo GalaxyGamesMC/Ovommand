@@ -16,6 +16,7 @@ TODO:
 - [x] usage messages
 - [x] result system (parser), not that good tho :l
 - [ ] attribute supports (temp abandoned)
+- [ ] SubCommand doesn't require perms if wanted
 
 
 Suggest:
@@ -25,6 +26,7 @@ Suggest:
 - [ ] make overloadId global which will make the code shorter
 - [ ] template?
 - [ ] move part of Ovommand to BaseCommand
+- [ ] do subCommand even need description?
 
 Discuss:
 - [ ] The aliases shouldn't be re-set to new one or adding more if they were registered! :l
