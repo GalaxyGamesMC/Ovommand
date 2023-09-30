@@ -21,8 +21,8 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 
 	/**
 	 * @param Permission|string|string[]|null $permission
-	 * @param array<string, string>    $hiddenAliases
-	 * @param array<string, string>    $showAliases
+	 * @param list<string>    $hiddenAliases
+	 * @param list<string>    $showAliases
 	 */
 	public function __construct(
 		string $name, protected string|Translatable $description = "", Permission|string|array $permission = null,
@@ -46,10 +46,16 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 		return in_array($in, $this->showAliases, true);
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getHiddenAliases() : array{
 		return $this->hiddenAliases;
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getShowAliases() : array{
 		return $this->showAliases;
 	}
