@@ -13,7 +13,7 @@ class SoftEnum extends BaseEnum{
 		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)], true);
 	}
 
-	public function removeValue(string|int $key) : void{
+	public function removeValue(string $key) : void{
 		$this->removeValues([$key]);
 	}
 
@@ -21,6 +21,9 @@ class SoftEnum extends BaseEnum{
 		$this->removeValues($keys);
 	}
 
+	/**
+	 * @param string[] $context
+	 */
 	public function removeValues(array $context) : void{
 		$updates = [];
 		foreach ($context as $k) {
@@ -45,6 +48,9 @@ class SoftEnum extends BaseEnum{
 		$this->addValues([$value => $bindValue ?? $value]);
 	}
 
+	/**
+	 * @param array<string,mixed> $context
+	 */
 	public function addValues(array $context) : void{  //TODO: aliases support?
 		$updates = [];
 		foreach ($context as $k => $v) {
@@ -53,7 +59,7 @@ class SoftEnum extends BaseEnum{
 				$updates[] = $k;
 			}
 		}
-		if (isset($updates)) {
+		if (!empty($updates)) {
 			$this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
 		}
 	}
@@ -64,6 +70,10 @@ class SoftEnum extends BaseEnum{
 		}
 	}
 
+	/**
+	 * @param list<string> $values
+	 * @param int   $type
+	 */
 	private function update(array $values, int $type) : void{
 		NetworkBroadcastUtils::broadcastPackets(Server::getInstance()->getOnlinePlayers(), [
 			UpdateSoftEnumPacket::create($this->name, $values, $type)
