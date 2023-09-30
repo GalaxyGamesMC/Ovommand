@@ -21,8 +21,8 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 
 	/**
 	 * @param Permission|string|string[]|null $permission
-	 * @param string|string[]                           $hiddenAliases
-	 * @param string|string[]                 $showAliases
+	 * @param string|array<string, string>    $hiddenAliases
+	 * @param string|array<string, string>    $showAliases
 	 */
 	public function __construct(
 		string $name, protected string|Translatable $description = "", Permission|string|array $permission = null,
