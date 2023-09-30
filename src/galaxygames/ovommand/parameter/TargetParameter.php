@@ -34,7 +34,7 @@ class TargetParameter extends BaseParameter{
 		$groups = [];
 		if (!preg_match("/^(?:([^\n]*@[apres])|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]) ?? "");
 		}
 		if (isset($groups[2])) {
 			$pName = $groups[2];
@@ -48,19 +48,17 @@ class TargetParameter extends BaseParameter{
 		};
 	}
 
-	public function betaParse(array $parameters) : BaseResult{
-		parent::parse($parameters);
-		$parameter = $parameters[0];
-		$groups = [];
-		if (!preg_match("/^(?:([^\n]*@[apres])(\S*)|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
-			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]));
-		}
-		return match ($tag = $groups[1]) {
-			TargetResult::TARGET_ENTITIES, TargetResult::TARGET_ALL, TargetResult::TARGET_NEAREST_PLAYER, TargetResult::TARGET_RANDOM_PLAYER, TargetResult::TARGET_SELF => TargetResult::create($tag),
-			default => TargetResult::create($groups[2])
-		};
-	}
-
-	private function parseTargetArguments(string $in) : array{}
+//	public function betaParse(array $parameters) : BaseResult{
+//		parent::parse($parameters);
+//		$parameter = $parameters[0];
+//		$groups = [];
+//		if (!preg_match("/^(?:([^\n]*@[apres])(\S*)|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
+//			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
+//			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]) ?? "");
+//		}
+//		return match ($tag = $groups[1]) {
+//			TargetResult::TARGET_ENTITIES, TargetResult::TARGET_ALL, TargetResult::TARGET_NEAREST_PLAYER, TargetResult::TARGET_RANDOM_PLAYER, TargetResult::TARGET_SELF => TargetResult::create($tag),
+//			default => TargetResult::create($groups[2])
+//		};
+//	}
 }

@@ -8,6 +8,10 @@ use galaxygames\ovommand\parameter\result\CoordinateResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 
 class BlockPositionParameter extends BaseParameter{
+	public function getValueName() : string{
+		return "x y z";
+	}
+
 	public function getNetworkType() : ParameterTypes{
 		return ParameterTypes::BLOCK_POSITION;
 	}
@@ -28,7 +32,7 @@ class BlockPositionParameter extends BaseParameter{
 				$brokenSyntax = $parameter;
 				break;
 			}
-			$type = match ($u = substr($parameter, 0, 1)) {
+			$type = match ($u = $parameter[0]) {
 				"~" => CoordinateResult::TYPE_RELATIVE,
 				"^" => CoordinateResult::TYPE_LOCAL,
 				default => CoordinateResult::TYPE_DEFAULT
@@ -51,7 +55,7 @@ class BlockPositionParameter extends BaseParameter{
 		}
 		if ($brokenSyntax !== "") {
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $brokenSyntax);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $brokenSyntax, $syntax[1]));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0] ?? "", $brokenSyntax, $syntax[1] ?? "") ?? "");
 		}
 		return CoordinateResult::fromData(...$values, ...$types);
 	}
@@ -59,6 +63,4 @@ class BlockPositionParameter extends BaseParameter{
 	public function getSpanLength() : int{
 		return 3;
 	}
-
-	public function getValueName() : string{}
 }

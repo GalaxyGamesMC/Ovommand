@@ -32,7 +32,7 @@ class PositionParameter extends BaseParameter{
 				$brokenSyntax = $parameter;
 				break;
 			}
-			$type = match ($u = substr($parameter, 0, 1)) {
+			$type = match ($u = $parameter[0]) {
 				"~" => CoordinateResult::TYPE_RELATIVE,
 				"^" => CoordinateResult::TYPE_LOCAL,
 				default => CoordinateResult::TYPE_DEFAULT
@@ -55,7 +55,7 @@ class PositionParameter extends BaseParameter{
 		}
 		if ($brokenSyntax !== "") {
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $brokenSyntax);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0] ?? "", $brokenSyntax, $syntax[1] ?? ""));
+			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0] ?? "", $brokenSyntax, $syntax[1] ?? "") ?? "");
 		}
 		return CoordinateResult::fromData(...$values, ...$types);
 	}

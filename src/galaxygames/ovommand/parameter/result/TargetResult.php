@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter\result;
 
 use pocketmine\command\CommandSender;
+use pocketmine\entity\Entity;
 use pocketmine\entity\Living;
 use pocketmine\player\Player;
 use pocketmine\Server;
@@ -43,8 +44,12 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 	//		"tag" => "Health", // Check if the tag exists in the entity/player.
 	//	];
 
+	/** @var array<string, mixed> parameters */
 	protected array $parameters;
 
+	/**
+	 * @param array<string, mixed> $params
+	 */
 	public function __construct(protected string $target, array $params = []){
 		if ($this->isTargetTagged()) {
 			$this->parameters = [
@@ -78,22 +83,26 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		return $in;
 	}
 
-	private function bindTargetParameters(array $params, array $defaults) : void{
-		foreach ($defaults as $key => $default) {
-			if (isset($params[$key])) {
-				$this->parameters[$key] = match (gettype($default)) {
-					"boolean" => (bool) $params[$key],
-					"integer" => (int) $params[$key],
-					"double" => (float) $params[$key],
-					"string" => (string) $params[$key],
-					default => throw new \RuntimeException("Unknown type!")
-				};
-			} else {
-				$this->parameters[$key] = $default;
-			}
-			//			$this->parameters[$key] = $params[$key] ?? $default;
-		}
-	}
+//	/**
+//	 * @param array $params
+//	 * @param list<mixed> $defaults
+//	 */
+//	private function bindTargetParameters(array $params, array $defaults) : void{
+//		foreach ($defaults as $key => $default) {
+//			if (isset($params[$key])) {
+//				$this->parameters[$key] = match (gettype($default)) {
+//					"boolean" => (bool) $params[$key],
+//					"integer" => (int) $params[$key],
+//					"double" => (float) $params[$key],
+//					"string" => (string) $params[$key],
+//					default => throw new \RuntimeException("Unknown type!")
+//				};
+//			} else {
+//				$this->parameters[$key] = $default;
+//			}
+//			//			$this->parameters[$key] = $params[$key] ?? $default;
+//		}
+//	}
 
 	public static function create(string $target) : self{
 		return new TargetResult($target);
@@ -106,6 +115,9 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		};
 	}
 
+	/**
+	 * @return Entity[]
+	 */
 	public function getTargets(CommandSender $sender) : array{
 		if ($this->target === self::TARGET_ALL) {
 			return Server::getInstance()->getOnlinePlayers();
@@ -113,11 +125,18 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		if (!$sender instanceof Living) {
 			return [];
 		}
+		if ($this->target === self::TARGET_NEAREST_PLAYER) {
+			$p = $this->getNearestPlayer($sender);
+			if ($p === null) {
+				return [];
+			}
+			return [$p];
+		}
 		return match ($this->target) {
 			self::TARGET_ENTITIES => $sender->getWorld()->getEntities(),
 			self::TARGET_RANDOM_PLAYER => [$this->getRandomPlayer()],
-			self::TARGET_NEAREST_PLAYER => [],
-			self::TARGET_SELF => $sender
+			self::TARGET_SELF => [$sender],
+			default => []
 		};
 	}
 
@@ -126,12 +145,12 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		return $onlinePlayers[mt_rand(0, count($onlinePlayers) - 1)];
 	}
 
-	private function getNearestPlayer(CommandSender $entity) : ?Player{
+	private function getNearestPlayer(CommandSender $entity) : ?Entity{
 		$online = array_values(Server::getInstance()->getOnlinePlayers());
 
-		if(!($entity instanceof Player)) {
+		if(!$entity instanceof Player) {
 			if(count($online) > 0){
-				return $online[array_keys($online)[0]]->getName();
+				return $online[array_keys($online)[0]];
 			}
 			return null;
 		}

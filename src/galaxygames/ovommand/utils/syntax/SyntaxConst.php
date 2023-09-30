@@ -27,7 +27,7 @@ class SyntaxConst{
 			self::SYNTAX_PRINT_VANILLA => self::parseVanillaSyntaxMessage(self::vanillaShift($previous), $brokenSyntax, self::vanillaShift($after)),
 			self::SYNTAX_PRINT_OVO_FULL => self::parseOvommandSyntaxMessage($previous, $brokenSyntax, $after, $helps),
 			self::SYNTAX_PRINT_OVO_VANILLA => self::parseOvommandSyntaxMessage(self::vanillaShift($previous), $brokenSyntax, self::vanillaShift($after), $helps),
-			default => null
+			default => $previous . " " . $brokenSyntax . " " . $after
 		};
 	}
 

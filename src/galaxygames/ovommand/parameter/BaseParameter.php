@@ -47,7 +47,7 @@ REGEXP; //TODO: find a way to use this?
 	private function setFlag(int $flag) : void{
 		$this->flag = match ($flag) {
 			0, 1 => $flag,
-			default => throw new ParameterException(ExceptionMessage::MSG_PARAMETER_INVALID_FLAG->getErrorMessage(['flag' => $flag]), ParameterException::PARAMETER_INVALID_FLAG_ERROR)
+			default => throw new ParameterException(ExceptionMessage::MSG_PARAMETER_INVALID_FLAG->getErrorMessage(['flag' => (string) $flag]), ParameterException::PARAMETER_INVALID_FLAG_ERROR)
 		};
 	}
 
