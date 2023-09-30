@@ -71,7 +71,7 @@ class SoftEnum extends BaseEnum{
 	}
 
 	/**
-	 * @param list<string> $values
+	 * @param string[] $values
 	 * @param int   $type
 	 */
 	private function update(array $values, int $type) : void{
