@@ -32,8 +32,6 @@ an enum, <para name: enum name>!
     ]
 ]
 
-a
-
 Commando lost its parenting!
 
 - Soft enums cannot spread out its value using flag 1!
