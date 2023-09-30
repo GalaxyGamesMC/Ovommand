@@ -38,7 +38,7 @@ abstract class Ovommand extends Command implements IParametable{
 		} else {
 			$this->setUsage($this->generateUsageMessage());
 		}
-		$this->prepare();
+		$this->setup();
 	}
 
 	/**
