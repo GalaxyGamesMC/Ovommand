@@ -12,5 +12,10 @@
       "spec": "3.0",
       "namespace-root": "galaxygames\\ovommand"
     }
+  },
+  "scripts": {
+    "fmt": "vendor/bin/php-cs-fixer fix",
+    "analyze": "vendor/bin/phpstan",
+    "build": "php -dphar.readonly=0 vendor/bin/pharynx -i=. -c -p=Timer.phar"
   }
 }
