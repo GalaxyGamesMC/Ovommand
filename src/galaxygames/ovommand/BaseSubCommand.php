@@ -58,6 +58,7 @@ abstract class BaseSubCommand extends Ovommand implements PluginOwned{
 	 */
 	public function setParent(Ovommand $parent) : self{
 		$this->parent = $parent;
+//		$this->usageMessage = $this->generateUsageList();
 		return $this;
 	}
 

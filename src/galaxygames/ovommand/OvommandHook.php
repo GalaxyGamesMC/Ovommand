@@ -29,6 +29,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\fetus\IParametable;
+use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
@@ -95,11 +96,11 @@ final class OvommandHook{
 
 	/**
 	 * @param CommandSender $sender
-	 * @param BaseCommand   $command
+	 * @param Ovommand   $command
 	 *
 	 * @return CommandOverload[]
 	 */
-	private static function generateOverloads(CommandSender $sender, BaseCommand $command) : array{
+	private static function generateOverloads(CommandSender $sender, Ovommand $command) : array{
 		$overloads = [];
 
 		foreach ($command->getSubCommands() as $label => $subCommand) {
@@ -111,8 +112,8 @@ final class OvommandHook{
 					continue 2;
 				}
 			}
+			$overloadList = self::generateOverloads($sender, $subCommand);
 			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...$subCommand->getShowAliases()]), 1);
-			$overloadList = self::generateOverloadList($subCommand);
 			if (!empty($overloadList)) {
 				foreach ($overloadList as $overload) {
 					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
