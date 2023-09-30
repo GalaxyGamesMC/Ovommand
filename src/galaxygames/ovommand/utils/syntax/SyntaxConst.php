@@ -18,7 +18,7 @@ class SyntaxConst{
 	public const OVO_GENERIC_SYNTAX_MESSAGE = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
 	public const OVO_GENERIC_SYNTAX_HELPER_MESSAGE = ". Suggest: \"{helps}\"";
 
-	public static function parseSyntax(string $previous, string $brokenSyntax, string $after, string $helps = "") : Translatable|string|null{
+	public static function parseSyntax(string $previous, string $brokenSyntax, string $after, string $helps = "") : string|null{
 		if (self::$syntax === self::SYNTAX_PRINT_USAGE) {
 			return null;
 		}
@@ -37,7 +37,6 @@ class SyntaxConst{
 			$brokenPartPos = 0; //TODO: FIX THIS MESS...
 		}
 
-
 		return [
 			substr($syntax, 0, $brokenPartPos), substr($syntax, $brokenPartPos + strlen($brokenPart))
 		];
@@ -47,8 +46,8 @@ class SyntaxConst{
 		return substr($in, -9);
 	}
 
-	public static function parseVanillaSyntaxMessage(string $previous, string $brokenSyntax, string $after) : Translatable{
-		return new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenSyntax, $after]);
+	public static function parseVanillaSyntaxMessage(string $previous, string $brokenSyntax, string $after) : string{
+		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenSyntax, $after]))->getText();
 	}
 
 	public static function parseOvommandSyntaxMessage(string $previous, string $brokenSyntax, string $after, string $helps = "") : string{
