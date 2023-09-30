@@ -34,6 +34,9 @@ REGEXP; //TODO: find a way to use this?
 
 	abstract public function getNetworkType() : ParameterTypes;
 
+	/**
+	 * @param string[] $parameters
+	 */
 	public function parse(array $parameters) : BaseResult{
 		if (count($parameters) > $this->getSpanLength()) {
 			throw new \InvalidArgumentException("Too many args");
