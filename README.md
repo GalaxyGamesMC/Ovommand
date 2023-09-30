@@ -25,6 +25,9 @@ Suggest:
 - [ ] make overloadId global which will make the code shorter
 - [ ] template?
 
+Discuss:
+- [ ] The aliases shouldn't be re-set to new one or adding more if they were registered! :l
+
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
 :x:
