@@ -20,12 +20,11 @@ abstract class BaseSubCommand extends Ovommand{
 	protected ?Ovommand $parent = null;
 
 	/**
-	 * @param Permission|string|string[]|null $permission
-	 * @param list<string>    $hiddenAliases
-	 * @param list<string>    $showAliases
+	 * @param list<string>             $hiddenAliases
+	 * @param list<string>             $showAliases
 	 */
 	public function __construct(
-		string $name, protected string|Translatable $description = "", Permission|string|array $permission = null,
+		string $name, protected string|Translatable $description = "", ?string $permission = null,
 		Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $showAliases = []
 	){
 		parent::__construct($name, $this->description, $permission, $usageMessage);
