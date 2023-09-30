@@ -61,6 +61,9 @@ class SyntaxConst{
 		return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
 	}
 
+	/**
+	 * @phpstan-param array<string, string> $tags
+	 */
 	private static function translate(string $msg, array $tags) : string{
 		foreach ($tags as $tag => $value) {
 			$msg = str_replace('{' . $tag . '}', $value, $msg);
