@@ -46,7 +46,7 @@ final class EnumManager{
 		if (trim($enumName) === '') {
 			throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
 		}
-		if ($enum->isSoft()) {
+		if ($enum instanceof SoftEnum) {
 			if (isset($this->softEnums[$enumName])) {
 				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
 			}
