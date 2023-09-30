@@ -5,7 +5,6 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
-use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\permission\Permission;
 use pocketmine\plugin\Plugin;
