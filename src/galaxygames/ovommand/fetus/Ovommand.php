@@ -18,7 +18,7 @@ abstract class Ovommand extends Command implements IParametable{
 
 	/** @var BaseConstraint[] */
 	protected array $constraints = [];
-	/** @var BaseSubCommand[] subCommands */
+	/** @var BaseSubCommand[] $subCommands */ //bad design
 	protected array $subCommands = [];
 	/** @var CommandSender */
 	protected CommandSender $currentSender;
@@ -80,8 +80,6 @@ abstract class Ovommand extends Command implements IParametable{
 			}
 		}
 	}
-
-
 
 	public function generateUsageList() : array{
 		$usages = [];
