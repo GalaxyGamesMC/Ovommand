@@ -5,7 +5,7 @@ on:
 jobs:
   build-php:
     name: Prepare PHP
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         php:
@@ -20,13 +20,13 @@ jobs:
   phpstan:
     name: phpstan analyze
     needs: [build-php]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         php:
           - "8.2"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pmmp/setup-php-action@main
         with:
           php-version: ${{ matrix.php }}
