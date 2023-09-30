@@ -33,11 +33,7 @@ abstract class Ovommand extends Command implements IParametable{
 		if ($permission !== null) {
 			$this->setPermission($permission);
 		}
-		if ($usageMessage !== null) {
-			$this->setUsage($usageMessage);
-		} else {
-			$this->setUsage($this->generateUsageMessage());
-		}
+		$this->setUsage($usageMessage ?? $this->generateUsageMessage());
 		$this->setup();
 	}
 
