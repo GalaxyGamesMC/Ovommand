@@ -70,9 +70,7 @@ abstract class Ovommand extends Command implements IParametable{
 				}
 				return;
 			}
-			$execute->execute($sender, $label, $args, $preLabel . $commandLabel); //TODO: Failed logic?
-//			$passArgs = $execute->parseParameters($args);
-//			$this->onRun($sender, $commandLabel, $passArgs, $preLabel . $commandLabel);
+			$execute->execute($sender, $label, $args, $preLabel . $commandLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
 			if ($this->onSyntaxError($sender, $commandLabel, $passArgs, $args)) {
