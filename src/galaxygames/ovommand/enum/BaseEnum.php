@@ -12,8 +12,6 @@ abstract class BaseEnum{
 	protected array $hiddenAliases = [];
 	protected array $showAliases = [];
 
-	// huh, <parameterName: enumName> doesn't show up...
-
 	/**
 	 * @param string $name The name of the enum, E.g: [parameterName: enumName]
 	 * @param array  $values The default values
@@ -54,17 +52,25 @@ abstract class BaseEnum{
 			if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
 				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => (string)$alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
 			}
-			if (is_array($alias)) {
-				foreach ($alias as $a) {
-					$aliasesList[$a] = (string) $key;
-				}
-				// TODO: type check for the alias list
-				// $this->setAliases(array_map $alias, $isHidden);
-			} elseif (is_string($alias)) {
+			if (is_string($alias)) {
 				$aliasesList[$alias] = $key;
+			} elseif (is_array($alias)) {
+				foreach ($alias as $a) {
+					if (!is_string($a)) {
+						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string) $a, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
+					}
+					$aliasesList[$a] = $key;
+				}
 			} else {
 				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string)$alias, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
 			}
+//			match (true) {
+//				!isset($this->values[$key]) => throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => (string)$alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR),
+//				isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias]) => throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => (string)$alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR),
+//				is_string($alias) => $aliasesList[$alias] = $key,
+//				is_array($alias) => $aliasesList += array_fill_keys($alias, $key),
+//				default => throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string)$alias, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR)
+//			};
 		}
 	}
 
@@ -83,5 +89,13 @@ abstract class BaseEnum{
 	public function hasValue(string $key) : bool{
 		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
 		return isset($this->values[$parentKey]);
+	}
+
+	public function getHiddenAliases() : array{
+		return $this->hiddenAliases;
+	}
+
+	public function getShowAliases() : array{
+		return $this->showAliases;
 	}
 }
