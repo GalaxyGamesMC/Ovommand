@@ -13,6 +13,9 @@ use pocketmine\plugin\PluginOwned;
 abstract class BaseCommand extends Ovommand implements PluginOwned{
 	use ParametableTrait;
 
+	/**
+	 * @param Permission|string|string[]|null $permission
+	 */
 	public function __construct(
 		protected Plugin $plugin, string $name, Translatable|string $description = "",
 		Permission|string|array $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []

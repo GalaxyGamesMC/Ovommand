@@ -47,7 +47,7 @@ use pocketmine\Server;
 
 final class OvommandHook{
 	protected static bool $registered = false;
-	protected static Plugin $plugin;
+	protected static ?Plugin $plugin = null;
 	protected static EnumManager $enumManager;
 
 	public static function register(Plugin $plugin) : bool{
@@ -130,6 +130,9 @@ final class OvommandHook{
 		return $overloads;
 	}
 
+	/**
+	 * @return CommandOverload[]
+	 */
 	private static function generateOverloadList(IParametable $parametable) : array{
 		$combinations = [];
 		foreach ($parametable->getOverloads() as $parameters) {
