@@ -14,10 +14,10 @@ class IntParameter extends BaseParameter{
 
 	public function parse(array $parameters) : BaseResult{
 		$f = implode("", $parameters);
-		if (is_int((int) $f)) { //TODO: is_int($f) phpstorm bugs?
-			return ValueResult::create($f);
+		if (preg_match("/^\d$/", $f)) {
+			return ValueResult::create((int) $f);
 		}
-		return BrokenSyntaxResult::create("$f"); //TODO: better msg
+		return BrokenSyntaxResult::create($f); //TODO: better msg
 	}
 
 	public function getValueName() : string{
