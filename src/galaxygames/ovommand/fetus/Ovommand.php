@@ -33,8 +33,9 @@ abstract class Ovommand extends Command implements IParametable{
 		if ($permission !== null) {
 			$this->setPermission($permission);
 		}
-		$this->setUsage($usageMessage ?? $this->generateUsageMessage());
 		$this->setup();
+		$this->setUsage($usageMessage ?? "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList()));
+		var_dump($this->getUsage());
 	}
 
 	/**
@@ -80,24 +81,59 @@ abstract class Ovommand extends Command implements IParametable{
 		}
 	}
 
-	public function generateUsageMessage() : string{
-		$msg = $this->getName() . " ";
-		$params = [];
-		foreach ($this->overloads as $parameters) {
-			$hasOptional = false;
-			$names = [];
-			foreach ($parameters as $parameter) {
-				$names[] = $parameter->getName() . ": " . $parameter->getValueName();
-				if ($parameter->isOptional()) {
-					$hasOptional = true;
-				}
-			}
-			$names = implode("|", $names);
-			$params[] = $hasOptional ? "[" . $names . "]" : "<" . $names . ">";
-		}
-		$msg .= implode(" ", $params);
 
-		return $msg;
+
+	public function generateUsageList() : array{
+		$usages = [];
+		foreach ($this->subCommands as $k => $subCommand) {
+			if ($k !== $subCommand->getName()) {
+//				array_push($usages, ...array_map(static fn(string $in) => str_repeat(" ", mb_strlen($subCommand->getName())) . " " . $in, $subCommand->generateUsageList()));
+				continue;
+			}
+			array_push($usages, ...array_map(static fn(string $in) => $k . " " . $in, $subCommand->generateUsageList()));
+		} //v1: skip adding alias subcommand's usage
+
+		// v2: adding alias subcommand's usage
+		//$mainSub = [];
+		//$aliasSub = [];
+		//$aliasSubName = [];
+		//foreach ($this->subCommands as $k => $subCommand) {
+		//	if ($k === $subCommand->getName()) {
+		//		$mainSub[$k] = $subCommand->generateUsageList();
+		//	} else {
+		//		$aliasSubName[$subCommand->getName()][] = $k;
+		//		$aliasSub[$subCommand->getName()][] = $subCommand->generateUsageList();
+		//	}
+		//}
+		//$result = [];
+		//foreach ($mainSub as $k => $main) {
+		//	if (!isset($aliasSubName[$k])) {
+		//		continue;
+		//	}
+		//	$result[$k] = array_map(null, ...$aliasSub[$k]);
+		//}
+		//foreach ($mainSub as $k => $data) {
+		//	foreach ($data as $i => $u) {
+		//		$usages[] = $k . " " . $u;
+		//		if (!isset($aliasSubName[$k])) {
+		//			continue;
+		//		}
+		//		foreach ($aliasSubName[$k] as $alias) {
+		//			$usages[] = TextFormat::GRAY . $alias . " " . $result[$k][$i];
+		//		}
+		//	}
+		//}
+
+		foreach ($this->overloads as $parameters) {
+			$param = "";
+			foreach ($parameters as $parameter) {
+				$hasOptional = $parameter->isOptional();
+				$p = $parameter->getName() . ": " . $parameter->getValueName();
+				$param .= $hasOptional ? "[$p] " : "<$p> ";
+			}
+			$usages[] = $param;
+		}
+		return $usages;
 	}
 
 	abstract protected function setup() : void;

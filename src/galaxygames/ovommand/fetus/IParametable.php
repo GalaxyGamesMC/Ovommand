@@ -7,8 +7,6 @@ use galaxygames\ovommand\parameter\BaseParameter;
 use pocketmine\command\CommandSender;
 
 interface IParametable{
-	public function generateUsageMessage() : string;
-
 	/**
 	 * @return BaseParameter[][]
 	 */
