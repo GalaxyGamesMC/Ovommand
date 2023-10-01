@@ -6,7 +6,7 @@
   "require": {
     "muqsit/simple-packet-handler": "dev-pm5",
     "pocketmine/pocketmine-mp": "^5.6.0",
-    "friendsofphp/php-cs-fixer": "^3.4",
+    "friendsofphp/php-cs-fixer": "^3.34",
     "phpstan/phpstan": "^1.2",
     "sof3/pharynx": "^0.3.6"
   },
