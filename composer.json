@@ -1,11 +1,13 @@
 {
   "name": "galaxygames/ovommand",
-  "description": "Add command overloads",
+  "description": "a normal framework virion designed to parse command data for PocketMine - MP",
   "type": "library",
   "license": "GPL-3.0",
   "minimum-stability": "dev",
   "require": {
-    "muqsit/simple-packet-handler": "dev-pm5",
+    "muqsit/simple-packet-handler": "dev-pm5"
+  },
+  "require-dev": {
     "phpstan/phpstan": "^1.2",
     "pocketmine/pocketmine-mp": "^5.6.0"
   },
