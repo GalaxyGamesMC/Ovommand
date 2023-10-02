@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
 
 class StringParameter extends BaseParameter{
 	public function getValueName() : string{

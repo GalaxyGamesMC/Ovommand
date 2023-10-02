@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
+
 class ValueResult extends BaseResult{
 	public function __construct(protected mixed $value){}
 

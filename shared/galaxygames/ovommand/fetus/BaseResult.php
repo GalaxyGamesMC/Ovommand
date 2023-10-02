@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\parameter\result;
+namespace shared\galaxygames\ovommand\enum\fetus;
 
 abstract class BaseResult{}

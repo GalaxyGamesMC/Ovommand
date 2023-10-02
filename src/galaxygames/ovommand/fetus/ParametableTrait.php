@@ -6,8 +6,8 @@ namespace galaxygames\ovommand\fetus;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
 use galaxygames\ovommand\parameter\BaseParameter;
-use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
 
 trait ParametableTrait{
 	/** @var BaseParameter[][] */

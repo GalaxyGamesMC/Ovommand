@@ -5,18 +5,13 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
-use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
+use shared\galaxygames\ovommand\enum\fetus\IParameter;
 
-abstract class BaseParameter{
-//	/** @var CommandParameter parameterData */
-//	protected CommandParameter $parameterData;
+abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;
-	protected ParameterTypes $parameterTypes;
-	protected const REGEX_PATTERN = <<<REGEXP
-*
-REGEXP; //TODO: find a way to use this?
 
 	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0,){
 		$this->setFlag($flag);

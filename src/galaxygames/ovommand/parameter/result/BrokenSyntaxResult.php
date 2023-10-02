@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
+
 class BrokenSyntaxResult extends BaseResult{
 	public function __construct(protected string $brokenSyntax, protected string $fullSyntax = "", protected string $expectedType = "", protected string $preLabel = ""){}
 

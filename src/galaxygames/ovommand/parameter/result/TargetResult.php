@@ -8,6 +8,7 @@ use pocketmine\entity\Entity;
 use pocketmine\entity\Living;
 use pocketmine\player\Player;
 use pocketmine\Server;
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
 
 class TargetResult extends BaseResult{ //TODO: Rename to selector?
 	public const TARGET_ALL = "@a";

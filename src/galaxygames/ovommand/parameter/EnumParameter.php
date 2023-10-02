@@ -5,10 +5,10 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use shared\galaxygames\ovommand\enum\fetus\BaseResult;
 use shared\galaxygames\ovommand\enum\fetus\IDynamicEnum;
 use shared\galaxygames\ovommand\enum\fetus\IEnum;
 use shared\galaxygames\ovommand\enum\fetus\IStaticEnum;
