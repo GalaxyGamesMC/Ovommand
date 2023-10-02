@@ -19,4 +19,8 @@ class BrokenSyntaxResult extends BaseResult{
 	public function getFullSyntax() : string{
 		return $this->fullSyntax;
 	}
+
+	public function setPreLabel(string $preLabel) : void{
+		$this->preLabel = $preLabel;
+	}
 }

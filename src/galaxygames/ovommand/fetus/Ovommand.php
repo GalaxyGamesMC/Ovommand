@@ -136,6 +136,7 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 	public function onSyntaxError(CommandSender $sender, string $commandLabel, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
+				$arg->setPreLabel($preLabel);
 				array_shift($nonParsedArgs);
 				$parts = SyntaxConst::getSyntaxBetweenBrokenPart("/" . $preLabel . " " . implode(" ", $nonParsedArgs), $arg->getBrokenSyntax());
 				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]));
