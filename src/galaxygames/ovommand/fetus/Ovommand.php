@@ -14,8 +14,9 @@ use pocketmine\lang\Translatable;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\IOvommand;
 
-abstract class Ovommand extends Command implements IParametable{
+abstract class Ovommand extends Command implements IOvommand, IParametable{
 	use ParametableTrait;
 
 	/** @var BaseConstraint[] */
@@ -83,43 +84,10 @@ abstract class Ovommand extends Command implements IParametable{
 	public function generateUsageList() : array{
 		$usages = [];
 		foreach ($this->subCommands as $k => $subCommand) {
-			if ($k !== $subCommand->getName()) {
-//				array_push($usages, ...array_map(static fn(string $in) => str_repeat(" ", mb_strlen($subCommand->getName())) . " " . $in, $subCommand->generateUsageList()));
-				continue;
+			if ($k === $subCommand->getName()) {
+				array_push($usages, ...array_map(static fn(string $in) => $k . " " . $in, $subCommand->generateUsageList()));
 			}
-			array_push($usages, ...array_map(static fn(string $in) => $k . " " . $in, $subCommand->generateUsageList()));
-		} //v1: skip adding alias subcommand's usage
-
-		// v2: adding alias subcommand's usage
-		//$mainSub = [];
-		//$aliasSub = [];
-		//$aliasSubName = [];
-		//foreach ($this->subCommands as $k => $subCommand) {
-		//	if ($k === $subCommand->getName()) {
-		//		$mainSub[$k] = $subCommand->generateUsageList();
-		//	} else {
-		//		$aliasSubName[$subCommand->getName()][] = $k;
-		//		$aliasSub[$subCommand->getName()][] = $subCommand->generateUsageList();
-		//	}
-		//}
-		//$result = [];
-		//foreach ($mainSub as $k => $main) {
-		//	if (!isset($aliasSubName[$k])) {
-		//		continue;
-		//	}
-		//	$result[$k] = array_map(null, ...$aliasSub[$k]);
-		//}
-		//foreach ($mainSub as $k => $data) {
-		//	foreach ($data as $i => $u) {
-		//		$usages[] = $k . " " . $u;
-		//		if (!isset($aliasSubName[$k])) {
-		//			continue;
-		//		}
-		//		foreach ($aliasSubName[$k] as $alias) {
-		//			$usages[] = TextFormat::GRAY . $alias . " " . $result[$k][$i];
-		//		}
-		//	}
-		//}
+		}
 
 		foreach ($this->overloads as $parameters) {
 			$param = "";
