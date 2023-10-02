@@ -38,7 +38,8 @@ class SyntaxConst{
 		$brokenPartPos = strpos($syntax, $brokenPart);
 		if ($brokenPartPos === false) {
 //			throw new \RuntimeException("wut??");
-			$brokenPartPos = 0; //TODO: FIX THIS MESS...
+//			$brokenPartPos = 0; //TODO: FIX THIS MESS...
+			$brokenPartPos = strlen($syntax);
 		}
 
 		return [
