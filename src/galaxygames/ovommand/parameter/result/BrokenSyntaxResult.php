@@ -8,6 +8,8 @@ use shared\galaxygames\ovommand\fetus\BaseResult;
 class BrokenSyntaxResult extends BaseResult{
 	public const CODE = 0; //TODO
 
+	protected int $matchedParameter = 0;
+
 	public function __construct(protected string $brokenSyntax, protected string $fullSyntax = "", protected string $expectedType = "", protected string $preLabel = ""){}
 
 	public static function create(string $brokenSyntax, string $fullSyntax = "", string $expectedType = "", string $preLabel = "") : self{
@@ -22,11 +24,20 @@ class BrokenSyntaxResult extends BaseResult{
 		return $this->fullSyntax;
 	}
 
+	public function setMatchedParameter(int $match = 0) : self{
+		$this->matchedParameter = $match;
+		return $this;
+	}
+
 	public function setPreLabel(string $preLabel) : void{
 		$this->preLabel = $preLabel;
 	}
 
 	public function getPreLabel() : string{
 		return $this->preLabel;
+	}
+
+	public function getMatchedParameter() : int{
+		return $this->matchedParameter;
 	}
 }

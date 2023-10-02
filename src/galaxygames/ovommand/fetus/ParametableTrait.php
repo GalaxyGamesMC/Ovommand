@@ -63,38 +63,32 @@ trait ParametableTrait{
 			$totalSpan = 0;
 			$matchPoint = 0;
 			foreach ($parameters as $parameterId => $parameter) {
-				$params = array_slice($rawParams, $offset, $span = $parameter->getSpanLength());
-//				echo "OPEN\n";
-//				var_dump($params);
-//				echo "CLOSE\n";
-				$totalSpan += $span;
+				$span = $parameter->getSpanLength();
 				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
-//					echo "CLOSE1\n\n";
 					break;
 				}
-				if (($pCount = count($params)) < $parameter->getSpanLength()) {
-					$results[$parameter->getName()] = BrokenSyntaxResult::create($params[$span - $offset] ?? "", expectedType: $parameter->getValueName());
-//					echo "CLOSE2\n\n";
-					break;
-				}
+				$params = array_slice($rawParams, $offset, $span);
+				$totalSpan += $span;
+
+//				if (($pCount = count($params)) < $parameter->getSpanLength()) {
+//					$results["_" . $parameter->getName()] = BrokenSyntaxResult::create("", expectedType: $parameter->getValueName());
+//					break;
+//				}
 				$offset += $span;
-				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it from doing that?
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
-//				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->overloads)) {
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
-//					echo "CLOSE2.5\n\n";
+					$matchPoint += $result->getMatchedParameter();
 					break;
 				}
-				$matchPoint+= $span;
+				$matchPoint += $span;
 			}
-			if ($paramCount > $totalSpan) {
+			if ($paramCount > $totalSpan && !$hasFailed) {
 				$results["_error"] = BrokenSyntaxResult::create("", implode(" ", $rawParams));
-//				echo "CLOSE3\n\n";
 				$hasFailed = true;
 			}
-//			echo "Max point of " . $overloadId . " is " . $matchPoint . "\n";
+			echo "Max point of " . $overloadId . " is " . $matchPoint . "\n";
 			if (!$hasFailed) {
 				$successResults[] = $results;
 			} else {
@@ -104,8 +98,6 @@ trait ParametableTrait{
 				$failedResults[$matchPoint] = $results;
 			}
 		}
-//		var_dump("Success", $successResults);
-//		var_dump("Fail", $failedResults);
 		if (empty($successResults)) {
 			return $failedResults[$finalId];
 		}
