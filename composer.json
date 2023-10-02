@@ -21,7 +21,8 @@
     "virion": {
       "spec": "3.1",
       "namespace-root": "galaxygames\\ovommand",
-      "shared-namespace-root": "galaxygames\\ovommand\\enum"
+      "shared-namespace-root": "shared\\galaxygames\\ovommand\\enum",
+      "shared-namespace-split-root": ""
     }
   },
   "scripts": {
