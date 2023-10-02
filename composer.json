@@ -1,5 +1,5 @@
 {
-  "name": "galaxygames/ovommand",
+  "name": "galaxygames/shared_ovommand",
   "description": "a normal framework virion designed to parse command data for PocketMine - MP",
   "type": "library",
   "license": "GPL-3.0",
