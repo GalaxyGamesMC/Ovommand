@@ -1,6 +1,6 @@
 <?php
 
-namespace shared;
+namespace galaxygames;
 
 class MeowMew{
 	public function __construct(){
