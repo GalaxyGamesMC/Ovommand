@@ -6,9 +6,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\lang\Translatable;
-use pocketmine\permission\Permission;
 use pocketmine\plugin\Plugin;
-use pocketmine\plugin\PluginOwned;
 
 abstract class BaseSubCommand extends Ovommand{
 	use ParametableTrait;
@@ -87,19 +85,5 @@ abstract class BaseSubCommand extends Ovommand{
 			$this->setUsage("/$parentHeader " . implode("\n/$parentHeader ", $this->generateUsageList()));
 		}
 		return $this;
-	}
-
-	public function getOwningPlugin() : ?Plugin{
-		$parent = $this->getParent();
-		if ($parent === null) {
-			throw new \RuntimeException("NO :C");
-		}
-		while ($parent instanceof BaseSubCommand) {
-			$newParent = $parent->getParent();
-			if ($newParent !== null) {
-				$parent = $newParent;
-			}
-		}
-		return $parent->getOwningPlugin();
 	}
 }

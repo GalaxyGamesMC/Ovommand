@@ -5,22 +5,23 @@ namespace galaxygames\ovommand\constraint;
 
 use galaxygames\ovommand\fetus\IParametable;
 use pocketmine\command\CommandSender;
+use shared\galaxygames\ovommand\fetus\IOvommand;
 
 abstract class BaseConstraint{
-	protected IParametable $context;
+	protected IOvommand $context;
 
 	/**
 	 * BaseConstraint constructor.
 	 *
 	 * "Context" is required so that this new-constraint-system doesn't hinder getting command info
 	 *
-	 * @param IParametable $context
+	 * @param IOvommand $context
 	 */
-	public function __construct(IParametable $context){
+	public function __construct(IOvommand $context){
 		$this->context = $context;
 	}
 
-	public function getContext() : IParametable{
+	public function getContext() : IOvommand{
 		return $this->context;
 	}
 
