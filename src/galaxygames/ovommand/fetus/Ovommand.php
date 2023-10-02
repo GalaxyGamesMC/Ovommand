@@ -71,7 +71,7 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 			$execute->execute($sender, $label, $args, $preLabel . $label);
 		} else {
 			$passArgs = $this->parseParameters($args);
-			if ($this->onSyntaxError($sender, $commandLabel, $passArgs, $args)) {
+			if ($this->onSyntaxError($sender, $commandLabel, $passArgs, $args, $preLabel)) {
 				$this->onRun($sender, $commandLabel, $passArgs);
 			}
 		}
@@ -134,11 +134,12 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 	 * @param string[] $nonParsedArgs
 	 */
 	public function onSyntaxError(CommandSender $sender, string $commandLabel, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
+		var_dump($args);
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
 				$arg->setPreLabel($preLabel);
 				array_shift($nonParsedArgs);
-				$parts = SyntaxConst::getSyntaxBetweenBrokenPart("/" . $preLabel . " " . implode(" ", $nonParsedArgs), $arg->getBrokenSyntax());
+				$parts = SyntaxConst::getSyntaxBetweenBrokenPart("/" . $arg->getPreLabel() . " " . implode(" ", $nonParsedArgs), $arg->getBrokenSyntax());
 				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]));
 				return false;
 			}

@@ -47,34 +47,69 @@ trait ParametableTrait{
 		if ($paramCount !== 0 && !$this->hasOverloads()) {
 			return [];
 		}
-		/** @var BaseResult[][] $resultContainers */
-		$resultContainers = [];
+		/** @var BaseResult[][] $successResults */
+		$successResults = [];
+		/** @var BaseResult[][] $failedResults */
+		$failedResults = [];
 		$finalId = 0;
+		
+//		$spanMap = array_map(static fn(array $parameters) => array_map(static fn(BaseParameter $parameter) => $parameter->getSpanLength(), $parameters), $this->overloads);
+//		var_dump($spanMap);
+		
 		foreach ($this->overloads as $overloadId => $parameters) {
 			$offset = 0;
 			$results = [];
-			foreach ($parameters as $parameter) {
+			$hasFailed = false;
+			$totalSpan = 0;
+			$matchPoint = 0;
+			foreach ($parameters as $parameterId => $parameter) {
 				$params = array_slice($rawParams, $offset, $span = $parameter->getSpanLength());
+				echo "OPEN\n";
+				var_dump($params);
+				echo "CLOSE\n";
+				$totalSpan += $span;
 				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
+					echo "CLOSE1\n\n";
 					break;
 				}
-				if (count($params) < $parameter->getSpanLength()) {
-					continue;
+				if (($pCount = count($params)) < $parameter->getSpanLength()) {
+					$results["_error" . $offset] = BrokenSyntaxResult::create("", expectedType: $parameter->getValueName());
+					echo "CLOSE2\n\n";
+					break;
 				}
 				$offset += $span;
 				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it from doing that?
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
-				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->overloads)) {
-					continue 2;
+//				if ($result instanceof BrokenSyntaxResult && $overloadId + 1 !== count($this->overloads)) {
+				if ($result instanceof BrokenSyntaxResult) {
+					$hasFailed = true;
+					echo "CLOSE2.5\n\n";
+					break;
 				}
+				$matchPoint+= $span;
 			}
-			if ($paramCount > ($pCount = count($parameters))) {
-				$results["_error"] = BrokenSyntaxResult::create(array_slice($rawParams, $pCount, $pCount + 1)[0]);
+			if ($paramCount > $totalSpan) {
+				$results["_error"] = BrokenSyntaxResult::create("", implode(" ", $rawParams));
+				echo "CLOSE3\n\n";
+				$hasFailed = true;
 			}
-			$resultContainers[$finalId = $overloadId] = $results;
+			echo "Max point of " . $overloadId . " is " . $matchPoint . "\n";
+			if (!$hasFailed) {
+				$successResults[] = $results;
+			} else {
+				if ($matchPoint > $finalId) {
+					$finalId = $matchPoint;
+				}
+				$failedResults[$matchPoint] = $results;
+			}
 		}
-		return $resultContainers[$finalId];
+		var_dump("Success", $successResults);
+		var_dump("Fail", $failedResults);
+		if (empty($successResults)) {
+			return $failedResults[$finalId];
+		}
+		return $successResults[array_key_first($successResults)];
 	}
 
 	/**

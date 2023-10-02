@@ -6,6 +6,8 @@ namespace galaxygames\ovommand\parameter\result;
 use shared\galaxygames\ovommand\fetus\BaseResult;
 
 class BrokenSyntaxResult extends BaseResult{
+	public const CODE = 0; //TODO
+
 	public function __construct(protected string $brokenSyntax, protected string $fullSyntax = "", protected string $expectedType = "", protected string $preLabel = ""){}
 
 	public static function create(string $brokenSyntax, string $fullSyntax = "", string $expectedType = "", string $preLabel = "") : self{
@@ -22,5 +24,9 @@ class BrokenSyntaxResult extends BaseResult{
 
 	public function setPreLabel(string $preLabel) : void{
 		$this->preLabel = $preLabel;
+	}
+
+	public function getPreLabel() : string{
+		return $this->preLabel;
 	}
 }
