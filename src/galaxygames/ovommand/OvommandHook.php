@@ -44,15 +44,25 @@ use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
+use ReflectionException;
+use shared\galaxygames\ovommand\fetus\IHookable;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
-final class OvommandHook{
-	protected static bool $registered = false;
-	protected static ?Plugin $plugin = null;
+final class OvommandHook implements IHookable{
+	/** @var self */
+	private static IHookable $instance;
+	protected static Plugin $plugin;
 	protected static EnumManager $enumManager;
 
-	public static function register(Plugin $plugin) : bool{
-		if (!self::$registered || self::$plugin === null || self::$plugin->isEnabled()) {
+	public static function getInstance() : OvommandHook{
+		if (!isset(self::$plugin)) {
+			throw new \RuntimeException("TODO"); //TODO: msg
+		}
+		return self::$instance ?? self::register(self::$plugin);
+	}
+
+	public static function register(Plugin $plugin) : self{
+		if (!isset(self::$plugin) || self::$plugin->isEnabled()) {
 			self::$enumManager = EnumManager::getInstance();
 			$pluginManager = Server::getInstance()->getPluginManager();
 			try {
@@ -64,36 +74,33 @@ final class OvommandHook{
 					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
 					$enum?->removeValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
-
-				$interceptor = SimplePacketHandler::createInterceptor($plugin);
-				$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
-					$player = $target->getPlayer();
-					if ($player === null) {
-						return false;
-					}
-					foreach ($packet->commandData as $name => $commandData) {
-						$command = Server::getInstance()->getCommandMap()->getCommand($name);
-						if ($command instanceof BaseCommand) {
-							foreach ($command->getConstraints() as $constraint) {
-								if (!$constraint->isVisibleTo($player)) {
-									continue 2;
-								}
-							}
-							$commandData->overloads = self::generateOverloads($player, $command);
-						}
-					}
-					return true;
-				});
-			} catch (\ReflectionException $e) {
-				$plugin->getLogger()->notice($e->getMessage());
-				return false;
+			} catch (ReflectionException $e) {
+				$plugin->getLogger()->logException($e);
 			}
+			$interceptor = SimplePacketHandler::createInterceptor($plugin);
+			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
+				$player = $target->getPlayer();
+				if ($player === null) {
+					return false;
+				}
+				foreach ($packet->commandData as $name => $commandData) {
+					$command = Server::getInstance()->getCommandMap()->getCommand($name);
+					if ($command instanceof BaseCommand) {
+						foreach ($command->getConstraints() as $constraint) {
+							if (!$constraint->isVisibleTo($player)) {
+								continue 2;
+							}
+						}
+						$commandData->overloads = self::generateOverloads($player, $command);
+					}
+				}
+				return true;
+			});
 			self::$plugin = $plugin;
-			GlobalHookPool::addPlugin($plugin);
-			self::$registered = true;
-			return true;
+			self::$instance = new self;
+			GlobalHookPool::addHook(self::$instance); //infinite loop bruh
 		}
-		return false;
+		return self::$instance;
 	}
 
 	/**
@@ -163,7 +170,7 @@ final class OvommandHook{
 	}
 
 	public static function isRegistered() : bool{
-		return self::$registered;
+		return isset(self::$plugin);
 	}
 
 	public static function setSyntaxDebugMode(int $syntax) : void{
@@ -174,7 +181,10 @@ final class OvommandHook{
 		return self::$enumManager ?? EnumManager::getInstance();
 	}
 
-	public static function getOwnedPlugin() : ?Plugin{
+	public static function getOwnedPlugin() : Plugin{
+		if (!self::isRegistered()) {
+			throw new \RuntimeException("TODO"); //TODO: msg
+		}
 		return self::$plugin;
 	}
 }
