@@ -5,9 +5,6 @@ namespace shared\galaxygames\ovommand;
 
 use pocketmine\plugin\Plugin;
 
-/**
- * Hooked lol
- */
 class GlobalHookPool{
 	/** @var Plugin[] $plugins */
 	protected static array $plugins;
