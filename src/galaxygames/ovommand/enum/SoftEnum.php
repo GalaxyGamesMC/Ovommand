@@ -7,9 +7,9 @@ use pocketmine\network\mcpe\NetworkBroadcastUtils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
-use shared\galaxygames\ovommand\enum\fetus\IDynamic;
+use shared\galaxygames\ovommand\enum\fetus\IDynamicEnum;
 
-class SoftEnum extends BaseEnum implements IDynamic{
+class SoftEnum extends BaseEnum implements IDynamicEnum{
 	public function encode() : CommandEnum{
 		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)], true);
 	}

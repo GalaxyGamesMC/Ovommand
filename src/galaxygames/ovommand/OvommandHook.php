@@ -56,11 +56,11 @@ final class OvommandHook{
 			$pluginManager = Server::getInstance()->getPluginManager();
 			try {
 				$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER);
+					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
 					$enum?->addValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
 				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER);
+					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
 					$enum?->removeValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
 

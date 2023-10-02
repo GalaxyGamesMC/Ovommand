@@ -9,15 +9,15 @@ use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use shared\galaxygames\ovommand\enum\fetus\IDynamic;
+use shared\galaxygames\ovommand\enum\fetus\IDynamicEnum;
 use shared\galaxygames\ovommand\enum\fetus\IEnum;
-use shared\galaxygames\ovommand\enum\fetus\IStatic;
+use shared\galaxygames\ovommand\enum\fetus\IStaticEnum;
 
 class EnumParameter extends BaseParameter{
 	protected IEnum $enum;
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
-		$enum = EnumManager::getInstance()->getSoftEnum($enumName, $isSoft);
+		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
 		if ($enum === null) {
 			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
 		}
@@ -35,8 +35,8 @@ class EnumParameter extends BaseParameter{
 
 	public function isSoft() : bool{
 		return match (true) {
-			$this->enum instanceof IStatic => false,
-			$this->enum instanceof IDynamic => true,
+			$this->enum instanceof IStaticEnum => false,
+			$this->enum instanceof IDynamicEnum => true,
 			default => throw new \RuntimeException("TODO") //TODO: Update msg
 		};
 	}
