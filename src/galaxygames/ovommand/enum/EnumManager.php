@@ -8,10 +8,10 @@ use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\OvommandHook;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\SingletonTrait;
-use shared\galaxygames\ovommand\enum\fetus\IDynamicEnum;
-use shared\galaxygames\ovommand\enum\fetus\IEnum;
-use shared\galaxygames\ovommand\enum\fetus\IStaticEnum;
-use shared\galaxygames\ovommand\enum\GlobalEnumPool;
+use shared\galaxygames\ovommand\fetus\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\IEnum;
+use shared\galaxygames\ovommand\fetus\IStaticEnum;
+use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
 	use SingletonTrait;

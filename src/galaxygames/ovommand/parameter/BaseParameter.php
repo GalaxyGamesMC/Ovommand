@@ -7,8 +7,8 @@ use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use shared\galaxygames\ovommand\enum\fetus\BaseResult;
-use shared\galaxygames\ovommand\enum\fetus\IParameter;
+use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\IParameter;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;

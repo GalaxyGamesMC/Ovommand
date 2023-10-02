@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace shared\galaxygames\ovommand\enum;
+namespace shared\galaxygames\ovommand;
 
-use shared\galaxygames\ovommand\enum\fetus\IDynamicEnum;
-use shared\galaxygames\ovommand\enum\fetus\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\IStaticEnum;
 
 final class GlobalEnumPool{
 	/**

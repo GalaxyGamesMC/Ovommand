@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace shared\galaxygames\ovommand\enum\fetus;
+namespace shared\galaxygames\ovommand\fetus;
 
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 

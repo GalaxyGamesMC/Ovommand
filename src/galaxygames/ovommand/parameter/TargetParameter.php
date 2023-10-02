@@ -7,7 +7,7 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use pocketmine\Server;
-use shared\galaxygames\ovommand\enum\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\BaseResult;
 
 class TargetParameter extends BaseParameter{
 

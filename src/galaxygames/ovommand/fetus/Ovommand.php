@@ -13,7 +13,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
-use shared\galaxygames\ovommand\enum\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\BaseResult;
 
 abstract class Ovommand extends Command implements IParametable{
 	use ParametableTrait;
