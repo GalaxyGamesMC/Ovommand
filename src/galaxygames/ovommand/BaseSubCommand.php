@@ -89,7 +89,7 @@ abstract class BaseSubCommand extends Ovommand{
 		return $this;
 	}
 
-	public function getOwningPlugin() : Plugin{
+	public function getOwningPlugin() : ?Plugin{
 		$parent = $this->getParent();
 		if ($parent === null) {
 			throw new \RuntimeException("NO :C");

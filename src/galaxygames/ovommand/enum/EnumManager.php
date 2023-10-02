@@ -5,22 +5,17 @@ namespace galaxygames\ovommand\enum;
 
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\exception\ExceptionMessage;
+use galaxygames\ovommand\OvommandHook;
 use pocketmine\player\GameMode;
+use pocketmine\plugin\Plugin;
 use pocketmine\utils\SingletonTrait;
+use shared\galaxygames\ovommand\enum\fetus\IDynamic;
+use shared\galaxygames\ovommand\enum\fetus\IEnum;
+use shared\galaxygames\ovommand\enum\fetus\IStatic;
+use shared\galaxygames\ovommand\enum\GlobalEnumPool;
 
 final class EnumManager{
 	use SingletonTrait;
-
-	/**
-	 * @var HardEnum[]
-	 * @phpstan-var array<string, HardEnum>
-	 */
-	private array $hardEnums = [];
-	/**
-	 * @var SoftEnum[]
-	 * @phpstan-var array<string, SoftEnum>
-	 */
-	private array $softEnums = [];
 
 	public function __construct(){
 		self::setInstance($this);
@@ -41,47 +36,48 @@ final class EnumManager{
 		$this->register(new SoftEnum(DefaultEnums::ONLINE_PLAYER->value));
 	}
 
-	public function register(SoftEnum|HardEnum $enum) : void{
+	public function register(IEnum $enum) : void{
 		$enumName = $enum->getName();
 		if (trim($enumName) === '') {
 			throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
 		}
-		if ($enum instanceof SoftEnum) {
-			if (isset($this->softEnums[$enumName])) {
+		if ($enum instanceof IDynamic) {
+			if (isset(GlobalEnumPool::$softEnums[$enumName])) {
 				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
 			}
-			$this->softEnums[$enum->getName()] = $enum;
+			GlobalEnumPool::$softEnums[$enum->getName()] = $enum;
+		} elseif($enum instanceof IStatic) {
+			if (isset(GlobalEnumPool::$hardEnums[$enumName])) {
+				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
+			}
+			GlobalEnumPool::$hardEnums[$enum->getName()] = $enum;
 		} else {
-			if (isset($this->hardEnums[$enumName])) {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
-			}
-			$this->hardEnums[$enum->getName()] = $enum;
+			throw new \RuntimeException("TODO"); //TODO: MSG
 		}
-//		$enum->isSoft() ? $enumList = &$this->softEnums : $enumList = &$this->hardEnums; reference method, slower?
-//		if (isset($enumList[$enumName])) {
-//			throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
-//		}
-//		$enumList[$enum->getName()] = $enum;
 	}
 
-	public function getSoftEnum(string|DefaultEnums $enumName) : ?SoftEnum{
+	public function getSoftEnum(string|DefaultEnums $enumName) : ?IDynamic{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
-		return $this->softEnums[$enumName] ?? null;
+		return GlobalEnumPool::$softEnums[$enumName] ?? null;
 	}
 
-	public function getHardEnum(string|DefaultEnums $enumName) : ?HardEnum{
+	public function getHardEnum(string|DefaultEnums $enumName) : ?IStatic{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
-		return $this->hardEnums[$enumName] ?? null;
+		return GlobalEnumPool::$hardEnums[$enumName] ?? null;
 	}
 
-	public function getEnum(string|DefaultEnums $enumName, bool $preferSoft = true) : ?BaseEnum{
+	public function getEnum(string|DefaultEnums $enumName, bool $preferSoft = true) : IDynamic|IStatic|null{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
-		return $preferSoft ? $this->softEnums[$enumName] ?? $this->hardEnums[$enumName] ?? null : $this->hardEnums[$enumName] ?? $this->softEnums[$enumName] ?? null;
+		return $preferSoft ? ($this->getSoftEnum($enumName) ?? $this->getHardEnum($enumName)) : ($this->getHardEnum($enumName) ?? $this->getSoftEnum($enumName));
+	}
+
+	public function getOwningPlugin() : ?Plugin{
+		return OvommandHook::getOwnedPlugin();
 	}
 }

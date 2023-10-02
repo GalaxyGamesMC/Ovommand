@@ -6,8 +6,9 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
+use shared\galaxygames\ovommand\enum\fetus\IEnum;
 
-abstract class BaseEnum{
+abstract class BaseEnum implements IEnum{
 	/** @var array<string, mixed> $values */
 	protected array $values;
 	/** @var string[] $hiddenAliases */
@@ -67,7 +68,7 @@ abstract class BaseEnum{
 					$aliasesList[$a] = $key;
 				}
 			} else {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string)$alias, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
+				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => $alias, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
 			}
 //			match (true) {
 //				!isset($this->values[$key]) => throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => (string)$alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR),
@@ -80,7 +81,6 @@ abstract class BaseEnum{
 	}
 
 	abstract public function encode() : CommandEnum;
-	abstract public function isSoft() : bool;
 
 	/**
 	 * @return array<string, mixed>

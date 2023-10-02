@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\enum\BaseEnum;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use shared\galaxygames\ovommand\enum\fetus\IDynamic;
+use shared\galaxygames\ovommand\enum\fetus\IEnum;
+use shared\galaxygames\ovommand\enum\fetus\IStatic;
 
 class EnumParameter extends BaseParameter{
-	protected BaseEnum $enum;
+	protected IEnum $enum;
 
-	public function __construct(string $name, DefaultEnums|string $enumName, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
-		$enum = EnumManager::getInstance()->getEnum($enumName);
+	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
+		$enum = EnumManager::getInstance()->getSoftEnum($enumName, $isSoft);
 		if ($enum === null) {
 			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
 		}
@@ -28,11 +30,15 @@ class EnumParameter extends BaseParameter{
 	}
 
 	public function getNetworkType() : ParameterTypes{
-		return $this->enum->isSoft() ? ParameterTypes::SOFT_ENUM : ParameterTypes::ENUM;
+		return $this->isSoft() ? ParameterTypes::SOFT_ENUM : ParameterTypes::ENUM;
 	}
 
 	public function isSoft() : bool{
-		return $this->enum->isSoft();
+		return match (true) {
+			$this->enum instanceof IStatic => false,
+			$this->enum instanceof IDynamic => true,
+			default => throw new \RuntimeException("TODO") //TODO: Update msg
+		};
 	}
 
 	public function parse(array $parameters) : BaseResult{

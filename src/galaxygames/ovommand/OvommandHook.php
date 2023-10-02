@@ -171,4 +171,8 @@ final class OvommandHook{
 	public static function getEnumManager() : EnumManager{
 		return self::$enumManager ?? EnumManager::getInstance();
 	}
+
+	public static function getOwnedPlugin() : ?Plugin{
+		return self::$plugin;
+	}
 }

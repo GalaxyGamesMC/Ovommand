@@ -7,8 +7,9 @@ use pocketmine\network\mcpe\NetworkBroadcastUtils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
+use shared\galaxygames\ovommand\enum\fetus\IDynamic;
 
-class SoftEnum extends BaseEnum{
+class SoftEnum extends BaseEnum implements IDynamic{
 	public function encode() : CommandEnum{
 		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)], true);
 	}
@@ -78,9 +79,5 @@ class SoftEnum extends BaseEnum{
 		NetworkBroadcastUtils::broadcastPackets(Server::getInstance()->getOnlinePlayers(), [
 			UpdateSoftEnumPacket::create($this->name, $values, $type)
 		]);
-	}
-
-	public function isSoft() : bool{
-		return true;
 	}
 }
