@@ -19,6 +19,12 @@ class PositionParameter extends BaseParameter{
 	public function parse(array $parameters) : BrokenSyntaxResult|CoordinateResult{
 		parent::parse($parameters);
 
+		$pCount = count($parameters);
+
+		if ($pCount < $this->getSpanLength()) {
+			return new BrokenSyntaxResult("");
+		}
+
 		$brokenSyntax = "";
 		$coordType = null;
 		$types = [];

@@ -58,6 +58,9 @@ trait ParametableTrait{
 				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
 					break;
 				}
+				if (count($params) < $parameter->getSpanLength()) {
+					continue;
+				}
 				$offset += $span;
 				//TODO: Because the parser might choose the wrong overloads, so adding something to stop it from doing that?
 				$result = $parameter->parse($params);

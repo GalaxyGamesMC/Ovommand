@@ -36,6 +36,9 @@ abstract class BaseParameter implements IParameter{
 		if (count($parameters) > $this->getSpanLength()) {
 			throw new \InvalidArgumentException("Too many args");
 		}
+		if (count($parameters) < $this->getSpanLength()) {
+			throw new \InvalidArgumentException("Not enough args");
+		}
 		return new ValueResult("null");
 	}
 
