@@ -44,6 +44,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
+use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class OvommandHook{
 	protected static bool $registered = false;
@@ -88,6 +89,7 @@ final class OvommandHook{
 				return false;
 			}
 			self::$plugin = $plugin;
+			GlobalHookPool::addPlugin($plugin);
 			self::$registered = true;
 			return true;
 		}

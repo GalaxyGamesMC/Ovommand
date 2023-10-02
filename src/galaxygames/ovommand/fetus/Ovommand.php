@@ -38,7 +38,6 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 		}
 		$this->setup();
 		$this->setUsage($usageMessage ?? "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList()));
-//		var_dump($this->getUsage());
 	}
 
 	/**
@@ -54,7 +53,7 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 			return;
 		}
 		$label = $args[0];
-		$preLabel .= $commandLabel . " " . $label;
+		$preLabel .= $commandLabel . " " . $preLabel;
 		$this->setCurrentSender($sender);
 		if (isset($this->subCommands[$label])) {
 			array_shift($args);
@@ -69,7 +68,7 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 				}
 				return;
 			}
-			$execute->execute($sender, $label, $args, $preLabel . $commandLabel);
+			$execute->execute($sender, $label, $args, $preLabel . $label);
 		} else {
 			$passArgs = $this->parseParameters($args);
 			if ($this->onSyntaxError($sender, $commandLabel, $passArgs, $args)) {

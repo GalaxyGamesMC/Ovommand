@@ -13,18 +13,6 @@ trait ParametableTrait{
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
 
-//	public function validateParameter() : bool{
-//		if (array_is_list($this->overloads)) {
-//			foreach ($this->overloads as $overload) {
-//				foreach ($overload as $parameter) {
-//
-//				}
-//			}
-//			return true;
-//		}
-//		return false;
-//	}
-
 	public function registerParameters(int $overloadId, BaseParameter ...$parameters) : void{
 		if ($overloadId < 0) {
 			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
@@ -33,8 +21,6 @@ trait ParametableTrait{
 			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
 		}
 		foreach ($parameters as $parameter) {
-			//TODO: TextParameter does not allow
-			//TODO: WRONG MSG!!!!!!!!!!!!!!!!!!!!!
 			if (!$parameter->isOptional()) {
 				foreach ($this->overloads[$overloadId] ?? [] as $para) {
 					if ($para->isOptional()) {
@@ -44,18 +30,6 @@ trait ParametableTrait{
 			}
 
 			$this->overloads[$overloadId][] = $parameter;
-//			echo $this->getName() . " with \$overloadId: $overloadId\n{" . $parameter->getName() . ": " . $parameter->getValueName() . "}\n\n";
-//			usort($this->overloads, $callback)
-
-			//		usort($this->overloads[$position], static function(BaseParameter $a, BaseParameter $b) : int{
-			//			if ($a->getSpanLength() === PHP_INT_MAX) { // if it takes unlimited parameters, pull it down
-			//				return 1;
-			//			}
-			//			return -1;
-			//		}); // Sort with their spans
-//			usort($this->overloads[$overloadId], static function(BaseParameter $a, BaseParameter $b) : int{
-//				return strnatcmp($a->getName() . ": " . $a->getValueName(), $b->getName() . ": " . $b->getValueName());
-//			}); // Sort with their alphabet. EDIT: FLAW LOL [not work]
 		}
 	}
 
