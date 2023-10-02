@@ -46,8 +46,6 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
-// meow
-
 final class OvommandHook{
 	protected static bool $registered = false;
 	protected static ?Plugin $plugin = null;
