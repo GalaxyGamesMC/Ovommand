@@ -19,7 +19,9 @@ class EnumParameter extends BaseParameter{
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
 		$this->enum = EnumManager::getInstance()->getEnum($enumName, $isSoft) ?? PlaceholderEnum::create($name, $isSoft);
-		var_dump($this->enum);
+		if ($this->enum instanceof PlaceholderEnum) {
+			var_dump($this->enum);
+		}
 		parent::__construct($name, $optional, $flag);
 	}
 
@@ -35,11 +37,23 @@ class EnumParameter extends BaseParameter{
 		return match (true) {
 			$this->enum instanceof IStaticEnum => false,
 			$this->enum instanceof IDynamicEnum => true,
+			$this->enum instanceof PlaceholderEnum => $this->enum->isSoft(),
 			default => throw new \RuntimeException("TODO") //TODO: Update msg
 		};
 	}
 
+	protected function resolvePlaceholder() : void{
+		if ($this->enum instanceof PlaceholderEnum) {
+			$enum = EnumManager::getInstance()->getEnum($this->getValueName(), $this->isSoft());
+			if ($enum === null) {
+				throw new \RuntimeException("Enum was not registered!"); //TODO: Better name
+			}
+			$this->enum = $enum;
+		}
+	}
+
 	public function parse(array $parameters) : BaseResult{
+		$this->resolvePlaceholder();
 		$enumValue = $this->enum->getValue($key = implode(" ", $parameters));
 		if ($enumValue !== null) {
 			return ValueResult::create($this->returnRaw ? $key : $enumValue); //TODO: Best sol?
@@ -48,13 +62,7 @@ class EnumParameter extends BaseParameter{
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
-		if ($this->enum instanceof PlaceholderEnum) {
-			$enum = EnumManager::getInstance()->getEnum($this->getValueName(), $this->isSoft());
-			if ($enum === null) {
-				throw new \RuntimeException("Enum was not registered!"); //TODO: Better name
-			}
-			$this->enum = $enum;
-		}
+		$this->resolvePlaceholder();
 		return CommandParameter::enum($this->name, $this->enum->encode(), $this->flag, $this->optional);
 	}
 
