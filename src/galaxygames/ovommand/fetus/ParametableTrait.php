@@ -65,6 +65,7 @@ trait ParametableTrait{
 			foreach ($parameters as $parameterId => $parameter) {
 				$span = $parameter->getSpanLength();
 				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
+//					echo "CLOSE 1" . $parameter->getName() . "\n";
 					break;
 				}
 				$params = array_slice($rawParams, $offset, $span);
@@ -73,7 +74,10 @@ trait ParametableTrait{
 //				if (($pCount = count($params)) < $parameter->getSpanLength()) {
 //					$results["_" . $parameter->getName()] = BrokenSyntaxResult::create("", expectedType: $parameter->getValueName());
 //					break;
-//				}
+//				} temp?,
+				//this got replaced by BrokenSyntaxResult::setMatchedParameter()...
+				//TODO: gotta find a better name for that function
+
 				$offset += $span;
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
@@ -84,11 +88,12 @@ trait ParametableTrait{
 				}
 				$matchPoint += $span;
 			}
-			if ($paramCount > $totalSpan && !$hasFailed) {
-				$results["_error"] = BrokenSyntaxResult::create("", implode(" ", $rawParams));
+			if (($paramCount > $totalSpan) && !$hasFailed) {
+				$results["_error"] = BrokenSyntaxResult::create($rawParams[$totalSpan], implode(" ", $rawParams))
+					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 				$hasFailed = true;
 			}
-			echo "Max point of " . $overloadId . " is " . $matchPoint . "\n";
+//			echo "Max point of " . $overloadId . " is " . $matchPoint . "\n";
 			if (!$hasFailed) {
 				$successResults[] = $results;
 			} else {

@@ -17,12 +17,11 @@ class PositionParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : BrokenSyntaxResult|CoordinateResult{
-//		parent::parse($parameters);
-
 		$pCount = count($parameters);
 
-		if ($pCount < $this->getSpanLength()) {
-			return new BrokenSyntaxResult("");
+		if ($pCount > $this->getSpanLength()) {
+			return BrokenSyntaxResult::create($parameters[$this->getSpanLength() + 1], implode(" ", $parameters))
+				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 		}
 
 		$brokenSyntax = "";
@@ -55,18 +54,24 @@ class PositionParameter extends BaseParameter{
 				$brokenSyntax = $parameter;
 				break;
 			}
-			$value = ltrim($parameter, $u);
-			$nValue = str_contains($value, ".") ? (double) $value : (int) $value;
 			$match++;
+			$value = ltrim($parameter, $u);
+			$values[$i] = str_contains($value, ".") ? (double) $value : (int) $value;
 			$types[$i] = $type;
-			$values[$i] = $nValue;
-		}
-		if ($match < $this->getSpanLength()) {
-			return  BrokenSyntaxResult::create(implode(" ", $parameters), expectedType: $this->getValueName());
 		}
 		if ($brokenSyntax !== "") {
-			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $brokenSyntax);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0] ?? "", $brokenSyntax, $syntax[1] ?? "") ?? "")->setMatchedParameter($match);
+			return BrokenSyntaxResult::create($brokenSyntax, implode(" ", $parameters), $this->getValueName())->setMatchedParameter($match)->setRequiredParameter($this->getSpanLength());
+		}
+		if ($pCount < $this->getSpanLength()) {
+			return BrokenSyntaxResult::create($brokenSyntax, implode(" ", $parameters), $this->getValueName())
+				->setMatchedParameter($match)
+				->setRequiredParameter($this->getSpanLength())
+				->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
+		}
+		if ($match < $this->getSpanLength()) {
+			return BrokenSyntaxResult::create($brokenSyntax, implode(" ", $parameters), $this->getValueName())
+				->setMatchedParameter($match)
+				->setRequiredParameter($this->getSpanLength());
 		}
 		return CoordinateResult::fromData(...$values, ...$types);
 	}

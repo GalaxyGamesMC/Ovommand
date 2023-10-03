@@ -53,7 +53,11 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 			return;
 		}
 		$label = $args[0];
-		$preLabel .= $preLabel . " " . $commandLabel;
+		if ($preLabel === "") {
+			$preLabel = $commandLabel;
+		} else {
+			$preLabel .= " " . $commandLabel;
+		}
 		$this->setCurrentSender($sender);
 		if (isset($this->subCommands[$label])) {
 			array_shift($args);
@@ -137,11 +141,22 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 		var_dump($args);
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
+				for ($i = 0; $i <= $arg->getMatchedParameter(); ++$i) {
+					array_shift($nonParsedArgs);
+				}
 				$arg->setPreLabel($preLabel);
-				array_shift($nonParsedArgs);
-				$parts = SyntaxConst::getSyntaxBetweenBrokenPart("/" . $preLabel . implode(" ", $nonParsedArgs), $arg->getBrokenSyntax());
-				var_dump($parts);
-				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]));
+				$fullCMD = "/" . $preLabel . " " . $arg->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
+				$parts = SyntaxConst::getSyntaxBetweenBrokenPart($fullCMD, $arg->getBrokenSyntax());
+				var_dump($fullCMD, $parts);
+
+				$msg = match($arg->getCode()) {
+					BrokenSyntaxResult::CODE_BROKEN_SYNTAX, BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS => SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]),
+					BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS =>  SyntaxConst::parseOvommandSyntaxMessage($fullCMD, "", "")
+				};
+
+				$sender->sendMessage(TextFormat::RED . $msg);
+				$sender->sendMessage("Expect the value is " . $arg->getExpectedType());
+				$sender->sendMessage("Usage: \n" . TextFormat::MINECOIN_GOLD . implode("\n" . TextFormat::MINECOIN_GOLD, explode("\n", $this->getUsage())));
 				return false;
 			}
 		}

@@ -46,7 +46,7 @@ class EnumParameter extends BaseParameter{
 		if ($enumValue !== null) {
 			return ValueResult::create($this->returnRaw ? $key : $enumValue); //TODO: Best sol?
 		}
-		return BrokenSyntaxResult::create($key, expectedType: $this->enum->getName()); //TODO: better msg
+		return BrokenSyntaxResult::create($key, $key, expectedType: $this->enum->getName()); //TODO: better msg
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
