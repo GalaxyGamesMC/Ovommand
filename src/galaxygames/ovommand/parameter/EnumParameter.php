@@ -18,6 +18,7 @@ class EnumParameter extends BaseParameter{
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
 		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
+		var_dump($enum);
 		if ($enum === null) {
 			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
 		}

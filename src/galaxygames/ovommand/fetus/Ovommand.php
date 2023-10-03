@@ -138,7 +138,6 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 	 * @param string[] $nonParsedArgs
 	 */
 	public function onSyntaxError(CommandSender $sender, string $commandLabel, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
-		var_dump($args);
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
 				for ($i = 0; $i <= $arg->getMatchedParameter(); ++$i) {
@@ -147,10 +146,10 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 				$arg->setPreLabel($preLabel);
 				$fullCMD = "/" . $preLabel . " " . $arg->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
 				$parts = SyntaxConst::getSyntaxBetweenBrokenPart($fullCMD, $arg->getBrokenSyntax());
-				var_dump($fullCMD, $parts);
+//				var_dump($fullCMD, $parts);
 
 				$msg = match($arg->getCode()) {
-					BrokenSyntaxResult::CODE_BROKEN_SYNTAX, BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS => SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]),
+					default => SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]),
 					BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS =>  SyntaxConst::parseOvommandSyntaxMessage($fullCMD, "", "")
 				};
 
@@ -188,5 +187,12 @@ abstract class Ovommand extends Command implements IOvommand, IParametable{
 
 	public function getOwningPlugin() : ?Plugin{
 		return OvommandHook::getOwnedPlugin();
+	}
+
+	public function getUsage() : string{
+		if (($usage = $this->usageMessage) instanceof Translatable) {
+			return $usage->getText();
+		}
+		return $usage;
 	}
 }

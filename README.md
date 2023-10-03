@@ -31,6 +31,7 @@ Suggest:
 
 Discuss:
 - [ ] The aliases shouldn't be re-set to new one or adding more if they were registered! :l
+- [ ] the problem with shared data is that if other plugins try to use other plugins enum... the enum might not exist due to plugin loading order!
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 

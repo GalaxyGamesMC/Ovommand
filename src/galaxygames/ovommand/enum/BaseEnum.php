@@ -23,8 +23,7 @@ abstract class BaseEnum implements IEnum{
 	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
 	 */
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = []){
-		$this->values = $values; //TODO: validate inputs
-//		$this->values = Utils::collapseBindingEnumInputs($values);
+		$this->values = $values;
 		$this->setAliases($showAliases);
 		$this->setAliases($hiddenAliases, true);
 	}

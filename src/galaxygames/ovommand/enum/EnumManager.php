@@ -12,6 +12,7 @@ use shared\galaxygames\ovommand\fetus\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\IEnum;
 use shared\galaxygames\ovommand\fetus\IStaticEnum;
 use shared\galaxygames\ovommand\GlobalEnumPool;
+use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class EnumManager{
 	use SingletonTrait;
@@ -21,13 +22,29 @@ final class EnumManager{
 		$this->initDefaultEnums();
 	}
 
-	protected function initDefaultEnums() : void{
-		$this->register(DefaultEnums::BOOLEAN()->getEnum());
-		$this->register(DefaultEnums::VANILLA_GAMEMODE()->getEnum());
-		$this->register(DefaultEnums::PM_GAMEMODE()->getEnum());
-		$this->register(DefaultEnums::ONLINE_PLAYER()->getEnum());
+	private function initDefaultEnums() : void{
+		$defaultEnums = DefaultEnums::getAll();
+		foreach ($defaultEnums as $defaultEnum) {
+			$enum = $defaultEnum->getEnum();
+			match (true) {
+				$enum instanceof IDynamicEnum => GlobalEnumPool::$softEnums[$enum->getName()] ??= $enum,
+				$enum instanceof IStaticEnum => GlobalEnumPool::$hardEnums[$enum->getName()] ??= $enum,
+			};
+		}
+		var_dump(GlobalEnumPool::$hardEnums);
+		var_dump(GlobalEnumPool::$softEnums);
+		//		try {
+		//			$this->register(DefaultEnums::BOOLEAN()->getEnum());
+		//			$this->register(DefaultEnums::VANILLA_GAMEMODE()->getEnum());
+		//			$this->register(DefaultEnums::PM_GAMEMODE()->getEnum());
+		//			$this->register(DefaultEnums::ONLINE_PLAYER()->getEnum());
+		//		} catch (EnumException $enumException) {
+		//			// DOTHING
+		////			if ($enumException->getCode() === EnumException::ENUM_FAILED_OVERLAY_ERROR) {
+		////				OvommandHook::getInstance()::getOwnedPlugin()->getLogger()->notice();
+		////			}
+		//		}
 	}
-
 	public function register(IEnum $enum) : void{
 		$enumName = $enum->getName();
 		if (trim($enumName) === '') {
@@ -48,6 +65,13 @@ final class EnumManager{
 		}
 	}
 
+	public function attemptFetchingData(string $enumName, bool $isSoft) : IDynamicEnum|IStaticEnum|null{
+		$enum = GlobalEnumPool::$softEnums[$enumName] ?? null;
+		if ($enum === null) {
+			GlobalEnumPool::$cacheFetches[] = OvommandHook::getInstance();
+		}
+	}
+
 	public function getSoftEnum(string|DefaultEnums $enumName) : ?IDynamicEnum{
 		if ($enumName instanceof DefaultEnums) {
 			$enum = $enumName->getEnum();
@@ -64,7 +88,7 @@ final class EnumManager{
 		return GlobalEnumPool::$hardEnums[$enumName] ?? null;
 	}
 
-	public function getEnum(string|DefaultEnums $enumName, bool $isSoft = true) : IDynamicEnum|IStaticEnum|null{
+	public function getEnum(string|DefaultEnums $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
 	}
 

@@ -52,10 +52,10 @@ class GlobalHookPool{
 
 	public static function addHook(IHookable $hookable) : void{
 		$plugin = $hookable->getOwnedPlugin();
-		if ($plugin === null) {
-			throw new \InvalidArgumentException("OvommandHook#" . spl_object_id($hookable) . " is not registered!");
-		}
 		self::$hooks[$pName = $plugin->getName()] = $hookable;
+//		if ($plugin === null) {
+//			throw new \InvalidArgumentException("OvommandHook#" . spl_object_id($hookable) . " is not registered!");
+//		}
 	}
 
 //	public static function getRegisteredPlugins() : array{
