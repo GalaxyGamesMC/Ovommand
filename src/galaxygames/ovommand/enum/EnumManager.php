@@ -12,7 +12,6 @@ use shared\galaxygames\ovommand\fetus\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\IEnum;
 use shared\galaxygames\ovommand\fetus\IStaticEnum;
 use shared\galaxygames\ovommand\GlobalEnumPool;
-use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class EnumManager{
 	use SingletonTrait;
@@ -31,8 +30,6 @@ final class EnumManager{
 				$enum instanceof IStaticEnum => GlobalEnumPool::$hardEnums[$enum->getName()] ??= $enum,
 			};
 		}
-		var_dump(GlobalEnumPool::$hardEnums);
-		var_dump(GlobalEnumPool::$softEnums);
 		//		try {
 		//			$this->register(DefaultEnums::BOOLEAN()->getEnum());
 		//			$this->register(DefaultEnums::VANILLA_GAMEMODE()->getEnum());
@@ -45,6 +42,7 @@ final class EnumManager{
 		////			}
 		//		}
 	}
+
 	public function register(IEnum $enum) : void{
 		$enumName = $enum->getName();
 		if (trim($enumName) === '') {
@@ -62,13 +60,6 @@ final class EnumManager{
 			GlobalEnumPool::$hardEnums[$enum->getName()] = $enum;
 		} else {
 			throw new \RuntimeException("TODO"); //TODO: MSG
-		}
-	}
-
-	public function attemptFetchingData(string $enumName, bool $isSoft) : IDynamicEnum|IStaticEnum|null{
-		$enum = GlobalEnumPool::$softEnums[$enumName] ?? null;
-		if ($enum === null) {
-			GlobalEnumPool::$cacheFetches[] = OvommandHook::getInstance();
 		}
 	}
 

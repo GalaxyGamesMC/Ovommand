@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
+use galaxygames\ovommand\enum\PlaceholderEnum;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
@@ -14,15 +15,11 @@ use shared\galaxygames\ovommand\fetus\IEnum;
 use shared\galaxygames\ovommand\fetus\IStaticEnum;
 
 class EnumParameter extends BaseParameter{
-	protected IEnum $enum;
+	protected PlaceholderEnum|IEnum $enum;
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
-		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
-		var_dump($enum);
-		if ($enum === null) {
-			throw new \RuntimeException("Enum is not valid or not registered in Enum Manager"); //TODO: better msg
-		}
-		$this->enum = $enum;
+		$this->enum = EnumManager::getInstance()->getEnum($enumName, $isSoft) ?? PlaceholderEnum::create($name, $isSoft);
+		var_dump($this->enum);
 		parent::__construct($name, $optional, $flag);
 	}
 
@@ -51,6 +48,13 @@ class EnumParameter extends BaseParameter{
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
+		if ($this->enum instanceof PlaceholderEnum) {
+			$enum = EnumManager::getInstance()->getEnum($this->getValueName(), $this->isSoft());
+			if ($enum === null) {
+				throw new \RuntimeException("Enum was not registered!"); //TODO: Better name
+			}
+			$this->enum = $enum;
+		}
 		return CommandParameter::enum($this->name, $this->enum->encode(), $this->flag, $this->optional);
 	}
 
