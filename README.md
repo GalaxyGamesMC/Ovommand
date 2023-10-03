@@ -17,6 +17,7 @@ TODO:
 - [x] result system (parser), not that good tho :l
 - [ ] attribute supports (temp abandoned)
 - [ ] SubCommand doesn't require perms if wanted
+- [ ] make syntax parser based on its string pos, not the string itself for the accuracy in catching broken syntax
 
 
 Suggest:
