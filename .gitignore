@@ -1,7 +1,0 @@
-.idea/*
-vendor/*
-composer.lock
-node_modules/*
-/dumpster/
-*.phar
-*.cache

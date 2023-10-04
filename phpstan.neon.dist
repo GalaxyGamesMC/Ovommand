@@ -1,9 +1,0 @@
-parameters:
-    level: 8
-    excludePaths:
-        - src/galaxygames/ovommand/utils/Utils.php
-    paths:
-        - src
-
-includes:
-    - ./phpstan-baseline.neon
