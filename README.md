@@ -32,6 +32,7 @@ Suggest:
 Discuss:
 - [ ] The aliases shouldn't be re-set to new one or adding more if they were registered! :l
 - [ ] the problem with shared data is that if other plugins try to use other plugins enum... the enum might not exist due to plugin loading order!
+- [ ] Default enums can have duplicated values if the event called more than twice on different plugins!
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
