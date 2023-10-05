@@ -28,7 +28,6 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\fetus\IParametable;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
@@ -143,9 +142,9 @@ final class OvommandHook implements IHookable{
 	/**
 	 * @return CommandOverload[]
 	 */
-	private static function generateOverloadList(IParametable $parametable) : array{
+	private static function generateOverloadList(Ovommand $ovommand) : array{
 		$combinations = [];
-		foreach ($parametable->getOverloads() as $parameters) {
+		foreach ($ovommand->getOverloads() as $parameters) {
 			$combinations[] = new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
 

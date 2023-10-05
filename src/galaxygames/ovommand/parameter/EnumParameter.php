@@ -9,13 +9,14 @@ use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
+use shared\galaxygames\ovommand\fetus\enum\IDefaultEnum;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class EnumParameter extends BaseParameter{
-	protected IEnum $enum;
+	protected IDefaultEnum|IEnum $enum;
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
 		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
@@ -38,6 +39,7 @@ class EnumParameter extends BaseParameter{
 		return match (true) {
 			$this->enum instanceof IStaticEnum => false,
 			$this->enum instanceof IDynamicEnum => true,
+			$this->enum instanceof IDefaultEnum => $this->enum->isSoft(),
 			default => throw new \RuntimeException("TODO") //TODO: Update msg
 		};
 	}

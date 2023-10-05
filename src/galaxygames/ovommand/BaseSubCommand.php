@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand;
 
-use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\lang\Translatable;
 
 abstract class BaseSubCommand extends Ovommand{
-	use ParametableTrait;
 	/** @var string[] */
 	private array $hiddenAliases;
 
