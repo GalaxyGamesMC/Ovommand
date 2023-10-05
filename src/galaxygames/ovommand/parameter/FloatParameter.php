@@ -5,7 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
-use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class FloatParameter extends BaseParameter{
 	public function getNetworkType() : ParameterTypes{

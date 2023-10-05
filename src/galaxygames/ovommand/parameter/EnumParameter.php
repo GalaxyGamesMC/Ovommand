@@ -9,10 +9,10 @@ use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use shared\galaxygames\ovommand\fetus\BaseResult;
-use shared\galaxygames\ovommand\fetus\IDynamicEnum;
-use shared\galaxygames\ovommand\fetus\IEnum;
-use shared\galaxygames\ovommand\fetus\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\enum\IEnum;
+use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class EnumParameter extends BaseParameter{
 	protected ?IEnum $enum;

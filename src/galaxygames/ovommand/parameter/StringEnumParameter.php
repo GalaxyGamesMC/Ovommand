@@ -8,7 +8,7 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class StringEnumParameter extends BaseParameter{
 	protected BaseEnum $enum;

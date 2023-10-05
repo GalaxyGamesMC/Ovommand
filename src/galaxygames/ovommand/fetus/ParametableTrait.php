@@ -7,7 +7,7 @@ use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
-use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 trait ParametableTrait{
 	/** @var BaseParameter[][] */

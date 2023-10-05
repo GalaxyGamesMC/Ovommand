@@ -5,15 +5,16 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use shared\galaxygames\ovommand\fetus\BaseResult;
 use shared\galaxygames\ovommand\fetus\IParameter;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;
 
-	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0,){
+	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0){
 		$this->setFlag($flag);
 	}
 
@@ -33,13 +34,13 @@ abstract class BaseParameter implements IParameter{
 	 * @param string[] $parameters
 	 */
 	public function parse(array $parameters) : BaseResult{
-		if (count($parameters) > $this->getSpanLength()) {
-			throw new \InvalidArgumentException("Too many args");
-		}
-		if (count($parameters) < $this->getSpanLength()) {
-			throw new \InvalidArgumentException("Not enough args");
-		}
-		return new ValueResult("null");
+		$cParam = count($parameters);
+		$span = $this->getSpanLength();
+		return match (true) {
+			$cParam > $span => BrokenSyntaxResult::create($parameters[$this->getSpanLength()], implode(" ", $parameters))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS),
+			$cParam < $span => BrokenSyntaxResult::create("", implode(" ", $parameters))->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS),
+			default => ValueResult::create($parameters)
+		};
 	}
 
 	private function setFlag(int $flag) : void{

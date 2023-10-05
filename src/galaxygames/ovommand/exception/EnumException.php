@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\exception;
 
+use shared\galaxygames\ovommand\fetus\exception\OvommandException;
+
 final class EnumException extends OvommandException{
 	public const ENUM_EMPTY_NAME_ERROR = 0;
 	public const ENUM_FAILED_OVERLAY_ERROR = 1;

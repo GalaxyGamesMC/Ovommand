@@ -6,7 +6,7 @@ namespace galaxygames\ovommand\parameter\result;
 use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
-use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 final class CoordinateResult extends BaseResult{
 	public const TYPE_DEFAULT = 0; //plain number

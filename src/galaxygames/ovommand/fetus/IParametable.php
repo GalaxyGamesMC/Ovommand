@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\fetus;
 
 use galaxygames\ovommand\parameter\BaseParameter;
-use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 interface IParametable{
 	/**

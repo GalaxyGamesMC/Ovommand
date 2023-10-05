@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
-use shared\galaxygames\ovommand\fetus\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
+use shared\galaxygames\ovommand\fetus\result\IFailedResult;
 
-class BrokenSyntaxResult extends BaseResult{
+class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 	public const CODE_BROKEN_SYNTAX = 0;
 	public const CODE_NOT_ENOUGH_INPUTS = 1;
 	public const CODE_TOO_MUCH_INPUTS = 2;
