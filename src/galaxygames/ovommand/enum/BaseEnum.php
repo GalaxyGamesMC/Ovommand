@@ -6,7 +6,7 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
-use shared\galaxygames\ovommand\fetus\IEnum;
+use shared\galaxygames\ovommand\fetus\enum\IEnum;
 
 abstract class BaseEnum implements IEnum{
 	/** @var array<string, mixed> $values */

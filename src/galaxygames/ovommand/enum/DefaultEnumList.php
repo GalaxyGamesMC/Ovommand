@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\enum;
 
 use pocketmine\player\GameMode;
-use shared\galaxygames\ovommand\fetus\IDynamicEnum;
-use shared\galaxygames\ovommand\fetus\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 
 enum DefaultEnumList : string{
 	case BOOLEAN = "Boolean";

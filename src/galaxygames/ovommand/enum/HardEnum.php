@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\enum;
 
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
-use shared\galaxygames\ovommand\fetus\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 
 class HardEnum extends BaseEnum implements IStaticEnum{
 	public function encode() : CommandEnum{

@@ -5,8 +5,8 @@ namespace galaxygames\ovommand\enum;
 
 use pocketmine\player\GameMode;
 use pocketmine\utils\EnumTrait;
-use shared\galaxygames\ovommand\fetus\IDynamicEnum;
-use shared\galaxygames\ovommand\fetus\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 
 /**
  * @method static DefaultEnums BOOLEAN()
