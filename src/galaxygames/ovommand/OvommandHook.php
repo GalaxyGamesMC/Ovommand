@@ -55,14 +55,14 @@ final class OvommandHook implements IHookable{
 	protected static EnumManager $enumManager;
 
 	public static function getInstance() : OvommandHook{
-		if (!isset(self::$plugin)) {
+		if (!self::isRegistered()) {
 			throw new OvommandHookException("This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.");
 		}
 		return self::$instance ?? self::register(self::$plugin);
 	}
 
 	public static function register(Plugin $plugin) : self{
-		if (!isset(self::$plugin) || self::$plugin->isEnabled()) {
+		if (!self::isRegistered() || self::$plugin->isEnabled()) {
 			self::$enumManager = EnumManager::getInstance();
 			$pluginManager = Server::getInstance()->getPluginManager();
 			try {

@@ -62,7 +62,7 @@ class GlobalHookPool{
 //		return self::$plugins;
 //	}
 
-	public static function isHookRegistered(Plugin $plugin) : bool{
-		return isset(self::$hooks[$plugin->getName()]);
+	public static function isHookRegistered(IHookable $hookable) : bool{
+		return isset(self::$hooks[$hookable::getOwnedPlugin()->getName()]);
 	}
 }
