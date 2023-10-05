@@ -30,14 +30,8 @@ use pocketmine\plugin\Plugin;
 use shared\galaxygames\ovommand\fetus\IHookable;
 
 class GlobalHookPool{
-//	/** @var Plugin[] $plugins */
-//	protected static array $plugins;
 	/** @var IHookable[] $hooks */
 	protected static array $hooks;
-
-//	public static function addPlugin(Plugin $plugin) : void{
-//		self::$plugins[$plugin->getName()] = $plugin;
-//	}
 
 	public static function getHooks() : array{
 		return self::$hooks;
@@ -52,15 +46,8 @@ class GlobalHookPool{
 
 	public static function addHook(IHookable $hookable) : void{
 		$plugin = $hookable->getOwnedPlugin();
-		self::$hooks[$pName = $plugin->getName()] = $hookable;
-//		if ($plugin === null) {
-//			throw new \InvalidArgumentException("OvommandHook#" . spl_object_id($hookable) . " is not registered!");
-//		}
+		self::$hooks[$plugin->getName()] = $hookable;
 	}
-
-//	public static function getRegisteredPlugins() : array{
-//		return self::$plugins;
-//	}
 
 	public static function isHookRegistered(IHookable $hookable) : bool{
 		return isset(self::$hooks[$hookable::getOwnedPlugin()->getName()]);

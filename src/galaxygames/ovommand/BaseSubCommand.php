@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand;
 
-use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\fetus\ParametableTrait;
 use pocketmine\lang\Translatable;
-use pocketmine\plugin\Plugin;
 
 abstract class BaseSubCommand extends Ovommand{
 	use ParametableTrait;

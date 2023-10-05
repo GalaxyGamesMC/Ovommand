@@ -6,6 +6,7 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\OvommandHook;
+use pocketmine\player\GameMode;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\SingletonTrait;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
@@ -22,25 +23,19 @@ final class EnumManager{
 	}
 
 	private function initDefaultEnums() : void{
-		$defaultEnums = DefaultEnums::getAll();
-		foreach ($defaultEnums as $defaultEnum) {
-			$enum = $defaultEnum->getEnum();
-			match (true) {
-				$enum instanceof IDynamicEnum => GlobalEnumPool::$softEnums[$enum->getName()] ??= $enum,
-				$enum instanceof IStaticEnum => GlobalEnumPool::$hardEnums[$enum->getName()] ??= $enum,
-			};
-		}
-		//		try {
-		//			$this->register(DefaultEnums::BOOLEAN()->getEnum());
-		//			$this->register(DefaultEnums::VANILLA_GAMEMODE()->getEnum());
-		//			$this->register(DefaultEnums::PM_GAMEMODE()->getEnum());
-		//			$this->register(DefaultEnums::ONLINE_PLAYER()->getEnum());
-		//		} catch (EnumException $enumException) {
-		//			// DOTHING
-		////			if ($enumException->getCode() === EnumException::ENUM_FAILED_OVERLAY_ERROR) {
-		////				OvommandHook::getInstance()::getOwnedPlugin()->getLogger()->notice();
-		////			}
-		//		}
+		GlobalEnumPool::addDefaultEnums(OvommandHook::getInstance(),
+			new DefaultEnum("Boolean", false, ["true" => true, "false" => false]),
+			new DefaultEnum("GameMode", false,
+				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
+				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
+				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"]
+			),
+			new DefaultEnum("PMGameMode", false,
+				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
+				["survival" => "s", "creative" => "c", "adventure" => "a"]
+			),
+			new DefaultEnum("OnlinePlayers", true)
+		);
 	}
 
 	public function register(IEnum $enum) : void{

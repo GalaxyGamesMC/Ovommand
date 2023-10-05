@@ -28,7 +28,7 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\fetus\Ovommand;
+use galaxygames\ovommand\fetus\IParametable;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
@@ -45,7 +45,6 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\fetus\exception\OvommandHookException;
 use shared\galaxygames\ovommand\fetus\IHookable;
-use shared\galaxygames\ovommand\fetus\IParametable;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class OvommandHook implements IHookable{
@@ -63,20 +62,6 @@ final class OvommandHook implements IHookable{
 
 	public static function register(Plugin $plugin) : self{
 		if (!self::isRegistered() || self::$plugin->isEnabled()) {
-			self::$enumManager = EnumManager::getInstance();
-			$pluginManager = Server::getInstance()->getPluginManager();
-			try {
-				$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
-					$enum?->addValue($event->getPlayer()->getName());
-				}, EventPriority::NORMAL, $plugin);
-				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
-					$enum?->removeValue($event->getPlayer()->getName());
-				}, EventPriority::NORMAL, $plugin);
-			} catch (\ReflectionException $e) {
-				$plugin->getLogger()->logException($e);
-			}
 			$interceptor = SimplePacketHandler::createInterceptor($plugin);
 			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
 				$player = $target->getPlayer();
@@ -99,7 +84,22 @@ final class OvommandHook implements IHookable{
 			});
 			self::$plugin = $plugin;
 			self::$instance = new self;
-			GlobalHookPool::addHook(self::$instance); //infinite loop bruh
+			GlobalHookPool::addHook(self::$instance);
+
+			self::$enumManager = EnumManager::getInstance();
+			$pluginManager = Server::getInstance()->getPluginManager();
+			try {
+				$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
+					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
+					$enum?->addValue($event->getPlayer()->getName());
+				}, EventPriority::NORMAL, $plugin);
+				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
+					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
+					$enum?->removeValue($event->getPlayer()->getName());
+				}, EventPriority::NORMAL, $plugin);
+			} catch (\ReflectionException $e) {
+				$plugin->getLogger()->logException($e);
+			}
 		}
 		return self::$instance;
 	}
