@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace shared\galaxygames\ovommand;
 
-use shared\galaxygames\ovommand\fetus\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 use shared\galaxygames\ovommand\fetus\IHookable;
-use shared\galaxygames\ovommand\fetus\IStaticEnum;
 
 final class GlobalEnumPool{
 	/**
