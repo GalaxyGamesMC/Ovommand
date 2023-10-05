@@ -90,7 +90,7 @@ abstract class BaseEnum implements IEnum{
 
 	public function getValue(string $key) : mixed{
 		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
-		return $this->values[$parentKey] ?? null; //TODO: What if null is bound with the key :c
+		return $this->values[$parentKey] ?? null; //What if null is bound with the key :c
 	}
 
 	public function hasValue(string $key) : bool{

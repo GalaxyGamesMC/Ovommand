@@ -43,7 +43,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
-use ReflectionException;
+use shared\galaxygames\ovommand\fetus\exception\OvommandHookException;
 use shared\galaxygames\ovommand\fetus\IHookable;
 use shared\galaxygames\ovommand\fetus\IParametable;
 use shared\galaxygames\ovommand\GlobalHookPool;
@@ -56,7 +56,7 @@ final class OvommandHook implements IHookable{
 
 	public static function getInstance() : OvommandHook{
 		if (!isset(self::$plugin)) {
-			throw new \RuntimeException("TODO"); //TODO: msg
+			throw new OvommandHookException("This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.");
 		}
 		return self::$instance ?? self::register(self::$plugin);
 	}
@@ -74,7 +74,7 @@ final class OvommandHook implements IHookable{
 					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
 					$enum?->removeValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
-			} catch (ReflectionException $e) {
+			} catch (\ReflectionException $e) {
 				$plugin->getLogger()->logException($e);
 			}
 			$interceptor = SimplePacketHandler::createInterceptor($plugin);
@@ -83,8 +83,9 @@ final class OvommandHook implements IHookable{
 				if ($player === null) {
 					return false;
 				}
+				$commandMap = Server::getInstance()->getCommandMap();
 				foreach ($packet->commandData as $name => $commandData) {
-					$command = Server::getInstance()->getCommandMap()->getCommand($name);
+					$command = $commandMap->getCommand($name);
 					if ($command instanceof BaseCommand) {
 						foreach ($command->getConstraints() as $constraint) {
 							if (!$constraint->isVisibleTo($player)) {
@@ -145,24 +146,6 @@ final class OvommandHook implements IHookable{
 	private static function generateOverloadList(IParametable $parametable) : array{
 		$combinations = [];
 		foreach ($parametable->getOverloads() as $parameters) {
-			//T1
-			///** @var CommandParameter[] $params */
-			//$params = [];
-			//foreach ($parameters as $parameter) {
-			//	$params[] = $parameter->getNetworkParameterData();
-			//}
-			//$combinations[] = new CommandOverload(false, $params);
-
-			//T2
-			//$params = [];
-			//foreach ($parameters as $parameter) {
-			//	$params[] = $parameter->getNetworkParameterData();
-			//	if (($parameter instanceof StringEnumParameter) && isset($param->enum) && $param->enum instanceof CommandEnum) {
-			//		$refClass = new \ReflectionClass(CommandEnum::class);
-			//		$refProp = $refClass->getProperty("enumName");
-			//		$refProp->setValue($param->enum, "enum#" . spl_object_id($param->enum));
-			//	}
-			//}
 			$combinations[] = new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
 
@@ -183,7 +166,7 @@ final class OvommandHook implements IHookable{
 
 	public static function getOwnedPlugin() : Plugin{
 		if (!self::isRegistered()) {
-			throw new \RuntimeException("TODO"); //TODO: msg
+			throw new OvommandHookException("This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods."); //TODO: msg
 		}
 		return self::$plugin;
 	}
