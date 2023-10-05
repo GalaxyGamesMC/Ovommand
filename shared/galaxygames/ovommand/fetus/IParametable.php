@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\fetus;
+namespace shared\galaxygames\ovommand\fetus;
 
 use galaxygames\ovommand\parameter\BaseParameter;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;

@@ -14,11 +14,21 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 	protected int $matchedParameter = 0;
 	protected int $requiredParameter = 1;
 	protected int $code = self::CODE_BROKEN_SYNTAX;
+	protected int $searchOffset = 0;
 
 	public function __construct(protected string $brokenSyntax, protected string $fullSyntax = "", protected string $expectedType = "", protected string $preLabel = ""){}
 
 	public static function create(string $brokenSyntax, string $fullSyntax = "", string $expectedType = "", string $preLabel = "") : self{
 		return new BrokenSyntaxResult($brokenSyntax, $fullSyntax, $expectedType, $preLabel);
+	}
+
+	public function setSearchOffset(int $offset = 0) : self{
+		$this->searchOffset = 0;
+		return $this;
+	}
+
+	public function getSearchOffset() : int{
+		return $this->searchOffset;
 	}
 
 	public function getBrokenSyntax() : string{

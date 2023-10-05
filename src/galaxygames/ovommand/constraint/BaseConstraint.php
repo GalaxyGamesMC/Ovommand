@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\constraint;
 
-use galaxygames\ovommand\fetus\IParametable;
 use pocketmine\command\CommandSender;
 use shared\galaxygames\ovommand\fetus\IOvommand;
 

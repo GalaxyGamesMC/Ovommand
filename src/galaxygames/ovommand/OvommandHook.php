@@ -28,7 +28,6 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\fetus\IParametable;
 use galaxygames\ovommand\fetus\Ovommand;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
@@ -46,6 +45,7 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use ReflectionException;
 use shared\galaxygames\ovommand\fetus\IHookable;
+use shared\galaxygames\ovommand\fetus\IParametable;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class OvommandHook implements IHookable{

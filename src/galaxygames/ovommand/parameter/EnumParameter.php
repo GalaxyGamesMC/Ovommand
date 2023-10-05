@@ -15,13 +15,14 @@ use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class EnumParameter extends BaseParameter{
-	protected ?IEnum $enum;
+	protected IEnum $enum;
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
-		$this->enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
-		if ($this->enum === null) {
-			throw new EnumException("LOL UNKNOWN ENUM!"); //TODO: Enum, code etc
+		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
+		if ($enum === null) {
+			throw new EnumException("LOL UNKNOWN ENUM! $enumName"); //TODO: Enum, code etc
 		}
+		$this->enum = $enum;
 		parent::__construct($name, $optional, $flag);
 	}
 
