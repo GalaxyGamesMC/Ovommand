@@ -5,6 +5,7 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
+use galaxygames\ovommand\exception\SubCommandException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
@@ -53,11 +54,11 @@ abstract class Ovommand extends Command implements IOvommand{
 					if (!isset($this->subCommands[$alias])) {
 						$this->subCommands[$alias] = $subCommand;
 					} else {
-						throw new \InvalidArgumentException("SubCommand with same alias for '$alias' already exists");
+						throw new SubCommandException("SubCommand with same alias for '$alias' already exists", SubCommandException::SUB_COMMAND_DUPLICATE_ALIAS_ERROR);
 					}
 				}
 			} else {
-				throw new \InvalidArgumentException("SubCommand with same name for '$subName' already exists");
+				throw new SubCommandException("SubCommand with same name for '$subName' already exists", SubCommandException::SUB_COMMAND_DUPLICATE_ALIAS_ERROR);
 			}
 		}
 	}
@@ -276,7 +277,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	public function addConstraint(BaseConstraint $constraint) : void{
-		$this->constraints[] = $constraint->getOvommand();
+		$this->constraints[] = $constraint;
 	}
 
 	/**
