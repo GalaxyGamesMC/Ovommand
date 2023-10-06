@@ -83,8 +83,6 @@ abstract class Ovommand extends Command implements IOvommand{
 		}
 	}
 
-//	public function registerParameter(int $parameterId = 0)
-
 	/**
 	 * @param string[] $rawParams
 	 *
