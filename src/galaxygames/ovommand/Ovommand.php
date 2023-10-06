@@ -181,6 +181,13 @@ abstract class Ovommand extends Command implements IOvommand{
 		if (!$this->testPermission($sender)) {
 			return;
 		}
+		foreach ($this->constraints as $constraint) {
+			if ($constraint->test($sender, $commandLabel, $args)) {
+				$constraint->onSuccess($sender, $commandLabel, $args);
+			} else {
+				$constraint->onFailure($sender, $commandLabel, $args);
+			}
+		}
 		if (count($args) < 1) {
 			$this->onRun($sender, $commandLabel, []);
 			return;
@@ -269,7 +276,6 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param BaseResult[] $args
 	 */
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
-
 	abstract protected function setup() : void;
 
 	public function setCurrentSender(CommandSender $currentSender) : Ovommand{
@@ -282,7 +288,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	public function addConstraint(BaseConstraint $constraint) : void{
-		$this->constraints[] = $constraint;
+		$this->constraints[] = $constraint->getOvommand();
 	}
 
 	/**

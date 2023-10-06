@@ -31,4 +31,8 @@ abstract class BaseConstraint{
 	abstract public function onFailure(CommandSender $sender, string $aliasUsed, array $args) : void;
 
 	abstract public function isVisibleTo(CommandSender $sender) : bool;
+
+	public function setOvommand(IOvommand $ovommand) : void{
+		$this->ovommand = $ovommand;
+	}
 }
