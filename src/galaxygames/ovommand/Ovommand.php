@@ -27,6 +27,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	protected CommandSender $currentSender;
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
+	protected int $currentOverloadId = 0;
 
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
@@ -41,10 +42,6 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	protected function generateUsage() : string{
 		return "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList());
-	}
-
-	public function registerSubCommand(BaseSubCommand $subCommand) : void{
-		$this->registerSubCommands($subCommand);
 	}
 
 	public function registerSubCommands(BaseSubCommand ...$subCommands) : void{
@@ -72,29 +69,20 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $this->subCommands;
 	}
 
-	public function registerParameters(int $overloadId, BaseParameter ...$parameters) : void{
-		if ($overloadId < 0) {
-			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
-		}
-		if ($overloadId > 0 && !isset($this->overloads[$overloadId - 1])) {
-			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
-		}
+	public function registerParameters(BaseParameter ...$parameters) : void{
+		$hasOptionalParameter = false;
 		foreach ($parameters as $parameter) {
-			if (!$parameter->isOptional()) {
-				foreach ($this->overloads[$overloadId] ?? [] as $para) {
-					if ($para->isOptional()) {
-						throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
-					}
-				}
+			if ($parameter->isOptional()) {
+				$hasOptionalParameter = true;
+			} elseif ($hasOptionalParameter) {
+				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 			}
 
-			$this->overloads[$overloadId][] = $parameter;
+			$this->overloads[$this->currentOverloadId++][] = $parameter;
 		}
 	}
 
-	public function registerParameter(int $overloadId, BaseParameter $parameter) : void{
-		$this->registerParameters($overloadId, $parameter);
-	}
+//	public function registerParameter(int $parameterId = 0)
 
 	/**
 	 * @param string[] $rawParams
@@ -307,5 +295,9 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	public function getOwningPlugin() : ?Plugin{
 		return OvommandHook::getOwnedPlugin();
+	}
+
+	public function getCurrentOverloadId() : int{
+		return $this->currentOverloadId;
 	}
 }
