@@ -20,4 +20,6 @@ class InGameRequiredConstraint extends BaseConstraint{
 	public function isVisibleTo(CommandSender $sender) : bool{
 		return $sender instanceof Player;
 	}
+
+	public function onSuccess(CommandSender $sender, string $aliasUsed, array $args) : void{}
 }
