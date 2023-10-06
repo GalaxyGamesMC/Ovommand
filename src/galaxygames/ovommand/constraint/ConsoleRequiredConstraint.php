@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\constraint;
 
 use pocketmine\command\CommandSender;
-use pocketmine\player\Player;
+use pocketmine\console\ConsoleCommandSender;
 use pocketmine\utils\TextFormat;
+use shared\galaxygames\ovommand\fetus\BaseConstraint;
 
 class ConsoleRequiredConstraint extends BaseConstraint{
 	public function test(CommandSender $sender, string $aliasUsed, array $args) : bool{
@@ -17,6 +18,6 @@ class ConsoleRequiredConstraint extends BaseConstraint{
 	}
 
 	public function isVisibleTo(CommandSender $sender) : bool{
-		return !($sender instanceof Player);
+		return $sender instanceof ConsoleCommandSender;
 	}
 }

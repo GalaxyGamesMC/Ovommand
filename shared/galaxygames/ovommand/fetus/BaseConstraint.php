@@ -1,27 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\constraint;
+namespace shared\galaxygames\ovommand\fetus;
 
 use pocketmine\command\CommandSender;
-use shared\galaxygames\ovommand\fetus\IOvommand;
 
 abstract class BaseConstraint{
-	protected IOvommand $context;
+	protected IOvommand $ovommand;
 
-	/**
-	 * BaseConstraint constructor.
-	 *
-	 * "Context" is required so that this new-constraint-system doesn't hinder getting command info
-	 *
-	 * @param IOvommand $context
-	 */
-	public function __construct(IOvommand $context){
-		$this->context = $context;
+	public function __construct(IOvommand $ovommand){
+		$this->ovommand = $ovommand;
 	}
 
-	public function getContext() : IOvommand{
-		return $this->context;
+	public function getOvommand() : IOvommand{
+		return $this->ovommand;
 	}
 
 	/**

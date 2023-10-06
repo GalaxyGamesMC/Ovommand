@@ -6,6 +6,7 @@ namespace galaxygames\ovommand\constraint;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
+use shared\galaxygames\ovommand\fetus\BaseConstraint;
 
 class InGameRequiredConstraint extends BaseConstraint{
 	public function test(CommandSender $sender, string $aliasUsed, array $args) : bool{

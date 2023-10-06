@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand;
 
-use galaxygames\ovommand\constraint\BaseConstraint;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
 use galaxygames\ovommand\parameter\BaseParameter;
@@ -14,6 +13,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
+use shared\galaxygames\ovommand\fetus\BaseConstraint;
 use shared\galaxygames\ovommand\fetus\IOvommand;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
@@ -39,7 +39,11 @@ abstract class Ovommand extends Command implements IOvommand{
 			$this->setPermission($permission);
 		}
 		$this->setup();
-		$this->setUsage($usageMessage ?? "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList()));
+		$this->setUsage($usageMessage ?? $this->generateUsage());
+	}
+
+	protected function generateUsage() : string{
+		return "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList());
 	}
 
 	public function registerSubCommand(BaseSubCommand $subCommand) : void{
