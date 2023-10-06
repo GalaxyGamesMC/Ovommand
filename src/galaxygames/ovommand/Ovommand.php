@@ -113,13 +113,6 @@ abstract class Ovommand extends Command implements IOvommand{
 				$params = array_slice($rawParams, $offset, $span);
 				$totalSpan += $span;
 
-				//				if (($pCount = count($params)) < $parameter->getSpanLength()) {
-				//					$results["_" . $parameter->getName()] = BrokenSyntaxResult::create("", expectedType: $parameter->getValueName());
-				//					break;
-				//				} temp?,
-				//this got replaced by BrokenSyntaxResult::setMatchedParameter()...
-				//TODO: gotta find a better name for that function
-
 				$offset += $span;
 				$result = $parameter->parse($params);
 				$results[$parameter->getName()] = $result;
