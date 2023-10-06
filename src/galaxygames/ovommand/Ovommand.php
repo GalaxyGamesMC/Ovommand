@@ -5,6 +5,7 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterOrderException;
+use galaxygames\ovommand\exception\SubCommandException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
@@ -27,6 +28,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	protected CommandSender $currentSender;
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
+	protected int $currentOverloadId = 0;
 
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
@@ -43,10 +45,6 @@ abstract class Ovommand extends Command implements IOvommand{
 		return "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList());
 	}
 
-	public function registerSubCommand(BaseSubCommand $subCommand) : void{
-		$this->registerSubCommands($subCommand);
-	}
-
 	public function registerSubCommands(BaseSubCommand ...$subCommands) : void{
 		foreach ($subCommands as $subCommand) {
 			if (!isset($this->subCommands[$subName = $subCommand->getName()])) {
@@ -56,11 +54,11 @@ abstract class Ovommand extends Command implements IOvommand{
 					if (!isset($this->subCommands[$alias])) {
 						$this->subCommands[$alias] = $subCommand;
 					} else {
-						throw new \InvalidArgumentException("SubCommand with same alias for '$alias' already exists");
+						throw new SubCommandException("SubCommand with same alias for '$alias' already exists", SubCommandException::SUB_COMMAND_DUPLICATE_ALIAS_ERROR);
 					}
 				}
 			} else {
-				throw new \InvalidArgumentException("SubCommand with same name for '$subName' already exists");
+				throw new SubCommandException("SubCommand with same name for '$subName' already exists", SubCommandException::SUB_COMMAND_DUPLICATE_ALIAS_ERROR);
 			}
 		}
 	}
@@ -72,28 +70,17 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $this->subCommands;
 	}
 
-	public function registerParameters(int $overloadId, BaseParameter ...$parameters) : void{
-		if ($overloadId < 0) {
-			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_NEGATIVE_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_NEGATIVE_ORDER_ERROR);
-		}
-		if ($overloadId > 0 && !isset($this->overloads[$overloadId - 1])) {
-			throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DETACHED_ORDER->getErrorMessage(["position" => (string) $overloadId]), ParameterOrderException::PARAMETER_DETACHED_ORDER_ERROR);
-		}
+	public function registerParameters(BaseParameter ...$parameters) : void{
+		$hasOptionalParameter = false;
 		foreach ($parameters as $parameter) {
-			if (!$parameter->isOptional()) {
-				foreach ($this->overloads[$overloadId] ?? [] as $para) {
-					if ($para->isOptional()) {
-						throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
-					}
-				}
+			if ($parameter->isOptional()) {
+				$hasOptionalParameter = true;
+			} elseif ($hasOptionalParameter) {
+				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 			}
 
-			$this->overloads[$overloadId][] = $parameter;
+			$this->overloads[$this->currentOverloadId++][] = $parameter;
 		}
-	}
-
-	public function registerParameter(int $overloadId, BaseParameter $parameter) : void{
-		$this->registerParameters($overloadId, $parameter);
 	}
 
 	/**
@@ -125,13 +112,6 @@ abstract class Ovommand extends Command implements IOvommand{
 				}
 				$params = array_slice($rawParams, $offset, $span);
 				$totalSpan += $span;
-
-				//				if (($pCount = count($params)) < $parameter->getSpanLength()) {
-				//					$results["_" . $parameter->getName()] = BrokenSyntaxResult::create("", expectedType: $parameter->getValueName());
-				//					break;
-				//				} temp?,
-				//this got replaced by BrokenSyntaxResult::setMatchedParameter()...
-				//TODO: gotta find a better name for that function
 
 				$offset += $span;
 				$result = $parameter->parse($params);
@@ -288,7 +268,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	public function addConstraint(BaseConstraint $constraint) : void{
-		$this->constraints[] = $constraint->getOvommand();
+		$this->constraints[] = $constraint;
 	}
 
 	/**
@@ -307,5 +287,9 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	public function getOwningPlugin() : ?Plugin{
 		return OvommandHook::getOwnedPlugin();
+	}
+
+	public function getCurrentOverloadId() : int{
+		return $this->currentOverloadId;
 	}
 }
