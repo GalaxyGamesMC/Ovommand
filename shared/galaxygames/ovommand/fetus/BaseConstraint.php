@@ -24,6 +24,10 @@ abstract class BaseConstraint{
 	/**
 	 * @param string[] $args
 	 */
+	abstract public function onSuccess(CommandSender $sender, string $aliasUsed, array $args) : void;
+	/**
+	 * @param string[] $args
+	 */
 	abstract public function onFailure(CommandSender $sender, string $aliasUsed, array $args) : void;
 
 	abstract public function isVisibleTo(CommandSender $sender) : bool;

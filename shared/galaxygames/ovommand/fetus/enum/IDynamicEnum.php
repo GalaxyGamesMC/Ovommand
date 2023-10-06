@@ -6,6 +6,7 @@ namespace shared\galaxygames\ovommand\fetus\enum;
 interface IDynamicEnum extends IEnum{
 
 	public function removeValue(string $key) : void;
+
 	public function removeValuesBySpreading(string ...$keys) : void;
 
 	/**
