@@ -117,7 +117,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$hasFailed = false;
 			$totalSpan = 0;
 			$matchPoint = 0;
-			foreach ($parameters as $parameterId => $parameter) {
+			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
 				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
 					break;
