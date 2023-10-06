@@ -28,10 +28,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
 
-	public function __construct(
-		string $name, Translatable|string $description = "", ?string $permission = null,
-		Translatable|string|null $usageMessage = null, array $aliases = []
-	){
+	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
 
 		$this->setAliases(array_unique($aliases));
@@ -147,8 +144,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$matchPoint += $span;
 			}
 			if (($paramCount > $totalSpan) && !$hasFailed) {
-				$results["_error"] = BrokenSyntaxResult::create($rawParams[$totalSpan], implode(" ", $rawParams))
-					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
+				$results["_error"] = BrokenSyntaxResult::create($rawParams[$totalSpan], implode(" ", $rawParams))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 				$hasFailed = true;
 			}
 			if (!$hasFailed) {
@@ -178,8 +174,8 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
-	 * @param string[]      $args
-	 * @param string        $preLabel Return a string combined of its parent labels with the current label
+	 * @param string[] $args
+	 * @param string   $preLabel Return a string combined of its parent labels with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
 		if (!$this->testPermission($sender)) {
@@ -243,7 +239,7 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * @param BaseResult[] $args
-	 * @param string[] $nonParsedArgs
+	 * @param string[]     $nonParsedArgs
 	 */
 	public function onSyntaxError(CommandSender $sender, string $commandLabel, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
 		foreach ($args as $arg) {
@@ -255,9 +251,9 @@ abstract class Ovommand extends Command implements IOvommand{
 				$fullCMD = "/" . $preLabel . " " . $arg->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
 				$parts = SyntaxConst::getSyntaxBetweenBrokenPart($fullCMD, $arg->getBrokenSyntax());
 
-				$msg = match($arg->getCode()) {
+				$msg = match ($arg->getCode()) {
 					default => SyntaxConst::parseOvommandSyntaxMessage($parts[0], $arg->getBrokenSyntax(), $parts[1]),
-					BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS =>  SyntaxConst::parseOvommandSyntaxMessage($fullCMD, "", "")
+					BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS => SyntaxConst::parseOvommandSyntaxMessage($fullCMD, "", "")
 				};
 
 				$sender->sendMessage(TextFormat::RED . $msg);
@@ -268,10 +264,12 @@ abstract class Ovommand extends Command implements IOvommand{
 		}
 		return true;
 	}
+
 	/**
-	 * @param BaseResult[]         $args
+	 * @param BaseResult[] $args
 	 */
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
+
 	abstract protected function setup() : void;
 
 	public function setCurrentSender(CommandSender $currentSender) : Ovommand{
