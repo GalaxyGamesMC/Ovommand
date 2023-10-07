@@ -13,6 +13,6 @@ class TextParameter extends BaseParameter{
 	}
 
 	public function getSpanLength() : int{
-		return PHP_INT_MAX; //TODO: should?
+		return PHP_INT_MAX;
 	}
 }
