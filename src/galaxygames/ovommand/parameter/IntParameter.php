@@ -14,7 +14,7 @@ class IntParameter extends BaseParameter{
 
 	public function parse(array $parameters) : BaseResult{
 		$f = implode("", $parameters);
-		if (preg_match("/^\d$/", $f)) {
+		if (preg_match("/^\d+$/", $f)) {
 			return ValueResult::create((int) $f);
 		}
 		return BrokenSyntaxResult::create($f); //TODO: better msg
