@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace shared\galaxygames\ovommand\fetus\enum;
 
-interface IDynamicEnum extends IEnum{
+interface IDynamicEnum{
 
 	public function removeValue(string $key) : void;
 

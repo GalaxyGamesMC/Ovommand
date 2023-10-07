@@ -17,53 +17,57 @@ final class GlobalEnumPool{
 	 * @var array<string, IDynamicEnum>
 	 */
 	public static array $softEnums = [];
+	public static array $softEnumHooker = [];
+	public static array $hardEnumHooker = [];
 
-	/** @var array<string, IDefaultEnum> $defaultEnums */
-	protected static array $defaultEnums = [];
-	/** @var array<string, IHookable> $defaultEnumsHooker */
-	protected static array $defaultEnumsHooker = [];
-
-	public static function addSoftEnums(IHookable $hookable, IDefaultEnum ...$enums) : void{
+	public static function addEnums(IHookable $hookable, IDynamicEnum $enum) : void{
 		if (!GlobalHookPool::isHookRegistered($hookable)) {
 			throw new \RuntimeException("Hook is not registered!");
 		}
-		foreach ($enums as $enum) {
-			$eName = $enum->getName();
-			if (isset(self::$defaultEnums[$eName])) {
-				continue;
-			}
-			self::$defaultEnums[$eName] = $enum;
-			self::$defaultEnumsHooker[$eName] = $hookable;
+		if (isset(self::$softEnums[$enum->getName()]) && !$enum->isDeault()) {
+
 		}
 	}
 
-	public static function addDefaultEnums(IHookable $hookable, IDefaultEnum ...$enums) : void{
-		if (!GlobalHookPool::isHookRegistered($hookable)) {
-			throw new \RuntimeException("Hook is not registered!");
-		}
-		foreach ($enums as $enum) {
-			$eName = $enum->getName();
-			if (isset(self::$defaultEnums[$eName])) {
-				continue;
-			}
-			self::$defaultEnums[$eName] = $enum;
-			self::$defaultEnumsHooker[$eName] = $hookable;
-		}
-	}
-
-	/**
-	 * @return array<string, IDefaultEnum>
-	 */
-	public static function getAllOwnedEnumsOfAHook(IHookable $hookable) : array{
-		$results = [];
-		foreach (self::$defaultEnums as $enum) {
-			$eName = $enum->getName();
-			$tHook = self::$defaultEnumsHooker[$eName];
-
-			if ($tHook === $hookable) {
-				$results[$eName] = $enum;
-			}
-		}
-		return $results;
-	}
+//	/** @var array<string, IDefaultEnum> $defaultHardEnums */
+//	protected static array $defaultHardEnums = [];
+//	/** @var array<string, IDefaultEnum> $defaultSoftEnums */
+//	protected static array $defaultSoftEnums = [];
+//	/** @var array<string, IHookable> $defaultEnumsHooker */
+//	protected static array $defaultSoftEnumsHooker = [];
+//	protected static array $defaultHardEnumsHooker = [];
+//
+//	public static function addDefaultEnums(IHookable $hookable, IDefaultEnum ...$enums) : void{
+//		foreach ($enums as $enum) {
+//			$eName = $enum->getName();
+//			if ($enum->isSoft()) {
+//				if (isset(self::$defaultSoftEnums[$eName])) {
+//					continue;
+//				}
+//				self::$defaultSoftEnumsHooker[$eName] = $enum;
+//			} else {
+//				if (isset(self::$defaultHardEnums[$eName])) {
+//					continue;
+//				}
+//				self::$defaultHardEnums[$eName] = $enum;
+//				self::$defaultHardEnumsHooker[$eName] = $hookable;
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * @return array<string, IDefaultEnum>
+//	 */
+//	public static function getAllOwnedEnumsOfAHook(IHookable $hookable) : array{
+//		$results = [];
+//		foreach (self::$defaultHardEnums as $enum) {
+//			$eName = $enum->getName();
+//			$tHook = self::$defaultHardEnumsHooker[$eName];
+//
+//			if ($tHook === $hookable) {
+//				$results[$eName] = $enum;
+//			}
+//		}
+//		return $results;
+//	}
 }
