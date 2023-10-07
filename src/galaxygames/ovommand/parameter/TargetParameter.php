@@ -22,6 +22,8 @@ class TargetParameter extends BaseParameter{
 
 	//dump IDA: parseSelector
 
+	// latest https://rubular.com/r/FJiwYBmY0IoQ0J
+
 	//TODO: edu version have aprescv, not just apres
 
 	public function getValueName() : string{
@@ -32,7 +34,7 @@ class TargetParameter extends BaseParameter{
 		parent::parse($parameters);
 		$parameter = $parameters[0];
 		$groups = [];
-		if (!preg_match("/^(?:([^\n]*@[apres])|([\w ][^\n]*))$/", $parameter, $groups)) {  //rgx2
+		if (!preg_match("/^(?:([^\n\w]*@[apres])|([^\d\n@][\w ]*))$/", $parameter, $groups)) {  //rgx2
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
 			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]) ?? "");
 		}
