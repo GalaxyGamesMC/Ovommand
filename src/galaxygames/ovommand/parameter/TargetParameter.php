@@ -15,12 +15,7 @@ class TargetParameter extends BaseParameter{
 		return ParameterTypes::TARGET;
 	}
 
-	// rgx https://rubular.com/r/MKSVoMp8yZkeLO
-	// rgx2 https://rubular.com/r/fhKYm1q3A863LO
-
 	// rgx-tag https://rubular.com/r/aAcqUeP3S9wPKx
-
-	//dump IDA: parseSelector
 
 	// latest https://rubular.com/r/FJiwYBmY0IoQ0J
 
@@ -34,7 +29,7 @@ class TargetParameter extends BaseParameter{
 		parent::parse($parameters);
 		$parameter = $parameters[0];
 		$groups = [];
-		if (!preg_match("/^(?:([^\n\w]*@[apres])|([^\d\n@][\w ]*))$/", $parameter, $groups)) {  //rgx2
+		if (!preg_match("/^(?:([^\n\w]*@[apres])|([^\d\n@][\w ]*))$/", $parameter, $groups)) {
 			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
 			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]) ?? "");
 		}
