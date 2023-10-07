@@ -54,8 +54,8 @@ final class CoordinateResult extends BaseResult{
 		}
 	}
 
-	public static function fromData(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT) : self{
-		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType);
+	public static function fromData(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false) : self{
+		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType, $isBlockPos);
 	}
 
 	public static function here() : self{
