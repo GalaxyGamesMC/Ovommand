@@ -79,6 +79,10 @@ class PositionParameter extends BaseParameter{
 				$brokenSyntax = $parameter;
 				break;
 			}
+//			if ($type !== $coordType && ($type === CoordinateResult::TYPE_LOCAL || $coordType === CoordinateResult::TYPE_LOCAL)) {
+//				$brokenSyntax = $parameter;
+//				break; // this would shorten the two above?
+//			}
 			$match++;
 			$value = ltrim($parameter, $u);
 			$values[$i] = str_contains($value, ".") ? (double) $value : (int) $value;
