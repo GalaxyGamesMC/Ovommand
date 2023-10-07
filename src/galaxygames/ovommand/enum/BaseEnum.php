@@ -21,7 +21,7 @@ abstract class BaseEnum extends OvoEnum{
 	}
 
 	/**
-	 * @phpstan-param array<string, string|string[]> $aliases
+	 * @param array<string, string|string[]> $aliases
 	 */
 	public function setAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
@@ -37,7 +37,7 @@ abstract class BaseEnum extends OvoEnum{
 			} elseif (is_array($alias)) {
 				foreach ($alias as $a) {
 					if (!is_string($alias)) {
-						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => (string) $a, "type" => gettype($a)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
+						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["key" => $key, "type" => gettype($a)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
 					}
 					if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
 						throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => $alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
@@ -45,7 +45,7 @@ abstract class BaseEnum extends OvoEnum{
 					$aliasesList[$a] = $key;
 				}
 			} else {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["aliasName" => $alias, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
+				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["key" => $key, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
 			}
 		}
 	}

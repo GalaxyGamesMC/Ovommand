@@ -15,17 +15,17 @@ enum DefaultEnumList : string{
 
 	public function encode() : IDynamicEnum|IStaticEnum{
 		return match ($this) {
-			self::BOOLEAN => new HardEnum($this->value, ["true" => true, "false" => false]),
-			self::VANILLA_GAMEMODE => new HardEnum($this->value,
+			self::BOOLEAN => new HardEnumI($this->value, ["true" => true, "false" => false]),
+			self::VANILLA_GAMEMODE => new HardEnumI($this->value,
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
 				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"]
 			),
-			self::PM_GAMEMODE => new HardEnum($this->value,
+			self::PM_GAMEMODE => new HardEnumI($this->value,
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a"]
 			),
-			self::ONLINE_PLAYER => new SoftEnum($this->value)
+			self::ONLINE_PLAYER => new SoftEnumI($this->value)
 		};
 	}
 

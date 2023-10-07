@@ -5,7 +5,7 @@ namespace shared\galaxygames\ovommand\fetus\enum;
 
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
-abstract class OvoEnum{
+abstract class OvoEnum implements IOvoEnum{
 	protected string $name;
 	/** @var array<string, mixed> $values */
 	protected array $values;

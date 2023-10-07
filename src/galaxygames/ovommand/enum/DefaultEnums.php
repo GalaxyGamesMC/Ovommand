@@ -21,17 +21,17 @@ class DefaultEnums{
 
 	protected static function setup() : void{
 		self::registerAll(
-			new DefaultEnums("boolean", "Boolean", new HardEnum("Boolean", ["true"=>true, "false"=>false])),
-			new DefaultEnums("vanilla_gamemode", "GameMode", new HardEnum("GameMode",
+			new DefaultEnums("boolean", "Boolean", new HardEnumI("Boolean", ["true"=>true, "false"=>false])),
+			new DefaultEnums("vanilla_gamemode", "GameMode", new HardEnumI("GameMode",
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
 				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"]
 			)),
-			new DefaultEnums("pm_gamemode", "PMGameMode", new HardEnum("PMGameMode",
+			new DefaultEnums("pm_gamemode", "PMGameMode", new HardEnumI("PMGameMode",
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a"]
 			)),
-			new DefaultEnums("online_player", "OnlinePlayers", new SoftEnum("OnlinePlayers")),
+			new DefaultEnums("online_player", "OnlinePlayers", new SoftEnumI("OnlinePlayers")),
 		);
 	}
 
