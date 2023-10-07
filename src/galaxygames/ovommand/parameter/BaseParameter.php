@@ -16,12 +16,12 @@ abstract class BaseParameter implements IParameter{
 	/** @var bool if this was true, value will not give the parsed results but the raw parameters store in Result*/
 	protected bool $returnRaw = false;
 
-	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0){
-		$this->setFlag($flag);
+	final public function getName() : string{
+		return $this->name;
 	}
 
-	public function getName() : string{
-		return $this->name;
+	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0){
+		$this->setFlag($flag);
 	}
 
 	abstract public function getValueName() : string;
@@ -48,7 +48,7 @@ abstract class BaseParameter implements IParameter{
 	private function setFlag(int $flag) : void{
 		$this->flag = match ($flag) {
 			0, 1 => $flag,
-			default => throw new ParameterException(ExceptionMessage::MSG_PARAMETER_INVALID_FLAG->getErrorMessage(['flag' => (string) $flag]), ParameterException::PARAMETER_INVALID_FLAG_ERROR)
+			default => throw new ParameterException(ExceptionMessage::PARAMETER_INVALID_FLAG->getErrorMessage(['flag' => (string) $flag]), ParameterException::PARAMETER_INVALID_FLAG)
 		};
 	}
 

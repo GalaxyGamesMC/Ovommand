@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand;
 
-use galaxygames\ovommand\exception\ExceptionMessage;
-use galaxygames\ovommand\exception\ParameterOrderException;
-use galaxygames\ovommand\exception\SubCommandException;
+use galaxygames\ovommand\exception\CommandException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\syntax\SyntaxConst;
@@ -54,11 +52,11 @@ abstract class Ovommand extends Command implements IOvommand{
 					if (!isset($this->subCommands[$alias])) {
 						$this->subCommands[$alias] = $subCommand;
 					} else {
-						throw new SubCommandException("SubCommand with same alias for '$alias' already exists", SubCommandException::SUB_COMMAND_DUPLICATE_ALIAS_ERROR);
+						throw new CommandException("SubCommand with same alias for '$alias' already exists", CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
 					}
 				}
 			} else {
-				throw new SubCommandException("SubCommand with same name for '$subName' already exists", SubCommandException::SUB_COMMAND_DUPLICATE_ALIAS_ERROR);
+				throw new CommandException("SubCommand with same name for '$subName' already exists", CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
 			}
 		}
 	}
@@ -76,7 +74,8 @@ abstract class Ovommand extends Command implements IOvommand{
 			if ($parameter->isOptional()) {
 				$hasOptionalParameter = true;
 			} elseif ($hasOptionalParameter) {
-				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
+				echo "TODO";
+//				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 			}
 
 			$this->overloads[$this->currentOverloadId++][] = $parameter;

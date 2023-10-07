@@ -5,7 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\exception\EnumException;
+use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
@@ -19,7 +19,10 @@ class EnumParameter extends BaseParameter{
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0){
 		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
 		if ($enum === null) {
-			throw new EnumException("LOL UNKNOWN ENUM! $enumName"); //TODO: Enum, code etc
+			if ($enumName instanceof DefaultEnums) {
+				$enumName = $enumName->value;
+			}
+			throw new ParameterException("LOL UNKNOWN ENUM! $enumName", ParameterException::PARAMETER_UNKNOWN_ENUM); //TODO: Better msg
 		}
 		$this->enum = $enum;
 		parent::__construct($name, $optional, $flag);
@@ -40,7 +43,7 @@ class EnumParameter extends BaseParameter{
 	public function parse(array $parameters) : BaseResult{
 		$enumValue = $this->enum->getValue($key = implode(" ", $parameters));
 		if ($enumValue !== null) {
-			return ValueResult::create($this->returnRaw ? $key : $enumValue); //TODO: Best sol?
+			return ValueResult::create($this->returnRaw ? $key : $enumValue);
 		}
 		return BrokenSyntaxResult::create($key, $key, expectedType: $this->enum->getName()); //TODO: better msg
 	}

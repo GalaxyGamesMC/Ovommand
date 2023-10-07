@@ -5,7 +5,6 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\CoordinateResult;
-use galaxygames\ovommand\utils\syntax\SyntaxConst;
 
 class PositionParameter extends BaseParameter{
 	public function getValueName() : string{
