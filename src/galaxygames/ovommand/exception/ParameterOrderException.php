@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\exception;
 
-use shared\galaxygames\ovommand\exception\OvommandException;
+use shared\galaxygames\ovommand\fetus\OvommandException;
 
 final class ParameterOrderException extends OvommandException{
 	public const PARAMETER_NEGATIVE_ORDER_ERROR = 0;

@@ -30,7 +30,7 @@ use pocketmine\plugin\Plugin;
 use shared\galaxygames\ovommand\fetus\IHookable;
 
 class GlobalHookPool{
-	/** @var IHookable[] $hooks */
+	/** @var IHookable[] */
 	protected static array $hooks;
 
 	public static function getHooks() : array{

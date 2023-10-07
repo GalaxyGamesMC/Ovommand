@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace shared\galaxygames\ovommand;
 
+use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 use shared\galaxygames\ovommand\fetus\enum\OvoEnum;
 use shared\galaxygames\ovommand\fetus\IHookable;
-use shared\galaxygames\ovommand\fetus\OvommandEnumPoolException;
 
 final class GlobalEnumPool{
 	/** @var array<string, IStaticEnum> */

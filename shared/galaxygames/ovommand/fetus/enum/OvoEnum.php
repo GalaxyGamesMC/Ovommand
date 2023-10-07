@@ -7,11 +7,11 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 abstract class OvoEnum implements IOvoEnum{
 	protected string $name;
-	/** @var array<string, mixed> $values */
+	/** @var array<string, mixed> */
 	protected array $values;
-	/** @var string[] $hiddenAliases */
+	/** @var string[] */
 	protected array $hiddenAliases = [];
-	/** @var string[] $showAliases */
+	/** @var string[] */
 	protected array $showAliases = [];
 	protected bool $isDefault = false;
 

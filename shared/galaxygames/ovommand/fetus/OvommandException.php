@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
 
-namespace shared\galaxygames\ovommand\exception;
+namespace shared\galaxygames\ovommand\fetus;
 
 abstract class OvommandException extends \RuntimeException{}

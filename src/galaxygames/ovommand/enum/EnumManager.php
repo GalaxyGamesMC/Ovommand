@@ -9,9 +9,9 @@ use galaxygames\ovommand\OvommandHook;
 use pocketmine\player\GameMode;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\SingletonTrait;
+use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
-use shared\galaxygames\ovommand\fetus\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
