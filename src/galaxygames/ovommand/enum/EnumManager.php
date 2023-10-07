@@ -23,21 +23,7 @@ final class EnumManager{
 	}
 
 	private function initDefaultEnums() : void{
-		GlobalEnumPool::addEnums(OvommandHook::getInstance(),
-			new HardEnum("Boolean", ["true" => true, "false" => false],isDefault: true),
-			new HardEnum("GameMode",
-				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
-				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
-				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
-				isDefault: true
-			),
-			new HardEnum("PMGameMode",
-				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
-				["survival" => "s", "creative" => "c", "adventure" => "a"],
-				isDefault: true
-			),
-			new SoftEnum("OnlinePlayers",isDefault: true)
-		);
+		GlobalEnumPool::addEnums(OvommandHook::getInstance(), ...array_map(static fn(DefaultEnums $enum) => $enum->encode(), DefaultEnums::cases()));
 	}
 
 	public function register(BaseEnum ...$enums) : void{
@@ -60,23 +46,21 @@ final class EnumManager{
 		}
 	}
 
-	public function getSoftEnum(string $enumName) : ?IDynamicEnum{
-//		if ($enumName instanceof DefaultEnums) {
-//			$enum = $enumName->getEnum();
-//			return $enum instanceof IDynamicEnum ? $enum : null;
-//		}
+	public function getSoftEnum(DefaultEnums|string $enumName) : ?IDynamicEnum{
+		if ($enumName instanceof DefaultEnums) {
+			$enumName = $enumName->value;
+		}
 		return GlobalEnumPool::getSoftEnum($enumName);
 	}
 
-	public function getHardEnum(string $enumName) : ?IStaticEnum{
-//		if ($enumName instanceof DefaultEnums) {
-//			$enum = $enumName->getEnum();
-//			return $enum instanceof IStaticEnum ? $enum : null;
-//		}
+	public function getHardEnum(DefaultEnums|string $enumName) : ?IStaticEnum{
+		if ($enumName instanceof DefaultEnums) {
+			$enumName = $enumName->value;
+		}
 		return GlobalEnumPool::getHardEnum($enumName);
 	}
 
-	public function getEnum(string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{
+	public function getEnum(DefaultEnums|string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
 	}
 

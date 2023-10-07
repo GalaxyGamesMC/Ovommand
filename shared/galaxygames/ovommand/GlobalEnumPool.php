@@ -47,4 +47,20 @@ final class GlobalEnumPool{
 	public static function getSoftEnum(string $key) : ?IDynamicEnum{
 		return self::$softEnums[$key] ?? null;
 	}
+
+	/** @return list<IDynamicEnum|IStaticEnum> */
+	public static function getHookerRegisteredEnums(IHookable $hookable) : array{
+		$results = [];
+		foreach (self::$softEnumHooker as $eName => $hook) {
+			if ($hook === $hookable) {
+				$results[] = self::$softEnums[$eName];
+			}
+		}
+		foreach (self::$hardEnumHooker as $eName => $hook) {
+			if ($hook === $hookable) {
+				$results[] = self::$hardEnums[$eName];
+			}
+		}
+		return $results;
+	}
 }

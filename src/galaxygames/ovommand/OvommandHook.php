@@ -89,11 +89,11 @@ final class OvommandHook implements IHookable{
 			$pluginManager = Server::getInstance()->getPluginManager();
 			try {
 				$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
+					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
 					$enum?->addValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
 				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYER());
+					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
 					$enum?->removeValue($event->getPlayer()->getName());
 				}, EventPriority::NORMAL, $plugin);
 			} catch (\ReflectionException $e) {
