@@ -48,7 +48,7 @@ final class CoordinateResult extends BaseResult{
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
 			default => throw new \InvalidArgumentException("Unknown coordinate's z value type set in self::class")
 		};
-		$this->hasCaret = $this->x === self::TYPE_LOCAL || $this->y === self::TYPE_LOCAL || $this->z === self::TYPE_LOCAL;
+		$this->hasCaret = $this->xType === self::TYPE_LOCAL || $this->yType === self::TYPE_LOCAL || $this->zType === self::TYPE_LOCAL;
 		if (!($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL) && $this->hasCaret) {
 			throw new \InvalidArgumentException("Once caret, all caret!");
 		}
