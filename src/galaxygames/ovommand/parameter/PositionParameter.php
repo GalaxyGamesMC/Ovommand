@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\CoordinateResult;
+use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class PositionParameter extends BaseParameter{
 	public function getValueName() : string{
@@ -98,6 +99,41 @@ class PositionParameter extends BaseParameter{
 				->setRequiredParameter($this->getSpanLength());
 		}
 		return CoordinateResult::fromData(...$values, ...$types);
+	}
+
+	// beta is faster than most case compared to the above
+	public function betaParse(array $parameters) : BaseResult{
+		$parameter = implode(" ", $parameters);
+		if (!preg_match("/^([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?)$/", $parameter, $matches)) {
+			return new BrokenSyntaxResult($parameter);
+		}
+
+		if (empty($matches)) {
+			return new BrokenSyntaxResult("");
+		}
+
+		$typeCast = static function(string $in) {
+			return match ($u = $in[0]) {
+				"~" => CoordinateResult::TYPE_RELATIVE,
+				"^" => CoordinateResult::TYPE_LOCAL,
+				default => CoordinateResult::TYPE_DEFAULT
+			};
+		};
+		$xType = $typeCast($matches[1][0]);
+		$xValue = ltrim($matches[1], $matches[1][0]);
+		$x = str_contains($xValue, ".") ? (double) $xValue : (int) $xValue;
+		$yType = $typeCast($matches[2][0]);
+		$yValue = ltrim($matches[2], $matches[2][0]);
+		$y = str_contains($yValue, ".") ? (double) $yValue : (int) $yValue;
+		$zType = $typeCast($matches[3][0]);
+		$zValue = ltrim($matches[3], $matches[2][0]);
+		$z = str_contains($zValue, ".") ? (double) $zValue : (int) $zValue;
+		$hasCaret = $xType === CoordinateResult::TYPE_LOCAL || $yType === CoordinateResult::TYPE_LOCAL || $zType === CoordinateResult::TYPE_LOCAL;
+		if (!($xType === CoordinateResult::TYPE_LOCAL && $yType === CoordinateResult::TYPE_LOCAL && $zType === CoordinateResult::TYPE_LOCAL) && $hasCaret) {
+			return new BrokenSyntaxResult("");
+		}
+
+		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType);
 	}
 
 	public function getSpanLength() : int{
