@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\exception;
 
-use shared\galaxygames\ovommand\fetus\exception\OvommandException;
+use shared\galaxygames\ovommand\exception\OvommandException;
 
 final class SubCommandException extends OvommandException{
 	public const SUB_COMMAND_DUPLICATE_NAME_ERROR = 0;

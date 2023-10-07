@@ -14,7 +14,7 @@ abstract class BaseEnum extends OvoEnum{
 	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show or have type hint ingame!
 	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
 	 */
-	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = []){
+	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isDefault = false){
 		$this->values = $values;
 		$this->setAliases($showAliases);
 		$this->setAliases($hiddenAliases, true);

@@ -42,7 +42,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
-use shared\galaxygames\ovommand\fetus\exception\OvommandHookException;
+use shared\galaxygames\ovommand\exception\OvommandHookException;
 use shared\galaxygames\ovommand\fetus\IHookable;
 use shared\galaxygames\ovommand\GlobalHookPool;
 

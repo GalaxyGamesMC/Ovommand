@@ -10,8 +10,8 @@ use pocketmine\player\GameMode;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\SingletonTrait;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
-use shared\galaxygames\ovommand\fetus\enum\IEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
@@ -23,58 +23,60 @@ final class EnumManager{
 	}
 
 	private function initDefaultEnums() : void{
-		GlobalEnumPool::addDefaultEnums(OvommandHook::getInstance(),
-			new DefaultEnum("Boolean", false, ["true" => true, "false" => false]),
-			new DefaultEnum("GameMode", false,
+		GlobalEnumPool::addEnums(OvommandHook::getInstance(),
+			new HardEnum("Boolean", ["true" => true, "false" => false],isDefault: true),
+			new HardEnum("GameMode",
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
-				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"]
+				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
+				isDefault: true
 			),
-			new DefaultEnum("PMGameMode", false,
+			new HardEnum("PMGameMode",
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
-				["survival" => "s", "creative" => "c", "adventure" => "a"]
+				["survival" => "s", "creative" => "c", "adventure" => "a"],
+				isDefault: true
 			),
-			new DefaultEnum("OnlinePlayers", true)
+			new SoftEnum("OnlinePlayers",isDefault: true)
 		);
 	}
 
-	public function register(IEnum $enum) : void{
-		$enumName = $enum->getName();
-		if (trim($enumName) === '') {
-			throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
-		}
-		if ($enum instanceof IDynamicEnum) {
-			if (isset(GlobalEnumPool::$softEnums[$enumName])) {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
+	public function register(BaseEnum ...$enums) : void{
+		foreach ($enums as $enum) {
+			$enumName = $enum->getName();
+			if ($enum->isDefault()) {
+				throw new EnumException("");
 			}
-			GlobalEnumPool::$softEnums[$enum->getName()] = $enum;
-		} elseif($enum instanceof IStaticEnum) {
-			if (isset(GlobalEnumPool::$hardEnums[$enumName])) {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["enumName" => $enumName]), EnumException::ENUM_FAILED_OVERLAY_ERROR);
+			if (trim($enumName) === '') {
+				throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
 			}
-			GlobalEnumPool::$hardEnums[$enum->getName()] = $enum;
-		} else {
-			throw new \RuntimeException("TODO"); //TODO: MSG
+		}
+		try {
+			GlobalEnumPool::addEnums(OvommandHook::getInstance(), ...$enums);
+		} catch (OvommandEnumPoolException $e) {
+			match ($e->getCode()) {
+				OvommandEnumPoolException::ENUM_ALREADY_EXISTED_ERROR => throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->value, EnumException::ENUM_ALREADY_EXISTED_ERROR),
+				default => throw $e
+			};
 		}
 	}
 
-	public function getSoftEnum(string|DefaultEnums $enumName) : ?IDynamicEnum{
-		if ($enumName instanceof DefaultEnums) {
-			$enum = $enumName->getEnum();
-			return $enum instanceof IDynamicEnum ? $enum : null;
-		}
-		return GlobalEnumPool::$softEnums[$enumName] ?? null;
+	public function getSoftEnum(string $enumName) : ?IDynamicEnum{
+//		if ($enumName instanceof DefaultEnums) {
+//			$enum = $enumName->getEnum();
+//			return $enum instanceof IDynamicEnum ? $enum : null;
+//		}
+		return GlobalEnumPool::getSoftEnum($enumName);
 	}
 
-	public function getHardEnum(string|DefaultEnums $enumName) : ?IStaticEnum{
-		if ($enumName instanceof DefaultEnums) {
-			$enum = $enumName->getEnum();
-			return $enum instanceof IStaticEnum ? $enum : null;
-		}
-		return GlobalEnumPool::$hardEnums[$enumName] ?? null;
+	public function getHardEnum(string $enumName) : ?IStaticEnum{
+//		if ($enumName instanceof DefaultEnums) {
+//			$enum = $enumName->getEnum();
+//			return $enum instanceof IStaticEnum ? $enum : null;
+//		}
+		return GlobalEnumPool::getHardEnum($enumName);
 	}
 
-	public function getEnum(string|DefaultEnums $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{
+	public function getEnum(string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
 	}
 
