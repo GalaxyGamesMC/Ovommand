@@ -29,13 +29,11 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		$updates = [];
 		foreach ($context as $k) {
 			if (isset($this->values[$k])) {
-				unset($this->values[$k]); // move to #1
+				unset($this->values[$k]);
 				$updates[] = $k;
 			}
 		}
 		if (!empty($updates)) {
-			// #1
-			// $this->values = array_diff($this->values, $updates);
 			$this->hiddenAliases = array_diff($this->hiddenAliases, $updates);
 			$this->showAliases = array_diff($this->showAliases, $updates);
 

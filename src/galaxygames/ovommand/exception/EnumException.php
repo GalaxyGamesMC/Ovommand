@@ -6,10 +6,9 @@ namespace galaxygames\ovommand\exception;
 use shared\galaxygames\ovommand\fetus\OvommandException;
 
 final class EnumException extends OvommandException{
-	public const ENUM_EMPTY_NAME_ERROR = 0;
-	public const ENUM_ALREADY_EXISTED_ERROR = 1;
-	public const ENUM_DUPLICATED_NAME_IN_OTHER_TYPE_ERROR = 2; // lol
-	public const ENUM_ALIAS_REGISTERED_ERROR = 3;
-	public const ENUM_ALIAS_UNKNOWN_KEY_ERROR = 4;
-	public const ENUM_ALIAS_UNKNOWN_TYPE_ERROR = 5;
+	public const ENUM_EMPTY_NAME = 0;
+	public const ENUM_ALREADY_EXISTED = 1;
+	public const ENUM_ALIAS_REGISTERED = 2;
+	public const ENUM_ALIAS_UNKNOWN_KEY = 3;
+	public const ENUM_ALIAS_UNKNOWN_TYPE = 4;
 }

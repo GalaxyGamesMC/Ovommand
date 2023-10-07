@@ -6,7 +6,6 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\OvommandHook;
-use pocketmine\player\GameMode;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\SingletonTrait;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
@@ -33,14 +32,14 @@ final class EnumManager{
 				throw new EnumException("");
 			}
 			if (trim($enumName) === '') {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME_ERROR);
+				throw new EnumException(ExceptionMessage::ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME);
 			}
 		}
 		try {
 			GlobalEnumPool::addEnums(OvommandHook::getInstance(), ...$enums);
 		} catch (OvommandEnumPoolException $e) {
 			match ($e->getCode()) {
-				OvommandEnumPoolException::ENUM_ALREADY_EXISTED_ERROR => throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->value, EnumException::ENUM_ALREADY_EXISTED_ERROR),
+				OvommandEnumPoolException::ENUM_ALREADY_EXISTED => throw new EnumException(ExceptionMessage::ENUM_ALREADY_EXISTED->value, EnumException::ENUM_ALREADY_EXISTED),
 				default => throw $e
 			};
 		}
