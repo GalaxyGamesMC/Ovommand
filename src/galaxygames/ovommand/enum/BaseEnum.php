@@ -26,21 +26,24 @@ abstract class BaseEnum extends OvoEnum{
 	public function setAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $key => $alias) {
-			if (!isset($this->values[$key])) {
-				throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => $alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
-			}
 			if (is_string($alias)) {
+				if (!isset($this->values[$key])) {
+					throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => $alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
+				}
 				if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
 					throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => $alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
 				}
 				$aliasesList[$alias] = $key;
 			} elseif (is_array($alias)) {
 				foreach ($alias as $a) {
-					if (!is_string($alias)) {
+					if (!isset($this->values[$key])) {
+						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_KEY->getErrorMessage(["aliasName" => $a, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY_ERROR);
+					}
+					if (!is_string($a)) {
 						throw new EnumException(ExceptionMessage::MSG_ENUM_ALIAS_UNKNOWN_TYPE->getErrorMessage(["key" => $key, "type" => gettype($a)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE_ERROR);
 					}
-					if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
-						throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => $alias]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
+					if (isset($this->showAliases[$a]) || isset($this->hiddenAliases[$a])) {
+						throw new EnumException(ExceptionMessage::MSG_ENUM_FAILED_OVERLAY->getErrorMessage(["aliasName" => $a]), EnumException::ENUM_ALIAS_REGISTERED_ERROR);
 					}
 					$aliasesList[$a] = $key;
 				}
