@@ -16,10 +16,33 @@ class PositionParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : BrokenSyntaxResult|CoordinateResult{
+		$newParameters = [];
+		foreach ($parameters as $parameter) { //special case, ~~~
+			$s = $parameter;
+			$l = strlen($s);
+
+			$currentPos = 0;
+
+			while ($currentPos < $l) {
+				$tildePos = strpos($s, "~", $currentPos + 1);
+				$caretPos = strpos($s, "^", $currentPos + 1);
+				if ($tildePos === false) {
+					$tildePos = $l;
+				}
+				if ($caretPos === false) {
+					$caretPos = $l;
+				}
+				$nextPos = min($tildePos, $caretPos);
+
+				$newParameters[] = substr($s, $currentPos, $nextPos - $currentPos);
+				$currentPos = $nextPos;
+			}
+		}
+		$parameters = $newParameters;
 		$pCount = count($parameters);
 
 		if ($pCount > $this->getSpanLength()) {
-			return BrokenSyntaxResult::create($parameters[$this->getSpanLength() + 1], implode(" ", $parameters))
+			return BrokenSyntaxResult::create($parameters[$this->getSpanLength()], implode(" ", $parameters))
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 		}
 
@@ -28,11 +51,13 @@ class PositionParameter extends BaseParameter{
 		$types = [];
 		$values = [];
 		$match = 0;
+
 		foreach ($parameters as $i => $parameter) {
 			if (str_contains($parameter, " ")) {
 				$brokenSyntax = $parameter;
 				break;
 			}
+			// ^([~^]?[+-]?\d*?(?:\.\d+)?)[ ]?([~^]?[+-]?\d*?(?:\.\d+)?)[ ]?([~^]?[+-]?\d*?(?:\.\d+)?)$
 			if (!preg_match("/^([~^]?[+-]?\d*(?:\.\d+)?)$/", $parameter)) {
 				$brokenSyntax = $parameter;
 				break;
