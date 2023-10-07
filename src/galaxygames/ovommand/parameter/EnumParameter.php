@@ -12,10 +12,11 @@ use shared\galaxygames\ovommand\fetus\enum\IDefaultEnum;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\OvoEnum;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class EnumParameter extends BaseParameter{
-	protected IDefaultEnum|IEnum $enum;
+	protected IDynamicEnum|IStaticEnum $enum;
 	protected bool $returnRaw = false;
 
 	public function __construct(string $name, string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0){
@@ -36,12 +37,7 @@ class EnumParameter extends BaseParameter{
 	}
 
 	public function isSoft() : bool{
-		return match (true) {
-			$this->enum instanceof IStaticEnum => false,
-			$this->enum instanceof IDynamicEnum => true,
-			$this->enum instanceof IDefaultEnum => $this->enum->isSoft(),
-			default => throw new \RuntimeException("TODO") //TODO: Update msg
-		};
+		return $this->enum->isSoft();
 	}
 
 	public function parse(array $parameters) : BaseResult{

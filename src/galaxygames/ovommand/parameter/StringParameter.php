@@ -17,7 +17,7 @@ class StringParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : BaseResult{
-//		parent::parse($parameters);
+		parent::parse($parameters);
 
 		$f = implode("", $parameters);
 		if (empty($f)) {

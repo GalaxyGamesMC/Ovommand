@@ -22,7 +22,7 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/** @var BaseConstraint[] */
 	protected array $constraints = [];
-	/** @var BaseSubCommand[] $subCommands */ //bad design
+	/** @var BaseSubCommand[] */ //bad design
 	protected array $subCommands = [];
 	/** @var CommandSender */
 	protected CommandSender $currentSender;
