@@ -73,8 +73,6 @@ class BlockPositionParameter extends BaseParameter{
 				->setRequiredParameter($this->getSpanLength());
 		}
 
-		/** @var list<3> $values */
-		/** @var list<3> $types */
 		return CoordinateResult::fromData($values[0], $values[1], $values[2], $types[0], $types[1], $types[3], true);
 	}
 
