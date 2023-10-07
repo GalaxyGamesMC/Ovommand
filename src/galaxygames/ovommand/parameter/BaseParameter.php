@@ -13,6 +13,8 @@ use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;
+	/** @var bool if this was true, value will not give the parsed results but the raw parameters store in Result*/
+	protected bool $returnRaw = false;
 
 	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0){
 		$this->setFlag($flag);
@@ -60,5 +62,13 @@ abstract class BaseParameter implements IParameter{
 
 	public function getNetworkParameterData() : CommandParameter{
 		return CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
+	}
+
+	public function isReturnRaw() : bool{
+		return $this->returnRaw;
+	}
+
+	public function returnRaw(bool $returnRaw = true) : void{
+		$this->returnRaw = $returnRaw;
 	}
 }

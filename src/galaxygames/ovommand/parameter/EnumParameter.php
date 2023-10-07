@@ -16,8 +16,9 @@ use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class EnumParameter extends BaseParameter{
 	protected IDefaultEnum|IEnum $enum;
+	protected bool $returnRaw = false;
 
-	public function __construct(string $name, string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0, protected bool $returnRaw = false){
+	public function __construct(string $name, string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0){
 		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
 		if ($enum === null) {
 			throw new EnumException("LOL UNKNOWN ENUM! $enumName"); //TODO: Enum, code etc
@@ -53,9 +54,5 @@ class EnumParameter extends BaseParameter{
 
 	public function getNetworkParameterData() : CommandParameter{
 		return CommandParameter::enum($this->name, $this->enum->encode(), $this->flag, $this->optional);
-	}
-
-	public function isReturnRaw() : bool{
-		return $this->returnRaw;
 	}
 }
