@@ -17,14 +17,14 @@ final class CoordinateResult extends BaseResult{
 	protected int $yType;
 	protected int $zType;
 
-	protected float $x;
-	protected float $y;
-	protected float $z;
+	protected float|int $x;
+	protected float|int $y;
+	protected float|int $z;
 
 	protected bool $hasCaret;
 	protected bool $isBlockPos; //TODO: deal with this later
 
-	public function __construct(float $x, float $y, float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false){
+	public function __construct(float|int $x, float|int $y, float|int $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false){
 		$this->x = $x;
 		$this->y = $y;
 		$this->z = $z;
@@ -54,7 +54,7 @@ final class CoordinateResult extends BaseResult{
 		}
 	}
 
-	public static function fromData(float $x, float $y, float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false) : self{
+	public static function fromData(float|int $x, float|int $y, float|int $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false) : self{
 		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType, $isBlockPos);
 	}
 
@@ -77,6 +77,13 @@ final class CoordinateResult extends BaseResult{
 			return $this->parseRelative($entity);
 		}
 		return new Position($this->x, $this->y, $this->z, $entity?->getWorld());
+	}
+
+	public function asBlockPosition(Entity $entity = null) : Position{
+		$pos = $this->asPosition($entity);
+		$pos->x = is_int($pos->x) ? $pos->x + 0.5 : $pos->x;
+		$pos->z = is_int($pos->z) ? $pos->z + 0.5 : $pos->z;
+		return $pos;
 	}
 
 	private function parseRelative(Entity $entity) : Position{
