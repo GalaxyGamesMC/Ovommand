@@ -116,7 +116,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$offset += $span;
 
 				if ($parameter instanceof PositionParameter) {
-					$test = 50000;
+					$test = 500;
 
 					$rate = 0;
 					for ($i = 1; $i <= $test; ++$i) {
@@ -135,6 +135,26 @@ abstract class Ovommand extends Command implements IOvommand{
 						$rate += $end - $start;
 					}
 					echo("Test2: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->parse2($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test3: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->betaParse2($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test4: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$result = [];
 				} else {
 					$result = $parameter->parse($params);
 				}

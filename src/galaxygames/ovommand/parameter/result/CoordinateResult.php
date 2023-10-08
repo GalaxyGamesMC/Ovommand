@@ -17,17 +17,17 @@ final class CoordinateResult extends BaseResult{
 	protected int $yType;
 	protected int $zType;
 
-	protected int|float $x;
-	protected int|float $y;
-	protected int|float $z;
+	protected float $x;
+	protected float $y;
+	protected float $z;
 
 	protected bool $hasCaret;
 	protected bool $isBlockPos; //TODO: deal with this later
 
-	public function __construct(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false){
-		$this->x = (float) $x;
-		$this->y = (float) $y;
-		$this->z = (float) $z;
+	public function __construct(float $x, float $y, float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false){
+		$this->x = $x;
+		$this->y = $y;
+		$this->z = $z;
 		$this->isBlockPos = $isBlockPos;
 
 		$this->xType = match ($xType) {
@@ -54,7 +54,7 @@ final class CoordinateResult extends BaseResult{
 		}
 	}
 
-	public static function fromData(int|float $x, int|float $y, int|float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false) : self{
+	public static function fromData(float $x, float $y, float $z, int $xType = self::TYPE_DEFAULT, int $yType = self::TYPE_DEFAULT, int $zType = self::TYPE_DEFAULT, bool $isBlockPos = false) : self{
 		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType, $isBlockPos);
 	}
 
@@ -116,7 +116,7 @@ final class CoordinateResult extends BaseResult{
 		return (new Vector3($x, $y, $z))->normalize();
 	}
 
-	private function addLength(Vector3 $vector, int|float $num) : Vector3{
+	private function addLength(Vector3 $vector, int $num) : Vector3{
 		$len = $vector->length();
 		if (!($len > 0)) {
 			$len = 0;
