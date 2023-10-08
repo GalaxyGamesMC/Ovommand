@@ -105,6 +105,10 @@ class PositionParameter extends BaseParameter{
 	}
 
 	// beta is faster than most case compared to the above, except for large input, eg: ~1327819873199127309273197392709273927832981720371987321893~1.13133131313131313~10987310923810983109813093809128109281
+
+	/**
+	 * @param string[] $parameters
+	 */
 	public function betaParse(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match("/^([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?)$/U", $parameter, $matches)) {
