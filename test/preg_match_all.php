@@ -1,9 +1,13 @@
 <?php
 declare(strict_types=1);
 
-$s = "~1313~131~13a"; //worked great yay :D
+$s = "~~~"; //worked great yay :D
 
-preg_match_all("/(\S[~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $s, $matches);
+//preg_match_all("/(\S[~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $s, $matches);
+//preg_match_all("/(\S[~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $s, $matches);
+//preg_match_all("/([~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $s, $matches);
+//preg_match_all("/([[:graph:]][~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $s, $matches);
+preg_match_all("/([~^]?[+-]?(?:\d*\.\d+|\d+)|[~^])([^~\s\d]+)?/", $s, $matches);
 var_dump($matches[1], $matches[2]);
 
 $xType = $matches[1][0][0];

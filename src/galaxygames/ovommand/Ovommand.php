@@ -135,6 +135,15 @@ abstract class Ovommand extends Command implements IOvommand{
 						$rate += $end - $start;
 					}
 					echo("Test2: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->omegaParse($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test3: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 				} else {
 					$result = $parameter->parse($params);
 				}

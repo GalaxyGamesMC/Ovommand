@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\CoordinateResult;
+use RuntimeException;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class PositionParameter extends BaseParameter{
@@ -140,6 +141,58 @@ class PositionParameter extends BaseParameter{
 		}
 
 		return new CoordinateResult($x, $y, $z, $xType, $yType, $zType);
+	}
+
+	/**
+	 * @param string[] $parameters
+	 */
+	public function omegaParse(array $parameters) : BaseResult{
+		$parameter = implode(" ", $parameters);
+
+		//		if (!preg_match_all("/(\S[~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $parameter, $matches)) {
+//		if (!preg_match_all("/([~^]?[+-]?(?:\d*\.\d+|\d+)?)([^~\s\d]+)?/", $parameter, $matches)) {
+		if (!preg_match_all("/([~^]?[+-]?(?:\d*\.\d+|\d+)|[~^])([^~\s\d]+)?/", $parameter, $matches)) {
+//			echo "Meow";
+			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName())
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
+		}
+		if (($u = count($matches[0])) < 3) {
+//			echo "Meow2";
+			return BrokenSyntaxResult::create("", $parameter, $this->getValueName())
+				->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
+		}
+		$typeCast = static function(string $in) {
+			return match ($u = $in[0]) {
+				"~" => CoordinateResult::TYPE_RELATIVE,
+				"^" => CoordinateResult::TYPE_LOCAL,
+				default => CoordinateResult::TYPE_DEFAULT
+			};
+		};
+		$xInvalid = $matches[2][0];
+		if (!empty($xInvalid)) {
+			return BrokenSyntaxResult::create($xInvalid, $parameter, $this->getValueName())
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
+				->setMatchedParameter(1);
+		}
+		$yInvalid = $matches[2][1];
+		if (!empty($yInvalid)) {
+			return BrokenSyntaxResult::create($yInvalid, $parameter, $this->getValueName())
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
+				->setMatchedParameter(2);
+		}
+		$zInvalid = $matches[2][2];
+		if (!empty($zInvalid)) {
+			return BrokenSyntaxResult::create($zInvalid, $parameter, $this->getValueName())
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
+				->setMatchedParameter(3);
+		}
+		$xType = $typeCast($matches[1][0][0]);
+		$x = (float) substr($matches[1][0], 1);
+		$yType = $typeCast($matches[1][1][0]);
+		$y = (float) substr($matches[1][1], 1);
+		$zType = $typeCast($matches[1][1][0]);
+		$z = (float) substr($matches[1][2], 1);
+		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
 	}
 
 	public function getSpanLength() : int{
