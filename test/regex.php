@@ -66,13 +66,43 @@ function test1U(array $parameters) : void{
 function test2(array $parameters) : void{
 	$parameter = implode(" ", $parameters);
 	if (!preg_match("/^([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?)$/", $parameter, $matches)) {
-		var_dump($parameter);
+//		var_dump($parameter);
 	}
 }
 function test2U(array $parameters) : void{
 	$parameter = implode(" ", $parameters);
 	if (!preg_match("/^([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?)$/U", $parameter, $matches)) {
-		var_dump($parameter);
+//		var_dump($parameter);
+	}
+}
+
+function test3(array $parameters) : void{
+	$parameter = implode(" ", $parameters);
+//	if (!preg_match("/^([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?)$/", $parameter, $matches)) {
+		if (!preg_match("/^([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?)$/", $parameter, $matches)) {
+//		var_dump($parameter);
+	}
+}
+function test3U(array $parameters) : void{
+	$parameter = implode(" ", $parameters);
+	//	if (!preg_match("/^([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?)$/U", $parameter, $matches)) {
+	if (!preg_match("/^([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?) *([~^]?[+-]?\d*?(?:\.\d+)?)$/U", $parameter, $matches)) {
+//		var_dump($parameter);
+	}
+}
+
+function test4(array $parameters) : void{
+	$parameter = implode(" ", $parameters);
+	//	if (!preg_match("/^([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?)$/", $parameter, $matches)) {
+	if (!preg_match("/^([~^]?[+-]?(\d+(?:\.\d+)?)?) *([~^]?[+-]?(\d+(?:\.\d+)?)?) *([~^]?[+-]?(\d+(?:\.\d+)?)?)$/", $parameter, $matches)) {
+//		var_dump($parameter);
+	}
+}
+function test4U(array $parameters) : void{
+	$parameter = implode(" ", $parameters);
+	//	if (!preg_match("/^([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?) *([~^]?[+-]?\d*?\.?\d+?)$/U", $parameter, $matches)) {
+	if (!preg_match("/^([~^]?[+-]?(\d+(?:\.\d+)?)?) *([~^]?[+-]?(\d+(?:\.\d+)?)?) *([~^]?[+-]?(\d+(?:\.\d+)?)?)$/U", $parameter, $matches)) {
+//		var_dump($parameter);
 	}
 }
 
@@ -83,10 +113,11 @@ $parameters = [
 	["^^^"],
 	["~131318763183~-131873173", "~1123221312321312312321321376317a2791281631287162317863781.1321368763287812"],
 	["~13131", "~+1123221312321312312", "-13132313133"],
-	[""]
+	[""],
+	[" ", "  "],
 ];
 
-$test = 1;
+$test = 50000;
 
 $tz = 'GMT+7';
 $timestamp = time();
@@ -99,7 +130,7 @@ try {
 }
 
 foreach ($parameters as $parameter) {
-	echo implode(" ", $parameter) . "\n";
+	echo "\"" . implode(" ", $parameter) . "\"" . "\n";
 	$rate = 0;
 	for ($i = 1; $i <= $test; ++$i) {
 		$start = microtime(true);
@@ -135,6 +166,42 @@ foreach ($parameters as $parameter) {
 		$rate += $end - $start;
 	}
 	echo("Test2U: " . sprintf('%0.25f', $rate/$test) . "\n");
+
+	$rate = 0;
+	for ($i = 1; $i <= $test; ++$i) {
+		$start = microtime(true);
+		test3($parameter);
+		$end = microtime(true);
+		$rate += $end - $start;
+	}
+	echo("Test3 : " . sprintf('%0.25f', $rate/$test) . "\n");
+
+	$rate = 0;
+	for ($i = 1; $i <= $test; ++$i) {
+		$start = microtime(true);
+		test3U($parameter);
+		$end = microtime(true);
+		$rate += $end - $start;
+	}
+	echo("Test3U: " . sprintf('%0.25f', $rate/$test) . "\n");
+
+	$rate = 0;
+	for ($i = 1; $i <= $test; ++$i) {
+		$start = microtime(true);
+		test4($parameter);
+		$end = microtime(true);
+		$rate += $end - $start;
+	}
+	echo("Test4 : " . sprintf('%0.25f', $rate/$test) . "\n");
+
+	$rate = 0;
+	for ($i = 1; $i <= $test; ++$i) {
+		$start = microtime(true);
+		test4U($parameter);
+		$end = microtime(true);
+		$rate += $end - $start;
+	}
+	echo("Test4U: " . sprintf('%0.25f', $rate/$test) . "\n");
 
 	echo "-----------------------------------------------------------------\n";
 }
