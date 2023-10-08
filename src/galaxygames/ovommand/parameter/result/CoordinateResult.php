@@ -123,7 +123,7 @@ final class CoordinateResult extends BaseResult{
 		return (new Vector3($x, $y, $z))->normalize();
 	}
 
-	private function addLength(Vector3 $vector, int $num) : Vector3{
+	private function addLength(Vector3 $vector, float|int $num) : Vector3{
 		$len = $vector->length();
 		if (!($len > 0)) {
 			$len = 0;
