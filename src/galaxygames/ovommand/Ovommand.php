@@ -125,7 +125,7 @@ abstract class Ovommand extends Command implements IOvommand{
 						$end = microtime(true);
 						$rate += $end - $start;
 					}
-					echo("Test1: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+					echo("Test legacy: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 
 					$rate = 0;
 					for ($i = 1; $i <= $test; ++$i) {
@@ -134,7 +134,25 @@ abstract class Ovommand extends Command implements IOvommand{
 						$end = microtime(true);
 						$rate += $end - $start;
 					}
-					echo("Test2: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+					echo("Test Beta:   " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->betaParse2($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test Beta2:  " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->betaParse3($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test Beta3:  " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 
 					$rate = 0;
 					for ($i = 1; $i <= $test; ++$i) {
@@ -143,7 +161,7 @@ abstract class Ovommand extends Command implements IOvommand{
 						$end = microtime(true);
 						$rate += $end - $start;
 					}
-					echo("Test3: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+					echo("Test omega:  " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 				} else {
 					$result = $parameter->parse($params);
 				}

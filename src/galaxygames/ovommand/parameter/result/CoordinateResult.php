@@ -81,8 +81,9 @@ final class CoordinateResult extends BaseResult{
 
 	public function asBlockPosition(Entity $entity = null) : Position{
 		$pos = $this->asPosition($entity);
-		$pos->x = is_int($pos->x) ? $pos->x + 0.5 : $pos->x;
-		$pos->z = is_int($pos->z) ? $pos->z + 0.5 : $pos->z;
+		$pos->x = $pos->getFloorX();
+		$pos->y = $pos->getFloorY();
+		$pos->z = $pos->getFloorZ();
 		return $pos;
 	}
 
