@@ -16,7 +16,7 @@ class PositionParameter extends BaseParameter{
 		return ParameterTypes::POSITION;
 	}
 
-	public function deltaParse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\s\d]+)?([~^]?[+-]?\d+(?:\.\d+)?|[~^])([^~^\s\d]+)?/", $parameter, $matches)) {
 			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName())
