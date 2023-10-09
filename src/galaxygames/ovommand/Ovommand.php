@@ -102,7 +102,6 @@ abstract class Ovommand extends Command implements IOvommand{
 			$offset = 0;
 			$results = [];
 			$hasFailed = false;
-			$totalSpan = 0;
 			$matchPoint = 0;
 			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
@@ -110,7 +109,6 @@ abstract class Ovommand extends Command implements IOvommand{
 					break;
 				}
 				$params = array_slice($rawParams, $offset, $span);
-				$totalSpan += $span;
 				$offset += $span;
 
 				$result = $parameter->parse($params);
@@ -123,7 +121,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$matchPoint += $span;
 			}
 			if (($paramCount > $matchPoint) && !$hasFailed) {
-				$results["_error"] = BrokenSyntaxResult::create($rawParams[$totalSpan], implode(" ", $rawParams))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
+				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 				$hasFailed = true;
 			}
 			if (!$hasFailed) {
