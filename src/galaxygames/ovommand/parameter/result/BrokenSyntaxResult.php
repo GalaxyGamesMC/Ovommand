@@ -70,7 +70,7 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 	}
 
 	public function setCode(int $code) : self{
-		$this->code = match($code) {
+		$this->code = match ($code) {
 			self::CODE_BROKEN_SYNTAX => self::CODE_BROKEN_SYNTAX,
 			self::CODE_NOT_ENOUGH_INPUTS => self::CODE_NOT_ENOUGH_INPUTS,
 			self::CODE_TOO_MUCH_INPUTS => self::CODE_TOO_MUCH_INPUTS,

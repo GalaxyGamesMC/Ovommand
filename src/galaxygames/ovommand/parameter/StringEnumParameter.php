@@ -14,7 +14,7 @@ class StringEnumParameter extends BaseParameter{
 	protected BaseEnum $enum;
 
 	/**
-	 * @param string[]  $values
+	 * @param string[] $values
 	 */
 	public function __construct(string $name, protected array $values, bool $optional = false, int $flag = 0){
 		parent::__construct($name, $optional, $flag);

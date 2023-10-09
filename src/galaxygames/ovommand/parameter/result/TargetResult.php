@@ -54,8 +54,7 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 	public function __construct(protected string $target, array $params = []){
 		if ($this->isTargetTagged()) {
 			$this->parameters = [
-				"x" => $this->castPositionValue($params["x"] ?? 0),
-				"y" => $this->castPositionValue($params["y"] ?? 0),
+				"x" => $this->castPositionValue($params["x"] ?? 0), "y" => $this->castPositionValue($params["y"] ?? 0),
 				"z" => $this->castPositionValue($params["z"] ?? 0),
 				"dx" => $this->castPositionValue($params["dx"] ?? 0),
 				"dy" => $this->castPositionValue($params["dy"] ?? 0),
@@ -84,26 +83,26 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		return $in;
 	}
 
-//	/**
-//	 * @param array $params
-//	 * @param list<mixed> $defaults
-//	 */
-//	private function bindTargetParameters(array $params, array $defaults) : void{
-//		foreach ($defaults as $key => $default) {
-//			if (isset($params[$key])) {
-//				$this->parameters[$key] = match (gettype($default)) {
-//					"boolean" => (bool) $params[$key],
-//					"integer" => (int) $params[$key],
-//					"double" => (float) $params[$key],
-//					"string" => (string) $params[$key],
-//					default => throw new \RuntimeException("Unknown type!")
-//				};
-//			} else {
-//				$this->parameters[$key] = $default;
-//			}
-//			//			$this->parameters[$key] = $params[$key] ?? $default;
-//		}
-//	}
+	//	/**
+	//	 * @param array $params
+	//	 * @param list<mixed> $defaults
+	//	 */
+	//	private function bindTargetParameters(array $params, array $defaults) : void{
+	//		foreach ($defaults as $key => $default) {
+	//			if (isset($params[$key])) {
+	//				$this->parameters[$key] = match (gettype($default)) {
+	//					"boolean" => (bool) $params[$key],
+	//					"integer" => (int) $params[$key],
+	//					"double" => (float) $params[$key],
+	//					"string" => (string) $params[$key],
+	//					default => throw new \RuntimeException("Unknown type!")
+	//				};
+	//			} else {
+	//				$this->parameters[$key] = $default;
+	//			}
+	//			//			$this->parameters[$key] = $params[$key] ?? $default;
+	//		}
+	//	}
 
 	public static function create(string $target) : self{
 		return new TargetResult($target);
@@ -149,8 +148,8 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 	private function getNearestPlayer(CommandSender $entity) : ?Entity{
 		$online = array_values(Server::getInstance()->getOnlinePlayers());
 
-		if(!$entity instanceof Player) {
-			if(count($online) > 0){
+		if (!$entity instanceof Player) {
+			if (count($online) > 0) {
 				return $online[array_keys($online)[0]];
 			}
 			return null;
