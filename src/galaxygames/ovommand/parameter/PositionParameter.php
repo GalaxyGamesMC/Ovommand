@@ -27,7 +27,7 @@ class PositionParameter extends BaseParameter{
 				->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
 		}
 		$typeCast = static function(string $in) {
-			return match ($u = $in[0]) {
+			return match ($in[0]) {
 				"~" => CoordinateResult::TYPE_RELATIVE,
 				"^" => CoordinateResult::TYPE_LOCAL,
 				default => CoordinateResult::TYPE_DEFAULT
@@ -48,8 +48,7 @@ class PositionParameter extends BaseParameter{
 		$xPreInvalid = $matches[1][0];
 		if (!empty($xPreInvalid)) {
 			return BrokenSyntaxResult::create($xPreInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
-				->setMatchedParameter(0);
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
 		$xPostInvalid = $matches[3][0];
 		if (!empty($xPostInvalid)) {
