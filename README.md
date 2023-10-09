@@ -31,6 +31,7 @@ Suggest:
 - [ ] more features to the syntax parser
 
 Discuss:
+- [ ] Default Enums should have its own register and a version checker!?
 - [ ] The aliases shouldn't be re-set to new one or add more if they were registered! :l. Edit: what was I meant?
 - [x] the problem with shared data is that if other plugins try to use other plugins enum... the enum might not exist due to plugin loading order!
 - [x] Default enums can have duplicated values if the event called more than twice on different plugins!
