@@ -112,9 +112,59 @@ abstract class Ovommand extends Command implements IOvommand{
 				}
 				$params = array_slice($rawParams, $offset, $span);
 				$totalSpan += $span;
+
 				$offset += $span;
 
-				$result = $parameter->parse($params);
+				if ($parameter instanceof PositionParameter) {
+					$test = 500;
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->parse($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test legacy: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->betaParse($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test Beta:   " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->betaParse2($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test Beta2:  " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->betaParse3($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test Beta3:  " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+
+					$rate = 0;
+					for ($i = 1; $i <= $test; ++$i) {
+						$start = microtime(true);
+						$result = $parameter->omegaParse($params);
+						$end = microtime(true);
+						$rate += $end - $start;
+					}
+					echo("Test omega:  " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+				} else {
+					$result = $parameter->parse($params);
+				}
 				$results[$parameter->getName()] = $result;
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
