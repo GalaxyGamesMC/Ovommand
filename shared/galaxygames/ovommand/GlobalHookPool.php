@@ -3,10 +3,14 @@ declare(strict_types=1);
 
 /**
  * Ovommand - A command virion for PocketMine-MP
- *    ／l、
- *  （ﾟ､ ｡ ７
- *    l ~ヽ
- *  ⠀じしf_,)ノ
+ *                     ／l、
+ *                   （ﾟ､ ｡ ７
+ *                     l ~ヽ
+ *  _____             じしf_,)ノ	           _
+ * |     | _ _  ___  _____  _____  ___  ___ _| |
+ * |  |  || | ||>_ ||     ||     || .'||   || . |
+ * |_____| \_/ |___||_|_|_||_|_|_||__,||_|_||___|
+ *
  * Copyright (C) 2023 GalaxyGamesMC
  * @link https://github.com/GalaxyGamesMC/Ovommand
  *
