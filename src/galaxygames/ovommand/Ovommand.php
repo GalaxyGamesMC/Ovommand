@@ -122,7 +122,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				}
 				$matchPoint += $span;
 			}
-			if (($paramCount > $totalSpan) && !$hasFailed) {
+			if (($paramCount > $matchPoint) && !$hasFailed) {
 				$results["_error"] = BrokenSyntaxResult::create($rawParams[$totalSpan], implode(" ", $rawParams))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 				$hasFailed = true;
 			}
