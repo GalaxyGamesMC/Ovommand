@@ -28,6 +28,7 @@ Suggest:
 - [ ] template?
 - [ ] move part of Ovommand to BaseCommand
 - [ ] do subCommand even need description?
+- [ ] more features to the syntax parser
 
 Discuss:
 - [ ] The aliases shouldn't be re-set to new one or add more if they were registered! :l. Edit: what was I meant?
