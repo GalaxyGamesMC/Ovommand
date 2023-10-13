@@ -36,7 +36,9 @@ abstract class Ovommand extends Command implements IOvommand{
 			$this->setPermission($permission);
 		}
 		$this->setup();
-		$this->setUsage($usageMessage ?? $this->generateUsage());
+		if (empty($this->usageMessage)) {
+			$this->setUsage($usageMessage ?? $this->generateUsage());
+		}
 	}
 
 	protected function generateUsage() : string{
@@ -75,7 +77,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$hasOptionalParameter = true;
 			} elseif ($hasOptionalParameter) {
 				echo "TODO";
-//				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
+				//				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 			}
 
 			$this->overloads[$this->currentOverloadId++][] = $parameter;
@@ -121,7 +123,8 @@ abstract class Ovommand extends Command implements IOvommand{
 				$matchPoint += $span;
 			}
 			if (($paramCount > $matchPoint) && !$hasFailed) {
-				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
+				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))
+					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 				$hasFailed = true;
 			}
 			if (!$hasFailed) {
@@ -133,9 +136,11 @@ abstract class Ovommand extends Command implements IOvommand{
 				$failedResults[$matchPoint] = $results;
 			}
 		}
+		// return the failed parse with the most matched semi-parameters, usually the last failed parse.
 		if (empty($successResults)) {
 			return $failedResults[$finalId];
 		}
+		// return the first succeed parse!
 		return $successResults[array_key_first($successResults)];
 	}
 
@@ -165,7 +170,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$constraint->onFailure($sender, $commandLabel, $args);
 			}
 		}
-		if (count($args) < 1) {
+		if (count($args) === 0) {
 			$this->onRun($sender, $commandLabel, []);
 			return;
 		}
@@ -253,6 +258,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param BaseResult[] $args
 	 */
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
+
 	abstract protected function setup() : void;
 
 	public function setCurrentSender(CommandSender $currentSender) : Ovommand{

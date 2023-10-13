@@ -14,15 +14,11 @@ abstract class BaseSubCommand extends Ovommand{
 	protected ?Ovommand $parent = null;
 
 	/**
-	 * @param list<string>             $hiddenAliases
-	 * @param list<string>             $showAliases
+	 * @param list<string> $hiddenAliases
+	 * @param list<string> $showAliases
 	 */
-	public function __construct(
-		string $name, protected string|Translatable $description = "", ?string $permission = null,
-		Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $showAliases = []
-	){
+	public function __construct(string $name, protected string|Translatable $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $showAliases = []){
 		parent::__construct($name, $this->description, $permission, $usageMessage);
-
 		$this->hiddenAliases = array_unique($hiddenAliases);
 		$this->showAliases = array_unique($showAliases);
 	}
@@ -37,6 +33,14 @@ abstract class BaseSubCommand extends Ovommand{
 
 	public function isShowAlias(string $in) : bool{
 		return in_array($in, $this->showAliases, true);
+	}
+
+	/**
+	 * @return string[]
+	 * @deprecated SubCommand shouldn't use this, use getShowAliases instead!
+	 */
+	public function getAliases() : array{
+		return [];
 	}
 
 	/**
@@ -57,9 +61,6 @@ abstract class BaseSubCommand extends Ovommand{
 		return $this->parent;
 	}
 
-	/**
-	 * @internal Used to pass the parent context from the parent command
-	 */
 	public function setParent(Ovommand $parent) : self{
 		$this->parent = $parent;
 		$parentHeader = $parent->getName() . " " . $this->getName();

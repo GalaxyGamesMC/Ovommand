@@ -126,6 +126,19 @@ final class OvommandHook implements IHookable{
 			}
 			$overloadList = self::generateOverloads($sender, $subCommand);
 			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...array_values($subCommand->getShowAliases())]), 1);
+
+			if (!empty($overloadList)) {
+				foreach ($overloadList as $overload) {
+					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
+				}
+			} else {
+				$overloads[] = new CommandOverload(false, [$scParam]);
+			}
+
+			// v2
+			foreach ($subCommand->getShowAliases() as $alias) {
+
+			}
 			if (!empty($overloadList)) {
 				foreach ($overloadList as $overload) {
 					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
