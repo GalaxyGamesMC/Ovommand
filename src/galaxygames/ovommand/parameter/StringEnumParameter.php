@@ -11,6 +11,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class StringEnumParameter extends BaseParameter{
+	/** @var string[] */
 	protected array $values;
 	/**
 	 * @param string[] $values

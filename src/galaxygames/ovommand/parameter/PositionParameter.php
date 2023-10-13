@@ -84,6 +84,9 @@ class PositionParameter extends BaseParameter{
 		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
 	}
 
+	/**
+	 * @param string[] $parameters
+	 */
 	public function parse2(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?\d+(?:\.\d+)?|[~^])([^~^+\-\d]+)?/", $parameter, $matches)) {
@@ -145,6 +148,9 @@ class PositionParameter extends BaseParameter{
 		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
 	}
 
+	/**
+	 * @param string[] $parameters
+	 */
 	public function parse3(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?\d+(?:\.\d+)?|[~^])([[:blank:]]?[^~^+\-\d\s]+)?/", $parameter, $matches)) {

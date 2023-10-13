@@ -66,6 +66,7 @@ class SyntaxConst{
 	}
 
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result) : string{
+		return $result->getBrokenSyntax();
 	}
 
 	/**
