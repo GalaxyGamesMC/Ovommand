@@ -125,7 +125,7 @@ final class OvommandHook implements IHookable{
 				}
 			}
 			$overloadList = self::generateOverloads($sender, $subCommand);
-			$enumName = "enum#" . spl_object_id($subCommand);
+			$enumName = "aliases#" . spl_object_id($subCommand);
 			$scParams = [CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName, [$label]), 1)];
 			foreach ($subCommand->getShowAliases() as $i => $alias) {
 				$scParams[] = CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName . "_" . ++$i, [$label, ...array_values($subCommand->getShowAliases())]), 1);

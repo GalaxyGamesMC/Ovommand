@@ -11,13 +11,13 @@ use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class StringEnumParameter extends BaseParameter{
-	protected BaseEnum $enum;
-
+	protected array $values;
 	/**
 	 * @param string[] $values
 	 */
-	public function __construct(string $name, protected array $values, bool $optional = false, int $flag = 0){
+	public function __construct(string $name, array $values, bool $optional = false, int $flag = 0){
 		parent::__construct($name, $optional, $flag);
+		$this->values = array_unique($values);
 	}
 
 	public function getValueName() : string{
