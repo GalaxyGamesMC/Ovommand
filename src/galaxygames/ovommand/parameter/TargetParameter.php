@@ -11,6 +11,8 @@ use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class TargetParameter extends BaseParameter{
 
+	public function getValueName() : string{ return "target"; }
+
 	public function getNetworkType() : ParameterTypes{
 		return ParameterTypes::TARGET;
 	}
@@ -20,10 +22,6 @@ class TargetParameter extends BaseParameter{
 	// latest https://rubular.com/r/FJiwYBmY0IoQ0J
 
 	//TODO: edu version have aprescv, not just apres
-
-	public function getValueName() : string{
-		return "target";
-	}
 
 	public function parse(array $parameters) : BaseResult{
 		parent::parse($parameters);

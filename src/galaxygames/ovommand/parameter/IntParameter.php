@@ -20,7 +20,5 @@ class IntParameter extends BaseParameter{
 		return BrokenSyntaxResult::create($f); //TODO: better msg
 	}
 
-	public function getValueName() : string{
-		return "int";
-	}
+	public function getValueName() : string{ return "int"; }
 }

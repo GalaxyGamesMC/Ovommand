@@ -8,9 +8,7 @@ use galaxygames\ovommand\parameter\result\ValueResult;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class StringParameter extends BaseParameter{
-	public function getValueName() : string{
-		return "string";
-	}
+	public function getValueName() : string{ return "string"; }
 
 	public function getNetworkType() : ParameterTypes{
 		return ParameterTypes::STRING;

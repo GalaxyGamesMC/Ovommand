@@ -8,9 +8,7 @@ use galaxygames\ovommand\parameter\result\CoordinateResult;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class PositionParameter extends BaseParameter{
-	public function getValueName() : string{
-		return "x y z";
-	}
+	public function getValueName() : string{ return "x y z"; }
 
 	public function getNetworkType() : ParameterTypes{
 		return ParameterTypes::POSITION;

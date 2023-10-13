@@ -12,9 +12,7 @@ class FloatParameter extends BaseParameter{
 		return ParameterTypes::FLOAT;
 	}
 
-	public function getValueName() : string{
-		return "float";
-	}
+	public function getValueName() : string{ return "float"; }
 
 	public function parse(array $parameters) : BaseResult{
 		$f = implode("", $parameters);
