@@ -87,11 +87,12 @@ class PositionParameter extends BaseParameter{
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)
 				->setMatchedParameter(3);
 		}
-		$x = (float) substr($matches[2][0], 1);
-		$y = (float) substr($matches[2][1], 1);
-		$z = (float) substr($matches[2][2], 1);
+		$x = (float) substr($matches[2][0], (int) ($xType !== CoordinateResult::TYPE_DEFAULT));
+		$y = (float) substr($matches[2][1], (int) ($yType !== CoordinateResult::TYPE_DEFAULT));
+		$z = (float) substr($matches[2][2], (int) ($zType !== CoordinateResult::TYPE_DEFAULT));
 		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
 	}
+
 	public function parse2(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?\d+(?:\.\d+)?|[~^])([^~^+\-\d]+)?/", $parameter, $matches)) {
@@ -151,9 +152,10 @@ class PositionParameter extends BaseParameter{
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)
 				->setMatchedParameter(3);
 		}
-		$x = (float) substr($matches[2][0], 1);
-		$y = (float) substr($matches[2][1], 1);
-		$z = (float) substr($matches[2][2], 1);
+		$x = (float) substr($matches[2][0], (int) ($xType !== CoordinateResult::TYPE_DEFAULT));
+		$y = (float) substr($matches[2][1], (int) ($yType !== CoordinateResult::TYPE_DEFAULT));
+		$z = (float) substr($matches[2][2], (int) ($zType !== CoordinateResult::TYPE_DEFAULT));
+
 		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
 	}
 
@@ -216,9 +218,9 @@ class PositionParameter extends BaseParameter{
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)
 				->setMatchedParameter(3);
 		}
-		$x = (float) substr($matches[2][0], 1);
-		$y = (float) substr($matches[2][1], 1);
-		$z = (float) substr($matches[2][2], 1);
+		$x = (float) substr($matches[2][0], (int) ($xType !== CoordinateResult::TYPE_DEFAULT));
+		$y = (float) substr($matches[2][1], (int) ($yType !== CoordinateResult::TYPE_DEFAULT));
+		$z = (float) substr($matches[2][2], (int) ($zType !== CoordinateResult::TYPE_DEFAULT));
 		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
 	}
 
