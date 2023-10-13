@@ -197,7 +197,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$execute->execute($sender, $label, $args, $preLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
-			if ($this->onSyntaxError($sender, $commandLabel, $passArgs, $args, $preLabel)) {
+			if ($this->onSyntaxError($sender, $passArgs, $args, $preLabel)) {
 				$this->onRun($sender, $commandLabel, $passArgs);
 			}
 		}
@@ -230,7 +230,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param BaseResult[] $args
 	 * @param string[]     $nonParsedArgs
 	 */
-	public function onSyntaxError(CommandSender $sender, string $commandLabel, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
+	public function onSyntaxError(CommandSender $sender, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
 				for ($i = 0; $i <= $arg->getMatchedParameter(); ++$i) {

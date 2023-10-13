@@ -65,7 +65,7 @@ class SyntaxConst{
 		return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
 	}
 
-	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result) : string{
+	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, ) : string{
 		return $result->getBrokenSyntax();
 	}
 
