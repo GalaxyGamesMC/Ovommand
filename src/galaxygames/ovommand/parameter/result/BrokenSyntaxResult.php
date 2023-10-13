@@ -22,15 +22,6 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 		return new BrokenSyntaxResult($brokenSyntax, $fullSyntax, $expectedType, $preLabel);
 	}
 
-	public function setSearchOffset(int $offset = 0) : self{
-		$this->searchOffset = 0;
-		return $this;
-	}
-
-	public function getSearchOffset() : int{
-		return $this->searchOffset;
-	}
-
 	public function getBrokenSyntax() : string{
 		return $this->brokenSyntax;
 	}

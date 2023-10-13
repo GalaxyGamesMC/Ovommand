@@ -8,8 +8,8 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 
 $parameter = new PositionParameter("t");
 
-$test = 10000;
-$test = 1;
+$test = 100000;
+//$test = 1;
 $out = $test === 1;
 
 $parameters = [

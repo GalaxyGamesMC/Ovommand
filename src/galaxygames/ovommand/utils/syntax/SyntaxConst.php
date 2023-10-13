@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\utils\syntax;
 
+use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use pocketmine\lang\Translatable;
 
 class SyntaxConst{
@@ -62,6 +63,9 @@ class SyntaxConst{
 		}
 		$translate["helps"] = $helps;
 		return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
+	}
+
+	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result) : string{
 	}
 
 	/**
