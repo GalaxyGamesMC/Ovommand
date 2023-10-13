@@ -125,26 +125,17 @@ final class OvommandHook implements IHookable{
 				}
 			}
 			$overloadList = self::generateOverloads($sender, $subCommand);
-			$scParam = CommandParameter::enum($subCommand->getName(), new CommandEnum("enum#" . spl_object_id($subCommand), [$label, ...array_values($subCommand->getShowAliases())]), 1);
-
-			if (!empty($overloadList)) {
-				foreach ($overloadList as $overload) {
-					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
-				}
-			} else {
-				$overloads[] = new CommandOverload(false, [$scParam]);
-			}
-
-			// v2
-			foreach ($subCommand->getShowAliases() as $alias) {
-
+			$enumName = "enum#" . spl_object_id($subCommand);
+			$scParams = [CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName, [$label]), 1)];
+			foreach ($subCommand->getShowAliases() as $i => $alias) {
+				$scParams[] = CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName . "_" . ++$i, [$label, ...array_values($subCommand->getShowAliases())]), 1);
 			}
 			if (!empty($overloadList)) {
 				foreach ($overloadList as $overload) {
-					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
+					$overloads[] = new CommandOverload(false, [...$scParams, ...$overload->getParameters()]);
 				}
 			} else {
-				$overloads[] = new CommandOverload(false, [$scParam]);
+				$overloads[] = new CommandOverload(false, $scParams);
 			}
 		}
 
