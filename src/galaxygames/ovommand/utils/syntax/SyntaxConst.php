@@ -65,8 +65,17 @@ class SyntaxConst{
 		return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
 	}
 
-	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, ) : string{
-		return $result->getBrokenSyntax();
+	/**
+	 * @param string[] $nonParsedArgs
+	 */
+	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, array $nonParsedArgs = []) : string{
+		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
+		$parts = SyntaxConst::getSyntaxBetweenBrokenPart($fullCMD, $result->getBrokenSyntax());
+		$msg = match ($result->getCode()) {
+			default => SyntaxConst::parseOvommandSyntaxMessage($parts[0], $result->getBrokenSyntax(), $parts[1]),
+			BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS => SyntaxConst::parseOvommandSyntaxMessage($fullCMD, "", "")
+		};
+		return $msg;
 	}
 
 	/**
