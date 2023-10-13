@@ -6,7 +6,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\exception\CommandException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
-use galaxygames\ovommand\utils\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\SyntaxConst;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;

@@ -32,7 +32,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\parameter\BaseParameter;
-use galaxygames\ovommand\utils\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\command\CommandSender;
 use pocketmine\event\EventPriority;

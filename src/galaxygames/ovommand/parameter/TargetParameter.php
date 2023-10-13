@@ -5,7 +5,7 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
-use galaxygames\ovommand\utils\syntax\SyntaxConst;
+use galaxygames\ovommand\utils\SyntaxConst;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace galaxygames\ovommand\utils\syntax;
+namespace galaxygames\ovommand\utils;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use pocketmine\lang\Translatable;
