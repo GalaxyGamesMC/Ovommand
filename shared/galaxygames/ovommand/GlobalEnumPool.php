@@ -33,7 +33,7 @@ final class GlobalEnumPool{
 				$enumHookers = &self::$hardEnumHooker;
 			}
 			if (isset($enumStore[$eName]) && !$enum->isDefault()) {
-				throw new OvommandEnumPoolException(code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
+				throw new OvommandEnumPoolException("Enum is not default", code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
 			}
 			$enumStore[$eName] = $enum;
 			$enumHookers[$eName] = $hookable;
