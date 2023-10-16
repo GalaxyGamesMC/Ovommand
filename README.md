@@ -19,7 +19,7 @@ TODO:
 - [ ] SubCommand doesn't require perms if wanted
 - [ ] ~~make syntax parser based on its string pos, not the string itself for the accuracy in catching broken syntax~~ spoiled
 - [ ] fix a bug where the parser cannot check the correct span leading to this to be valid: `/tp ~~~ a`, where a is not valid but the parser cannot know that because it don't expect that to be a case!
-
+- [ ] fix broken SYNTAX_PRINT_VANILLA
 
 Suggest:
 - [x] make canParse and parse into one
