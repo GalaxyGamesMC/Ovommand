@@ -237,7 +237,7 @@ abstract class Ovommand extends Command implements IOvommand{
 					array_shift($nonParsedArgs);
 				}
 				$arg->setPreLabel($preLabel);
-				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseFromBrokenSyntaxResult($arg, $nonParsedArgs));
+				$sender->sendMessage(TextFormat::RED . SyntaxConst::parseFromBrokenSyntaxResult($arg, SyntaxConst::SYNTAX_PRINT_OVOMMAND | SyntaxConst::SYNTAX_TRIMMED, $nonParsedArgs));
 				$sender->sendMessage("Expect the value is " . $arg->getExpectedType());
 				$sender->sendMessage("Usage: \n" . TextFormat::MINECOIN_GOLD . implode("\n" . TextFormat::MINECOIN_GOLD, explode("\n", $this->getUsage())));
 				return false;

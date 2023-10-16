@@ -28,8 +28,7 @@ class TargetParameter extends BaseParameter{
 		$parameter = $parameters[0];
 		$groups = [];
 		if (!preg_match("/^(?:([^\n\w]*@[apres])|([^\d\n@][\w ]*))$/", $parameter, $groups)) {
-			$syntax = SyntaxConst::getSyntaxBetweenBrokenPart(implode(" ", $parameters), $parameter);
-			return BrokenSyntaxResult::create(SyntaxConst::parseSyntax($syntax[0], $parameter, $syntax[1]) ?? "");
+			return BrokenSyntaxResult::create($parameter, $parameter, $syntax[1]);
 		}
 		if (isset($groups[2])) {
 			$pName = $groups[2];

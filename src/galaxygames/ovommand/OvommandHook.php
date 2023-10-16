@@ -32,7 +32,6 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\parameter\BaseParameter;
-use galaxygames\ovommand\utils\SyntaxConst;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\command\CommandSender;
 use pocketmine\event\EventPriority;
@@ -160,10 +159,6 @@ final class OvommandHook implements IHookable{
 
 	public static function isRegistered() : bool{
 		return isset(self::$plugin);
-	}
-
-	public static function setSyntaxDebugMode(int $syntax) : void{
-		SyntaxConst::setSyntax($syntax);
 	}
 
 	public static function getEnumManager() : EnumManager{
