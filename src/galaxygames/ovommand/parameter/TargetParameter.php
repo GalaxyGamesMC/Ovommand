@@ -5,7 +5,6 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
-use galaxygames\ovommand\utils\SyntaxConst;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
@@ -28,7 +27,7 @@ class TargetParameter extends BaseParameter{
 		$parameter = $parameters[0];
 		$groups = [];
 		if (!preg_match("/^(?:([^\n\w]*@[apres])|([^\d\n@][\w ]*))$/", $parameter, $groups)) {
-			return BrokenSyntaxResult::create($parameter, $parameter, $syntax[1]);
+			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName());
 		}
 		if (isset($groups[2])) {
 			$pName = $groups[2];
