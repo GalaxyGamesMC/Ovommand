@@ -14,6 +14,9 @@ class SyntaxConst{
 	public const COMMAND_GENERIC_SYNTAX_KEY = "commands.generic.syntax";
 	public const OVO_GENERIC_SYNTAX_MESSAGE = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
 
+	/**
+	 * @param string[] $nonParsedArgs
+	 */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_VANILLA | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : string{
 		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
 		$brokenPart = $result->getBrokenSyntax();
@@ -41,7 +44,6 @@ class SyntaxConst{
 	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : string{
 		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenPart, $after]))->getText();
 	}
-
 
 	private static function vanillaShift(string $in) : string{
 		return substr($in, -9);
