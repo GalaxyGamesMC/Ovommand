@@ -7,29 +7,54 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use pocketmine\lang\Translatable;
 
 class SyntaxConst{
-	public const SYNTAX_PRINT_FULL = 0; // previous>>error<<after
-	public const SYNTAX_PRINT_VANILLA = 1; // 123456789>>error<<123456789
-	public const SYNTAX_PRINT_OVO_FULL = 2;
-	public const SYNTAX_PRINT_OVO_VANILLA = 3;
-	public const SYNTAX_PRINT_USAGE = 4;
-
-	protected static int $syntax = self::SYNTAX_PRINT_FULL;
+	public const SYNTAX_PRINT_VANILLA = 0b0001;
+	public const SYNTAX_PRINT_OVOMMAND = 0b0010;
+	public const SYNTAX_TRIMMED = 0b0100;
 
 	public const COMMAND_GENERIC_SYNTAX_KEY = "commands.generic.syntax";
 	public const OVO_GENERIC_SYNTAX_MESSAGE = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
-	public const OVO_GENERIC_SYNTAX_HELPER_MESSAGE = ". Suggest: \"{helps}\"";
 
-	public static function parseSyntax(string $previous, string $brokenSyntax, string $after, string $helps = "") : string|null{
-		if (self::$syntax === self::SYNTAX_PRINT_USAGE) {
-			return null;
+	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_VANILLA | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : string{
+		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
+		$brokenPart = $result->getBrokenSyntax();
+		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
+		if ($flags & self::SYNTAX_TRIMMED) {
+			$parts[0] = self::vanillaShift($parts[0]);
+			$parts[1] = self::vanillaShift($parts[1]);
 		}
-		return match (self::$syntax) {
-			self::SYNTAX_PRINT_FULL => self::parseVanillaSyntaxMessage($previous, $brokenSyntax, $after),
-			self::SYNTAX_PRINT_VANILLA => self::parseVanillaSyntaxMessage(self::vanillaShift($previous), $brokenSyntax, self::vanillaShift($after)),
-			self::SYNTAX_PRINT_OVO_FULL => self::parseOvommandSyntaxMessage($previous, $brokenSyntax, $after, $helps),
-			self::SYNTAX_PRINT_OVO_VANILLA => self::parseOvommandSyntaxMessage(self::vanillaShift($previous), $brokenSyntax, self::vanillaShift($after), $helps),
-			default => $previous . " " . $brokenSyntax . " " . $after
-		};
+		if ($flags & self::SYNTAX_PRINT_VANILLA) {
+			if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
+				throw new \RuntimeException("Collided flag."); //TODO: BETTER MSG
+			}
+			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
+			$translate = [
+				"previous" => $parts[0], "broken_syntax" => $result->getBrokenSyntax(), "after" => $parts[1],
+			];
+			return self::translate($message, $translate);
+		}
+		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
+			return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
+		}
+		throw new \RuntimeException("MSG"); //TODO: Better msg
+	}
+
+	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : string{
+		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenPart, $after]))->getText();
+	}
+
+
+	private static function vanillaShift(string $in) : string{
+		return substr($in, -9);
+	}
+
+	/**
+	 * @param array<string, string> $tags
+	 */
+	private static function translate(string $msg, array $tags) : string{
+		foreach ($tags as $tag => $value) {
+			$msg = str_replace('{' . $tag . '}', $value, $msg);
+		}
+		return $msg;
 	}
 
 	/**
@@ -44,55 +69,5 @@ class SyntaxConst{
 		return [
 			substr($syntax, 0, $brokenPartPos), substr($syntax, $brokenPartPos + strlen($brokenPart))
 		];
-	}
-
-	private static function vanillaShift(string $in) : string{
-		return substr($in, -9);
-	}
-
-	public static function parseVanillaSyntaxMessage(string $previous, string $brokenSyntax, string $after) : string{
-		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenSyntax, $after]))->getText();
-	}
-
-	public static function parseOvommandSyntaxMessage(string $previous, string $brokenSyntax, string $after, string $helps = "") : string{
-		$translate = [
-			"previous" => $previous, "broken_syntax" => $brokenSyntax, "after" => $after,
-		];
-		if ($helps === "") {
-			return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE, $translate);
-		}
-		$translate["helps"] = $helps;
-		return self::translate(self::OVO_GENERIC_SYNTAX_MESSAGE . self::OVO_GENERIC_SYNTAX_HELPER_MESSAGE, $translate);
-	}
-
-	/**
-	 * @param string[] $nonParsedArgs
-	 */
-	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, array $nonParsedArgs = []) : string{
-		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
-		$parts = SyntaxConst::getSyntaxBetweenBrokenPart($fullCMD, $result->getBrokenSyntax());
-		$msg = match ($result->getCode()) {
-			default => SyntaxConst::parseOvommandSyntaxMessage($parts[0], $result->getBrokenSyntax(), $parts[1]),
-			BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS => SyntaxConst::parseOvommandSyntaxMessage($fullCMD, "", "")
-		};
-		return $msg;
-	}
-
-	/**
-	 * @phpstan-param array<string, string> $tags
-	 */
-	private static function translate(string $msg, array $tags) : string{
-		foreach ($tags as $tag => $value) {
-			$msg = str_replace('{' . $tag . '}', $value, $msg);
-		}
-		return $msg;
-	}
-
-	public static function getSyntax() : int{
-		return self::$syntax;
-	}
-
-	public static function setSyntax(int $syntax) : void{
-		self::$syntax = $syntax;
 	}
 }
