@@ -17,13 +17,13 @@ class SyntaxConst{
 	/**
 	 * @param string[] $nonParsedArgs
 	 */
-	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_VANILLA | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : string{
-		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . " " . implode(" ", $nonParsedArgs);
+	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_VANILLA | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
+		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . implode(" ", $nonParsedArgs);
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
 		if ($flags & self::SYNTAX_TRIMMED) {
-			$parts[0] = self::vanillaShift($parts[0]);
-			$parts[1] = self::vanillaShift($parts[1]);
+			$parts[0] = substr($parts[0], -9);
+			$parts[1] = substr($parts[0], 0, 9);
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
 			if ($flags & self::SYNTAX_PRINT_VANILLA) {
@@ -41,12 +41,8 @@ class SyntaxConst{
 		throw new \RuntimeException("MSG"); //TODO: Better msg
 	}
 
-	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : string{
-		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenPart, $after]))->getText();
-	}
-
-	private static function vanillaShift(string $in) : string{
-		return substr($in, -9);
+	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : Translatable|string{
+		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenPart, $after]));
 	}
 
 	/**
