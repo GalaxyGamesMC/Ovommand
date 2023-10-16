@@ -7,17 +7,17 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use pocketmine\lang\Translatable;
 
 class SyntaxConst{
-	public const SYNTAX_PRINT_VANILLA = 0b0001;
+//	public const SYNTAX_PRINT_VANILLA = 0b0001;
 	public const SYNTAX_PRINT_OVOMMAND = 0b0010;
 	public const SYNTAX_TRIMMED = 0b0100;
 
-	public const COMMAND_GENERIC_SYNTAX_KEY = "commands.generic.syntax";
+//	public const COMMAND_GENERIC_SYNTAX_KEY = "commands.generic.syntax";
 	public const OVO_GENERIC_SYNTAX_MESSAGE = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
 
 	/**
 	 * @param string[] $nonParsedArgs
 	 */
-	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_VANILLA | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
+	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
 		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . implode(" ", $nonParsedArgs);
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
@@ -26,18 +26,18 @@ class SyntaxConst{
 			$parts[1] = substr($parts[0], 0, 9);
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
-			if ($flags & self::SYNTAX_PRINT_VANILLA) {
-				throw new \RuntimeException("Collided flag."); //TODO: BETTER MSG
-			}
+//			if ($flags & self::SYNTAX_PRINT_VANILLA) {
+//				throw new \RuntimeException("Collided flag."); //TODO: BETTER MSG
+//			}
 			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
 			$translate = [
 				"previous" => $parts[0], "broken_syntax" => $result->getBrokenSyntax(), "after" => $parts[1],
 			];
 			return self::translate($message, $translate);
 		}
-		if ($flags & self::SYNTAX_PRINT_VANILLA) {
-			return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
-		}
+//		if ($flags & self::SYNTAX_PRINT_VANILLA) {
+//			return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
+//		}
 		throw new \RuntimeException("MSG"); //TODO: Better msg
 	}
 
