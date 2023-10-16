@@ -21,7 +21,7 @@ final class GlobalEnumPool{
 
 	public static function addEnums(IHookable $hookable, OvoEnum ...$enums) : void{
 		if (!GlobalHookPool::isHookRegistered($hookable)) {
-			throw new OvommandEnumPoolException("Hook is not registered!", OvommandEnumPoolException::ENUM_ALREADY_EXISTED_ERROR);
+			throw new OvommandEnumPoolException("Hook is not registered!", OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
 		}
 		foreach ($enums as $enum) {
 			$eName = $enum->getName();
@@ -33,7 +33,7 @@ final class GlobalEnumPool{
 				$enumHookers = &self::$hardEnumHooker;
 			}
 			if (isset($enumStore[$eName]) && !$enum->isDefault()) {
-				throw new OvommandEnumPoolException(code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED_ERROR);
+				throw new OvommandEnumPoolException(code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
 			}
 			$enumStore[$eName] = $enum;
 			$enumHookers[$eName] = $hookable;
