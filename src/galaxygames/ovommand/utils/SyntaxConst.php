@@ -25,8 +25,8 @@ class SyntaxConst{
 			$parts[0] = self::vanillaShift($parts[0]);
 			$parts[1] = self::vanillaShift($parts[1]);
 		}
-		if ($flags & self::SYNTAX_PRINT_VANILLA) {
-			if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
+		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
+			if ($flags & self::SYNTAX_PRINT_VANILLA) {
 				throw new \RuntimeException("Collided flag."); //TODO: BETTER MSG
 			}
 			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
@@ -35,7 +35,7 @@ class SyntaxConst{
 			];
 			return self::translate($message, $translate);
 		}
-		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
+		if ($flags & self::SYNTAX_PRINT_VANILLA) {
 			return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
 		}
 		throw new \RuntimeException("MSG"); //TODO: Better msg
