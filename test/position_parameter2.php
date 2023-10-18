@@ -9,7 +9,7 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 $parameter = new PositionParameter("t");
 
 $test = 100000;
-$test = 1;
+//$test = 1;
 $out = $test === 1;
 
 $parameters = [
@@ -56,7 +56,7 @@ foreach ($parameters as $params) {
 		$rate += $end-$start;
 	}
 	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo $result->getBrokenSyntax() . "\n";
+		echo var_export($result->getBrokenSyntax()) . "\n";
 	}
 	echo("Test1: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 	$rate = 0;
@@ -70,7 +70,7 @@ foreach ($parameters as $params) {
 		$rate += $end-$start;
 	}
 	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo $result->getBrokenSyntax() . "\n";
+		echo var_export($result->getBrokenSyntax()) . "\n";
 	}
 	echo("Test2: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 	$rate = 0;
@@ -84,8 +84,36 @@ foreach ($parameters as $params) {
 		$rate += $end-$start;
 	}
 	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo $result->getBrokenSyntax() . "\n";
+		echo var_export($result->getBrokenSyntax()) . "\n";
 	}
 	echo("Test3: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+	$rate = 0;
+	for ($i = 1; $i <= $test; ++$i) {
+		$start = microtime(true);
+		$result = $parameter->parse4($params);
+		$end = microtime(true);
+		if ($end - $start === 0.0) {
+			$i--;
+		}
+		$rate += $end-$start;
+	}
+	if ($out && $result instanceof BrokenSyntaxResult) {
+		echo var_export($result->getBrokenSyntax()) . "\n";
+	}
+	echo("Test4: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
+	$rate = 0;
+	for ($i = 1; $i <= $test; ++$i) {
+		$start = microtime(true);
+		$result = $parameter->parse5($params);
+		$end = microtime(true);
+		if ($end - $start === 0.0) {
+			$i--;
+		}
+		$rate += $end-$start;
+	}
+	if ($out && $result instanceof BrokenSyntaxResult) {
+		echo var_export($result->getBrokenSyntax()) . "\n";
+	}
+	echo("Test5: " . sprintf('%0.25f', $rate/$test) . PHP_EOL);
 	echo ("-----------------------------------------------------------------\n");
 }

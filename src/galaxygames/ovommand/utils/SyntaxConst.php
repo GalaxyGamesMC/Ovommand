@@ -18,7 +18,7 @@ class SyntaxConst{
 	 * @param string[] $nonParsedArgs
 	 */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
-		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . implode(" ", $nonParsedArgs);
+		$fullCMD = "/" . $result->getPreLabel() . " " . " -liner 1- " . $result->getFullSyntax() . " -liner 2- " . implode(" ", $nonParsedArgs);
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
 		if ($flags & self::SYNTAX_TRIMMED) {
