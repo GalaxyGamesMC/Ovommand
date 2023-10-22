@@ -6,6 +6,7 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\exception\ParameterException;
+use galaxygames\ovommand\OvommandHook;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
@@ -17,7 +18,7 @@ class EnumParameter extends BaseParameter{
 	protected IDynamicEnum|IStaticEnum $enum;
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0){
-		$enum = EnumManager::getInstance()->getEnum($enumName, $isSoft);
+		$enum = OvommandHook::getEnumManager()->getEnum($enumName, $isSoft);
 		if ($enum === null) {
 			if ($enumName instanceof DefaultEnums) {
 				$enumName = $enumName->value;
