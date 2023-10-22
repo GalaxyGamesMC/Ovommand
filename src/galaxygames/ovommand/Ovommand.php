@@ -128,7 +128,7 @@ abstract class Ovommand extends Command implements IOvommand{
 					$matchPoint += $result->getMatchedParameter();
 					break;
 				}
-				$matchPoint += $span;
+				$matchPoint += $t;
 			}
 			if (($paramCount > $matchPoint) && !$hasFailed) {
 				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))
@@ -239,10 +239,12 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param string[]     $nonParsedArgs
 	 */
 	public function onSyntaxError(CommandSender $sender, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
+//		var_dump($nonParsedArgs, $preLabel, "TEST1");
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
+				$matchPtr = $arg->getMatchedParameter();
 				for ($i = 0; $i <= $arg->getMatchedParameter(); $i++) {
-					$preLabel .= " " . array_shift($nonParsedArgs);
+					array_shift($nonParsedArgs);
 				}
 				$arg->setPreLabel($preLabel);
 				$msg = SyntaxConst::parseFromBrokenSyntaxResult($arg, SyntaxConst::SYNTAX_PRINT_OVOMMAND | SyntaxConst::SYNTAX_TRIMMED, $nonParsedArgs);
