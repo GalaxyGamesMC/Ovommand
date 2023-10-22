@@ -6,14 +6,6 @@ namespace galaxygames\ovommand\utils;
 use galaxygames\ovommand\BaseCommand;
 
 class Utils{
-	public static function parseUsages(BaseCommand $command) : string{
-		$usages = ["/" . $command->generateUsageMessage()];
-		foreach ($command->getSubCommands() as $subCommand) {
-			$usages[] = $subCommand->getUsage();
-		}
-		$usages = array_unique($usages);
-		return implode("\n - /" . $command->getName() . " ", $usages);
-	}
 
 	public static function arr(...$arr) : array{
 		return $arr;

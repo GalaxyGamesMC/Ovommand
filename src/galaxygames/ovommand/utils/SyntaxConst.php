@@ -19,14 +19,8 @@ class SyntaxConst{
 	 */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
 		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . implode(" ", $nonParsedArgs);
-		//   "/§et sub1 aa" -> "/\xc2\xa7et sub1 aa"
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
-		var_dump($parts);
-		/* array(2) {
-			[0]=> string(11) "/§et sub1 " -> "/\xc2\xa7et sub1 "
-			[1]=> string(0) ""
-		}*/
 		if ($flags & self::SYNTAX_TRIMMED) {
 			$l1 = mb_strlen($parts[0]);
 			$l2 = mb_strlen($parts[1]);
@@ -45,7 +39,6 @@ class SyntaxConst{
 			$translate = [
 				"previous" => $parts[0], "broken_syntax" => $result->getBrokenSyntax(), "after" => $parts[1],
 			];
-			var_dump($translate);
 			return self::translate($message, $translate);
 		}
 //		if ($flags & self::SYNTAX_PRINT_VANILLA) {
