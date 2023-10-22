@@ -33,7 +33,7 @@ final class GlobalEnumPool{
 				$enumHookers = &self::$hardEnumHooker;
 			}
 			if (isset($enumStore[$eName]) && !$enum->isDefault()) {
-				throw new OvommandEnumPoolException("Enum is not default", code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
+				throw new OvommandEnumPoolException("Enum with the same name is already existed!", code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
 			}
 			$enumStore[$eName] = $enum;
 			$enumHookers[$eName] = $hookable;
@@ -48,14 +48,20 @@ final class GlobalEnumPool{
 		return self::$softEnums[$key] ?? null;
 	}
 
-	/** @return list<IDynamicEnum|IStaticEnum> */
-	public static function getHookerRegisteredEnums(IHookable $hookable) : array{
+	/** @return list<IDynamicEnum> */
+	public static function getHookerRegisteredSoftEnums(IHookable $hookable) : array{
 		$results = [];
 		foreach (self::$softEnumHooker as $eName => $hook) {
 			if ($hook === $hookable) {
 				$results[] = self::$softEnums[$eName];
 			}
 		}
+		return $results;
+	}
+
+	/** @return list<IStaticEnum> */
+	public static function getHookerRegisteredHardEnums(IHookable $hookable) : array{
+		$results = [];
 		foreach (self::$hardEnumHooker as $eName => $hook) {
 			if ($hook === $hookable) {
 				$results[] = self::$hardEnums[$eName];

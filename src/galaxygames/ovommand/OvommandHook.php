@@ -46,11 +46,11 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\exception\OvommandHookException;
 use shared\galaxygames\ovommand\fetus\IHookable;
+use shared\galaxygames\ovommand\GlobalEnumPool;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class OvommandHook implements IHookable{
-	/** @var self */
-	private static IHookable $instance;
+	private static OvommandHook $instance;
 	private static Plugin $plugin;
 	private static EnumManager $enumManager;
 
@@ -86,20 +86,21 @@ final class OvommandHook implements IHookable{
 			self::$plugin = $plugin;
 			self::$instance = new self;
 			GlobalHookPool::addHook(self::$instance);
-
-			self::$enumManager = EnumManager::getInstance();
-			$pluginManager = Server::getInstance()->getPluginManager();
-			try {
-				$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-					$enum?->addValue($event->getPlayer()->getName());
-				}, EventPriority::NORMAL, $plugin);
-				$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
-					$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-					$enum?->removeValue($event->getPlayer()->getName());
-				}, EventPriority::NORMAL, $plugin);
-			} catch (\ReflectionException $e) {
-				$plugin->getLogger()->logException($e);
+			self::$enumManager = new EnumManager(self::$instance);
+			if (in_array(DefaultEnums::ONLINE_PLAYERS->value, GlobalEnumPool::getHookerRegisteredSoftEnums(self::$instance), true)) {
+				try {
+					$pluginManager = Server::getInstance()->getPluginManager();
+					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
+						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
+						$enum?->addValue($event->getPlayer()->getName());
+					}, EventPriority::NORMAL, $plugin);
+					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
+						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
+						$enum?->removeValue($event->getPlayer()->getName());
+					}, EventPriority::NORMAL, $plugin);
+				} catch (\ReflectionException $e) {
+					$plugin->getLogger()->logException($e);
+				}
 			}
 		}
 		return self::$instance;
@@ -162,7 +163,7 @@ final class OvommandHook implements IHookable{
 	}
 
 	public static function getEnumManager() : EnumManager{
-		return self::$enumManager ?? EnumManager::getInstance();
+		return self::$enumManager;
 	}
 
 	public static function getOwnedPlugin() : Plugin{

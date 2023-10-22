@@ -6,18 +6,20 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\OvommandHook;
+use pocketmine\event\EventPriority;
+use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\plugin\Plugin;
+use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\IHookable;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
-	use SingletonTrait;
-
-	public function __construct(){
-		self::setInstance($this);
+	public function __construct(private readonly OvommandHook $ovommandHook){
 		$this->initDefaultEnums();
 	}
 
@@ -29,7 +31,7 @@ final class EnumManager{
 		foreach ($enums as $enum) {
 			$enumName = $enum->getName();
 			if ($enum->isDefault()) {
-				throw new EnumException("");
+				throw new EnumException("You cannot make an enum be default from outside!");
 			}
 			if (trim($enumName) === '') {
 				throw new EnumException(ExceptionMessage::ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME);
@@ -63,7 +65,11 @@ final class EnumManager{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
 	}
 
-	public function getOwningPlugin() : ?Plugin{
-		return OvommandHook::getOwnedPlugin();
+	public function getOwningPlugin() : Plugin{
+		return $this->ovommandHook::getOwnedPlugin();
+	}
+
+	public function getOvommandHook() : OvommandHook{
+		return $this->ovommandHook;
 	}
 }
