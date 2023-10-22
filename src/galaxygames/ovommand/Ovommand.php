@@ -107,14 +107,22 @@ abstract class Ovommand extends Command implements IOvommand{
 			$matchPoint = 0;
 			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
-				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
+//				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
+//					break;
+//				}
+				$t = 1;
+				while ($t <= $span) {
+					$params = array_slice($rawParams, $offset, $t);
+					$result = $parameter->parse($params);
+					$results[$parameter->getName()] = $result;
+					if ($result instanceof BrokenSyntaxResult && $t !== $span) {
+						$t++;
+						continue;
+					}
 					break;
 				}
-				$params = array_slice($rawParams, $offset, $span);
-				$offset += $span;
-
-				$result = $parameter->parse($params);
-				$results[$parameter->getName()] = $result;
+				$offset += $t;
+				/** @var BaseResult $result */ //TODO: zero span might break this!
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
 					$matchPoint += $result->getMatchedParameter();
@@ -233,8 +241,8 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function onSyntaxError(CommandSender $sender, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
-				for ($i = 0; $i <= $arg->getMatchedParameter(); ++$i) {
-					array_shift($nonParsedArgs);
+				for ($i = 0; $i <= $arg->getMatchedParameter(); $i++) {
+					$preLabel .= " " . array_shift($nonParsedArgs);
 				}
 				$arg->setPreLabel($preLabel);
 				$msg = SyntaxConst::parseFromBrokenSyntaxResult($arg, SyntaxConst::SYNTAX_PRINT_OVOMMAND | SyntaxConst::SYNTAX_TRIMMED, $nonParsedArgs);

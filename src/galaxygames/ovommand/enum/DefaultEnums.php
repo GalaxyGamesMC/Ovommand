@@ -15,13 +15,13 @@ enum DefaultEnums : string{
 	public function encode() : OvoEnum{
 		return match ($this) {
 			self::BOOLEAN => new HardEnum($this->value, ["true" => true, "false" => false],isDefault: true),
-			self::VANILLA_GAMEMODE => new HardEnum($this->value,
+			self::PM_GAMEMODE => new HardEnum($this->value,
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
 				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
 				isDefault: true
 			),
-			self::PM_GAMEMODE => new HardEnum($this->value,
+			self::VANILLA_GAMEMODE => new HardEnum($this->value,
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a"],
 				isDefault: true

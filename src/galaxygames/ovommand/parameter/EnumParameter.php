@@ -43,10 +43,12 @@ class EnumParameter extends BaseParameter{
 
 	public function parse(array $parameters) : BaseResult{
 		$enumValue = $this->enum->getValue($key = implode(" ", $parameters));
+//		var_dump($parameters, $enumValue); TODO: REMOVE DUMPS
 		if ($enumValue !== null) {
 			return ValueResult::create($this->returnRaw ? $key : $enumValue);
 		}
-		return BrokenSyntaxResult::create($key, $key, expectedType:$this->enum->getName()); //TODO: better msg
+		return BrokenSyntaxResult::create($key, $key, expectedType:$this->enum->getName())
+			->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX); //TODO: better msg
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
