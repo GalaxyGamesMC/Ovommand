@@ -87,7 +87,7 @@ final class OvommandHook implements IHookable{
 			self::$instance = new self;
 			GlobalHookPool::addHook(self::$instance);
 			self::$enumManager = new EnumManager(self::$instance);
-			if (in_array(DefaultEnums::ONLINE_PLAYERS->value, GlobalEnumPool::getHookerRegisteredSoftEnums(self::$instance), true)) {
+			if (isset(GlobalEnumPool::getHookerRegisteredSoftEnums(self::$instance)[DefaultEnums::ONLINE_PLAYERS->value])) {
 				try {
 					$pluginManager = Server::getInstance()->getPluginManager();
 					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){

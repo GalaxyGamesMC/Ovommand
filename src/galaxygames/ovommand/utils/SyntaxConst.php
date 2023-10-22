@@ -47,9 +47,9 @@ class SyntaxConst{
 		throw new \RuntimeException("MSG"); //TODO: Better msg
 	}
 
-	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : Translatable|string{
-		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenPart, $after]));
-	}
+//	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : Translatable|string{
+//		return (new Translatable(self::COMMAND_GENERIC_SYNTAX_KEY, [$previous, $brokenPart, $after]));
+//	}
 
 	/**
 	 * @param array<string, string> $tags
@@ -65,7 +65,6 @@ class SyntaxConst{
 	 * @return string[]
 	 */
 	public static function getSyntaxBetweenBrokenPart(string $syntax, string $brokenPart) : array{
-		var_dump($syntax);
 		$brokenPartPos = strpos($syntax, $brokenPart);
 		if ($brokenPartPos === false) {
 			$brokenPartPos = strlen($syntax);

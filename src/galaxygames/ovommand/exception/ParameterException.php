@@ -6,8 +6,6 @@ namespace galaxygames\ovommand\exception;
 use shared\galaxygames\ovommand\fetus\OvommandException;
 
 final class ParameterException extends OvommandException{
-	public const PARAMETER_INVALID_VALUE = 0;
-	public const PARAMETER_NO_VALUE = 1;
-	public const PARAMETER_INVALID_FLAG = 2;
-	public const PARAMETER_UNKNOWN_ENUM = 3;
+	public const PARAMETER_INVALID_FLAG = 0;
+	public const PARAMETER_UNKNOWN_ENUM = 1;
 }

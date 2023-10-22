@@ -9,12 +9,7 @@ enum ExceptionMessage : string{
 	case ENUM_ALIAS_REGISTERED = "Alias '{aliasName}' is already used for another key!";
 	case ENUM_ALIAS_UNKNOWN_KEY = "Alias '{'aliasName}' is registered to unknown key '{key}'!";
 	case ENUM_ALIAS_UNKNOWN_TYPE = "Unknown alias type '{type}' has been registered to key '{key}'";
-	case PARAMETER_INVALID_VALUE = "Invalid value '{value}' for parameter #{position}";
-	case PARAMETER_NO_VALUE = "No arguments are required for this command";
 	case PARAMETER_INVALID_FLAG = "Invalid flag '{flag}', valid flags: (0, 1)";
-	case PARAMETER_NEGATIVE_ORDER = "You cannot register parameter at negative positions #{position}";
-	case PARAMETER_DETACHED_ORDER = "There were no parameters before #{position}";
-	case PARAMETER_DESTRUCTED_ORDER = "You cannot register a required Parameter after an optional parameter";
 
 	/**
 	 * @param array<string,string> $tags
