@@ -18,12 +18,24 @@ class SyntaxConst{
 	 * @param string[] $nonParsedArgs
 	 */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
-		$fullCMD = "/" . $result->getPreLabel() . " " . " -liner 1- " . $result->getFullSyntax() . " -liner 2- " . implode(" ", $nonParsedArgs);
+		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . implode(" ", $nonParsedArgs);
+		//   "/§et sub1 aa" -> "/\xc2\xa7et sub1 aa"
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
+		var_dump($parts);
+		/* array(2) {
+			[0]=> string(11) "/§et sub1 " -> "/\xc2\xa7et sub1 "
+			[1]=> string(0) ""
+		}*/
 		if ($flags & self::SYNTAX_TRIMMED) {
-			$parts[0] = substr($parts[0], -9);
-			$parts[1] = substr($parts[0], 0, 9);
+			$l1 = mb_strlen($parts[0]);
+			$l2 = mb_strlen($parts[1]);
+			if ($l1 > 9) {
+				$parts[0] = substr($parts[0], -9);
+			}
+			if ($l2 > 9) {
+				$parts[1] = substr($parts[0], 0, 9);
+			}
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
 //			if ($flags & self::SYNTAX_PRINT_VANILLA) {
@@ -33,6 +45,7 @@ class SyntaxConst{
 			$translate = [
 				"previous" => $parts[0], "broken_syntax" => $result->getBrokenSyntax(), "after" => $parts[1],
 			];
+			var_dump($translate);
 			return self::translate($message, $translate);
 		}
 //		if ($flags & self::SYNTAX_PRINT_VANILLA) {
@@ -59,6 +72,7 @@ class SyntaxConst{
 	 * @return string[]
 	 */
 	public static function getSyntaxBetweenBrokenPart(string $syntax, string $brokenPart) : array{
+		var_dump($syntax);
 		$brokenPartPos = strpos($syntax, $brokenPart);
 		if ($brokenPartPos === false) {
 			$brokenPartPos = strlen($syntax);
