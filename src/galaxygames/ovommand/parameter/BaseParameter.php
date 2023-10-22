@@ -45,6 +45,11 @@ abstract class BaseParameter implements IParameter{
 		};
 	}
 
+	/** Some parameter has 2 or more span but only one can fulfil the required!, like PositionParameter where (~~~ | ~~ ~ | ~ ~ ~) are all acceptable*/
+	public function hasCompactParameter() : bool{
+		return false;
+	}
+
 	private function setFlag(int $flag) : void{
 		$this->flag = match ($flag) {
 			0, 1 => $flag,

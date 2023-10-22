@@ -14,6 +14,10 @@ class PositionParameter extends BaseParameter{
 		return ParameterTypes::POSITION;
 	}
 
+	public function hasCompactParameter() : bool{
+		return true;
+	}
+
 	public function parse(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\s\d]+)?([~^]?[+-]?\d+(?:\.\d+)?|[~^])([^~^\s\d]+)?/", $parameter, $matches)) {

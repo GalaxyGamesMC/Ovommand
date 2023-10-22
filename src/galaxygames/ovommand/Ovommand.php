@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\exception\CommandException;
+use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\SyntaxConst;
@@ -76,10 +77,8 @@ abstract class Ovommand extends Command implements IOvommand{
 			if ($parameter->isOptional()) {
 				$hasOptionalParameter = true;
 			} elseif ($hasOptionalParameter) {
-				echo "TODO";
-				//				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
+				throw new ParameterException("", ParameterException::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL); //TODO: MSG
 			}
-
 			$this->overloads[$this->currentOverloadId][] = $parameter;
 		}
 		$this->currentOverloadId++;
