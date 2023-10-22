@@ -24,7 +24,7 @@ final class EnumManager{
 	}
 
 	private function initDefaultEnums() : void{
-		GlobalEnumPool::addEnums(OvommandHook::getInstance(), ...array_map(static fn(DefaultEnums $enum) => $enum->encode(), DefaultEnums::cases()));
+		GlobalEnumPool::addEnums($this->ovommandHook, ...array_map(static fn(DefaultEnums $enum) => $enum->encode(), DefaultEnums::cases()));
 	}
 
 	public function register(BaseEnum ...$enums) : void{
