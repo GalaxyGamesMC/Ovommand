@@ -80,8 +80,9 @@ abstract class Ovommand extends Command implements IOvommand{
 				//				throw new ParameterOrderException(ExceptionMessage::MSG_PARAMETER_DESTRUCTED_ORDER->getRawErrorMessage(), ParameterOrderException::PARAMETER_DESTRUCTED_ORDER_ERROR);
 			}
 
-			$this->overloads[$this->currentOverloadId++][] = $parameter;
+			$this->overloads[$this->currentOverloadId][] = $parameter;
 		}
+		$this->currentOverloadId++;
 	}
 
 	/**
