@@ -32,7 +32,10 @@ final class GlobalEnumPool{
 				$enumStore = &self::$hardEnums;
 				$enumHookers = &self::$hardEnumHooker;
 			}
-			if (isset($enumStore[$eName]) && !$enum->isDefault()) {
+			if (isset($enumStore[$eName])) {
+				if ($enum->isDefault()) {
+					continue;
+				}
 				throw new OvommandEnumPoolException("Enum with the same name is already existed!", code:OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
 			}
 			$enumStore[$eName] = $enum;
