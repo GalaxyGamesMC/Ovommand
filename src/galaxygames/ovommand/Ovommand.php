@@ -107,11 +107,8 @@ abstract class Ovommand extends Command implements IOvommand{
 			$matchPoint = 0;
 			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
-//				if ($offset === $paramCount - $span + 1 && $parameter->isOptional()) {
-//					break;
-//				}
 				$t = 1;
-				while ($t <= $span) {
+				do {
 					$params = array_slice($rawParams, $offset, $t);
 					$result = $parameter->parse($params);
 					$results[$parameter->getName()] = $result;
@@ -120,15 +117,17 @@ abstract class Ovommand extends Command implements IOvommand{
 						continue;
 					}
 					break;
-				}
+				} while ($t <= $span);
 				$offset += $t;
-				/** @var BaseResult $result */ //TODO: zero span might break this!
 				if ($parameter->hasCompactParameter()) {
 					$result->setParsedID($t);
 				}
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
 					$matchPoint += $result->getMatchedParameter();
+					break;
+				}
+				if ($offset === $paramCount + 1 && $parameter->isOptional()) {
 					break;
 				}
 				$matchPoint += $t;
