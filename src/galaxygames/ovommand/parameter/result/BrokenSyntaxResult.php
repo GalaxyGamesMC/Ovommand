@@ -14,7 +14,6 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 	protected int $matchedParameter = 0;
 	protected int $requiredParameter = 1;
 	protected int $code = self::CODE_BROKEN_SYNTAX;
-	protected int $searchOffset = 0;
 
 	public function __construct(protected string $brokenSyntax, protected string $fullSyntax = "", protected string $expectedType = "", protected string $preLabel = ""){}
 

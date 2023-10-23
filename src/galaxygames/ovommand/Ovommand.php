@@ -123,6 +123,9 @@ abstract class Ovommand extends Command implements IOvommand{
 				}
 				$offset += $t;
 				/** @var BaseResult $result */ //TODO: zero span might break this!
+				if ($parameter->hasCompactParameter()) {
+					$result->setParsedID($t);
+				}
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
 					$matchPoint += $result->getMatchedParameter();
@@ -168,6 +171,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param string   $preLabel Return a string combined of its parent labels with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
+		var_dump($args);
 		if (!$this->testPermission($sender)) {
 			return;
 		}
@@ -205,7 +209,16 @@ abstract class Ovommand extends Command implements IOvommand{
 			$execute->execute($sender, $label, $args, $preLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
-			if ($this->onSyntaxError($sender, $passArgs, $args, $preLabel)) {
+			$totalPoint = 0;
+			foreach ($passArgs as $passArg) {
+				if (!$passArg instanceof BrokenSyntaxResult) {
+					$preLabel .= " " . implode(" ", array_slice($args, $totalPoint, $passArg->getParsedID()));
+				}
+				$totalPoint += $passArg->getParsedID();
+			}
+			$args = array_slice($args, $totalPoint);
+
+			if ($this->onPreRun($sender, $passArgs, $args, $preLabel)) {
 				$this->onRun($sender, $commandLabel, $passArgs);
 			}
 		}
@@ -238,17 +251,14 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param BaseResult[] $args
 	 * @param string[]     $nonParsedArgs
 	 */
-	public function onSyntaxError(CommandSender $sender, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
-//		var_dump($nonParsedArgs, $preLabel, "TEST1");
+	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
-				$matchPtr = $arg->getMatchedParameter();
-				for ($i = 0; $i <= $arg->getMatchedParameter(); $i++) {
-					array_shift($nonParsedArgs);
-				}
 				$arg->setPreLabel($preLabel);
 				$msg = SyntaxConst::parseFromBrokenSyntaxResult($arg, SyntaxConst::SYNTAX_PRINT_OVOMMAND | SyntaxConst::SYNTAX_TRIMMED, $nonParsedArgs);
-				if (!$msg instanceof Translatable) {
+				if ($msg instanceof Translatable) {
+					$msg->prefix(TextFormat::RED);
+				} else {
 					$msg = TextFormat::RED . $msg;
 				}
 				$sender->sendMessage($msg);
