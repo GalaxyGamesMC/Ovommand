@@ -13,7 +13,7 @@ use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;
-	/** @var bool if this was true, value will not give the parsed results but the raw parameters store in Result */
+	/** if this was true, value will not give the parsed results but the raw parameters store in Result */
 	protected bool $returnRaw = false;
 
 	final public function getName() : string{
