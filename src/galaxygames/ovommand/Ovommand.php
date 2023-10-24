@@ -165,6 +165,10 @@ abstract class Ovommand extends Command implements IOvommand{
 		return !empty($this->overloads);
 	}
 
+	public function handleRawResult() : bool{
+		return true;
+	}
+
 	/**
 	 * @param string[] $args
 	 * @param string   $preLabel Return a string combined of its parent labels with the current label
