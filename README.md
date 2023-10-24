@@ -37,6 +37,7 @@ Discuss:
 - [x] the problem with shared data is that if other plugins try to use other plugins enum... the enum might not exist due to plugin loading order!
 - [x] Default enums can have duplicated values if the event called more than twice on different plugins!
 - [ ] Merge onRun() and onSyntaxError()?
+- [ ] Add supports for private enums and synced properties for soft enums
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
