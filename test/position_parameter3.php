@@ -8,6 +8,7 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 
 $parameter = new PositionParameter("t");
 
+$test = 100;
 $test = 100000;
 //$test = 1;
 $out = $test === 1;
@@ -50,70 +51,22 @@ foreach ($parameters as $params) {
 		$time = -hrtime(true);
 		$result = $parameter->parse($params);
 		$time += hrtime(true);
-		if ($time === 0) {
-			$i--;
-		}
 		$rate += $time;
 	}
 	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo var_export($result->getBrokenSyntax()) . "\n";
+		echo "\033[31m" . var_export($result->getBrokenSyntax(), true) . "\033[0m\n";
 	}
-	echo("Test1: " . sprintf('%0.4f', $rate/$test) . PHP_EOL);
+	echo("Test1: " . sprintf('%0.4fns', $rate/$test) . "\n");
 	$rate = 0;
 	for ($i = 1; $i <= $test; ++$i) {
 		$time = -hrtime(true);
-		$result = $parameter->parse2($params);
+		$result = $parameter->parse($params);
 		$time += hrtime(true);
-		if ($time === 0) {
-			$i--;
-		}
 		$rate += $time;
 	}
 	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo var_export($result->getBrokenSyntax()) . "\n";
+		echo "\033[31m" . var_export($result->getBrokenSyntax(), true) . "\033[0m\n";
 	}
-	echo("Test2: " . sprintf('%0.4f', $rate/$test) . PHP_EOL);
-	$rate = 0;
-	for ($i = 1; $i <= $test; ++$i) {
-		$time = -hrtime(true);
-		$result = $parameter->parse3($params);
-		$time += hrtime(true);
-		if ($time === 0) {
-			$i--;
-		}
-		$rate += $time;
-	}
-	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo var_export($result->getBrokenSyntax()) . "\n";
-	}
-	echo("Test3: " . sprintf('%0.4f', $rate/$test) . PHP_EOL);
-	$rate = 0;
-	for ($i = 1; $i <= $test; ++$i) {
-		$time = -hrtime(true);
-		$result = $parameter->parse4($params);
-		$time += hrtime(true);
-		if ($time === 0) {
-			$i--;
-		}
-		$rate += $time;
-	}
-	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo var_export($result->getBrokenSyntax()) . "\n";
-	}
-	echo("Test4: " . sprintf('%0.4f', $rate/$test) . PHP_EOL);
-	$rate = 0;
-	for ($i = 1; $i <= $test; ++$i) {
-		$time = -hrtime(true);
-		$result = $parameter->parse5($params);
-		$time += hrtime(true);
-		if ($time === 0) {
-			$i--;
-		}
-		$rate += $time;
-	}
-	if ($out && $result instanceof BrokenSyntaxResult) {
-		echo var_export($result->getBrokenSyntax()) . "\n";
-	}
-	echo("Test5: " . sprintf('%0.4f', $rate/$test) . PHP_EOL);
-	echo ("-----------------------------------------------------------------\n");
+	echo("Test2: " . sprintf('%0.4fns', $rate/$test) . "\n");
+	echo("------------------=---------------\n");
 }
