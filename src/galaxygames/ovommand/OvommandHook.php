@@ -116,7 +116,7 @@ final class OvommandHook implements IHookable{
 		$overloads = [];
 
 		foreach ($command->getSubCommands() as $label => $subCommand) {
-			if ($subCommand->isAliases($label) || !$subCommand->testPermissionSilent($sender)) { //Get origin label
+			if ($subCommand->isAliases($label) || !$subCommand->testPermissionSilent($sender)) { //get origin label
 				continue;
 			}
 			foreach ($subCommand->getConstraints() as $constraint) {
@@ -138,24 +138,11 @@ final class OvommandHook implements IHookable{
 				$overloads[] = new CommandOverload(false, $scParams);
 			}
 		}
-
-		foreach (self::generateOverloadList($command) as $overload) {
-			$overloads[] = $overload;
+		foreach ($command->getOverloads() as $parameters) {
+			$overloads[] =  new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
 
 		return $overloads;
-	}
-
-	/**
-	 * @return CommandOverload[]
-	 */
-	private static function generateOverloadList(Ovommand $ovommand) : array{
-		$combinations = [];
-		foreach ($ovommand->getOverloads() as $parameters) {
-			$combinations[] = new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
-		}
-
-		return $combinations;
 	}
 
 	public static function isRegistered() : bool{

@@ -41,8 +41,7 @@ class BlockPositionParameter extends BaseParameter{
 			}
 			if ($type !== $coordType && ($type === CoordinateResult::TYPE_LOCAL || $coordType === CoordinateResult::TYPE_LOCAL)) {
 				return BrokenSyntaxResult::create($matches[2][$i], $parameter, $this->getValueName())
-					->setMatchedParameter($i)
-					->setRequiredParameter($this->getSpanLength());
+					->setMatchedParameter($i);
 			}
 		}
 		$xPreInvalid = $matches[1][0];

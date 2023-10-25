@@ -12,7 +12,6 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 	public const CODE_TOO_MUCH_INPUTS = 2;
 
 	protected int $matchedParameter = 0;
-	protected int $requiredParameter = 1;
 	protected int $code = self::CODE_BROKEN_SYNTAX;
 
 	public function __construct(protected string $brokenSyntax, protected string $fullSyntax = "", protected string $expectedType = "", protected string $preLabel = ""){}
@@ -34,11 +33,6 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 		return $this;
 	}
 
-	public function setRequiredParameter(int $match = 1) : self{
-		$this->requiredParameter = $match;
-		return $this;
-	}
-
 	public function setPreLabel(string $preLabel) : void{
 		$this->preLabel = $preLabel;
 	}
@@ -49,10 +43,6 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 
 	public function getMatchedParameter() : int{
 		return $this->matchedParameter;
-	}
-
-	public function getRequiredParameter() : int{
-		return $this->requiredParameter;
 	}
 
 	public function getCode() : int{
