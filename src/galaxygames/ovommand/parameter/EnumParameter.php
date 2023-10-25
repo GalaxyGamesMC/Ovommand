@@ -43,7 +43,6 @@ class EnumParameter extends BaseParameter{
 
 	public function parse(array $parameters) : BaseResult{
 		$enumValue = $this->enum->getValue($key = implode(" ", $parameters));
-//		var_dump($parameters, $enumValue); TODO: REMOVE DUMPS
 		if ($enumValue !== null) {
 			return ValueResult::create($this->returnRaw ? $key : $enumValue);
 		}

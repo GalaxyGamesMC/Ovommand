@@ -22,9 +22,7 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		$this->removeValues($keys);
 	}
 
-	/**
-	 * @param string[] $context
-	 */
+	/** @param string[] $context */
 	public function removeValues(array $context) : void{
 		$updates = [];
 		foreach ($context as $k) {
@@ -47,9 +45,7 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		$this->addValues([$value => $bindValue ?? $value]);
 	}
 
-	/**
-	 * @param array<string,mixed> $context
-	 */
+	/** @param array<string,mixed> $context */
 	public function addValues(array $context) : void{  //TODO: aliases support?
 		$updates = [];
 		foreach ($context as $k => $v) {

@@ -62,9 +62,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		}
 	}
 
-	/**
-	 * @return BaseSubCommand[]
-	 */
+	/** @return BaseSubCommand[] */
 	public function getSubCommands() : array{
 		return $this->subCommands;
 	}
@@ -91,7 +89,6 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * @param string[] $rawParams
-	 *
 	 * @return array<string, BaseResult>
 	 */
 	public function parseParameters(array $rawParams) : array{
@@ -158,9 +155,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $successResults[array_key_first($successResults)]; // return the first succeed parse.
 	}
 
-	/**
-	 * @return BaseParameter[][]
-	 */
+	/** @return BaseParameter[][] */
 	public function getOverloads() : array{
 		return $this->overloads;
 	}
@@ -230,9 +225,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		}
 	}
 
-	/**
-	 * @return string[]
-	 */
+	/** @return string[] */
 	public function generateUsageList() : array{
 		$usages = [];
 		foreach ($this->subCommands as $k => $subCommand) {
@@ -255,7 +248,6 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * Return true will run onRun() and vice versa
-	 *
 	 * @param BaseResult[] $args
 	 * @param string[]     $nonParsedArgs
 	 */
@@ -277,9 +269,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		return true;
 	}
 
-	/**
-	 * @param BaseResult[] $args
-	 */
+	/** @param BaseResult[] $args */
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
 
 	abstract protected function setup() : void;
@@ -288,9 +278,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		$this->constraints[] = $constraint;
 	}
 
-	/**
-	 * @return BaseConstraint[]
-	 */
+	/** @return BaseConstraint[] */
 	public function getConstraints() : array{
 		return $this->constraints;
 	}

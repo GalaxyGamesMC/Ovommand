@@ -35,21 +35,20 @@ abstract class BaseSubCommand extends Ovommand{
 		return in_array($in, $this->showAliases, true);
 	}
 
-	/** @return string[] @deprecated SubCommand shouldn't use this, use getShowAliases() instead! */
+	/**
+	 * @return string[]
+	 * @deprecated SubCommand shouldn't use this, use getShowAliases() instead!
+	 */
 	public function getAliases() : array{
 		return [];
 	}
 
-	/**
-	 * @return list<string>
-	 */
+	/** @return list<string> */
 	public function getHiddenAliases() : array{
 		return $this->hiddenAliases;
 	}
 
-	/**
-	 * @return list<string>
-	 */
+	/** @return list<string> */
 	public function getShowAliases() : array{
 		return $this->showAliases;
 	}

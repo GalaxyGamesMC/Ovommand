@@ -20,9 +20,7 @@ abstract class BaseEnum extends OvoEnum{
 		$this->setAliases($hiddenAliases, true);
 	}
 
-	/**
-	 * @param array<string, string|string[]> $aliases
-	 */
+	/** @param array<string, string|string[]> $aliases */
 	public function setAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $key => $alias) {
