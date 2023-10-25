@@ -165,16 +165,15 @@ abstract class Ovommand extends Command implements IOvommand{
 		return !empty($this->overloads);
 	}
 
-	public function handleRawResult() : bool{
+	public function doHandleRawResult() : bool{
 		return true;
 	}
 
 	/**
 	 * @param string[] $args
-	 * @param string   $preLabel Return a string combined of its parent labels with the current label
+	 * @param string   $preLabel Return a string combined of its parent-label with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
-		var_dump($args);
 		if (!$this->testPermission($sender)) {
 			return;
 		}
@@ -195,11 +194,9 @@ abstract class Ovommand extends Command implements IOvommand{
 		} else {
 			$preLabel .= " " . $commandLabel;
 		}
-		$this->setCurrentSender($sender);
 		if (isset($this->subCommands[$label])) {
 			array_shift($args);
 			$execute = $this->subCommands[$label];
-			$execute->setCurrentSender($sender);
 			if (!$execute->testPermissionSilent($sender)) {
 				$msg = $this->getPermissionMessage();
 				if ($msg === null) {
@@ -216,12 +213,14 @@ abstract class Ovommand extends Command implements IOvommand{
 			foreach ($passArgs as $passArg) {
 				if (!$passArg instanceof BrokenSyntaxResult) {
 					$preLabel .= " " . implode(" ", array_slice($args, $totalPoint, $passArg->getParsedID()));
+				} else {
+					$passArg->setPreLabel($preLabel);
 				}
 				$totalPoint += $passArg->getParsedID();
 			}
 			$args = array_slice($args, $totalPoint);
 
-			if ($this->onPreRun($sender, $passArgs, $args, $preLabel)) {
+			if ($this->onPreRun($sender, $passArgs, $args)) {
 				$this->onRun($sender, $commandLabel, $passArgs);
 			}
 		}
@@ -252,12 +251,11 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * @param BaseResult[] $args
-	 * @param string[]     $nonParsedArgs
+	 * @param string[] $nonParsedArgs
 	 */
-	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = [], string $preLabel = "") : bool{
+	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs) : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
-				$arg->setPreLabel($preLabel);
 				$msg = SyntaxConst::parseFromBrokenSyntaxResult($arg, SyntaxConst::SYNTAX_PRINT_OVOMMAND | SyntaxConst::SYNTAX_TRIMMED, $nonParsedArgs);
 				if ($msg instanceof Translatable) {
 					$msg->prefix(TextFormat::RED);
@@ -279,15 +277,6 @@ abstract class Ovommand extends Command implements IOvommand{
 	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
 
 	abstract protected function setup() : void;
-
-	public function setCurrentSender(CommandSender $currentSender) : Ovommand{
-		$this->currentSender = $currentSender;
-		return $this;
-	}
-
-	public function getCurrentSender() : CommandSender{
-		return $this->currentSender;
-	}
 
 	public function addConstraint(BaseConstraint $constraint) : void{
 		$this->constraints[] = $constraint;
