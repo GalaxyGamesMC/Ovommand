@@ -105,12 +105,7 @@ final class OvommandHook implements IHookable{
 		return self::$instance;
 	}
 
-	/**
-	 * @param CommandSender $sender
-	 * @param Ovommand   $command
-	 *
-	 * @return CommandOverload[]
-	 */
+	/** @return CommandOverload[] */
 	private static function generateOverloads(CommandSender $sender, Ovommand $command) : array{
 		$overloads = [];
 

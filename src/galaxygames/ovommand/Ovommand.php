@@ -255,8 +255,9 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * Return true will run onRun() and vice versa
+	 *
 	 * @param BaseResult[] $args
-	 * @param string[] $nonParsedArgs
+	 * @param string[]     $nonParsedArgs
 	 */
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs) : bool{
 		foreach ($args as $arg) {
