@@ -7,6 +7,7 @@ use galaxygames\ovommand\exception\CommandException;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
+use galaxygames\ovommand\parameter\TextParameter;
 use galaxygames\ovommand\utils\SyntaxConst;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -73,11 +74,18 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	public function registerParameters(BaseParameter ...$parameters) : void{
 		$hasOptionalParameter = false;
-		foreach ($parameters as $parameter) {
+		$hasTextParameter = false;
+		foreach ($parameters as $i => $parameter) {
+			if (!$hasTextParameter) {
+				throw new ParameterException("Cannot have more parameters after TextParameter", ParameterException::PARAMETER_AFTER_TEXT_PARAMETER); //TODO: MSG
+			}
+			if ($parameter instanceof TextParameter) {
+				$hasTextParameter = true;
+			}
 			if ($parameter->isOptional()) {
 				$hasOptionalParameter = true;
 			} elseif ($hasOptionalParameter) {
-				throw new ParameterException("", ParameterException::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL); //TODO: MSG
+				throw new ParameterException("Cannot have non-optional parameters after an optional parameter", ParameterException::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL); //TODO: MSG
 			}
 			$this->overloads[$this->currentOverloadId][] = $parameter;
 		}
