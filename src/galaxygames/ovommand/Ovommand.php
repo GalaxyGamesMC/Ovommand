@@ -76,7 +76,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		$hasOptionalParameter = false;
 		$hasTextParameter = false;
 		foreach ($parameters as $i => $parameter) {
-			if (!$hasTextParameter) {
+			if ($hasTextParameter) {
 				throw new ParameterException("Cannot have more parameters after TextParameter", ParameterException::PARAMETER_AFTER_TEXT_PARAMETER); //TODO: MSG
 			}
 			if ($parameter instanceof TextParameter) {
