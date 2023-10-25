@@ -19,13 +19,10 @@ use shared\galaxygames\ovommand\fetus\IOvommand;
 use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 abstract class Ovommand extends Command implements IOvommand{
-
 	/** @var BaseConstraint[] */
 	protected array $constraints = [];
 	/** @var BaseSubCommand[] */ //bad design
 	protected array $subCommands = [];
-	/** @var CommandSender */
-	protected CommandSender $currentSender;
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
 	protected int $currentOverloadId = 0;
@@ -75,7 +72,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function registerParameters(BaseParameter ...$parameters) : void{
 		$hasOptionalParameter = false;
 		$hasTextParameter = false;
-		foreach ($parameters as $i => $parameter) {
+		foreach ($parameters as $parameter) {
 			if ($hasTextParameter) {
 				throw new ParameterException("Cannot have more parameters after TextParameter", ParameterException::PARAMETER_AFTER_TEXT_PARAMETER); //TODO: MSG
 			}
@@ -304,7 +301,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $usage;
 	}
 
-	public function getOwningPlugin() : ?Plugin{
+	public function getOwningPlugin() : Plugin{
 		return OvommandHook::getOwnedPlugin();
 	}
 
