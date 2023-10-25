@@ -16,7 +16,7 @@ class BlockPositionParameter extends BaseParameter{
 
 	public function parse(array $parameters) : BaseResult{
 		$parameter = implode(" ", $parameters);
-		if (!preg_match_all("/([^~^+\-\s\d]+)?([~^]?[+-]?\d+|[~^])([^~^\s\d]+)?/", $parameter, $matches)) {
+		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?(\d+)|[~^])([[:blank:]]?[^~^+\-\d\s]+)?/", $parameter, $matches)) {
 			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
@@ -49,40 +49,26 @@ class BlockPositionParameter extends BaseParameter{
 			return BrokenSyntaxResult::create($xPreInvalid, $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		$xPostInvalid = $matches[3][0];
+		$xPostInvalid = $matches[4][0];
 		if (!empty($xPostInvalid)) {
 			return BrokenSyntaxResult::create($xPostInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
-				->setMatchedParameter(1);
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)->setMatchedParameter(1);
 		}
-		$yPreInvalid = $matches[1][1];
-		if (!empty($yPreInvalid)) {
-			return BrokenSyntaxResult::create($yPreInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
-				->setMatchedParameter(1);
-		}
-		$yPostInvalid = $matches[3][1];
+		$yPostInvalid = $matches[4][1];
 		if (!empty($yPostInvalid)) {
 			return BrokenSyntaxResult::create($yPostInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
-				->setMatchedParameter(2);
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)->setMatchedParameter(2);
 		}
-		$zPreInvalid = $matches[1][2];
-		if (!empty($zPreInvalid)) {
-			return BrokenSyntaxResult::create($zPreInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
-				->setMatchedParameter(2);
-		}
-		$zPostInvalid = $matches[3][2];
+		$zPostInvalid = $matches[4][2];
 		if (!empty($zPostInvalid)) {
 			return BrokenSyntaxResult::create($zPostInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)
-				->setMatchedParameter(3);
+				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)->setMatchedParameter(3);
 		}
-		$x = (float) substr($matches[2][0], 1);
-		$y = (float) substr($matches[2][1], 1);
-		$z = (float) substr($matches[2][2], 1);
-		return CoordinateResult::fromData($x, $y, $z, $xType, $yType, $zType);
+		if (count($matches[0]) > 3) {
+			return BrokenSyntaxResult::create($matches[0][3], $parameter, $this->getValueName())
+				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)->setMatchedParameter(3);
+		}
+		return CoordinateResult::fromData((float) $matches[3][0], (float) $matches[3][1], (float) $matches[3][2], $xType, $yType, $zType);
 	}
 
 	public function getSpanLength() : int{
