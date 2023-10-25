@@ -8,8 +8,9 @@
 </p>
 
 # Ovommand
-TODO:
+<details> <summary>Show other dumps</summary>
 
+TODO:
 - [x] make reasonable enum that handle it value correctly (string -> value)
 - [x] custom enum, parameters, enum-based parameters
 - [x] feature rich
@@ -44,6 +45,8 @@ Self note:
 - Soft enums cannot spread out its value using flag 1!
 - Two enums, one soft and one hard could have a same name
 - Enum name could be set to anything, not just ascii / UTF-8
+
+</details>
 
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
