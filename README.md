@@ -7,8 +7,12 @@
 <b>a virion framework designed to parse command data for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b>
 </p>
 
+[READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
+
+[DEMO PLUGIN](https://github.com/idumpster/OvoTest)
+
 # Ovommand
-<details> <summary>Show other dumps</summary>
+<details> <summary>Show useless dumps</summary>
 
 TODO:
 - [x] make reasonable enum that handle it value correctly (string -> value)
@@ -48,14 +52,9 @@ Self note:
 
 </details>
 
-[READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
-
-[DEMO PLUGIN](https://github.com/idumpster/OvoTest)
 
 :x:
-
 :heavy_check_mark:
-
 :white_check_mark:
 
 |checked|unchecked|crossed|
