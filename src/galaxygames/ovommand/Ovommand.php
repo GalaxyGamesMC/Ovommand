@@ -158,8 +158,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		if (empty($successResults)) {
 			return $failedResults[$finalId];
 		}
-		// return the first succeed parse!
-		return $successResults[array_key_first($successResults)];
+		return $successResults[array_key_first($successResults)]; // return the first succeed parse.
 	}
 
 	/**
