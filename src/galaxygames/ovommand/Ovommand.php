@@ -258,6 +258,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
+	 * Return true will run onRun() and vice versa
 	 * @param BaseResult[] $args
 	 * @param string[] $nonParsedArgs
 	 */

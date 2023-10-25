@@ -31,6 +31,7 @@ Suggest:
 - [ ] move part of Ovommand to BaseCommand
 - [ ] do subCommand even need description?
 - [x] more features to the syntax parser
+- [ ] rename parsedId & matchedId in Results to rawParsedCount & parsedCount
 
 Discuss:
 - [ ] Default Enums should have its own register and a version checker!? (temp abandoned)
