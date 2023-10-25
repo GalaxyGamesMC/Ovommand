@@ -37,7 +37,7 @@ abstract class BaseSubCommand extends Ovommand{
 
 	/**
 	 * @return string[]
-	 * @deprecated SubCommand shouldn't use this, use getShowAliases instead!
+	 * @deprecated SubCommand shouldn't use this, use getShowAliases() instead!
 	 */
 	public function getAliases() : array{
 		return [];

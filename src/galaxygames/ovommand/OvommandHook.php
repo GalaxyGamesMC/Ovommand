@@ -55,10 +55,8 @@ final class OvommandHook implements IHookable{
 	private static EnumManager $enumManager;
 
 	public static function getInstance() : OvommandHook{
-		if (!self::isRegistered()) {
-			throw new OvommandHookException("This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.");
-		}
-		return self::$instance ?? self::register(self::$plugin);
+		$plugin = self::getOwnedPlugin();
+		return self::$instance ?? self::register($plugin);
 	}
 
 	public static function register(Plugin $plugin) : self{
@@ -87,6 +85,7 @@ final class OvommandHook implements IHookable{
 			self::$instance = new self;
 			GlobalHookPool::addHook(self::$instance);
 			self::$enumManager = new EnumManager(self::$instance);
+			// stop other plugins from calling redundant calls
 			if (isset(GlobalEnumPool::getHookerRegisteredSoftEnums(self::$instance)[DefaultEnums::ONLINE_PLAYERS->value])) {
 				try {
 					$pluginManager = Server::getInstance()->getPluginManager();
