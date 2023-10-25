@@ -40,6 +40,11 @@ Discuss:
 - [ ] Merge onRun() and onSyntaxError()?
 - [ ] Add supports for private enums and synced properties for soft enums
 
+Self note:
+- Soft enums cannot spread out its value using flag 1!
+- Two enums, one soft and one hard could have a same name
+- Enum name could be set to anything, not just ascii / UTF-8
+
 [READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
 
 [DEMO PLUGIN](https://github.com/idumpster/OvoTest)
