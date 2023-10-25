@@ -27,7 +27,7 @@ class SyntaxConst{
 				$parts[0] = substr($parts[0], -9);
 			}
 			if ($l2 > 9) {
-				$parts[1] = substr($parts[0], 0, 9);
+				$parts[1] = substr($parts[1], 0, 9);
 			}
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
