@@ -41,7 +41,8 @@ class GlobalHookPool{
 	}
 
 	public static function getHook(Plugin $plugin) : IHookable{
-		if (!isset(self::$hooks[$pName = $plugin->getName()])) {
+		$pName = $plugin->getName();
+		if (!isset(self::$hooks[$pName])) {
 			throw new \InvalidArgumentException("OvommandHook of the plugin, named $pName, is not registered!");
 		}
 		return self::$hooks[$pName];

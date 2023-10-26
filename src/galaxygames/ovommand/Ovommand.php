@@ -73,7 +73,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		$hasTextParameter = false;
 		foreach ($parameters as $parameter) {
 			if ($hasTextParameter) {
-				throw new ParameterException(ExceptionMessage::PARAMETER_AFTER_TEXT_PARAMETER->getText(), ParameterException::PARAMETER_AFTER_TEXT_PARAMETER); //TODO: MSG
+				throw new ParameterException(ExceptionMessage::PARAMETER_AFTER_TEXT_PARAMETER->getText(), ParameterException::PARAMETER_AFTER_TEXT_PARAMETER);
 			}
 			if ($parameter instanceof TextParameter) {
 				$hasTextParameter = true;
@@ -81,7 +81,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			if ($parameter->isOptional()) {
 				$hasOptionalParameter = true;
 			} elseif ($hasOptionalParameter) {
-				throw new ParameterException(ExceptionMessage::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL->getText(), ParameterException::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL); //TODO: MSG
+				throw new ParameterException(ExceptionMessage::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL->getText(), ParameterException::PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL);
 			}
 			$this->overloads[$this->currentOverloadId][] = $parameter;
 		}
