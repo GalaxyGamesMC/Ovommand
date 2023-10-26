@@ -23,7 +23,7 @@ class EnumParameter extends BaseParameter{
 			if ($enumName instanceof DefaultEnums) {
 				$enumName = $enumName->value;
 			}
-			throw new ParameterException(ExceptionMessage::PARAMETER_UNKNOWN_ENUM->translate(["enumName" => $enumName, "enumType" => $isSoft ? "soft" : "hard"]), ParameterException::PARAMETER_UNKNOWN_ENUM); //TODO: Better msg
+			throw new ParameterException(ExceptionMessage::PARAMETER_UNKNOWN_ENUM->translate(["enumName" => $enumName, "enumType" => $isSoft ? "soft" : "hard"]), ParameterException::PARAMETER_UNKNOWN_ENUM);
 		}
 		$this->enum = $enum;
 		parent::__construct($name, $optional, $flag);
@@ -47,7 +47,7 @@ class EnumParameter extends BaseParameter{
 			return ValueResult::create($this->returnRaw ? $key : $enumValue);
 		}
 		return BrokenSyntaxResult::create($key, $key, expectedType:$this->enum->getName())
-			->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX); //TODO: better msg
+			->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 	}
 
 	public function getNetworkParameterData() : CommandParameter{

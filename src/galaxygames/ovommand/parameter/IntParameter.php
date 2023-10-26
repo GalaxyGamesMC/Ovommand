@@ -17,7 +17,7 @@ class IntParameter extends BaseParameter{
 		if (preg_match("/^\d+$/", $f)) {
 			return ValueResult::create((int) $f);
 		}
-		return BrokenSyntaxResult::create($f); //TODO: better msg
+		return BrokenSyntaxResult::create($f);
 	}
 
 	public function getValueName() : string{ return "int"; }

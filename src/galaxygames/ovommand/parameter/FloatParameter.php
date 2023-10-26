@@ -19,6 +19,6 @@ class FloatParameter extends BaseParameter{
 		if (is_numeric($f)) {
 			return ValueResult::create((float) $f);
 		}
-		return BrokenSyntaxResult::create("$f is not a float number!"); //TODO: better msg
+		return BrokenSyntaxResult::create($f);
 	}
 }

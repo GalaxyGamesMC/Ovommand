@@ -39,7 +39,7 @@ class StringEnumParameter extends BaseParameter{
 		if ($enumValue !== null) {
 			return ValueResult::create($enumValue);
 		}
-		return BrokenSyntaxResult::create("Unknown value!"); //TODO: better msg
+		return BrokenSyntaxResult::create($in);
 	}
 
 	public function getNetworkParameterData() : CommandParameter{

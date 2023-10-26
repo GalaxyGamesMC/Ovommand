@@ -12,10 +12,10 @@ enum ExceptionMessage : string{
 	case ENUM_INVALID_DEFAULT = "You cannot set enum '{enumName}' to be default from outside!";
 	case PARAMETER_INVALID_FLAG = "Invalid flag '{flag}' was set, valid flags: (0, 1)!";
 	case PARAMETER_UNKNOWN_ENUM = "Unknown '{enumType}' enum was called '{enumName}'!";
+	case PARAMETER_NON_OPTIONAL_AFTER_OPTIONAL = "Cannot have non-optional parameters after an optional parameter";
+	case PARAMETER_AFTER_TEXT_PARAMETER = "Cannot have more parameters after TextParameter";
 
-	/**
-	 * @param array<string,string> $tags
-	 */
+	/** @param array<string,string> $tags  */
 	public function translate(array $tags = []) : string{
 		$msg = $this->value;
 		foreach ($tags as $tag => $value) {
