@@ -22,7 +22,7 @@ use shared\galaxygames\ovommand\fetus\result\BaseResult;
 abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseConstraint[] */
 	protected array $constraints = [];
-	/** @var BaseSubCommand[] */ //bad design
+	/** @var BaseSubCommand[] */
 	protected array $subCommands = [];
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
