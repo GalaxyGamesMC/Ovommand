@@ -149,7 +149,7 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		$online = array_values(Server::getInstance()->getOnlinePlayers());
 
 		if (!$entity instanceof Player) {
-			if (count($online) > 0) {
+			if (!empty($online)) {
 				return $online[array_keys($online)[0]];
 			}
 			return null;

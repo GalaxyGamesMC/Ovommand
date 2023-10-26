@@ -182,22 +182,23 @@ abstract class Ovommand extends Command implements IOvommand{
 				$constraint->onSuccess($sender, $commandLabel, $args);
 			} else {
 				$constraint->onFailure($sender, $commandLabel, $args);
+				return;
 			}
 		}
-		if (count($args) === 0) {
+		if (empty($args)) {
 			$this->onRun($sender, $commandLabel, []);
 			return;
 		}
-		$label = $args[0];
 		if ($preLabel === "") {
 			$preLabel = $commandLabel;
 		} else {
 			$preLabel .= " " . $commandLabel;
 		}
+		$label = $args[0];
 		if (isset($this->subCommands[$label])) {
-			array_shift($args);
 			$execute = $this->subCommands[$label];
 			if ($execute->testPermission($sender)) {
+				array_shift($args);
 				$execute->execute($sender, $label, $args, $preLabel);
 			}
 		} else {
