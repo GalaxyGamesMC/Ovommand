@@ -54,11 +54,11 @@ abstract class Ovommand extends Command implements IOvommand{
 					if (!isset($this->subCommands[$alias])) {
 						$this->subCommands[$alias] = $subCommand;
 					} else {
-						throw new CommandException("SubCommand with same alias for '$alias' already exists", CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
+						throw new CommandException(ExceptionMessage::SUB_COMMAND_DUPLICATE_ALIAS->translate(["alias" => $alias]), CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
 					}
 				}
 			} else {
-				throw new CommandException("SubCommand with same name for '$subName' already exists", CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
+				throw new CommandException(ExceptionMessage::SUB_COMMAND_DUPLICATE_NAME->translate(["subName" => $subName]), CommandException::SUB_COMMAND_DUPLICATE_NAME);
 			}
 		}
 	}
