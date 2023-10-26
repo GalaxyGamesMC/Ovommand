@@ -135,9 +135,9 @@ abstract class Ovommand extends Command implements IOvommand{
 				$matchPoint += $t;
 			}
 			if (($paramCount > $matchPoint) && !$hasFailed) {
+				$hasFailed = true;
 				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))
 					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
-				$hasFailed = true;
 			}
 			if (!$hasFailed) {
 				$successResults[] = $results;
