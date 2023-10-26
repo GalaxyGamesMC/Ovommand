@@ -68,12 +68,6 @@ abstract class BaseSubCommand extends Ovommand{
 			$parent = $newParent;
 		}
 		if ($parent instanceof BaseCommand) {
-			foreach ($this->subCommands as $k => $subCommand) {
-				if ($k !== $subCommand->getName()) {
-					continue;
-				}
-				$subCommand->setParent($this);
-			}
 			$this->setUsage("/$parentHeader " . implode("\n/$parentHeader ", $this->generateUsageList()));
 		}
 		return $this;
