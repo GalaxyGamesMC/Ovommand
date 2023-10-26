@@ -171,7 +171,7 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * @param string[] $args
-	 * @param string   $preLabel Return a string combined of its parent-label with the current label
+	 * @param string $preLabel Return a string combined of its parent-label with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
 		if (!$this->testPermission($sender)) {
