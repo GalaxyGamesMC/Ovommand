@@ -197,16 +197,9 @@ abstract class Ovommand extends Command implements IOvommand{
 		if (isset($this->subCommands[$label])) {
 			array_shift($args);
 			$execute = $this->subCommands[$label];
-			if (!$execute->testPermissionSilent($sender)) {
-				$msg = $this->getPermissionMessage();
-				if ($msg === null) {
-					$sender->sendMessage($sender->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission"));
-				} elseif (empty($msg)) {
-					$sender->sendMessage(str_replace("<permission>", $execute->getPermissions()[0], $msg));
-				}
-				return;
+			if ($execute->testPermission($sender)) {
+				$execute->execute($sender, $label, $args, $preLabel);
 			}
-			$execute->execute($sender, $label, $args, $preLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
 			$totalPoint = 0;
