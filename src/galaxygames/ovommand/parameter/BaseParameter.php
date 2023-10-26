@@ -51,7 +51,7 @@ abstract class BaseParameter implements IParameter{
 	private function setFlag(int $flag) : void{
 		$this->flag = match ($flag) {
 			0, 1 => $flag,
-			default => throw new ParameterException(ExceptionMessage::PARAMETER_INVALID_FLAG->getErrorMessage(['flag' => (string) $flag]), ParameterException::PARAMETER_INVALID_FLAG)
+			default => throw new ParameterException(ExceptionMessage::PARAMETER_INVALID_FLAG->translate(['flag' => (string) $flag]), ParameterException::PARAMETER_INVALID_FLAG)
 		};
 	}
 

@@ -31,10 +31,10 @@ final class EnumManager{
 		foreach ($enums as $enum) {
 			$enumName = $enum->getName();
 			if ($enum->isDefault()) {
-				throw new EnumException("You cannot make an enum be default from outside!");
+				throw new EnumException(ExceptionMessage::ENUM_INVALID_DEFAULT->translate(["enumName" => $enumName]), EnumException::ENUM_INVALID_DEFAULT);
 			}
 			if (trim($enumName) === '') {
-				throw new EnumException(ExceptionMessage::ENUM_EMPTY_NAME->getRawErrorMessage(), EnumException::ENUM_EMPTY_NAME);
+				throw new EnumException(ExceptionMessage::ENUM_EMPTY_NAME->getText(), EnumException::ENUM_EMPTY_NAME);
 			}
 		}
 		try {

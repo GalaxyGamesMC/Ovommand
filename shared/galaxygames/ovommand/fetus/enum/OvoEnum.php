@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace shared\galaxygames\ovommand\fetus\enum;
 
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
+use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 
 abstract class OvoEnum implements IOvoEnum{
 	protected string $name;
@@ -31,7 +32,7 @@ abstract class OvoEnum implements IOvoEnum{
 		return match(true) {
 			$this instanceof IStaticEnum => false,
 			$this instanceof IDynamicEnum => true,
-			default => throw new \RuntimeException("?") // TODO: Better msg
+			default => throw new OvommandEnumPoolException("Unknown enum type!", OvommandEnumPoolException::ENUM_UNKNOWN_TYPE) // TODO: Better msg
 		};
 	}
 
