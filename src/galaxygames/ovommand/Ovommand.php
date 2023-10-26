@@ -47,7 +47,8 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	public function registerSubCommands(BaseSubCommand ...$subCommands) : void{
 		foreach ($subCommands as $subCommand) {
-			if (!isset($this->subCommands[$subName = $subCommand->getName()])) {
+			$subName = $subCommand->getName();
+			if (!isset($this->subCommands[$subName])) {
 				$this->subCommands[$subName] = $subCommand->setParent($this);
 				$aliases = [...$subCommand->getShowAliases(), ...$subCommand->getHiddenAliases()];
 				foreach ($aliases as $alias) {
@@ -279,7 +280,8 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	public function getUsage() : string{
-		if (($usage = $this->usageMessage) instanceof Translatable) {
+		$usage = $this->usageMessage;
+		if ($usage instanceof Translatable) {
 			return $usage->getText();
 		}
 		return $usage;
