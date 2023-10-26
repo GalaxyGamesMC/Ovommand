@@ -55,8 +55,7 @@ final class OvommandHook implements IHookable{
 	private static EnumManager $enumManager;
 
 	public static function getInstance() : OvommandHook{
-		$plugin = self::getOwnedPlugin();
-		return self::$instance ?? self::register($plugin);
+		return self::$instance ?? self::register(self::getOwnedPlugin());
 	}
 
 	public static function register(Plugin $plugin) : self{
