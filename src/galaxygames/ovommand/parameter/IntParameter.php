@@ -13,11 +13,11 @@ class IntParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : BaseResult{
-		$f = implode("", $parameters);
-		if (preg_match("/^\d+$/", $f)) {
-			return ValueResult::create((int) $f);
+		$i = implode("", $parameters);
+		if (preg_match("/^\d+$/", $i)) {
+			return ValueResult::create((int) $i);
 		}
-		return BrokenSyntaxResult::create($f);
+		return BrokenSyntaxResult::create($i);
 	}
 
 	public function getValueName() : string{ return "int"; }
