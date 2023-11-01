@@ -31,7 +31,7 @@ class SyntaxConst{
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
 			if ($flags & self::SYNTAX_PRINT_VANILLA) {
-				throw new \RuntimeException("Collided flag."); //TODO: BETTER MSG
+				throw new \InvalidArgumentException("Collided flag, cannot print both vanilla and ovommand message."); //TODO: BETTER MSG
 			}
 			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
 			$translate = [
