@@ -37,8 +37,8 @@ abstract class BaseParameter implements IParameter{
 		$cParam = count($parameters);
 		$span = $this->getSpanLength();
 		return match (true) {
-			$cParam > $span => BrokenSyntaxResult::create($parameters[$this->getSpanLength()], implode(" ", $parameters))->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS),
-			$cParam < $span => BrokenSyntaxResult::create("", implode(" ", $parameters))->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS),
+			$cParam > $span => BrokenSyntaxResult::create($parameters[$this->getSpanLength()], implode(" ", $parameters), $this->getValueName())->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS),
+			$cParam < $span => BrokenSyntaxResult::create("", implode(" ", $parameters), $this->getValueName())->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS),
 			default => ValueResult::create($parameters)
 		};
 	}

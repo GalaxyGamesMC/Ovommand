@@ -114,7 +114,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$t = 1;
 				do {
 					$params = array_slice($rawParams, $offset, $t);
-					$result = $parameter->parse($params);
+ 					$result = $parameter->parse($params);
 					$results[$parameter->getName()] = $result;
 					if ($result instanceof BrokenSyntaxResult && $t !== $span) {
 						$t++;
@@ -140,6 +140,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				$hasFailed = true;
 				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))
 					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
+				print_r("HEHE BROKEN PART FOUND");
 			}
 			if (!$hasFailed) {
 				$successResults[] = $results;
@@ -255,6 +256,9 @@ abstract class Ovommand extends Command implements IOvommand{
 					$msg->prefix(TextFormat::RED);
 				} else {
 					$msg = TextFormat::RED . $msg;
+				}
+				if ($arg->getBrokenSyntax() === "") {
+					$sender->sendMessage(var_export($arg, true));
 				}
 				$sender->sendMessage($msg);
 				$sender->sendMessage("Expect the value to be " . $arg->getExpectedType());

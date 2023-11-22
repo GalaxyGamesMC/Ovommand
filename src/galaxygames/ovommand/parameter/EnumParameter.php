@@ -42,11 +42,15 @@ class EnumParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : BaseResult{
+		$result = parent::parse($parameters);
+		if ($result instanceof BrokenSyntaxResult) {
+			return $result;
+		}
 		$enumValue = $this->enum->getValue($key = implode(" ", $parameters));
 		if ($enumValue !== null) {
 			return ValueResult::create($this->returnRaw ? $key : $enumValue);
 		}
-		return BrokenSyntaxResult::create($key, $key, expectedType:$this->enum->getName())
+		return BrokenSyntaxResult::create($key, $key, $this->enum->getName())
 			->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 	}
 

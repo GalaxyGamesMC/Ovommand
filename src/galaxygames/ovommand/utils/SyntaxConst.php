@@ -17,6 +17,13 @@ class SyntaxConst{
 	/** @param string[] $nonParsedArgs */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
 		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . Utils::implode($nonParsedArgs);
+		if ($result->getCode() === BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS) {
+			$translate = [
+				"previous" => $fullCMD, "broken_syntax" => "", "after" => "",
+			];
+			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
+			return self::translate($message, $translate);
+		}
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
 		if ($flags & self::SYNTAX_TRIMMED) {

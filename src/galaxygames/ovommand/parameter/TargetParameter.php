@@ -32,7 +32,7 @@ class TargetParameter extends BaseParameter{
 		if (isset($groups[2])) {
 			$pName = $groups[2];
 			if (Server::getInstance()->getPlayerExact($pName) === null) {
-				return BrokenSyntaxResult::create($pName);
+				return BrokenSyntaxResult::create($pName, $parameter, $this->getValueName(),);
 			}
 		}
 		return match ($tag = $groups[1]) {
