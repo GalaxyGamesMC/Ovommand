@@ -16,7 +16,7 @@ class TargetParameter extends BaseParameter{
 		return ParameterTypes::TARGET;
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : TargetResult|BrokenSyntaxResult{
 		parent::parse($parameters);
 		$parameter = $parameters[0];
 		$groups = [];
