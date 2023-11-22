@@ -111,20 +111,20 @@ abstract class Ovommand extends Command implements IOvommand{
 			$matchPoint = 0;
 			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
-				$t = 1;
+				$p = 1;
 				do {
-					$params = array_slice($rawParams, $offset, $t);
+					$params = array_slice($rawParams, $offset, $p);
  					$result = $parameter->parse($params);
 					$results[$parameter->getName()] = $result;
-					if ($result instanceof BrokenSyntaxResult && $t !== $span) {
-						$t++;
+					if ($result instanceof BrokenSyntaxResult && $p !== $span) {
+						$p++;
 						continue;
 					}
 					break;
-				} while ($t <= $span);
-				$offset += $t;
+				} while ($p <= $span);
+				$offset += $p;
 				if ($parameter->hasCompactParameter()) {
-					$result->setParsedID($t);
+					$result->setParsedPoint($p);
 				}
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
@@ -134,13 +134,12 @@ abstract class Ovommand extends Command implements IOvommand{
 				if ($offset === $paramCount + 1 && $parameter->isOptional()) {
 					break;
 				}
-				$matchPoint += $t;
+				$matchPoint += $p;
 			}
 			if (($paramCount > $matchPoint) && !$hasFailed) {
 				$hasFailed = true;
 				$results["_error"] = BrokenSyntaxResult::create($rawParams[$matchPoint], implode(" ", $rawParams))
 					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
-				print_r("HEHE BROKEN PART FOUND");
 			}
 			if (!$hasFailed) {
 				$successResults[] = $results;
@@ -208,11 +207,11 @@ abstract class Ovommand extends Command implements IOvommand{
 			$totalPoint = 0;
 			foreach ($passArgs as $passArg) {
 				if (!$passArg instanceof BrokenSyntaxResult) {
-					$preLabel .= " " . implode(" ", array_slice($args, $totalPoint, $passArg->getParsedID()));
+					$preLabel .= " " . implode(" ", array_slice($args, $totalPoint, $passArg->getParsedPoint()));
 				} else {
 					$passArg->setPreLabel($preLabel);
 				}
-				$totalPoint += $passArg->getParsedID();
+				$totalPoint += $passArg->getParsedPoint();
 			}
 			$args = array_slice($args, $totalPoint);
 

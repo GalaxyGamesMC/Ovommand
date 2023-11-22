@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace shared\galaxygames\ovommand\fetus\result;
 
 abstract class BaseResult{
-	protected int $parsedID = 1;
+	protected int $parsedPoint = 1;
 
-	public function setParsedID(int $parsedID) : BaseResult{
-		$this->parsedID = $parsedID;
+	public function setParsedPoint(int $parsedPoint) : BaseResult{
+		$this->parsedPoint = $parsedPoint;
 		return $this;
 	}
 
-	public function getParsedID() : int{
-		return $this->parsedID;
+	public function getParsedPoint() : int{
+		return $this->parsedPoint;
 	}
 }
