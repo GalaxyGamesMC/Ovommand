@@ -14,7 +14,7 @@ class FloatParameter extends BaseParameter{
 
 	public function getValueName() : string{ return "float"; }
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$f = implode("", $parameters);
 		if (is_numeric($f)) {
 			return ValueResult::create((float) $f);

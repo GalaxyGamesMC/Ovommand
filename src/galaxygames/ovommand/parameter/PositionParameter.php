@@ -18,7 +18,7 @@ class PositionParameter extends BaseParameter{
 		return true;
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : CoordinateResult|BrokenSyntaxResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?(\d+(?:\.\d+)?)|[~^])([[:blank:]]?[^~^+\-\d\s]+)?/", $parameter, $matches)) {
 			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName())

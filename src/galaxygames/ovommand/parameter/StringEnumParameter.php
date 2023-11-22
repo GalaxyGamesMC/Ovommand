@@ -33,7 +33,7 @@ class StringEnumParameter extends BaseParameter{
 		return new CommandEnum($this->getValueName(), $this->values);
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$in = implode(" ", $parameters);
 		$enumValue = $this->values[$in] ?? null;
 		if ($enumValue !== null) {

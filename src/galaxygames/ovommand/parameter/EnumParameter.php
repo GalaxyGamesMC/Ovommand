@@ -41,7 +41,7 @@ class EnumParameter extends BaseParameter{
 		return $this->enum->isSoft();
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$result = parent::parse($parameters);
 		if ($result instanceof BrokenSyntaxResult) {
 			return $result;

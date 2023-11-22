@@ -14,7 +14,7 @@ class BlockPositionParameter extends BaseParameter{
 		return ParameterTypes::BLOCK_POSITION;
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : CoordinateResult|BrokenSyntaxResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?(\d+)|[~^])([[:blank:]]?[^~^+\-\d\s]+)?/", $parameter, $matches)) {
 			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName())
@@ -68,7 +68,7 @@ class BlockPositionParameter extends BaseParameter{
 			return BrokenSyntaxResult::create($matches[0][3], $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)->setMatchedParameter(3);
 		}
-		return CoordinateResult::fromData((float) $matches[3][0], (float) $matches[3][1], (float) $matches[3][2], $xType, $yType, $zType);
+		return CoordinateResult::fromData((float) $matches[3][0], (float) $matches[3][1], (float) $matches[3][2], $xType, $yType, $zType, true);
 	}
 
 	public function getSpanLength() : int{

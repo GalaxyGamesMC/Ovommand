@@ -12,6 +12,9 @@
 [DEMO PLUGIN](https://github.com/idumpster/OvoTest)
 
 # Ovommand
+NEW PROB:
+- [ ] `$returnRaw` in `BaseResult` is confusing and useless?
+- [ ] `isBlockPos` current do nothing in CoordinateResult
 <details> <summary>Show useless dumps</summary>
 
 TODO:
@@ -23,7 +26,7 @@ TODO:
 - [ ] attribute supports (temp abandoned)
 - [ ] SubCommand doesn't require perms if wanted
 - [ ] ~~make syntax parser based on its string pos, not the string itself for the accuracy in catching broken syntax~~ spoiled
-- [ ] fix a bug where the parser cannot check the correct span leading to this to be valid: `/tp ~~~ a`, where a is not valid but the parser cannot know that because it don't expect that to be a case!
+- [x] fix a bug where the parser cannot check the correct span leading to this to be valid: `/tp ~~~ a`, where a is not valid but the parser cannot know that because it don't expect that to be a case!
 - [ ] fix broken SYNTAX_PRINT_VANILLA
 - [ ] fix an issue where it failed to parse the parameter after position parameter that has less than the span! eg: ~~~ a, failed to parse a
 

@@ -14,7 +14,7 @@ class StringParameter extends BaseParameter{
 		return ParameterTypes::STRING;
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		parent::parse($parameters);
 
 		$f = implode("", $parameters);

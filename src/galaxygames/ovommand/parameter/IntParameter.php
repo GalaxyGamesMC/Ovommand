@@ -12,7 +12,7 @@ class IntParameter extends BaseParameter{
 		return ParameterTypes::INT;
 	}
 
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$i = implode("", $parameters);
 		if (preg_match("/^\d+$/", $i)) {
 			return ValueResult::create((int) $i);
