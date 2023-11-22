@@ -6,7 +6,7 @@ namespace galaxygames\ovommand\utils;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use pocketmine\lang\Translatable;
 
-class SyntaxConst{
+class BrokenSyntaxParser{
 	public const SYNTAX_PRINT_VANILLA = 0b0001;
 	public const SYNTAX_PRINT_OVOMMAND = 0b0010;
 	public const SYNTAX_TRIMMED = 0b0100;

@@ -9,7 +9,7 @@ use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\TextParameter;
-use galaxygames\ovommand\utils\SyntaxConst;
+use galaxygames\ovommand\utils\BrokenSyntaxParser;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
@@ -251,7 +251,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs) : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
-				$msg = SyntaxConst::parseFromBrokenSyntaxResult($arg, SyntaxConst::SYNTAX_PRINT_OVOMMAND | SyntaxConst::SYNTAX_TRIMMED, $nonParsedArgs);
+				$msg = BrokenSyntaxParser::parseFromBrokenSyntaxResult($arg, BrokenSyntaxParser::SYNTAX_PRINT_OVOMMAND | BrokenSyntaxParser::SYNTAX_TRIMMED, $nonParsedArgs);
 				if ($msg instanceof Translatable) {
 					$msg->prefix(TextFormat::RED);
 				} else {
