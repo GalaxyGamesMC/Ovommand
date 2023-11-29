@@ -138,5 +138,5 @@ class AttributeCommand extend Command{
 
 <hr><p align="center">
 <img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
-<sup>This wiki is under construction....</sup>
+<sup>This project is under construction....</sup>
 </p>
