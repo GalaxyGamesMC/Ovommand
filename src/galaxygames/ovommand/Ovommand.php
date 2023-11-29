@@ -11,6 +11,7 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\TextParameter;
 use galaxygames\ovommand\utils\BrokenSyntaxParser;
 use galaxygames\ovommand\utils\MessageParser;
+use galaxygames\ovommand\utils\Utils;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\lang\Translatable;
@@ -42,7 +43,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	protected function generateUsage() : string{
-		return "\n- /" . $this->getName() . " " . implode("\n- /" . $this->getName() . " ", $this->generateUsageList());
+		return Utils::implode($this->generateUsageList(), "\n- /" . $this->getName() . " ");
 	}
 
 	public function registerSubCommands(BaseSubCommand ...$subCommands) : void{

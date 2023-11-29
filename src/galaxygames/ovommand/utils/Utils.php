@@ -5,10 +5,10 @@ namespace galaxygames\ovommand\utils;
 
 class Utils{
 	/** @param string[] $input */
-	public static function implode(array $input) : string{
+	public static function implode(array $input, string $separator = " ") : string{
 		if (empty($input)) {
 			return "";
 		}
-		return " " . implode(" ", $input);
+		return $separator . implode($separator, $input);
 	}
 }
