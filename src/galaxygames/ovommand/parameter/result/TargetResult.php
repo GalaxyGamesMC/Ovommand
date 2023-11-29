@@ -10,7 +10,7 @@ use pocketmine\entity\Living;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
-class TargetResult extends BaseResult{ //TODO: Rename to selector?
+class TargetResult extends BaseResult{
 	public const TARGET_ALL = "@a";
 	public const TARGET_ENTITIES = "@e";
 	public const TARGET_NEAREST_PLAYER = "@p";
@@ -78,7 +78,7 @@ class TargetResult extends BaseResult{ //TODO: Rename to selector?
 		$entityPos = $entity->getPosition();
 		$selectedP = null;
 		foreach ($online as $player) {
-			if ($player->getWorld()->getDisplayName() !== "todo") {
+			if ($player->getWorld()->getDisplayName() !== $entity->getWorld()->getDisplayName()) {
 				continue;
 			}
 			if (!isset($selectedP) || $player->getPosition()->distanceSquared($entityPos) < $selectedP->getPosition()->distanceSquared($entityPos)) {

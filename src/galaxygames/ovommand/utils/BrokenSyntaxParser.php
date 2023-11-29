@@ -38,7 +38,7 @@ class BrokenSyntaxParser{
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
 			if ($flags & self::SYNTAX_PRINT_VANILLA) {
-				throw new \InvalidArgumentException(MessageParser::BROKEN_SYNTAX_PARSER_COLLIDED_FLAG->value);
+				throw new \InvalidArgumentException(MessageParser::EXCEPTION_BROKEN_SYNTAX_PARSER_COLLIDED_FLAG->value);
 			}
 			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
 			$translate = [
@@ -49,7 +49,7 @@ class BrokenSyntaxParser{
 		if ($flags & self::SYNTAX_PRINT_VANILLA) {
 			return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
 		}
-		throw new \RuntimeException("MSG"); //TODO: Better msg
+		return ""; //TODO REMOVE THIS?
 	}
 
 	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : Translatable|string{

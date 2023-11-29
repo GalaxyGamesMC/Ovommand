@@ -32,7 +32,7 @@ abstract class OvoEnum implements IOvoEnum{
 		return match(true) {
 			$this instanceof IStaticEnum => false,
 			$this instanceof IDynamicEnum => true,
-			default => throw new OvommandEnumPoolException("Unknown enum type!", OvommandEnumPoolException::ENUM_UNKNOWN_TYPE) // TODO: Better msg
+			default => throw new OvommandEnumPoolException("Unknown enum type!", OvommandEnumPoolException::ENUM_UNKNOWN_TYPE)
 		};
 	}
 

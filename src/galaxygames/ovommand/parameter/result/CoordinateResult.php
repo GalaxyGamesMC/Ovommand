@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter\result;
 
 use galaxygames\ovommand\parameter\BaseResult;
+use galaxygames\ovommand\utils\MessageParser;
 use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
@@ -34,23 +35,23 @@ final class CoordinateResult extends BaseResult{
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
 			self::TYPE_RELATIVE => self::TYPE_RELATIVE,
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
-			default => throw new \InvalidArgumentException("Unknown coordinate's x value type set in self::class")
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "x", "type" => $xType]))
 		};
 		$this->yType = match ($yType) {
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
 			self::TYPE_RELATIVE => self::TYPE_RELATIVE,
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
-			default => throw new \InvalidArgumentException("Unknown coordinate's y value type set in self::class")
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "y", "type" => $zType]))
 		};
 		$this->zType = match ($zType) {
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
 			self::TYPE_RELATIVE => self::TYPE_RELATIVE,
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
-			default => throw new \InvalidArgumentException("Unknown coordinate's z value type set in self::class")
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "z", "type" => $zType]))
 		};
 		$this->hasCaret = $this->xType === self::TYPE_LOCAL || $this->yType === self::TYPE_LOCAL || $this->zType === self::TYPE_LOCAL;
 		if (!($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL) && $this->hasCaret) {
-			throw new \InvalidArgumentException("Once caret, all caret!");
+			throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_COLLIDED_TYPE->value);
 		}
 	}
 
@@ -69,7 +70,7 @@ final class CoordinateResult extends BaseResult{
 	public function asPosition(Entity $entity = null) : Position{
 		if ($this->xType !== self::TYPE_DEFAULT || $this->yType !== self::TYPE_DEFAULT || $this->zType !== self::TYPE_DEFAULT) {
 			if ($entity === null) {
-				throw new \InvalidArgumentException("Coords must be returned from the execution by an entity!");
+				throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_ENTITY_REQUIRED->value);
 			}
 			if ($this->hasCaret) {
 				return $this->parseLocal($entity);

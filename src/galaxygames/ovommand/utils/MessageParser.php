@@ -21,11 +21,17 @@ enum MessageParser : string{
 	case EXCEPTION_SUB_COMMAND_DUPLICATE_ALIAS = "SubCommand with same alias for '{alias}' already exists";
 	case EXCEPTION_SUB_COMMAND_DUPLICATE_NAME = "SubCommand with same name for '{subName}' already exists";
 
+	case EXCEPTION_OVOMMANDHOOK_NOT_REGISTERED = "This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.";
+
+	case EXCEPTION_BROKEN_SYNTAX_PARSER_COLLIDED_FLAG = "Collided flag, cannot print both vanilla and ovommand message."; //TODO: BETTER MSG
+	case EXCEPTION_BROKEN_SYNTAX_RESULT_INVALID_CODE = "Invalid code '{code}' was set!";
+
+	case EXCEPTION_COORDINATE_RESULT_INVALID_TYPE = "Unknown coordinate's '{name}' value type '{type}' was set!";
+	case EXCEPTION_COORDINATE_RESULT_COLLIDED_TYPE = "Once caret, all caret!";
+	case EXCEPTION_COORDINATE_RESULT_ENTITY_REQUIRED = "Coords must be returned from the execution by an entity!";
+
 	case CONSTRAINT_INGAME_FAILURE = TextFormat::RED . "This command must be executed from in-game.";
 	case CONSTRAINT_CONSOLE_FAILURE = TextFormat::RED . "This command must be executed from server console.";
-
-	case OVOMMANDHOOK_NOT_REGISTERED = "This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.";
-	case BROKEN_SYNTAX_PARSER_COLLIDED_FLAG = "Collided flag, cannot print both vanilla and ovommand message."; //TODO: BETTER MSG
 
 	/** @param array<string,string> $tags  */
 	public function translate(array $tags = []) : string{

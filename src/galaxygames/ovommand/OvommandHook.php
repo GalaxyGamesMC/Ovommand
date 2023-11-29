@@ -149,7 +149,7 @@ final class OvommandHook implements IHookable{
 
 	public static function getOwnedPlugin() : Plugin{
 		if (!self::isRegistered()) {
-			throw new OvommandHookException(MessageParser::OVOMMANDHOOK_NOT_REGISTERED->value);
+			throw new OvommandHookException(MessageParser::EXCEPTION_OVOMMANDHOOK_NOT_REGISTERED->value);
 		}
 		return self::$plugin;
 	}
