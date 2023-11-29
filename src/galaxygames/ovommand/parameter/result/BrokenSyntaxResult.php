@@ -55,7 +55,7 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 			self::CODE_BROKEN_SYNTAX => self::CODE_BROKEN_SYNTAX,
 			self::CODE_NOT_ENOUGH_INPUTS => self::CODE_NOT_ENOUGH_INPUTS,
 			self::CODE_TOO_MUCH_INPUTS => self::CODE_TOO_MUCH_INPUTS,
-			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_BROKEN_SYNTAX_RESULT_INVALID_CODE->translate(["code" => $code]))
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_BROKEN_SYNTAX_RESULT_INVALID_CODE->translate(["code" => (string) $code]))
 		};
 		return $this;
 	}

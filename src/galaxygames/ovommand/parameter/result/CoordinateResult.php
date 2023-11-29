@@ -35,19 +35,19 @@ final class CoordinateResult extends BaseResult{
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
 			self::TYPE_RELATIVE => self::TYPE_RELATIVE,
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
-			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "x", "type" => $xType]))
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "x", "type" => (string) $xType]))
 		};
 		$this->yType = match ($yType) {
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
 			self::TYPE_RELATIVE => self::TYPE_RELATIVE,
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
-			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "y", "type" => $zType]))
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "y", "type" => (string) $yType]))
 		};
 		$this->zType = match ($zType) {
 			self::TYPE_DEFAULT => self::TYPE_DEFAULT,
 			self::TYPE_RELATIVE => self::TYPE_RELATIVE,
 			self::TYPE_LOCAL => self::TYPE_LOCAL,
-			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "z", "type" => $zType]))
+			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_COORDINATE_RESULT_INVALID_TYPE->translate(["name" => "z", "type" => (string) $zType]))
 		};
 		$this->hasCaret = $this->xType === self::TYPE_LOCAL || $this->yType === self::TYPE_LOCAL || $this->zType === self::TYPE_LOCAL;
 		if (!($this->xType === self::TYPE_LOCAL && $this->yType === self::TYPE_LOCAL && $this->zType === self::TYPE_LOCAL) && $this->hasCaret) {
