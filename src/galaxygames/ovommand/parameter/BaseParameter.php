@@ -9,7 +9,6 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use shared\galaxygames\ovommand\fetus\IParameter;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;

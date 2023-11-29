@@ -5,7 +5,6 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class StringParameter extends BaseParameter{
 	public function getValueName() : string{ return "string"; }

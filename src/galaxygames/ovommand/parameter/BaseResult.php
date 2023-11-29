@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace shared\galaxygames\ovommand\fetus\result;
+namespace galaxygames\ovommand\parameter;
 
-abstract class BaseResult{
+use shared\galaxygames\ovommand\fetus\result\ISucceedResult;
+
+abstract class BaseResult implements ISucceedResult{
 	protected int $parsedPoint = 1;
 
 	public function setParsedPoint(int $parsedPoint) : BaseResult{

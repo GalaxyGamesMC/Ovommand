@@ -12,7 +12,6 @@ use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class EnumParameter extends BaseParameter{
 	protected IDynamicEnum|IStaticEnum $enum;

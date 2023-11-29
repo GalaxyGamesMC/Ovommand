@@ -6,7 +6,6 @@ namespace galaxygames\ovommand\parameter;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\TargetResult;
 use pocketmine\Server;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class TargetParameter extends BaseParameter{
 

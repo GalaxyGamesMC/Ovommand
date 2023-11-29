@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
+use galaxygames\ovommand\parameter\BaseResult;
 use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 final class CoordinateResult extends BaseResult{
 	public const TYPE_DEFAULT = 0; //plain number

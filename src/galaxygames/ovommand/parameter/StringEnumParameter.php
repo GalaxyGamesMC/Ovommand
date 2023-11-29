@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter;
 
-use galaxygames\ovommand\enum\BaseEnum;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 class StringEnumParameter extends BaseParameter{
 	/** @var string[] */

@@ -7,6 +7,7 @@ use galaxygames\ovommand\exception\CommandException;
 use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\BaseParameter;
+use galaxygames\ovommand\parameter\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\TextParameter;
 use galaxygames\ovommand\utils\BrokenSyntaxParser;
@@ -17,7 +18,6 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use shared\galaxygames\ovommand\fetus\BaseConstraint;
 use shared\galaxygames\ovommand\fetus\IOvommand;
-use shared\galaxygames\ovommand\fetus\result\BaseResult;
 
 abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseConstraint[] */
