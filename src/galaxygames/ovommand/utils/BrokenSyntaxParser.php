@@ -38,7 +38,7 @@ class BrokenSyntaxParser{
 		}
 		if ($flags & self::SYNTAX_PRINT_OVOMMAND) {
 			if ($flags & self::SYNTAX_PRINT_VANILLA) {
-				throw new \InvalidArgumentException("Collided flag, cannot print both vanilla and ovommand message."); //TODO: BETTER MSG
+				throw new \InvalidArgumentException(MessageParser::BROKEN_SYNTAX_PARSER_COLLIDED_FLAG->value);
 			}
 			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
 			$translate = [

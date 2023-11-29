@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\utils;
 
+use pocketmine\utils\TextFormat;
+
 enum MessageParser : string{
 	case EXCEPTION_ENUM_EMPTY_NAME = "Enum's name cannot be empty!";
 	case EXCEPTION_ENUM_ALREADY_EXISTED = "Enum '{enumName}' is already registered!";
@@ -18,6 +20,12 @@ enum MessageParser : string{
 
 	case EXCEPTION_SUB_COMMAND_DUPLICATE_ALIAS = "SubCommand with same alias for '{alias}' already exists";
 	case EXCEPTION_SUB_COMMAND_DUPLICATE_NAME = "SubCommand with same name for '{subName}' already exists";
+
+	case CONSTRAINT_INGAME_FAILURE = TextFormat::RED . "This command must be executed from in-game.";
+	case CONSTRAINT_CONSOLE_FAILURE = TextFormat::RED . "This command must be executed from server console.";
+
+	case OVOMMANDHOOK_NOT_REGISTERED = "This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.";
+	case BROKEN_SYNTAX_PARSER_COLLIDED_FLAG = "Collided flag, cannot print both vanilla and ovommand message."; //TODO: BETTER MSG
 
 	/** @param array<string,string> $tags  */
 	public function translate(array $tags = []) : string{

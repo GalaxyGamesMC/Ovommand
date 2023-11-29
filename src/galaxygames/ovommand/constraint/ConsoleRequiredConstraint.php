@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\constraint;
 
+use galaxygames\ovommand\utils\MessageParser;
 use pocketmine\command\CommandSender;
 use pocketmine\console\ConsoleCommandSender;
-use pocketmine\utils\TextFormat;
 use shared\galaxygames\ovommand\fetus\BaseConstraint;
 
 class ConsoleRequiredConstraint extends BaseConstraint{
@@ -14,7 +14,7 @@ class ConsoleRequiredConstraint extends BaseConstraint{
 	}
 
 	public function onFailure(CommandSender $sender, string $aliasUsed, array $args) : void{
-		$sender->sendMessage(TextFormat::RED . "This command must be executed from server console.");
+		$sender->sendMessage(MessageParser::CONSTRAINT_CONSOLE_FAILURE->value);
 	}
 
 	public function isVisibleTo(CommandSender $sender) : bool{

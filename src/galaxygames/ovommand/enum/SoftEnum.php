@@ -65,10 +65,7 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		}
 	}
 
-	/**
-	 * @param string[] $values
-	 * @param int   $type
-	 */
+	/** @param string[] $values */
 	private function update(array $values, int $type) : void{
 		NetworkBroadcastUtils::broadcastPackets(Server::getInstance()->getOnlinePlayers(), [
 			UpdateSoftEnumPacket::create($this->name, $values, $type)

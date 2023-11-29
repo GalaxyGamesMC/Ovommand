@@ -32,6 +32,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\parameter\BaseParameter;
+use galaxygames\ovommand\utils\MessageParser;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\command\CommandSender;
 use pocketmine\event\EventPriority;
@@ -148,7 +149,7 @@ final class OvommandHook implements IHookable{
 
 	public static function getOwnedPlugin() : Plugin{
 		if (!self::isRegistered()) {
-			throw new OvommandHookException("This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.");
+			throw new OvommandHookException(MessageParser::OVOMMANDHOOK_NOT_REGISTERED->value);
 		}
 		return self::$plugin;
 	}
