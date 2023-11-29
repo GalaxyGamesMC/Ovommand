@@ -4,18 +4,12 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\enum;
 
 use galaxygames\ovommand\exception\EnumException;
-use galaxygames\ovommand\exception\ExceptionMessage;
 use galaxygames\ovommand\OvommandHook;
-use pocketmine\event\EventPriority;
-use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\event\player\PlayerQuitEvent;
+use galaxygames\ovommand\utils\MessageParser;
 use pocketmine\plugin\Plugin;
-use pocketmine\Server;
-use pocketmine\utils\SingletonTrait;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
-use shared\galaxygames\ovommand\fetus\IHookable;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
@@ -31,17 +25,17 @@ final class EnumManager{
 		foreach ($enums as $enum) {
 			$enumName = $enum->getName();
 			if ($enum->isDefault()) {
-				throw new EnumException(ExceptionMessage::ENUM_INVALID_DEFAULT->translate(["enumName" => $enumName]), EnumException::ENUM_INVALID_DEFAULT);
+				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_DEFAULT->translate(["enumName" => $enumName]), EnumException::ENUM_INVALID_DEFAULT);
 			}
 			if (trim($enumName) === '') {
-				throw new EnumException(ExceptionMessage::ENUM_EMPTY_NAME->getText(), EnumException::ENUM_EMPTY_NAME);
+				throw new EnumException(MessageParser::EXCEPTION_ENUM_EMPTY_NAME->getText(), EnumException::ENUM_EMPTY_NAME);
 			}
 		}
 		try {
 			GlobalEnumPool::addEnums(OvommandHook::getInstance(), ...$enums);
 		} catch (OvommandEnumPoolException $e) {
 			match ($e->getCode()) {
-				OvommandEnumPoolException::ENUM_ALREADY_EXISTED => throw new EnumException(ExceptionMessage::ENUM_ALREADY_EXISTED->value, EnumException::ENUM_ALREADY_EXISTED),
+				OvommandEnumPoolException::ENUM_ALREADY_EXISTED => throw new EnumException(MessageParser::EXCEPTION_ENUM_ALREADY_EXISTED->value, EnumException::ENUM_ALREADY_EXISTED),
 				default => throw $e
 			};
 		}
