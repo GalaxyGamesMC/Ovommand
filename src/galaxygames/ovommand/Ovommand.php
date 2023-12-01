@@ -270,7 +270,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/** @param BaseResult[] $args */
-	abstract public function onRun(CommandSender $sender, string $label, array $args, string $preLabel = "") : void;
+	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
 
 	abstract protected function setup() : void;
 
