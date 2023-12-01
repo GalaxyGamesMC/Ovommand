@@ -187,7 +187,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				return;
 			}
 		}
-		if (empty($args)) {
+		if (count($args) === 0) {
 			$this->onRun($sender, $commandLabel, []);
 			return;
 		}
