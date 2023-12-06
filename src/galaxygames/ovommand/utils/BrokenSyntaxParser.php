@@ -46,10 +46,7 @@ class BrokenSyntaxParser{
 			];
 			return self::translate($message, $translate);
 		}
-		if ($flags & self::SYNTAX_PRINT_VANILLA) {
-			return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
-		}
-		return ""; //TODO REMOVE THIS?
+		return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
 	}
 
 	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : Translatable|string{
