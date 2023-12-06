@@ -6,7 +6,7 @@ namespace galaxygames\ovommand\utils;
 class Utils{
 	/** @param string[] $input */
 	public static function implode(array $input, string $separator = " ") : string{
-		if (empty($input)) {
+		if (count($input) === 0) {
 			return "";
 		}
 		return $separator . implode($separator, $input);

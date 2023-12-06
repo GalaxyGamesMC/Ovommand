@@ -41,8 +41,4 @@ enum MessageParser : string{
 		}
 		return $msg;
 	}
-
-	public function getText() : string{
-		return $this->value;
-	}
 }

@@ -93,6 +93,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
+	 * Parse the parameters
 	 * @param string[] $rawParams
 	 * @return array<string, BaseResult>
 	 */
@@ -154,7 +155,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 		}
 		// return the failed parse with the most matched semi-parameters, usually the last failed parse.
-		if (empty($successResults)) {
+		if (count($successResults) === 0) {
 			return $failedResults[$finalId];
 		}
 		return $successResults[array_key_first($successResults)]; // return the first succeed parse.
