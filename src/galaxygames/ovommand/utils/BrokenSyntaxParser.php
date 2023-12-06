@@ -24,6 +24,13 @@ class BrokenSyntaxParser{
 			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
 			return self::translate($message, $translate);
 		}
+		if ($result->getCode() === BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS) {
+			$translate = [
+				"previous" => "/" . $result->getPreLabel() . " ", "broken_syntax" => $result->getBrokenSyntax(), "after" => Utils::implode($nonParsedArgs),
+			];
+			$message = self::OVO_GENERIC_SYNTAX_MESSAGE;
+			return self::translate($message, $translate);
+		}
 		$brokenPart = $result->getBrokenSyntax();
 		$parts = self::getSyntaxBetweenBrokenPart($fullCMD, $brokenPart);
 		if ($flags & self::SYNTAX_TRIMMED) {

@@ -30,8 +30,8 @@ enum MessageParser : string{
 	case EXCEPTION_COORDINATE_RESULT_COLLIDED_TYPE = "Once caret, all caret!";
 	case EXCEPTION_COORDINATE_RESULT_ENTITY_REQUIRED = "Coords must be returned from the execution by an entity!";
 
-	case CONSTRAINT_INGAME_FAILURE = TextFormat::RED . "This command must be executed from in-game.";
-	case CONSTRAINT_CONSOLE_FAILURE = TextFormat::RED . "This command must be executed from server console.";
+	case CONSTRAINT_INGAME_FAILURE = "This command must be executed from in-game.";
+	case CONSTRAINT_CONSOLE_FAILURE = "This command must be executed from server console.";
 
 	/** @param array<string,string> $tags  */
 	public function translate(array $tags = []) : string{

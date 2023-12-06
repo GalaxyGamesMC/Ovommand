@@ -28,8 +28,8 @@ abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
 	protected int $currentOverloadId = 0;
-	protected bool $doSendingSyntaxWarning = false;
-	protected bool $doSendingUsageMessage = false;
+	protected bool $doSendingSyntaxWarning = true;
+	protected bool $doSendingUsageMessage = true;
 
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
@@ -192,7 +192,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		}
 		if (count($args) === 0) {
 			if ($this->onPreRun($sender, [])) {
-				$this->onRun($sender, $commandLabel);
+				$this->onRun($sender, $commandLabel, []);
 			}
 			return;
 		}
@@ -252,6 +252,14 @@ abstract class Ovommand extends Command implements IOvommand{
 			if ($arg instanceof BrokenSyntaxResult) {
 				$message = BrokenSyntaxParser::parseFromBrokenSyntaxResult($arg, BrokenSyntaxParser::SYNTAX_PRINT_OVOMMAND | BrokenSyntaxParser::SYNTAX_TRIMMED, $nonParsedArgs);
 				$message instanceof Translatable ? $message->prefix(TextFormat::RED) : $message = TextFormat::RED . $message;
+				$sender->sendMessage(
+					match($arg->getCode()) {
+						BrokenSyntaxResult::CODE_BROKEN_SYNTAX => "Broken syntax!",
+						BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS => "Not enough inputs!",
+						BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS => "Too much inputs!",
+						BrokenSyntaxResult::CODE_INVALID_INPUTS => "Invalid inputs!"
+					}
+				);
 				if ($this->doSendingSyntaxWarning) {
 					$sender->sendMessage($message);
 				}
@@ -270,7 +278,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/** @param BaseResult[] $args */
-	abstract public function onRun(CommandSender $sender, string $label, array $args = []) : void;
+	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
 
 	abstract protected function setup() : void;
 
