@@ -257,6 +257,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				} else {
 					$msg = TextFormat::RED . $msg;
 				}
+				// TODO: remove this later
 				if ($arg->getBrokenSyntax() === "") {
 					$sender->sendMessage(var_export($arg, true));
 				}
