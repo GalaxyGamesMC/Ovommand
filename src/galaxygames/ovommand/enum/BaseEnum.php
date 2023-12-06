@@ -10,9 +10,9 @@ use shared\galaxygames\ovommand\fetus\enum\OvoEnum;
 abstract class BaseEnum extends OvoEnum{
 	/**
 	 * @param string $name The name of the enum, E.g: [parameterName: enumName]
-	 * @param array<string, mixed> $values The default values
-	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show or have type hint ingame!
-	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have type hint ingame!
+	 * @param array<string, mixed> $values The input values of an enum
+	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show and have auto-hint ingame!
+	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have auto-hint ingame!
 	 */
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isDefault = false){
 		$this->values = $values;
