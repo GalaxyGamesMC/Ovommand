@@ -23,7 +23,7 @@ enum MessageParser : string{
 
 	case EXCEPTION_OVOMMANDHOOK_NOT_REGISTERED = "This OvommandHook is not registered with a plugin; please hook it to a plugin before using it for your own goods.";
 
-	case EXCEPTION_BROKEN_SYNTAX_PARSER_COLLIDED_FLAG = "Collided flag, cannot print both vanilla and ovommand message."; //TODO: BETTER MSG
+	case EXCEPTION_BROKEN_SYNTAX_PARSER_COLLIDED_FLAG = "Collided flag, cannot print both vanilla and ovommand message at the same time."; //TODO: BETTER MSG
 	case EXCEPTION_BROKEN_SYNTAX_RESULT_INVALID_CODE = "Invalid code '{code}' was set!";
 
 	case EXCEPTION_COORDINATE_RESULT_INVALID_TYPE = "Unknown coordinate's '{name}' value type '{type}' was set!";

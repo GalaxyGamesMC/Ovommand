@@ -28,6 +28,8 @@ abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
 	protected int $currentOverloadId = 0;
+	protected bool $doSendingSyntaxWarning = false;
+	protected bool $doSendingUsageMessage = false;
 
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
@@ -37,7 +39,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$this->setPermission($permission);
 		}
 		$this->setup();
-		if (empty($this->usageMessage)) {
+		if ($this->usageMessage === "") {
 			$this->setUsage($usageMessage ?? $this->generateUsage());
 		}
 	}
@@ -191,11 +193,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$this->onRun($sender, $commandLabel, []);
 			return;
 		}
-		if ($preLabel === "") {
-			$preLabel = $commandLabel;
-		} else {
-			$preLabel .= " " . $commandLabel;
-		}
+		$preLabel === "" ? $preLabel = $commandLabel : $preLabel .= " " . $commandLabel;
 		$label = $args[0];
 		if (isset($this->subCommands[$label])) {
 			$execute = $this->subCommands[$label];
@@ -208,7 +206,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$totalPoint = 0;
 			foreach ($passArgs as $passArg) {
 				if (!$passArg instanceof BrokenSyntaxResult) {
-					$preLabel .= " " . implode(" ", array_slice($args, $totalPoint, $passArg->getParsedPoint()));
+					$preLabel .= Utils::implode(array_slice($args, $totalPoint, $passArg->getParsedPoint()), " ");
 				} else {
 					$passArg->setPreLabel($preLabel);
 				}
@@ -251,19 +249,14 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs) : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
-				$msg = BrokenSyntaxParser::parseFromBrokenSyntaxResult($arg, BrokenSyntaxParser::SYNTAX_PRINT_OVOMMAND | BrokenSyntaxParser::SYNTAX_TRIMMED, $nonParsedArgs);
-				if ($msg instanceof Translatable) {
-					$msg->prefix(TextFormat::RED);
-				} else {
-					$msg = TextFormat::RED . $msg;
+				$message = BrokenSyntaxParser::parseFromBrokenSyntaxResult($arg, BrokenSyntaxParser::SYNTAX_PRINT_OVOMMAND | BrokenSyntaxParser::SYNTAX_TRIMMED, $nonParsedArgs);
+				$message instanceof Translatable ? $message->prefix(TextFormat::RED) : $message = TextFormat::RED . $message;
+				if ($this->doSendingSyntaxWarning) {
+					$sender->sendMessage($message);
 				}
-				// TODO: remove this later
-				if ($arg->getBrokenSyntax() === "") {
-					$sender->sendMessage(var_export($arg, true));
+				if ($this->doSendingUsageMessage) {
+					$sender->sendMessage("Usage: \n" . TextFormat::MINECOIN_GOLD . implode("\n" . TextFormat::MINECOIN_GOLD, explode("\n", $this->getUsage())));
 				}
-				$sender->sendMessage($msg);
-				$sender->sendMessage("Expect the value to be " . $arg->getExpectedType());
-				$sender->sendMessage("Usage: \n" . TextFormat::MINECOIN_GOLD . implode("\n" . TextFormat::MINECOIN_GOLD, explode("\n", $this->getUsage())));
 				return false;
 			}
 		}
@@ -298,5 +291,23 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	public function getCurrentOverloadId() : int{
 		return $this->currentOverloadId;
+	}
+
+	public function doSendingSyntaxWarning() : bool{
+		return $this->doSendingSyntaxWarning;
+	}
+
+	public function isDoSendingUsageMessage() : bool{
+		return $this->doSendingUsageMessage;
+	}
+
+	public function setDoSendingSyntaxWarning(bool $doSendingSyntaxWarning = true) : Ovommand{
+		$this->doSendingSyntaxWarning = $doSendingSyntaxWarning;
+		return $this;
+	}
+
+	public function setDoSendingUsageMessage(bool $doSendingUsageMessage = true) : Ovommand{
+		$this->doSendingUsageMessage = $doSendingUsageMessage;
+		return $this;
 	}
 }
