@@ -178,7 +178,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param string $preLabel Return a string combined of its parent-label with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
-		if (!$this->testPermission($sender)) {
+		if (!$this->testPermission($sender) && !$this->onPermissionRejected($sender)) {
 			return;
 		}
 		foreach ($this->constraints as $constraint) {
@@ -199,10 +199,8 @@ abstract class Ovommand extends Command implements IOvommand{
 		$label = $args[0];
 		if (isset($this->subCommands[$label])) {
 			$execute = $this->subCommands[$label];
-			if ($execute->testPermission($sender)) {
-				array_shift($args);
-				$execute->execute($sender, $label, $args, $preLabel);
-			}
+			array_shift($args);
+			$execute->execute($sender, $label, $args, $preLabel);
 		} else {
 			$passArgs = $this->parseParameters($args);
 			$totalPoint = 0;
@@ -263,6 +261,11 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 		}
 		return true;
+	}
+
+	/** Called when the sender don't have the permissions to execute the command / sub commands, return false to confirm the rejection */
+	public function onPermissionRejected(CommandSender $sender) : bool{
+		return false;
 	}
 
 	/** @param BaseResult[] $args */
