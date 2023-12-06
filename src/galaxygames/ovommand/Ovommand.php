@@ -207,7 +207,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$totalPoint = 0;
 			foreach ($passArgs as $passArg) {
 				if (!$passArg instanceof BrokenSyntaxResult) {
-					$preLabel .= Utils::implode(array_slice($args, $totalPoint, $passArg->getParsedPoint()), " ");
+					$preLabel .= Utils::implode(array_slice($args, $totalPoint, $passArg->getParsedPoint()));
 				} else {
 					$passArg->setPreLabel($preLabel);
 				}

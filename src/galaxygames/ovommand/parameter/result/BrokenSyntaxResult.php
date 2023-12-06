@@ -11,6 +11,7 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 	public const CODE_BROKEN_SYNTAX = 0;
 	public const CODE_NOT_ENOUGH_INPUTS = 1;
 	public const CODE_TOO_MUCH_INPUTS = 2;
+	public const CODE_INVALID_INPUTS = 3;
 
 	protected int $matchedParameter = 0;
 	protected int $code = self::CODE_BROKEN_SYNTAX;
@@ -55,6 +56,7 @@ class BrokenSyntaxResult extends BaseResult implements IFailedResult{
 			self::CODE_BROKEN_SYNTAX => self::CODE_BROKEN_SYNTAX,
 			self::CODE_NOT_ENOUGH_INPUTS => self::CODE_NOT_ENOUGH_INPUTS,
 			self::CODE_TOO_MUCH_INPUTS => self::CODE_TOO_MUCH_INPUTS,
+			self::CODE_INVALID_INPUTS => self::CODE_INVALID_INPUTS,
 			default => throw new \InvalidArgumentException(MessageParser::EXCEPTION_BROKEN_SYNTAX_RESULT_INVALID_CODE->translate(["code" => (string) $code]))
 		};
 		return $this;
