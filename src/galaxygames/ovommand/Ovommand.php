@@ -190,7 +190,9 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 		}
 		if (count($args) === 0) {
-			$this->onRun($sender, $commandLabel, []);
+			if ($this->onPreRun($sender, [])) {
+				$this->onRun($sender, $commandLabel);
+			}
 			return;
 		}
 		$preLabel === "" ? $preLabel = $commandLabel : $preLabel .= " " . $commandLabel;
@@ -246,7 +248,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * @param BaseResult[] $args
 	 * @param string[] $nonParsedArgs
 	 */
-	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs) : bool{
+	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = []) : bool{
 		foreach ($args as $arg) {
 			if ($arg instanceof BrokenSyntaxResult) {
 				$message = BrokenSyntaxParser::parseFromBrokenSyntaxResult($arg, BrokenSyntaxParser::SYNTAX_PRINT_OVOMMAND | BrokenSyntaxParser::SYNTAX_TRIMMED, $nonParsedArgs);
@@ -264,7 +266,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/** @param BaseResult[] $args */
-	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
+	abstract public function onRun(CommandSender $sender, string $label, array $args = []) : void;
 
 	abstract protected function setup() : void;
 
