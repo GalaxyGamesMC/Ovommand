@@ -7,6 +7,8 @@ use pocketmine\utils\TextFormat;
 
 enum MessageParser : string{
 	case EXCEPTION_ENUM_EMPTY_NAME = "Enum's name cannot be empty!";
+	case EXCEPTION_ENUM_NULL_VALUE = "Enum's values cannot be null!";
+	case EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE = "Enum's value-name is not a string!"; //TODO: better msg
 	case EXCEPTION_ENUM_ALREADY_EXISTED = "Enum '{enumName}' is already registered!";
 	case EXCEPTION_ENUM_ALIAS_REGISTERED = "Alias '{aliasName}' is already used for another key!";
 	case EXCEPTION_ENUM_ALIAS_UNKNOWN_KEY = "Alias '{'aliasName}' is registered to unknown key '{key}'!";

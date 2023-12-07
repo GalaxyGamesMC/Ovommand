@@ -17,7 +17,10 @@ abstract class BaseEnum extends OvoEnum{
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isDefault = false){
 		foreach ($values as $key => $value) {
 			if (!is_string($key)) {
-				throw new EnumException("TODO", EnumException::ENUM_INVALID_VALUE_NAME_TYPE); //TODO: Better msg
+				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE->value, EnumException::ENUM_INVALID_VALUE_NAME_TYPE); //TODO: Better msg
+			}
+			if ($value === null) {
+				throw new EnumException(MessageParser::EXCEPTION_ENUM_NULL_VALUE->value, EnumException::ENUM_NULL_VALUE); //TODO: Better msg
 			}
 		}
 		$this->values = $values;
