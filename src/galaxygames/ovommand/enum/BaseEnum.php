@@ -56,6 +56,7 @@ abstract class BaseEnum extends OvoEnum{
 		}
 	}
 
+	/** @param string[] $aliases */
 	public function removeAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $alias) {

@@ -38,6 +38,10 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		}
 	}
 
+	/**
+	 * @param string|string[] $showAliases
+	 * @param string|string[] $hiddenAliases
+	 */
 	public function addValue(string $value, mixed $bindValue = null, string|array $showAliases = [], string|array $hiddenAliases = []) : void{
 		$this->addValues([$value => $bindValue ?? $value], [$value => $showAliases], [$value => $hiddenAliases]);
 	}
@@ -56,9 +60,11 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 			}
 		}
 		if (count($updates) !== 0) {
+			$oldShowAliases = $this->showAliases;
 			$this->addAliases($showAliases);
 			$this->addAliases($hiddenAliases, true);
-			$this->update([...$updates, ...$showAliases], UpdateSoftEnumPacket::TYPE_ADD);
+			// We can also give them the full $this->showAliases too, this might be changed in the near future
+			$this->update([...$updates, ...array_diff($this->showAliases, $oldShowAliases)], UpdateSoftEnumPacket::TYPE_ADD);
 		}
 	}
 
