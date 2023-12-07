@@ -15,13 +15,18 @@ abstract class BaseEnum extends OvoEnum{
 	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have auto-hint ingame!
 	 */
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isDefault = false){
+		foreach ($values as $key => $value) {
+			if (!is_string($key)) {
+				throw new EnumException("TODO", EnumException::ENUM_INVALID_VALUE_NAME_TYPE); //TODO: Better msg
+			}
+		}
 		$this->values = $values;
-		$this->setAliases($showAliases);
-		$this->setAliases($hiddenAliases, true);
+		$this->addAliases($showAliases);
+		$this->addAliases($hiddenAliases, true);
 	}
 
 	/** @param array<string, string|string[]> $aliases */
-	public function setAliases(array $aliases, bool $isHidden = false) : void{
+	public function addAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $key => $alias) {
 			if (is_string($alias)) {
@@ -48,6 +53,13 @@ abstract class BaseEnum extends OvoEnum{
 			} else {
 				throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE->translate(["key" => $key, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE);
 			}
+		}
+	}
+
+	public function removeAliases(array $aliases, bool $isHidden = false) : void{
+		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
+		foreach ($aliases as $alias) {
+			unset($aliasesList[$alias]);
 		}
 	}
 

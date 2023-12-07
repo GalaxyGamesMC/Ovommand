@@ -257,7 +257,8 @@ abstract class Ovommand extends Command implements IOvommand{
 						BrokenSyntaxResult::CODE_BROKEN_SYNTAX => "Broken syntax!",
 						BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS => "Not enough inputs!",
 						BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS => "Too much inputs!",
-						BrokenSyntaxResult::CODE_INVALID_INPUTS => "Invalid inputs!"
+						BrokenSyntaxResult::CODE_INVALID_INPUTS => "Invalid inputs!",
+						default => "Unknown code report!"
 					}
 				);
 				if ($this->doSendingSyntaxWarning) {

@@ -24,7 +24,8 @@ abstract class OvoEnum implements IOvoEnum{
 		return $this->isDefault;
 	}
 
-	abstract public function setAliases(array $aliases, bool $isHidden = false) : void;
+	abstract public function addAliases(array $aliases, bool $isHidden = false) : void;
+	abstract public function removeAliases(array $aliases, bool $isHidden = false) : void;
 	abstract public function encode() : CommandEnum;
 	abstract public function getValue(string $key) : mixed;
 

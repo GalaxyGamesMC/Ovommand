@@ -34,19 +34,20 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		if (count($updates) !== 0) {
 			$this->hiddenAliases = array_diff($this->hiddenAliases, $updates);
 			$this->showAliases = array_diff($this->showAliases, $updates);
-
 			$this->update($updates, UpdateSoftEnumPacket::TYPE_REMOVE);
 		}
 	}
 
-	public function addValue(string $value, mixed $bindValue = null) : void{
-		//Should null be default?
-		//TODO: aliases support?
-		$this->addValues([$value => $bindValue ?? $value]);
+	public function addValue(string $value, mixed $bindValue = null, string|array $showAliases = [], string|array $hiddenAliases = []) : void{
+		$this->addValues([$value => $bindValue ?? $value], [$value => $showAliases], [$value => $hiddenAliases]);
 	}
 
-	/** @param array<string,mixed> $context */
-	public function addValues(array $context) : void{  //TODO: aliases support?
+	/**
+	 * @param array<string, mixed> $context
+	 * @param array<string, string|string[]> $showAliases
+	 * @param array<string, string|string[]> $hiddenAliases
+	 */
+	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
 		$updates = [];
 		foreach ($context as $k => $v) {
 			if (!isset($this->values[$k])) {
@@ -55,7 +56,9 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 			}
 		}
 		if (count($updates) !== 0) {
-			$this->update($updates, UpdateSoftEnumPacket::TYPE_ADD);
+			$this->addAliases($showAliases);
+			$this->addAliases($hiddenAliases, true);
+			$this->update([...$updates, ...$showAliases], UpdateSoftEnumPacket::TYPE_ADD);
 		}
 	}
 
