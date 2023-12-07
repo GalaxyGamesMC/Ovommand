@@ -12,11 +12,14 @@ class IntParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
-		$i = implode("", $parameters);
-		if (preg_match("/^\d+$/", $i)) {
-			return ValueResult::create((int) $i);
+		$result = parent::parse($parameters);
+		if ($result instanceof BrokenSyntaxResult) {
+			return $result;
 		}
-		return BrokenSyntaxResult::create($i);
+		if (preg_match("/^\d+$/", $parameters[0])) {
+			return ValueResult::create((int) $parameters[0]);
+		}
+		return BrokenSyntaxResult::create($parameters[0], $parameters[0]);
 	}
 
 	public function getValueName() : string{ return "int"; }

@@ -14,12 +14,10 @@ class StringParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
-		parent::parse($parameters);
-
-		$f = implode("", $parameters);
-		if (empty($f)) {
-			return BrokenSyntaxResult::create($f);
+		$result = parent::parse($parameters);
+		if ($result instanceof BrokenSyntaxResult) {
+			return $result;
 		}
-		return ValueResult::create($f);
+		return ValueResult::create($parameters[0]);
 	}
 }

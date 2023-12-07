@@ -16,7 +16,10 @@ class TargetParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : TargetResult|BrokenSyntaxResult{
-		parent::parse($parameters);
+		$result = parent::parse($parameters);
+		if ($result instanceof BrokenSyntaxResult) {
+			return $result;
+		}
 		$parameter = $parameters[0];
 		$groups = [];
 		if (!preg_match("/^(?:([^\n\w]*@[apres])|([^\d\n@][\w ]*))$/", $parameter, $groups)) {
