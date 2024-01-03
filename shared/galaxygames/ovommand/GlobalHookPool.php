@@ -34,19 +34,19 @@ use shared\galaxygames\ovommand\fetus\IHookable;
 
 class GlobalHookPool{
 	/** @var IHookable[] */
-	protected static array $hooks;
+	private static array $hooks;
 
-	public static function getHooks() : array{
-		return self::$hooks;
-	}
-
-	public static function getHook(Plugin $plugin) : IHookable{
-		$pName = $plugin->getName();
-		if (!isset(self::$hooks[$pName])) {
-			throw new \InvalidArgumentException("OvommandHook of the plugin, named '$pName', is not registered!");
-		}
-		return self::$hooks[$pName];
-	}
+//	public static function getHooks() : array{
+//		return self::$hooks;
+//	}
+//
+//	public static function getHook(Plugin $plugin) : IHookable{
+//		$pName = $plugin->getName();
+//		if (!isset(self::$hooks[$pName])) {
+//			throw new \InvalidArgumentException("OvommandHook of the plugin, named '$pName', is not registered!");
+//		}
+//		return self::$hooks[$pName];
+//	}
 
 	public static function addHook(IHookable $hookable) : void{
 		$plugin = $hookable->getOwnedPlugin();
