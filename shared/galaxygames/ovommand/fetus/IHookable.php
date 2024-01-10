@@ -11,4 +11,5 @@ interface IHookable{
 	public static function getOwnedPlugin() : Plugin;
 	public static function getInstance() : self;
 	public static function getEnumManager();
+	public static function isPrivate();
 }
