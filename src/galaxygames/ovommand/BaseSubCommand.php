@@ -7,9 +7,9 @@ use pocketmine\lang\Translatable;
 
 abstract class BaseSubCommand extends Ovommand{
 	/** @var string[] */
-	private array $hiddenAliases;
+	protected array $hiddenAliases;
 	/** @var string[] */
-	private array $showAliases;
+	protected array $showAliases;
 	protected ?Ovommand $parent = null;
 
 	/**
