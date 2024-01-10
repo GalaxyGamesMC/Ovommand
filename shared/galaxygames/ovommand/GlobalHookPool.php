@@ -34,7 +34,7 @@ use shared\galaxygames\ovommand\exception\OvommandHookException;
 use shared\galaxygames\ovommand\fetus\IHookable;
 
 class GlobalHookPool{
-	/** @var IHookable[] */
+	/** @var array<int, IHookable> */
 	private static array $hooks;
 
 	public static function getHook(Plugin $plugin) : IHookable{
