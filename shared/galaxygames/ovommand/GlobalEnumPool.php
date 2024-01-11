@@ -43,16 +43,27 @@ final class GlobalEnumPool{
 		}
 	}
 
-	public static function getHardEnum(string $key) : ?IStaticEnum{
-		return self::$hardEnums[$key] ?? null;
+	public static function getHardEnum(string $key, ?IHookable $hookable = null) : ?IStaticEnum{
+		$eHook = self::$hardEnumHooker[$key] ?? null;
+		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
+			return self::$hardEnums[$key];
+		}
+		return null;
 	}
 
-	public static function getSoftEnum(string $key) : ?IDynamicEnum{
-		return self::$softEnums[$key] ?? null;
+	public static function getSoftEnum(string $key, ?IHookable $hookable = null) : ?IDynamicEnum{
+		$eHook = self::$softEnumHooker[$key] ?? null;
+		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
+			return self::$softEnums[$key];
+		}
+		return null;
 	}
 
 	/** @return array<string,IDynamicEnum> */
 	public static function getHookerRegisteredSoftEnums(IHookable $hookable) : array{
+		if ($hookable::isPrivate()) {
+			return [];
+		}
 		$results = [];
 		foreach (self::$softEnumHooker as $eName => $hook) {
 			if ($hook === $hookable) {
@@ -64,6 +75,9 @@ final class GlobalEnumPool{
 
 	/** @return array<string,IStaticEnum> */
 	public static function getHookerRegisteredHardEnums(IHookable $hookable) : array{
+		if ($hookable::isPrivate()) {
+			return [];
+		}
 		$results = [];
 		foreach (self::$hardEnumHooker as $eName => $hook) {
 			if ($hook === $hookable) {

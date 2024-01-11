@@ -15,6 +15,8 @@
 NEW PROB:
 - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
 - [ ] `isBlockPos` current do nothing in CoordinateResult
+- [ ] Any plugins can edit the enums
+- [ ] Enum's value can be illegally edit via outside packet
 <details> <summary>Show useless dumps</summary>
 
 TODO:
