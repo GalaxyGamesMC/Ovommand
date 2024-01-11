@@ -54,13 +54,13 @@ final class OvommandHook implements IHookable{
 	private static OvommandHook $instance;
 	private static Plugin $plugin;
 	private static EnumManager $enumManager;
-	private static bool $privacy = true;
+	private static bool $privacy = false;
 
 	public static function getInstance() : OvommandHook{
 		return self::$instance ?? self::register(self::getOwnedPlugin());
 	}
 
-	public static function register(Plugin $plugin, bool $private = true) : self{
+	public static function register(Plugin $plugin, bool $private = false) : self{
 		if (!self::isRegistered() || self::$plugin->isEnabled()) {
 			$interceptor = SimplePacketHandler::createInterceptor($plugin);
 			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
