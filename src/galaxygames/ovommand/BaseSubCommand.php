@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand;
 
+use galaxygames\ovommand\utils\Utils;
 use pocketmine\lang\Translatable;
 
 abstract class BaseSubCommand extends Ovommand{
@@ -71,7 +72,7 @@ abstract class BaseSubCommand extends Ovommand{
 			$subCommand->setParent($this);
 		}
 		if ($parent instanceof BaseCommand) {
-			$this->setUsage("/$parentHeader " . implode("\n/$parentHeader ", $this->generateUsageList()));
+			$this->setUsage(Utils::implode($this->generateUsageList(), "/$parentHeader ", "\n"));
 		}
 		return $this;
 	}

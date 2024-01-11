@@ -5,13 +5,13 @@ namespace galaxygames\ovommand\utils;
 
 class Utils{
 	/**
-	 * Default separator is " "
+	 * $separator . implode($sub_separator . $separator, $input) || ""
 	 * @param string[] $input
 	 */
-	public static function implode(array $input, string $separator = " ") : string{
+	public static function implode(array $input, string $separator = " ", string $sub_separator = "") : string{
 		if (count($input) === 0) {
 			return "";
 		}
-		return $separator . implode($separator, $input);
+		return $separator . implode($sub_separator . $separator, $input);
 	}
 }
