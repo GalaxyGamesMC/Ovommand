@@ -6,6 +6,9 @@ namespace galaxygames\ovommand\utils;
 use pocketmine\utils\TextFormat;
 
 enum MessageParser : string{
+	case GENERIC_SYNTAX_MESSAGE_VANILLA = "commands.generic.syntax";
+	case GENERIC_SYNTAX_MESSAGE_OVO = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
+
 	case EXCEPTION_ENUM_EMPTY_NAME = "Enum's name cannot be empty!";
 	case EXCEPTION_ENUM_NULL_VALUE = "Enum's values cannot be null!";
 	case EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE = "Enum's value-name is not a string!"; //TODO: better msg
