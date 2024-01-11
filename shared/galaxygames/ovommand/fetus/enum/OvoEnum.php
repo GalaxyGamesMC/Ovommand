@@ -15,6 +15,7 @@ abstract class OvoEnum implements IOvoEnum{
 	/** @var string[] */
 	protected array $showAliases = [];
 	protected bool $isDefault = false;
+	protected bool $isReadonly = false;
 
 	final public function getName() : string{
 		return $this->name;
@@ -24,12 +25,16 @@ abstract class OvoEnum implements IOvoEnum{
 		return $this->isDefault;
 	}
 
+	public function isReadonly() : bool{
+		return $this->isReadonly;
+	}
+
 	abstract public function addAliases(array $aliases, bool $isHidden = false) : void;
 	abstract public function removeAliases(array $aliases, bool $isHidden = false) : void;
 	abstract public function encode() : CommandEnum;
 	abstract public function getValue(string $key) : mixed;
 
-	final public function isSoft() : bool{
+	public function isSoft() : bool{
 		return match(true) {
 			$this instanceof IStaticEnum => false,
 			$this instanceof IDynamicEnum => true,

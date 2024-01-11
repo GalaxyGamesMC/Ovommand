@@ -14,7 +14,7 @@ abstract class BaseEnum extends OvoEnum{
 	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show and have auto-hint ingame!
 	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have auto-hint ingame!
 	 */
-	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isDefault = false){
+	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isReadonly = false, protected bool $isDefault = false){
 		foreach ($values as $key => $value) {
 			if (!is_string($key)) {
 				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE->value, EnumException::ENUM_INVALID_VALUE_NAME_TYPE); //TODO: Better msg

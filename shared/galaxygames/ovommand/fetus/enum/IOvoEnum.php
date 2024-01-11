@@ -8,6 +8,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 interface IOvoEnum{
 	public function getName() : string;
 	public function isDefault() : bool;
+	public function isReadonly() : bool;
 	public function addAliases(array $aliases, bool $isHidden = false) : void;
 	public function encode() : CommandEnum;
 	public function getValue(string $key) : mixed;
