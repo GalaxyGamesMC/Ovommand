@@ -10,18 +10,22 @@ class BrokenSyntaxParser{
 	public const SYNTAX_PRINT_VANILLA = 0b0001;
 	public const SYNTAX_PRINT_OVOMMAND = 0b0010;
 	public const SYNTAX_TRIMMED = 0b0100;
+	
+	public const MESSAGE_TAG_PREVIOUS = "previous";
+	public const MESSAGE_TAG_BROKEN_SYNTAX = "broken_syntax";
+	public const MESSAGE_TAG_AFTER = "after";
 
 	/** @param string[] $nonParsedArgs */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{
 		$fullCMD = "/" . $result->getPreLabel() . " " . $result->getFullSyntax() . Utils::implode($nonParsedArgs);
 		if ($result->getCode() === BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS) {
 			return MessageParser::GENERIC_SYNTAX_MESSAGE_OVO->translate([
-				"previous" => $fullCMD, "broken_syntax" => "", "after" => ""
+				self::MESSAGE_TAG_PREVIOUS => $fullCMD, self::MESSAGE_TAG_BROKEN_SYNTAX => "", self::MESSAGE_TAG_AFTER => ""
 			]);
 		}
 		if ($result->getCode() === BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS) {
 			return MessageParser::GENERIC_SYNTAX_MESSAGE_OVO->translate([
-				"previous" => "/" . $result->getPreLabel() . " ", "broken_syntax" => $result->getBrokenSyntax(), "after" => Utils::implode($nonParsedArgs)
+				self::MESSAGE_TAG_PREVIOUS => "/" . $result->getPreLabel() . " ", self::MESSAGE_TAG_BROKEN_SYNTAX => $result->getBrokenSyntax(), self::MESSAGE_TAG_AFTER => Utils::implode($nonParsedArgs)
 			]);
 		}
 		$brokenPart = $result->getBrokenSyntax();
@@ -41,7 +45,7 @@ class BrokenSyntaxParser{
 				throw new \InvalidArgumentException(MessageParser::EXCEPTION_BROKEN_SYNTAX_PARSER_COLLIDED_FLAG->value);
 			}
 			return MessageParser::GENERIC_SYNTAX_MESSAGE_OVO->translate([
-				"previous" => $parts[0], "broken_syntax" => $brokenPart, "after" => $parts[1]
+				self::MESSAGE_TAG_PREVIOUS => $parts[0], self::MESSAGE_TAG_BROKEN_SYNTAX => $brokenPart, self::MESSAGE_TAG_AFTER => $parts[1]
 			]);
 		}
 		return self::parseVanillaSyntaxMessage($parts[0], $brokenPart, $parts[1]);
@@ -49,14 +53,6 @@ class BrokenSyntaxParser{
 
 	public static function parseVanillaSyntaxMessage(string $previous, string $brokenPart, string $after) : Translatable|string{
 		return (new Translatable(MessageParser::GENERIC_SYNTAX_MESSAGE_VANILLA->value, [$previous, $brokenPart, $after]));
-	}
-
-	/** @param array<string, string> $tags */
-	private static function translate(string $msg, array $tags) : string{
-		foreach ($tags as $tag => $value) {
-			$msg = str_replace('{' . $tag . '}', $value, $msg);
-		}
-		return $msg;
 	}
 
 	/** @return string[] */
