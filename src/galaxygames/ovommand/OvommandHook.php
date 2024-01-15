@@ -31,7 +31,6 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\enum\SoftEnum;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\MessageParser;
 use muqsit\simplepackethandler\SimplePacketHandler;
