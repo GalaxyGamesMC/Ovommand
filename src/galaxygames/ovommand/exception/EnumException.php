@@ -14,4 +14,5 @@ final class EnumException extends OvommandException{
 	public const ENUM_ALIAS_UNKNOWN_KEY = 5;
 	public const ENUM_ALIAS_UNKNOWN_TYPE = 6;
 	public const ENUM_INVALID_DEFAULT = 7;
+	public const ENUM_EDIT_PROTECTED_ENUM = 8;
 }

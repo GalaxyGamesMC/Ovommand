@@ -6,7 +6,6 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\utils\MessageParser;
 use shared\galaxygames\ovommand\fetus\enum\OvommandEnum;
-use shared\galaxygames\ovommand\fetus\IHookable;
 
 abstract class BaseEnum extends OvommandEnum{
 	/**
@@ -15,7 +14,7 @@ abstract class BaseEnum extends OvommandEnum{
 	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show and have auto-hint ingame!
 	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have auto-hint ingame!
 	 */
-	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isReadonly = false, protected bool $isDefault = false){
+	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isProtected = false, protected bool $isDefault = false){
 		foreach ($values as $key => $value) {
 			if (!is_string($key)) {
 				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE->value, EnumException::ENUM_INVALID_VALUE_NAME_TYPE); //TODO: Better msg
@@ -30,7 +29,7 @@ abstract class BaseEnum extends OvommandEnum{
 	}
 
 	/** @param array<string, string|string[]> $aliases */
-	protected function addAliases(array $aliases, bool $isHidden = false, ?IHookable $hookable = null) : void{
+	public function addAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $key => $alias) {
 			if (is_string($alias)) {
@@ -57,6 +56,14 @@ abstract class BaseEnum extends OvommandEnum{
 			} else {
 				throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE->translate(["key" => $key, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE);
 			}
+		}
+	}
+
+	/** @param string[] $aliases */
+	public function removeAliases(array $aliases, bool $isHidden = false) : void{
+		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
+		foreach ($aliases as $alias) {
+			unset($aliasesList[$alias]);
 		}
 	}
 

@@ -15,6 +15,15 @@ abstract class OvommandEnum implements IEnum{
 	/** @var string[] */
 	protected array $showAliases = [];
 	protected bool $isDefault = false;
+	protected bool $isProtected = false;
+
+	public function isProtected() : bool{
+		return $this->isProtected;
+	}
+
+	public function asProtected() : ProtectedEnum{
+		return new ProtectedEnum($this);
+	}
 
 	final public function getName() : string{
 		return $this->name;
@@ -30,7 +39,7 @@ abstract class OvommandEnum implements IEnum{
 	final public function isSoft() : bool{
 		return match(true) {
 			$this instanceof IStaticEnum => false,
-			$this instanceof IDynamicEnum, $this instanceof ProtectedEnum => true,
+			$this instanceof IDynamicEnum => true,
 			default => throw new OvommandEnumPoolException("Unknown enum type!", OvommandEnumPoolException::ENUM_UNKNOWN_TYPE)
 		};
 	}

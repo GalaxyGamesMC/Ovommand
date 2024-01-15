@@ -7,7 +7,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
 class ProtectedEnum implements IEnum{
 
-	public function __construct(protected IDynamicEnum $origin){}
+	public function __construct(protected OvommandEnum $origin){}
 
 	public function getName() : string{
 		return $this->origin->getName();
@@ -26,7 +26,7 @@ class ProtectedEnum implements IEnum{
 	}
 
 	public function isSoft() : bool{
-		return true;
+		return $this->origin->isSoft();
 	}
 
 	public function getRawValues() : array{

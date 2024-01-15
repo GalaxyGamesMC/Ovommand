@@ -20,7 +20,7 @@ NEW PROB:
 Enums system:
 
 |                                                                       | Soft Enum | Hard Enum |
-|:----------------------------------------------------------------------|:---------:|:---------:|
+|:----------------------------------------------------------------------|:---------:Se|:---------:|
 | Can value be read by owner?                                           |    YES    |    YES    |
 | Can value be read by other? (Public)                                  |    YES    |    YES    |
 | Can value be read by other? (Private)                                 |    NO     |    NO     |
