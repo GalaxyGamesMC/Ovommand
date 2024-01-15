@@ -15,8 +15,34 @@
 NEW PROB:
 - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
 - [ ] `isBlockPos` current do nothing in CoordinateResult
-- [x] Any plugins can edit the enums
 - [ ] Enum's value can be illegally edit via outside packet
+
+Enums system:
+
+|                                                                       | Soft Enum | Hard Enum |
+|:----------------------------------------------------------------------|:---------:|:---------:|
+| Can value be read by owner?                                           |    YES    |    YES    |
+| Can value be read by other? (Public)                                  |    YES    |    YES    |
+| Can value be read by other? (Private)                                 |    NO     |    NO     |
+| Can value be written by owner? (Before server starts)                 |    YES    |    YES    |
+| Can value be written by others? (Private)                             |    NO     |    NO     |
+| Can value be written by others? (Before server starts, not Protected) |    YES    |    YES    |
+| Can value be written by owner? (After server starts)                  |    YES    |    NO     |
+| Can value be written by others? (After server starts, not Protected)  |    YES    |    NO     |
+| Can value be written by others? (Before server starts, Protected)     |    NO     |    NO     |
+| Can value be written by others? (After server starts, Protected)      |    NO     |    NO     |
+| Can alias be written by owner? (Before server starts)                 |    YES    |    YES    |
+| Can alias be written by owner? (After server starts)                  |    YES    |    NO     |
+| Can alias be written by others? (Before server starts, not Protected) |    YES    |    YES    |
+| Can alias be written by others? (Before server starts, Protected)     |    NO     |    NO     |
+| Can alias be written by others? (After server starts, not Protected)  |    YES    |    NO     |
+| Can alias be written by others? (After server starts, Protected)      |    NO     |    NO     |
+
+
+
+
+
+
 <details> <summary>Show useless dumps</summary>
 
 TODO:
