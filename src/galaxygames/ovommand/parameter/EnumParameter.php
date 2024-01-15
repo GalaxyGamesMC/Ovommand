@@ -12,9 +12,10 @@ use galaxygames\ovommand\utils\MessageParser;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\ProtectedEnum;
 
 class EnumParameter extends BaseParameter{
-	protected IDynamicEnum|IStaticEnum $enum;
+	protected ProtectedEnum|IDynamicEnum|IStaticEnum $enum;
 
 	public function __construct(string $name, DefaultEnums|string $enumName, bool $isSoft = false, bool $optional = false, int $flag = 0){
 		$enum = OvommandHook::getEnumManager()->getEnum($enumName, $isSoft);

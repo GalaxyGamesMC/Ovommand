@@ -10,6 +10,7 @@ use pocketmine\plugin\Plugin;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
+use shared\galaxygames\ovommand\fetus\enum\ProtectedEnum;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
@@ -21,7 +22,7 @@ final class EnumManager{
 		GlobalEnumPool::addEnums($this->ovommandHook, ...array_map(static fn(DefaultEnums $enum) => $enum->encode(), DefaultEnums::cases()));
 	}
 
-	public function register(BaseEnum ...$enums) : void{
+	public function register(IDynamicEnum|IStaticEnum ...$enums) : void{
 		foreach ($enums as $enum) {
 			$enumName = $enum->getName();
 			if ($enum->isDefault()) {
@@ -41,21 +42,21 @@ final class EnumManager{
 		}
 	}
 
-	public function getSoftEnum(DefaultEnums|string $enumName) : ?IDynamicEnum{
+	public function getSoftEnum(DefaultEnums|string $enumName) : IDynamicEnum|ProtectedEnum|null{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
 		return GlobalEnumPool::getSoftEnum($enumName, $this->ovommandHook);
 	}
 
-	public function getHardEnum(DefaultEnums|string $enumName) : ?IStaticEnum{
+	public function getHardEnum(DefaultEnums|string $enumName) : IStaticEnum|ProtectedEnum|null{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
 		return GlobalEnumPool::getHardEnum($enumName, $this->ovommandHook);
 	}
 
-	public function getEnum(DefaultEnums|string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{
+	public function getEnum(DefaultEnums|string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|ProtectedEnum|null{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
 	}
 

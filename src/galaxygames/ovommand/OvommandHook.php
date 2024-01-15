@@ -31,6 +31,7 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
+use galaxygames\ovommand\enum\SoftEnum;
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\MessageParser;
 use muqsit\simplepackethandler\SimplePacketHandler;
@@ -46,6 +47,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\exception\OvommandHookException;
+use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\IHookable;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 use shared\galaxygames\ovommand\GlobalHookPool;
@@ -93,11 +95,15 @@ final class OvommandHook implements IHookable{
 					$pluginManager = Server::getInstance()->getPluginManager();
 					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
 						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-						$enum?->addValue($event->getPlayer()->getName());
+						if ($enum instanceof IDynamicEnum) {
+							$enum->addValue($event->getPlayer()->getName());
+						}
 					}, EventPriority::NORMAL, $plugin);
 					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
 						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-						$enum?->removeValue($event->getPlayer()->getName());
+						if ($enum instanceof IDynamicEnum) {
+							$enum->removeValue($event->getPlayer()->getName());
+						}
 					}, EventPriority::NORMAL, $plugin);
 				} catch (\ReflectionException $e) {
 					$plugin->getLogger()->logException($e);

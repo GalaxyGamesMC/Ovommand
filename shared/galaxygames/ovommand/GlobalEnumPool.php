@@ -6,7 +6,6 @@ namespace shared\galaxygames\ovommand;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
-use shared\galaxygames\ovommand\fetus\enum\OvommandEnum;
 use shared\galaxygames\ovommand\fetus\enum\ProtectedEnum;
 use shared\galaxygames\ovommand\fetus\IHookable;
 
@@ -20,7 +19,7 @@ final class GlobalEnumPool{
 	/** @var array<string, IHookable> */
 	private static array $softEnumHooker = [];
 
-	public static function addEnums(IHookable $hookable, OvommandEnum ...$enums) : void{
+	public static function addEnums(IHookable $hookable, IDynamicEnum|IStaticEnum ...$enums) : void{
 		if (!GlobalHookPool::isHookRegistered($hookable)) {
 			throw new OvommandEnumPoolException("Hook is not registered!", OvommandEnumPoolException::ENUM_UNREGISTERED_HOOK);
 		}

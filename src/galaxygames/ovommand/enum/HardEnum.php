@@ -24,6 +24,6 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 		if (Server::getInstance()->getTick() !== 0) {
 			throw new EnumException("Tried to remove aliases from a running hard enum!", EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
 		}
-		parent::removeAliases( $aliases, $isHidden = false);
+		parent::removeAliases( $aliases, $isHidden);
 	}
 }
