@@ -7,6 +7,7 @@ use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 use shared\galaxygames\ovommand\fetus\enum\OvommandEnum;
+use shared\galaxygames\ovommand\fetus\enum\ProtectedEnum;
 use shared\galaxygames\ovommand\fetus\IHookable;
 
 final class GlobalEnumPool{
@@ -43,7 +44,7 @@ final class GlobalEnumPool{
 		}
 	}
 
-	public static function getHardEnum(string $key, ?IHookable $hookable = null) : ?IStaticEnum{
+	public static function getHardEnum(string $key, ?IHookable $hookable = null) : IStaticEnum | ProtectedEnum | null{
 		$eHook = self::$hardEnumHooker[$key] ?? null;
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
 			return self::$hardEnums[$key];
@@ -51,13 +52,11 @@ final class GlobalEnumPool{
 		return null;
 	}
 
-	public static function getSoftEnum(string $key, ?IHookable $hookable = null) : ?IDynamicEnum{
+	public static function getSoftEnum(string $key, ?IHookable $hookable = null) : IDynamicEnum | ProtectedEnum | null{
 		$eHook = self::$softEnumHooker[$key] ?? null;
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
 			$enum = self::$softEnums[$key];
-			if ($enum->isProtected()) {
-				return $enum->asProtected();
-			}
+			return $enum->isProtected() ? $enum->asProtected() : $enum;
 		}
 		return null;
 	}

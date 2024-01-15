@@ -14,14 +14,14 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 	}
 
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
-		if (Server::getInstance()->isRunning()) {
+		if (Server::getInstance()->getTick() !== 0) {
 			throw new EnumException("Tried to add aliases to a running hard enum!", EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
 		}
 		parent::addAliases($aliases, $isHidden);
 	}
 
 	public function removeAliases(array $aliases, bool $isHidden = false) : void{
-		if (Server::getInstance()->isRunning()) {
+		if (Server::getInstance()->getTick() !== 0) {
 			throw new EnumException("Tried to remove aliases from a running hard enum!", EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
 		}
 		parent::removeAliases( $aliases, $isHidden = false);
