@@ -51,9 +51,9 @@ use shared\galaxygames\ovommand\GlobalEnumPool;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class OvommandHook implements IHookable{
+	private static EnumManager $enumManager;
 	private static OvommandHook $instance;
 	private static Plugin $plugin;
-	private static EnumManager $enumManager;
 	private static bool $privacy = false;
 
 	public static function getInstance() : OvommandHook{

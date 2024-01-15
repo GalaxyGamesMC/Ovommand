@@ -3,4 +3,4 @@ declare(strict_types=1);
 
 namespace shared\galaxygames\ovommand\fetus\enum;
 
-interface IStaticEnum extends IOvoEnum{}
+interface IStaticEnum extends IEnum{}

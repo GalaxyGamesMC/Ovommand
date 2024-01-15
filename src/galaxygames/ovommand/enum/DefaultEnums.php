@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\enum;
 
 use pocketmine\player\GameMode;
-use shared\galaxygames\ovommand\fetus\enum\OvoEnum;
+use shared\galaxygames\ovommand\fetus\enum\OvommandEnum;
 
 enum DefaultEnums : string{
 	case BOOLEAN = "Boolean";
@@ -12,7 +12,7 @@ enum DefaultEnums : string{
 	case PM_GAMEMODE = "PMGameMode";
 	case ONLINE_PLAYERS = "OnlinePlayers";
 
-	public function encode() : OvoEnum{
+	public function encode() : OvommandEnum{
 		return match ($this) {
 			self::BOOLEAN => new HardEnum($this->value, ["true" => true, "false" => false],isDefault: true),
 			self::PM_GAMEMODE => new HardEnum($this->value,
@@ -26,7 +26,7 @@ enum DefaultEnums : string{
 				["survival" => "s", "creative" => "c", "adventure" => "a"],
 				isDefault: true
 			),
-			self::ONLINE_PLAYERS => new SoftEnum("OnlinePlayers",isDefault: true),
+			self::ONLINE_PLAYERS => new SoftEnum("OnlinePlayers",isDefault: true)
 		};
 	}
 }

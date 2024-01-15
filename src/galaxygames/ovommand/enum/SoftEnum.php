@@ -8,10 +8,27 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\UpdateSoftEnumPacket;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
+use shared\galaxygames\ovommand\fetus\enum\ProtectedEnum;
+use shared\galaxygames\ovommand\fetus\IHookable;
 
 class SoftEnum extends BaseEnum implements IDynamicEnum{
+	public bool $isProtected = false;
+
 	public function encode() : CommandEnum{
 		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)], true);
+	}
+
+	/** @param array<string, string|string[]> $aliases */
+	public function addAliases(array $aliases, bool $isHidden = false, ?IHookable $hookable = null) : void{
+		parent::addAliases($aliases, $isHidden, $hookable);
+	}
+
+	/** @param string[] $aliases */
+	protected function removeAliases(array $aliases, bool $isHidden = false) : void{
+		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
+		foreach ($aliases as $alias) {
+			unset($aliasesList[$alias]);
+		}
 	}
 
 	public function removeValue(string $key) : void{
@@ -79,5 +96,13 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		NetworkBroadcastUtils::broadcastPackets(Server::getInstance()->getOnlinePlayers(), [
 			UpdateSoftEnumPacket::create($this->name, $values, $type)
 		]);
+	}
+
+	public function isProtected() : bool{
+		return $this->isProtected;
+	}
+
+	public function asProtected() : ProtectedEnum{
+		return new ProtectedEnum($this);
 	}
 }

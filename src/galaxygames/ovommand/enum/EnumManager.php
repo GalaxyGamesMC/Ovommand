@@ -45,14 +45,14 @@ final class EnumManager{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
-		return GlobalEnumPool::getSoftEnum($enumName);
+		return GlobalEnumPool::getSoftEnum($enumName, $this->ovommandHook);
 	}
 
 	public function getHardEnum(DefaultEnums|string $enumName) : ?IStaticEnum{
 		if ($enumName instanceof DefaultEnums) {
 			$enumName = $enumName->value;
 		}
-		return GlobalEnumPool::getHardEnum($enumName);
+		return GlobalEnumPool::getHardEnum($enumName, $this->ovommandHook);
 	}
 
 	public function getEnum(DefaultEnums|string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|null{

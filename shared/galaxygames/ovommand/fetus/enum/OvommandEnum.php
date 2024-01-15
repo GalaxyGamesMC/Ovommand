@@ -6,7 +6,7 @@ namespace shared\galaxygames\ovommand\fetus\enum;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 
-abstract class OvoEnum implements IOvoEnum{
+abstract class OvommandEnum implements IEnum{
 	protected string $name;
 	/** @var array<string, mixed> */
 	protected array $values;
@@ -15,7 +15,6 @@ abstract class OvoEnum implements IOvoEnum{
 	/** @var string[] */
 	protected array $showAliases = [];
 	protected bool $isDefault = false;
-	protected bool $isReadonly = false;
 
 	final public function getName() : string{
 		return $this->name;
@@ -25,19 +24,13 @@ abstract class OvoEnum implements IOvoEnum{
 		return $this->isDefault;
 	}
 
-	public function isReadonly() : bool{
-		return $this->isReadonly;
-	}
-
-	abstract public function addAliases(array $aliases, bool $isHidden = false) : void;
-	abstract public function removeAliases(array $aliases, bool $isHidden = false) : void;
 	abstract public function encode() : CommandEnum;
 	abstract public function getValue(string $key) : mixed;
 
-	public function isSoft() : bool{
+	final public function isSoft() : bool{
 		return match(true) {
 			$this instanceof IStaticEnum => false,
-			$this instanceof IDynamicEnum => true,
+			$this instanceof IDynamicEnum, $this instanceof ProtectedEnum => true,
 			default => throw new OvommandEnumPoolException("Unknown enum type!", OvommandEnumPoolException::ENUM_UNKNOWN_TYPE)
 		};
 	}

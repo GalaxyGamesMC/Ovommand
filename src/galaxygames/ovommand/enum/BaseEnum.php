@@ -5,9 +5,10 @@ namespace galaxygames\ovommand\enum;
 
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\utils\MessageParser;
-use shared\galaxygames\ovommand\fetus\enum\OvoEnum;
+use shared\galaxygames\ovommand\fetus\enum\OvommandEnum;
+use shared\galaxygames\ovommand\fetus\IHookable;
 
-abstract class BaseEnum extends OvoEnum{
+abstract class BaseEnum extends OvommandEnum{
 	/**
 	 * @param string $name The name of the enum, E.g: [parameterName: enumName]
 	 * @param array<string, mixed> $values The input values of an enum
@@ -29,7 +30,7 @@ abstract class BaseEnum extends OvoEnum{
 	}
 
 	/** @param array<string, string|string[]> $aliases */
-	public function addAliases(array $aliases, bool $isHidden = false) : void{
+	protected function addAliases(array $aliases, bool $isHidden = false, ?IHookable $hookable = null) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $key => $alias) {
 			if (is_string($alias)) {
@@ -56,14 +57,6 @@ abstract class BaseEnum extends OvoEnum{
 			} else {
 				throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE->translate(["key" => $key, "type" => gettype($alias)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE);
 			}
-		}
-	}
-
-	/** @param string[] $aliases */
-	public function removeAliases(array $aliases, bool $isHidden = false) : void{
-		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
-		foreach ($aliases as $alias) {
-			unset($aliasesList[$alias]);
 		}
 	}
 

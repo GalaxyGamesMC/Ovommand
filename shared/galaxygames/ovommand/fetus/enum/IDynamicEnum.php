@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace shared\galaxygames\ovommand\fetus\enum;
 
-interface IDynamicEnum extends IOvoEnum{
+interface IDynamicEnum extends IEnum{
+	public function isProtected() : bool;
+	public function asProtected();
 	public function removeValue(string $key) : void;
 	public function removeValuesBySpreading(string ...$keys) : void;
 	/** @param string[] $context */
