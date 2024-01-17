@@ -46,7 +46,8 @@ final class GlobalEnumPool{
 	public static function getHardEnum(string $key, ?IHookable $hookable = null) : IStaticEnum | ProtectedEnum | null{
 		$eHook = self::$hardEnumHooker[$key] ?? null;
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
-			return self::$hardEnums[$key];
+			$enum = self::$hardEnums[$key];
+			return $enum->isProtected() ? $enum->asProtected() : $enum;
 		}
 		return null;
 	}
