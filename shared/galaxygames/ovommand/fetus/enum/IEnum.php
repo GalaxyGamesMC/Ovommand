@@ -19,7 +19,17 @@ interface IEnum{
 	public function getHiddenAliases() : array;
 	public function getShowAliases() : array;
 
+	/**
+	 * @param string|string[] $showAliases
+	 * @param string|string[] $hiddenAliases
+	 */
 	public function addValue(string $value, mixed $bindValue = null, string|array $showAliases = [], string|array $hiddenAliases = []) : void;
+	/**
+	 * @param array<string, mixed> $context
+	 * @param array<string, string|string[]> $showAliases
+	 * @param array<string, string|string[]> $hiddenAliases
+	 */
 	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void;
+
 	public function changeValue(string $key, mixed $value) : void;
 }
