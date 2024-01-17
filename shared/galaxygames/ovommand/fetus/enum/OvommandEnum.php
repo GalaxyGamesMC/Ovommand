@@ -7,7 +7,7 @@ use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 
 abstract class OvommandEnum implements IEnum{
-	protected string $name;
+	public readonly string $name;
 	/** @var array<string, mixed> */
 	protected array $values;
 	/** @var string[] */
