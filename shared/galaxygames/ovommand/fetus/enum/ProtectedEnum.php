@@ -5,7 +5,7 @@ namespace shared\galaxygames\ovommand\fetus\enum;
 
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 
-class ProtectedEnum implements IEnum{
+abstract class ProtectedEnum implements IEnum{
 
 	public function __construct(protected OvommandEnum $origin){}
 
@@ -40,4 +40,12 @@ class ProtectedEnum implements IEnum{
 	public function getShowAliases() : array{
 		return $this->origin->getShowAliases();
 	}
+
+	abstract public function removeValue(string $key) : void;
+	abstract public function removeValuesBySpreading(string ...$keys) : void;
+	/** @param string[] $context */
+	abstract public function removeValues(array $context) : void;
+	abstract public function addValue(string $value, mixed $bindValue = null, string|array $showAliases = [], string|array $hiddenAliases = []) : void;
+	abstract public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void;
+	abstract public function changeValue(string $key, mixed $value) : void;
 }

@@ -15,7 +15,7 @@ enum DefaultEnums : string{
 
 	public function encode() : IDynamicEnum | IStaticEnum{
 		return match ($this) {
-			self::BOOLEAN => new HardEnum($this->value, ["true" => true, "false" => false], isDefault: true),
+			self::BOOLEAN => new HardEnum($this->value, ["true" => true, "false" => false], isProtected: true, isDefault: true),
 			self::PM_GAMEMODE => new HardEnum($this->value,
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],

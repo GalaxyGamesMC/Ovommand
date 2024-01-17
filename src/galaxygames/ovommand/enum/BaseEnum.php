@@ -76,4 +76,8 @@ abstract class BaseEnum extends OvommandEnum{
 		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
 		return isset($this->values[$parentKey]);
 	}
+
+	public function asProtected() : ProtectedEnum{
+		return new ProtectedEnum($this);
+	}
 }

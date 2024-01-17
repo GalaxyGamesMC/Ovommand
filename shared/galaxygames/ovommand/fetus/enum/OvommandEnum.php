@@ -21,9 +21,7 @@ abstract class OvommandEnum implements IEnum{
 		return $this->isProtected;
 	}
 
-	public function asProtected() : ProtectedEnum{
-		return new ProtectedEnum($this);
-	}
+	abstract public function asProtected() : ProtectedEnum;
 
 	final public function getName() : string{
 		return $this->name;
