@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\utils;
 
-use pocketmine\utils\TextFormat;
-
 enum MessageParser : string{
 	case GENERIC_SYNTAX_MESSAGE_VANILLA = "commands.generic.syntax";
 	case GENERIC_SYNTAX_MESSAGE_OVO = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
@@ -17,6 +15,11 @@ enum MessageParser : string{
 	case EXCEPTION_ENUM_ALIAS_UNKNOWN_KEY = "Alias '{'aliasName}' is registered to unknown key '{key}'!";
 	case EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE = "Unknown alias type '{type}' has been registered to key '{key}'!";
 	case EXCEPTION_ENUM_INVALID_DEFAULT = "You cannot set enum '{enumName}' to be default from outside!";
+	case EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE = "You cannot remove values from a protected enum '{enumName}'!";
+	case EXCEPTION_ENUM_ADD_PROTECTED_VALUE = "You cannot add values from a protected enum '{enumName}'!";
+	case EXCEPTION_ENUM_CHANGE_PROTECTED_VALUE = "You cannot change value of key '{key}' from a protected enum '{enumName}'!";
+	case EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS = "HO HO HO";
+	case EXCEPTION_ENUM_ADD_PROTECTED_ALIAS = "HAHA";
 
 	case EXCEPTION_PARAMETER_INVALID_FLAG = "Invalid flag '{flag}' was set, valid flags: (0, 1)!";
 	case EXCEPTION_PARAMETER_UNKNOWN_ENUM = "Unknown '{enumType}' enum was called '{enumName}'!";

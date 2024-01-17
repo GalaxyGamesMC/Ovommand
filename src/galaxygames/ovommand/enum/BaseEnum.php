@@ -28,7 +28,6 @@ abstract class BaseEnum extends OvommandEnum{
 		$this->addAliases($hiddenAliases, true);
 	}
 
-	/** @param array<string, string|string[]> $aliases */
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $key => $alias) {
@@ -59,7 +58,6 @@ abstract class BaseEnum extends OvommandEnum{
 		}
 	}
 
-	/** @param string[] $aliases */
 	public function removeAliases(array $aliases, bool $isHidden = false) : void{
 		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
 		foreach ($aliases as $alias) {

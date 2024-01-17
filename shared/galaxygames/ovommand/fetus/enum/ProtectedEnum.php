@@ -41,6 +41,8 @@ abstract class ProtectedEnum implements IEnum{
 		return $this->origin->getShowAliases();
 	}
 
+	abstract public function addAliases(array $aliases, bool $isHidden = false) : void;
+	abstract public function removeAliases(array $aliases, bool $isHidden = false) : void;
 	abstract public function removeValue(string $key) : void;
 	abstract public function removeValuesBySpreading(string ...$keys) : void;
 	/** @param string[] $context */
