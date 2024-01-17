@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\utils;
 
+use galaxygames\ovommand\enum\HardEnum;
+
 class Utils{
 	/**
 	 * $separator . implode($sub_separator . $separator, $input) || ""
@@ -13,5 +15,18 @@ class Utils{
 			return "";
 		}
 		return $separator . implode($sub_separator . $separator, $input);
+	}
+
+	/**
+	 * @param string[] $context
+	 * @param array<string, string|string[]> $showAliases
+	 * @param array<string, string|string[]> $hiddenAliases
+	 */
+	public static function hardEnumFromList(string $name, array $context, array $showAliases = [], array $hiddenAliases = [], bool $isProtected = false, bool $isDefault = false) : HardEnum{
+		$inputs = [];
+		foreach ($context as $value) {
+			$inputs[$value] = $value;
+		}
+		return new HardEnum($name, $inputs, $showAliases, $hiddenAliases, $isProtected, $isDefault);
 	}
 }
