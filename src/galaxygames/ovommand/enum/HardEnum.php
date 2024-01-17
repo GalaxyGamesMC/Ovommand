@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\enum;
 
 use galaxygames\ovommand\exception\EnumException;
+use galaxygames\ovommand\utils\MessageParser;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
@@ -15,14 +16,14 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException("Tried to add aliases to a running hard enum!", EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		parent::addAliases($aliases, $isHidden);
 	}
 
 	public function removeAliases(array $aliases, bool $isHidden = false) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException("Tried to remove aliases from a running hard enum!", EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		parent::removeAliases( $aliases, $isHidden);
 	}
@@ -37,7 +38,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function removeValues(array $context) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException("Tried to remove values from a running hard enum!", EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
 		}
 		$updates = [];
 		foreach ($context as $k) {
@@ -58,7 +59,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException("Tried to add values from a running hard enum!", EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
 		}
 		$updates = [];
 		foreach ($context as $k => $v) {
@@ -75,7 +76,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function changeValue(string $key, mixed $value) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException("Tried to change value from a running hard enum!", EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_CHANGE_VALUE->translate(['key' => $key, 'enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
 		}
 		if (isset($this->values[$key])) {
 			$this->values[$key] = $value;

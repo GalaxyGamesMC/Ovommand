@@ -16,10 +16,15 @@ enum MessageParser : string{
 	case EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE = "Unknown alias type '{type}' has been registered to key '{key}'!";
 	case EXCEPTION_ENUM_INVALID_DEFAULT = "You cannot set enum '{enumName}' to be default from outside!";
 	case EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE = "You cannot remove values from a protected enum '{enumName}'!";
-	case EXCEPTION_ENUM_ADD_PROTECTED_VALUE = "You cannot add values from a protected enum '{enumName}'!";
+	case EXCEPTION_ENUM_ADD_PROTECTED_VALUE = "You cannot add values to a protected enum '{enumName}'!";
 	case EXCEPTION_ENUM_CHANGE_PROTECTED_VALUE = "You cannot change value of key '{key}' from a protected enum '{enumName}'!";
 	case EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS = "HO HO HO";
 	case EXCEPTION_ENUM_ADD_PROTECTED_ALIAS = "HAHA";
+	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_ALIAS = "You cannot add new aliases to a running hard enum '{enumName}'!";
+	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_ALIAS = "You cannot remove aliases from a running hard enum '{enumName}'!";
+	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_VALUE = "You cannot add values to a running hard enum '{enumName}'!";
+	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_CHANGE_VALUE = "You cannot change value of key '{key}' from a running hard enum '{enumName}'!";
+	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_VALUE = "You cannot remove values from a running hard enum '{enumName}'!";
 
 	case EXCEPTION_PARAMETER_INVALID_FLAG = "Invalid flag '{flag}' was set, valid flags: (0, 1)!";
 	case EXCEPTION_PARAMETER_UNKNOWN_ENUM = "Unknown '{enumType}' enum was called '{enumName}'!";
