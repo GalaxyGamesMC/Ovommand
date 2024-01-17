@@ -18,8 +18,8 @@ enum MessageParser : string{
 	case EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE = "You cannot remove values from a protected enum '{enumName}'!";
 	case EXCEPTION_ENUM_ADD_PROTECTED_VALUE = "You cannot add values to a protected enum '{enumName}'!";
 	case EXCEPTION_ENUM_CHANGE_PROTECTED_VALUE = "You cannot change value of key '{key}' from a protected enum '{enumName}'!";
-	case EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS = "HO HO HO";
-	case EXCEPTION_ENUM_ADD_PROTECTED_ALIAS = "HAHA";
+	case EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS = "You cannot remove existed aliases from a protected enum '{enumName}'!";
+	case EXCEPTION_ENUM_ADD_PROTECTED_ALIAS = "You cannot add more aliases to a protected enum '{enumName}'!";
 	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_ALIAS = "You cannot add new aliases to a running hard enum '{enumName}'!";
 	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_ALIAS = "You cannot remove aliases from a running hard enum '{enumName}'!";
 	case EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_VALUE = "You cannot add values to a running hard enum '{enumName}'!";
