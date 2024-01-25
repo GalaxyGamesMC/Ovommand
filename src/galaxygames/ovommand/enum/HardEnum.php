@@ -59,7 +59,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		$updates = [];
 		foreach ($context as $k => $v) {

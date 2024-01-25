@@ -6,7 +6,6 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\OvommandHook;
 use galaxygames\ovommand\utils\MessageParser;
-use pocketmine\plugin\Plugin;
 use shared\galaxygames\ovommand\exception\OvommandEnumPoolException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
@@ -58,10 +57,6 @@ final class EnumManager{
 
 	public function getEnum(DefaultEnums|string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|ProtectedEnum|null{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
-	}
-
-	public function getOwningPlugin() : Plugin{
-		return $this->ovommandHook::getOwnedPlugin();
 	}
 
 	public function getOvommandHook() : OvommandHook{
