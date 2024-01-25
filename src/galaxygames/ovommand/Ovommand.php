@@ -311,7 +311,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $this->doSendingSyntaxWarning;
 	}
 
-	public function isDoSendingUsageMessage() : bool{
+	public function doSendingUsageMessage() : bool{
 		return $this->doSendingUsageMessage;
 	}
 
