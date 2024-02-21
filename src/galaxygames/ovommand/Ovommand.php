@@ -259,7 +259,7 @@ abstract class Ovommand extends Command implements IOvommand{
 //						BrokenSyntaxResult::CODE_INVALID_INPUTS => "Invalid inputs!",
 //						default => "Unknown code report!"
 //					}
-//				); //TODO:  remove debug msg
+//				); //TODO: remove debug msg
 				if ($this->doSendingSyntaxWarning) {
 					$sender->sendMessage($message);
 				}

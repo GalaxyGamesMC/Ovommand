@@ -11,7 +11,7 @@ enum MessageParser : string{
 	case EXCEPTION_ENUM_NULL_VALUE = "Enum's values cannot be null!";
 	case EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE = "Enum's value-name is not a string!"; //TODO: better msg
 	case EXCEPTION_ENUM_ALREADY_EXISTED = "Enum '{enumName}' is already registered!";
-	case EXCEPTION_ENUM_ALIAS_REGISTERED = "Alias '{aliasName}' is already used for another key!";
+	case EXCEPTION_ENUM_ALIAS_REGISTERED = "Alias '{aliasName}' is already used for another key!"; //TODO: ref 
 	case EXCEPTION_ENUM_ALIAS_UNKNOWN_KEY = "Alias '{'aliasName}' is registered to unknown key '{key}'!";
 	case EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE = "Unknown alias type '{type}' has been registered to key '{key}'!";
 	case EXCEPTION_ENUM_INVALID_DEFAULT = "You cannot set enum '{enumName}' to be default from outside!";
