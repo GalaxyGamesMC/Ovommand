@@ -9,11 +9,11 @@ use galaxygames\ovommand\utils\MessageParser;
 // This was made so users would know what went wrong.
 class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnum{
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
-		throw new EnumException(MessageParser::EXCEPTION_ENUM_ADD_PROTECTED_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
+		throw new EnumException(MessageParser::EXCEPTION_ENUM_ADD_PROTECTED_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
 	public function removeAliases(array $aliases, bool $isHidden = false) : void{
-		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
+		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
 	public function removeValue(string $key) : void{
@@ -25,7 +25,7 @@ class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnu
 
 	/** @param string[] $context */
 	public function removeValues(array $context) : void{
-		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
+		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
 	/**
@@ -42,10 +42,10 @@ class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnu
 	 * @param array<string, string|string[]> $hiddenAliases
 	 */
 	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
-		throw new EnumException(MessageParser::EXCEPTION_ENUM_ADD_PROTECTED_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
+		throw new EnumException(MessageParser::EXCEPTION_ENUM_ADD_PROTECTED_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
 	public function changeValue(string $key, mixed $value) : void{
-		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE->translate(['key' => $key, 'enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM); //TODO: change msg
+		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE->translate(['key' => $key, 'enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 }

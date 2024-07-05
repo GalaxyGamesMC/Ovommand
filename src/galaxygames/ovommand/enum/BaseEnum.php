@@ -17,10 +17,10 @@ abstract class BaseEnum extends OvommandEnum{
 	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isProtected = false, protected bool $isDefault = false){
 		foreach ($values as $key => $value) {
 			if (!is_string($key)) {
-				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE->value, EnumException::ENUM_INVALID_VALUE_NAME_TYPE); //TODO: Better msg
+				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE->value, EnumException::ENUM_INVALID_VALUE_NAME_TYPE);
 			}
 			if ($value === null) {
-				throw new EnumException(MessageParser::EXCEPTION_ENUM_NULL_VALUE->value, EnumException::ENUM_NULL_VALUE); //TODO: Better msg
+				throw new EnumException(MessageParser::EXCEPTION_ENUM_NULL_VALUE->value, EnumException::ENUM_NULL_VALUE);
 			}
 		}
 		$this->values = $values;

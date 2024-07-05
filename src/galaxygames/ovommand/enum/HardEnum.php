@@ -38,7 +38,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function removeValues(array $context) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		$updates = [];
 		foreach ($context as $k) {
@@ -76,7 +76,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 
 	public function changeValue(string $key, mixed $value) : void{
 		if (Server::getInstance()->getTick() !== 0) {
-			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_CHANGE_VALUE->translate(['key' => $key, 'enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM); //TODO: change msg
+			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_CHANGE_VALUE->translate(['key' => $key, 'enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		if (isset($this->values[$key])) {
 			$this->values[$key] = $value;

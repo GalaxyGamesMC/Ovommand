@@ -72,6 +72,10 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $this->subCommands;
 	}
 
+	/**
+	 * Register the parameters, the order of the parameters will be the order of the parameters in the command.
+	 * @param BaseParameter ...$parameters
+	 */
 	public function registerParameters(BaseParameter ...$parameters) : void{
 		$hasOptionalParameter = false;
 		$hasTextParameter = false;
