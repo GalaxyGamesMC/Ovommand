@@ -36,12 +36,12 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 		$this->removeValues($keys);
 	}
 
-	public function removeValues(array $context) : void{
+	public function removeValues(array $keys) : void{
 		if (Server::getInstance()->getTick() !== 0) {
 			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_REMOVE_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		$updates = [];
-		foreach ($context as $k) {
+		foreach ($keys as $k) {
 			if (isset($this->values[$k])) {
 				unset($this->values[$k]);
 				$updates[] = $k;
@@ -57,18 +57,18 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 		$this->addValues([$value => $bindValue], [$value => $showAliases], [$value => $hiddenAliases]);
 	}
 
-	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
+	public function addValues(array $values, array $showAliases = [], array $hiddenAliases = []) : void{
 		if (Server::getInstance()->getTick() !== 0) {
 			throw new EnumException(MessageParser::EXCEPTION_ENUM_RUNNING_HARD_ENUM_ADD_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_RUNNING_HARD_ENUM);
 		}
 		$updates = [];
-		foreach ($context as $k => $v) {
+		foreach ($values as $k => $v) {
 			if (!isset($this->values[$k])) {
 				$this->values[$k] = $v;
 				$updates[] = $k;
 			}
 		}
-		if (count($updates) !== 0) {
+		if (!empty($updates)) {
 			$this->addAliases($showAliases);
 			$this->addAliases($hiddenAliases, true);
 		}

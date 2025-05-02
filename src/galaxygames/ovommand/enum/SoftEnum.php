@@ -32,7 +32,7 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 				$updates[] = $k;
 			}
 		}
-		if (count($updates) !== 0) {
+		if (!empty($updates)) {
 			$this->hiddenAliases = array_diff($this->hiddenAliases, $updates);
 			$this->showAliases = array_diff($this->showAliases, $updates);
 			$this->update($updates, UpdateSoftEnumPacket::TYPE_REMOVE);
@@ -60,7 +60,7 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 				$updates[] = $k;
 			}
 		}
-		if (count($updates) !== 0) {
+		if (!empty($updates)) {
 			$oldShowAliases = $this->showAliases;
 			$this->addAliases($showAliases);
 			$this->addAliases($hiddenAliases, true);

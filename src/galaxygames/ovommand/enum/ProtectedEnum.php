@@ -23,8 +23,8 @@ class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnu
 		$this->removeValues($keys);
 	}
 
-	/** @param string[] $context */
-	public function removeValues(array $context) : void{
+	/** @param string[] $keys */
+	public function removeValues(array $keys) : void{
 		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
@@ -37,11 +37,11 @@ class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnu
 	}
 
 	/**
-	 * @param array<string, mixed> $context
+	 * @param array<string, mixed> $values
 	 * @param array<string, string|string[]> $showAliases
 	 * @param array<string, string|string[]> $hiddenAliases
 	 */
-	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
+	public function addValues(array $values, array $showAliases = [], array $hiddenAliases = []) : void{
 		throw new EnumException(MessageParser::EXCEPTION_ENUM_ADD_PROTECTED_VALUE->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
