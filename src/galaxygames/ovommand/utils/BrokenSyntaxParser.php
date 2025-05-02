@@ -7,13 +7,13 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use pocketmine\lang\Translatable;
 
 class BrokenSyntaxParser{
-	public const SYNTAX_PRINT_VANILLA = 0b0001;
-	public const SYNTAX_PRINT_OVOMMAND = 0b0010;
-	public const SYNTAX_TRIMMED = 0b0100;
+	public const int SYNTAX_PRINT_VANILLA = 0b0001;
+	public const int SYNTAX_PRINT_OVOMMAND = 0b0010;
+	public const int SYNTAX_TRIMMED = 0b0100;
 	
-	public const MESSAGE_TAG_PREVIOUS = "previous";
-	public const MESSAGE_TAG_BROKEN_SYNTAX = "broken_syntax";
-	public const MESSAGE_TAG_AFTER = "after";
+	public const string MESSAGE_TAG_PREVIOUS = "previous";
+	public const string MESSAGE_TAG_BROKEN_SYNTAX = "broken_syntax";
+	public const string MESSAGE_TAG_AFTER = "after";
 
 	/** @param string[] $nonParsedArgs */
 	public static function parseFromBrokenSyntaxResult(BrokenSyntaxResult $result, int $flags = self::SYNTAX_PRINT_OVOMMAND | self::SYNTAX_TRIMMED, array $nonParsedArgs = []) : Translatable|string{

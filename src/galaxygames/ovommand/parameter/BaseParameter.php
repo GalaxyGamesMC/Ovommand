@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\exception\ParameterException;
+use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 use galaxygames\ovommand\utils\MessageParser;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use shared\galaxygames\ovommand\fetus\IParameter;
+use shared\galaxygames\ovommand\fetus\result\IResult;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;
@@ -32,7 +34,7 @@ abstract class BaseParameter implements IParameter{
 	abstract public function getNetworkType() : ParameterTypes;
 
 	/** @param string[] $parameters */
-	public function parse(array $parameters) : BaseResult{
+	public function parse(array $parameters) : IResult{
 		$cParam = count($parameters);
 		$span = $this->getSpanLength();
 		return match (true) {
@@ -42,7 +44,7 @@ abstract class BaseParameter implements IParameter{
 		};
 	}
 
-	/** Some parameter has 2 or more span but only one can fulfil the required!, like PositionParameter where (~~~ | ~~ ~ | ~ ~ ~) are all acceptable*/
+	/** Some parameters have 2 or more span but only one can fulfil the required!, like PositionParameter where (~~~ | ~~ ~ | ~ ~ ~) are all acceptable*/
 	public function hasCompactParameter() : bool{
 		return false;
 	}
