@@ -13,6 +13,10 @@ class BlockPositionParameter extends BaseParameter{
 		return ParameterTypes::BLOCK_POSITION;
 	}
 
+	public function hasCompactParameter() : bool{
+		return true;
+	}
+
 	public function parse(array $parameters) : CoordinateResult|BrokenSyntaxResult{
 		$parameter = implode(" ", $parameters);
 		if (!preg_match_all("/([^~^+\-\d\s]+)?([~^]?[+-]?(\d+)|[~^])([[:blank:]]?[^~^+\-\d\s]+)?/", $parameter, $matches)) {

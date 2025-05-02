@@ -154,7 +154,7 @@ abstract class Ovommand extends Command implements IOvommand{
 					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 			}
 			if (!$hasFailed) {
-				$successResults[] = $results;
+				return $results;
 			} else {
 				if ($matchPoint > $finalId) {
 					$finalId = $matchPoint;
@@ -163,10 +163,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 		}
 		// return the failed parse with the most matched semi-parameters, usually the last failed parse.
-		if (empty($successResults)) {
-			return $failedResults[$finalId];
-		}
-		return $successResults[array_key_first($successResults)]; // return the first succeed parse.
+		return $failedResults[$finalId];
 	}
 
 	/** @return BaseParameter[][] */
