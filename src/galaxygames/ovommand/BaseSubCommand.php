@@ -15,12 +15,12 @@ abstract class BaseSubCommand extends Ovommand{
 
 	/**
 	 * @param list<string> $hiddenAliases
-	 * @param list<string> $showAliases
+	 * @param list<string> $visibleAliases
 	 */
-	public function __construct(string $name, protected string|Translatable $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $showAliases = []){
+	public function __construct(string $name, protected string|Translatable $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $visibleAliases = []){
 		parent::__construct($name, $this->description, $permission, $usageMessage);
 		$this->hiddenAliases = array_unique($hiddenAliases);
-		$this->visibleAliases = array_unique($showAliases);
+		$this->visibleAliases = array_unique($visibleAliases);
 	}
 
 	public function isAliases(string $input) : bool{
@@ -35,10 +35,7 @@ abstract class BaseSubCommand extends Ovommand{
 		return in_array($input, $this->visibleAliases, true);
 	}
 
-	/**
-	 * @return string[]
-	 * @deprecated SubCommand shouldn't use this, use getShowAliases() instead!
-	 */
+	/** @return list<string> */
 	public function getAliases() : array{
 		return [];
 	}
@@ -49,7 +46,7 @@ abstract class BaseSubCommand extends Ovommand{
 	}
 
 	/** @return list<string> */
-	public function getShowAliases() : array{
+	public function getVisibleAliases() : array{
 		return $this->visibleAliases;
 	}
 

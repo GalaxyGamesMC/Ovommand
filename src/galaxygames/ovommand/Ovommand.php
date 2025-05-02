@@ -54,7 +54,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			$subName = $subCommand->getName();
 			if (!isset($this->subCommands[$subName])) {
 				$this->subCommands[$subName] = $subCommand->setParent($this);
-				$aliases = [...$subCommand->getShowAliases(), ...$subCommand->getHiddenAliases()];
+				$aliases = [...$subCommand->getVisibleAliases(), ...$subCommand->getHiddenAliases()];
 				foreach ($aliases as $alias) {
 					if (!isset($this->subCommands[$alias])) {
 						$this->subCommands[$alias] = $subCommand;
@@ -74,8 +74,9 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
-	 * Register the parameters, the order of the parameters will be the order of the parameters in the command.
-	 * @param BaseParameter ...$parameters
+	 * Registers parameters as an overloading, keeping the input order and enforcing rules: no non-optional after optional,
+	 * no parameters after `TextParameter`.
+	 * @param list<BaseParameter> $parameters
 	 */
 	public function registerParameters(BaseParameter ...$parameters) : void{
 		$hasOptionalParameter = false;
@@ -98,8 +99,9 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
-	 * Parse the parameters
-	 * @param string[] $rawParams
+	 * Parses raw input parameters, validating their format and structure. Returns the first successful match or the most
+	 * progressed failed result, while handling optional, compact, and error scenarios.
+	 * @param list<string> $rawParams
 	 * @return array<string, IResult>
 	 */
 	public function parseParameters(array $rawParams) : array{
@@ -181,7 +183,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
-	 * @param string[] $args
+	 * @param list<string> $args
 	 * @param string $preLabel Return a string combined of its parent-label with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
@@ -227,7 +229,7 @@ abstract class Ovommand extends Command implements IOvommand{
 		}
 	}
 
-	/** @return string[] */
+	/** @return list<string> */
 	public function generateUsageList() : array{
 		$usages = [];
 		foreach ($this->subCommands as $k => $subCommand) {
@@ -248,9 +250,9 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/**
-	 * Return true will run onRun() and vice versa
-	 * @param BaseResult[] $args
-	 * @param string[] $nonParsedArgs
+	 * Checks for syntax errors in arguments, sends warnings if enabled, and returns `false` to halt or `true` to proceed.
+	 * @param BaseResult[] $args Parsed results
+	 * @param list<string> $nonParsedArgs Arguments that hadn't got parsed, mostly due to failed result from the parsing.
 	 */
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = []) : bool{
 		foreach ($args as $arg) {
