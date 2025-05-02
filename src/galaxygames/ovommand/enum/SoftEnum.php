@@ -23,10 +23,10 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		$this->removeValues($keys);
 	}
 
-	/** @param string[] $context */
-	public function removeValues(array $context) : void{
+	/** @param string[] $keys */
+	public function removeValues(array $keys) : void{
 		$updates = [];
-		foreach ($context as $k) {
+		foreach ($keys as $k) {
 			if (isset($this->values[$k])) {
 				unset($this->values[$k]);
 				$updates[] = $k;
@@ -48,13 +48,13 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 	}
 
 	/**
-	 * @param array<string, mixed> $context
+	 * @param array<string, mixed> $values
 	 * @param array<string, string|string[]> $showAliases
 	 * @param array<string, string|string[]> $hiddenAliases
 	 */
-	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void{
+	public function addValues(array $values, array $showAliases = [], array $hiddenAliases = []) : void{
 		$updates = [];
-		foreach ($context as $k => $v) {
+		foreach ($values as $k => $v) {
 			if (!isset($this->values[$k])) {
 				$this->values[$k] = $v;
 				$updates[] = $k;
