@@ -23,7 +23,8 @@ class PositionParameter extends BaseParameter{
 			return BrokenSyntaxResult::create($parameter, $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		if (count($matches[0]) < 3) {
+		$matchCount = count($matches[0]);
+		if ($matchCount < 3) {
 			return BrokenSyntaxResult::create("", $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
 		}
@@ -52,22 +53,13 @@ class PositionParameter extends BaseParameter{
 			return BrokenSyntaxResult::create($xPreInvalid, $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		$xPostInvalid = $matches[4][0];
-		if (!empty($xPostInvalid)) {
-			return BrokenSyntaxResult::create($xPostInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)->setMatchedParameter(1);
+		for ($i = 1; $i < 3; $i++) {
+			if (empty($matches[2][$i])) {
+				return BrokenSyntaxResult::create("", $parameter, $this->getValueName())
+					->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
+			}
 		}
-		$yPostInvalid = $matches[4][1];
-		if (!empty($yPostInvalid)) {
-			return BrokenSyntaxResult::create($yPostInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)->setMatchedParameter(2);
-		}
-		$zPostInvalid = $matches[4][2];
-		if (!empty($zPostInvalid)) {
-			return BrokenSyntaxResult::create($zPostInvalid, $parameter, $this->getValueName())
-				->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX)->setMatchedParameter(3);
-		}
-		if (count($matches[0]) > 3) {
+		if ($matchCount > 3) {
 			return BrokenSyntaxResult::create($matches[0][3], $parameter, $this->getValueName())
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)->setMatchedParameter(3);
 		}
