@@ -25,21 +25,15 @@ final class GlobalEnumPool{
 		}
 		foreach ($enums as $enum) {
 			$eName = $enum->getName();
-			if ($enum->isSoft()) {
-				$enumStore = &self::$softEnums;
-				$enumHookers = &self::$softEnumHooker;
-			} else {
-				$enumStore = &self::$hardEnums;
-				$enumHookers = &self::$hardEnumHooker;
-			}
-			if (isset($enumStore[$eName])) {
+			[$enumPool, $enumHooker] = $enum->isSoft() ? [&self::$softEnums, &self::$softEnumHooker] : [&self::$hardEnums, &self::$hardEnumHooker];
+			if (isset($enumPool[$eName])) {
 				if ($enum->isDefault()) {
 					continue;
 				}
 				throw new OvommandEnumPoolException("Enum with the same name is already existed!", OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
 			}
-			$enumStore[$eName] = $enum;
-			$enumHookers[$eName] = $hookable;
+			$enumPool[$eName] = $enum;
+			$enumHooker[$eName] = $hookable;
 		}
 	}
 
