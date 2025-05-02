@@ -10,7 +10,7 @@ abstract class BaseSubCommand extends Ovommand{
 	/** @var string[] */
 	protected array $hiddenAliases;
 	/** @var string[] */
-	protected array $showAliases;
+	protected array $visibleAliases;
 	protected ?Ovommand $parent = null;
 
 	/**
@@ -20,19 +20,19 @@ abstract class BaseSubCommand extends Ovommand{
 	public function __construct(string $name, protected string|Translatable $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $hiddenAliases = [], array $showAliases = []){
 		parent::__construct($name, $this->description, $permission, $usageMessage);
 		$this->hiddenAliases = array_unique($hiddenAliases);
-		$this->showAliases = array_unique($showAliases);
+		$this->visibleAliases = array_unique($showAliases);
 	}
 
-	public function isAliases(string $in) : bool{
-		return $this->isHiddenAlias($in) || $this->isShowAlias($in);
+	public function isAliases(string $input) : bool{
+		return $this->isHiddenAlias($input) || $this->isVisibleAlias($input);
 	}
 
-	public function isHiddenAlias(string $in) : bool{
-		return in_array($in, $this->hiddenAliases, true);
+	public function isHiddenAlias(string $input) : bool{
+		return in_array($input, $this->hiddenAliases, true);
 	}
 
-	public function isShowAlias(string $in) : bool{
-		return in_array($in, $this->showAliases, true);
+	public function isVisibleAlias(string $input) : bool{
+		return in_array($input, $this->visibleAliases, true);
 	}
 
 	/**
@@ -50,7 +50,7 @@ abstract class BaseSubCommand extends Ovommand{
 
 	/** @return list<string> */
 	public function getShowAliases() : array{
-		return $this->showAliases;
+		return $this->visibleAliases;
 	}
 
 	public function getParent() : ?Ovommand{
