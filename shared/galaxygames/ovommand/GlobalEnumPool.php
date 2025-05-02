@@ -25,9 +25,16 @@ final class GlobalEnumPool{
 		}
 		foreach ($enums as $enum) {
 			$eName = $enum->getName();
-			[$enumPool, $enumHooker] = $enum->isSoft() ? [&self::$softEnums, &self::$softEnumHooker] : [&self::$hardEnums, &self::$hardEnumHooker];
+			if ($enum->isSoft()) {
+				$enumPool = &self::$softEnums;
+				$enumHooker = &self::$softEnumHooker;
+			} else {
+				$enumPool = &self::$hardEnums;
+				$enumHooker = &self::$hardEnumHooker;
+			}
 			if (isset($enumPool[$eName])) {
 				if ($enum->isDefault()) {
+					printf("Enum with the same name is already existed, but it is default enum, so it will be overwritten!\n");
 					continue;
 				}
 				throw new OvommandEnumPoolException("Enum with the same name is already existed!", OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
@@ -35,10 +42,14 @@ final class GlobalEnumPool{
 			$enumPool[$eName] = $enum;
 			$enumHooker[$eName] = $hookable;
 		}
+		printf("ADD ENUMS:\n");
+		var_dump(self::$hardEnums);
 	}
 
 	public static function getHardEnum(string $key, ?IHookable $hookable = null) : IStaticEnum | ProtectedEnum | null{
 		$eHook = self::$hardEnumHooker[$key] ?? null;
+		printf("DUMP HARD ENUMS:\n");
+		var_dump(self::$hardEnums);
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
 			$enum = self::$hardEnums[$key];
 			return $enum->isProtected() ? $enum->asProtected() : $enum;
