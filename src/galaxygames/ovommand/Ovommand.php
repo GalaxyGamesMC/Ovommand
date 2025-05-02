@@ -6,7 +6,7 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\exception\CommandException;
 use galaxygames\ovommand\exception\ParameterException;
 use galaxygames\ovommand\parameter\BaseParameter;
-use galaxygames\ovommand\parameter\BaseResult;
+use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\TextParameter;
 use galaxygames\ovommand\utils\BrokenSyntaxParser;
@@ -120,10 +120,11 @@ abstract class Ovommand extends Command implements IOvommand{
 			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
 				$p = 1;
+				$parameterName = $parameter->getName();
 				do {
 					$params = array_slice($rawParams, $offset, $p);
  					$result = $parameter->parse($params);
-					$results[$parameter->getName()] = $result;
+					$results[$parameterName] = $result;
 					if ($result instanceof BrokenSyntaxResult && $p !== $span) {
 						$p++;
 						continue;
@@ -159,7 +160,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 		}
 		// return the failed parse with the most matched semi-parameters, usually the last failed parse.
-		if (count($successResults) === 0) {
+		if (empty($successResults)) {
 			return $failedResults[$finalId];
 		}
 		return $successResults[array_key_first($successResults)]; // return the first succeed parse.
@@ -194,7 +195,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				return;
 			}
 		}
-		if (count($args) === 0) {
+		if (empty($args)) {
 			if ($this->onPreRun($sender, [])) {
 				$this->onRun($sender, $commandLabel, []);
 			}

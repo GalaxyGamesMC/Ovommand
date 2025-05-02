@@ -131,7 +131,7 @@ final class OvommandHook implements IHookable{
 				$scParams[] = CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName . "_" . ++$i, [$label, ...array_values($subCommand->getShowAliases())]), 1);
 			}
 			$overloadList = self::generateOverloads($sender, $subCommand);
-			if (count($overloadList) !== 0) {
+			if (!empty($overloadList)) {
 				foreach ($overloadList as $overload) {
 					$overloads[] = new CommandOverload(false, [...$scParams, ...$overload->getParameters()]);
 				}
