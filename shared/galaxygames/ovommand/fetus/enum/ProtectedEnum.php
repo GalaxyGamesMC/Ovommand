@@ -45,9 +45,9 @@ abstract class ProtectedEnum implements IEnum{
 	abstract public function removeAliases(array $aliases, bool $isHidden = false) : void;
 	abstract public function removeValue(string $key) : void;
 	abstract public function removeValuesBySpreading(string ...$keys) : void;
-	/** @param string[] $context */
-	abstract public function removeValues(array $context) : void;
+	/** @param string[] $keys */
+	abstract public function removeValues(array $keys) : void;
 	abstract public function addValue(string $value, mixed $bindValue = null, string|array $showAliases = [], string|array $hiddenAliases = []) : void;
-	abstract public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void;
+	abstract public function addValues(array $values, array $showAliases = [], array $hiddenAliases = []) : void;
 	abstract public function changeValue(string $key, mixed $value) : void;
 }

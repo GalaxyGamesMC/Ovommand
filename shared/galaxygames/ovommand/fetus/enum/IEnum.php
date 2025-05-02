@@ -13,8 +13,8 @@ interface IEnum{
 	public function getValue(string $key) : mixed;
 	public function removeValue(string $key) : void;
 	public function removeValuesBySpreading(string ...$keys) : void;
-	/** @param string[] $context */
-	public function removeValues(array $context) : void;
+	/** @param string[] $keys */
+	public function removeValues(array $keys) : void;
 	public function getRawValues() : array;
 	public function getHiddenAliases() : array;
 	public function getShowAliases() : array;
@@ -30,11 +30,11 @@ interface IEnum{
 	 */
 	public function addValue(string $value, mixed $bindValue = null, string|array $showAliases = [], string|array $hiddenAliases = []) : void;
 	/**
-	 * @param array<string, mixed> $context
+	 * @param array<string, mixed> $values
 	 * @param array<string, string|string[]> $showAliases
 	 * @param array<string, string|string[]> $hiddenAliases
 	 */
-	public function addValues(array $context, array $showAliases = [], array $hiddenAliases = []) : void;
+	public function addValues(array $values, array $showAliases = [], array $hiddenAliases = []) : void;
 
 	public function changeValue(string $key, mixed $value) : void;
 }
