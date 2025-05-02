@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
-use galaxygames\ovommand\parameter\BaseResult;
 use galaxygames\ovommand\utils\MessageParser;
 use shared\galaxygames\ovommand\fetus\result\IFailedResult;
 

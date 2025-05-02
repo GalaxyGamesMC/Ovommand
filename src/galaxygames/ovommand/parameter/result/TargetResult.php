@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
-use galaxygames\ovommand\parameter\BaseResult;
 use pocketmine\command\CommandSender;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Living;

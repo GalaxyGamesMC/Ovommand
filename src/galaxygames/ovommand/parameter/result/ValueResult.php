@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
-use galaxygames\ovommand\parameter\BaseResult;
-
 class ValueResult extends BaseResult{
 	public function __construct(protected mixed $value){}
 
