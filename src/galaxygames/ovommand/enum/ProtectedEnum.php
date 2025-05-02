@@ -6,7 +6,6 @@ namespace galaxygames\ovommand\enum;
 use galaxygames\ovommand\exception\EnumException;
 use galaxygames\ovommand\utils\MessageParser;
 
-// This was made so users would know what went wrong.
 class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnum{
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
 		throw new EnumException(MessageParser::EXCEPTION_ENUM_ADD_PROTECTED_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);

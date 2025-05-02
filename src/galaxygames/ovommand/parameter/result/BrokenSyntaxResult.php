@@ -7,10 +7,10 @@ use galaxygames\ovommand\utils\MessageParser;
 use shared\galaxygames\ovommand\fetus\result\IFailedResult;
 
 class BrokenSyntaxResult extends BaseResult implements IFailedResult{
-	public const CODE_BROKEN_SYNTAX = 0;
-	public const CODE_NOT_ENOUGH_INPUTS = 1;
-	public const CODE_TOO_MUCH_INPUTS = 2;
-	public const CODE_INVALID_INPUTS = 3;
+	public const int CODE_BROKEN_SYNTAX = 0;
+	public const int CODE_NOT_ENOUGH_INPUTS = 1;
+	public const int CODE_TOO_MUCH_INPUTS = 2;
+	public const int CODE_INVALID_INPUTS = 3;
 
 	protected int $matchedParameter = 0;
 	protected int $code = self::CODE_BROKEN_SYNTAX;

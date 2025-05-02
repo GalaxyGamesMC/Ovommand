@@ -19,6 +19,7 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use shared\galaxygames\ovommand\fetus\BaseConstraint;
 use shared\galaxygames\ovommand\fetus\IOvommand;
+use shared\galaxygames\ovommand\fetus\result\IResult;
 
 abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseConstraint[] */
@@ -99,7 +100,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	/**
 	 * Parse the parameters
 	 * @param string[] $rawParams
-	 * @return array<string, BaseResult>
+	 * @return array<string, IResult>
 	 */
 	public function parseParameters(array $rawParams) : array{
 		$paramCount = count($rawParams);

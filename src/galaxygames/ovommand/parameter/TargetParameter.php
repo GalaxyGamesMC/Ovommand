@@ -34,7 +34,7 @@ class TargetParameter extends BaseParameter{
 		}
 		return match ($tag = $groups[1]) {
 			TargetResult::TARGET_ENTITIES, TargetResult::TARGET_ALL, TargetResult::TARGET_NEAREST_PLAYER, TargetResult::TARGET_RANDOM_PLAYER, TargetResult::TARGET_SELF => TargetResult::create($tag),
-			default => TargetResult::create($groups[2])
+			default => TargetResult::create($groups[2] ?? []) // TODO: ?? [] is a placeholder
 		};
 	}
 }
