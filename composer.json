@@ -8,8 +8,8 @@
     "muqsit/simple-packet-handler": "dev-pm5"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.2",
-    "pocketmine/pocketmine-mp": "^5.10.0"
+    "phpstan/phpstan": "^1.12",
+    "pocketmine/pocketmine-mp": "^5.27.1"
   },
   "autoload": {
     "classmap": [
