@@ -42,14 +42,10 @@ final class GlobalEnumPool{
 			$enumPool[$eName] = $enum;
 			$enumHooker[$eName] = $hookable;
 		}
-		printf("ADD ENUMS:\n");
-		var_dump(self::$hardEnums);
 	}
 
 	public static function getHardEnum(string $key, ?IHookable $hookable = null) : IStaticEnum | ProtectedEnum | null{
 		$eHook = self::$hardEnumHooker[$key] ?? null;
-		printf("DUMP HARD ENUMS:\n");
-		var_dump(self::$hardEnums);
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
 			$enum = self::$hardEnums[$key];
 			return $enum->isProtected() ? $enum->asProtected() : $enum;
