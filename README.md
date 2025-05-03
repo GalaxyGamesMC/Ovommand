@@ -1,8 +1,8 @@
 <p align="center">
 <a href="https://github.com/GalaxyGamesMC/Ovommand"><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/white/ovommand_title.svg" width="300" height="88">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/ovommand_title.svg" width="300" height="88">
-  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/ovommand_title.svg" width="300" height="88">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/white/ovommand_title.svg" width="600" height="88">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/ovommand_title.svg" width="600" height="88">
+  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/ovommand_title.svg" width="600" height="88">
 </picture></a><br>
 <b>a feature-rich virion framework to handle commands for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b><br>
 📔<a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">Docs</a>⠀⠀🔌<a href="https://github.com/idumpster/OvoTest">Demo plugin</a> 
@@ -10,12 +10,12 @@
 
 ## About
 Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
+### Features
 
 ## Getting Started
 
 
 
-## License
 
 ## Issues:
 1. - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
