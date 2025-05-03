@@ -1,11 +1,11 @@
 <p align="center">
 <a href="https://github.com/GalaxyGamesMC/Ovommand"><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/white/short/ovommand.svg" width="125" height="88">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/short/ovommand.svg" width="125" height="88">
-  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/short/ovommand.svg" width="125" height="88">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/white/ovommand_title.svg" width="300" height="88">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/ovommand_title.svg" width="300" height="88">
+  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/ovommand_title.svg" width="300" height="88">
 </picture></a><br>
 <b>a feature-rich virion framework to handle commands for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b><br>
-<a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">📔Docs</a>⠀⠀<a href="https://github.com/idumpster/OvoTest">🔌Demo plugin</a> 
+📔<a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">Docs</a>⠀⠀🔌<a href="https://github.com/idumpster/OvoTest">Demo plugin</a> 
 </p>
 
 ## About
