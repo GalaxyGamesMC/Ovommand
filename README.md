@@ -4,18 +4,25 @@
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/ovommand.svg" width="125" height="125">
   <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/ovommand.svg" width="125" height="125">
 </picture></a><br>
-<b>a virion framework designed to parse command data for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b>
+<b>a feature-rich virion framework to handle commands for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b><br>
+Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.
+
+<a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">📔Docs</a>⠀⠀<a href="https://github.com/idumpster/OvoTest">🔌Demo plugin</a> 
 </p>
 
-[READ WIKI](https://github.com/GalaxyGamesMC/Ovommand/wiki)
+<div style="text-align: left; letter-spacing: 1.5em;">
+  <h1>Subcommands a :l</h1>
+</div>
 
-[DEMO PLUGIN](https://github.com/idumpster/OvoTest)
 
 # Ovommand
-NEW PROB:
-- [ ] `$returnRaw` in `BaseResult` is confusing and useless?
-- [ ] `isBlockPos` current do nothing in CoordinateResult
-- [ ] Enum's value can be illegally edit via outside packet
+## Issues:
+1. - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
+2. - [ ] `isBlockPos` current do nothing in CoordinateResult
+3. - [ ] Allow users to decide how the subcommand aliases are handled (multiple overloads vs packed enum)
+4. - [ ] Command namespace system (as vanilla addon) and duplicate command name.
+
+
 
 Enums system:
 
