@@ -10,6 +10,7 @@
 
 ## About
 Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
+
 ### Features
 1. - [x] Custom command with rich customizability
 2. - [x] Custom subcommand/parameters with command enum supports
@@ -30,19 +31,19 @@ Ovommand is a command parsing and handling framework for PocketMine-MP. It made 
 - [PMMP](https://github.com//pmmp/PocketMine-MP) 5.27.0 or higher
 - [simple-packet-handler](https://github.com/Muqsit/SimplePacketHandler) 0.1.5 or higher
 ## Getting Started
+<p align="center">
+<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
+<sup>This project is under construction....</sup>
+</p>
 
 ## Contributing
 Yes, please...
+<hr>
 ## Issues:
 1. - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
 2. - [ ] `isBlockPos` current do nothing in CoordinateResult
 3. - [ ] Allow users to decide how the subcommand aliases are handled (multiple overloads vs packed enum)
 4. - [ ] Command namespace system (as vanilla addon) and duplicate command name.
-
-<hr><p align="center">
-<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
-<sup>This project is under construction....</sup>
-</p>
 
 
 
