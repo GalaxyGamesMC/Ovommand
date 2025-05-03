@@ -22,10 +22,11 @@ Ovommand is a command parsing and handling framework for PocketMine-MP. It made 
 4. - [x] Default enums support (player list, gamemode, boolean, etc)
 5. - [x] Visible/Hidden aliases for subcommands.
 6. - [x] Constraints for commands
-7. - [x] Auto-generate usage for commands/subcommands
+7. - [x] Auto-generated usage for commands/subcommands
 8. - [ ] Command namespace (from vanilla addon: `/plugin1:test`)
 9. - [ ] Duplicate command name handle (adding counter to the command name)
 10. - [ ] Attribute supports (temp abandoned)
+11. - [ ] ?
 ### Requirement
 - PHP 8.2 or higher
 - [PMMP](https://github.com//pmmp/PocketMine-MP) 5.27.0 or higher
