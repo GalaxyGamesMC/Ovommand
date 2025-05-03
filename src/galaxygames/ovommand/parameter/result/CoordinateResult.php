@@ -9,9 +9,9 @@ use pocketmine\math\Vector3;
 use pocketmine\world\Position;
 
 final class CoordinateResult extends BaseResult{
-	public const int TYPE_DEFAULT = 0; //plain number
-	public const int TYPE_RELATIVE = 1; //tilde
-	public const int TYPE_LOCAL = 2; //caret notation
+	public const TYPE_DEFAULT = 0; //plain number
+	public const TYPE_RELATIVE = 1; //tilde
+	public const TYPE_LOCAL = 2; //caret notation
 
 	protected int $xType;
 	protected int $yType;

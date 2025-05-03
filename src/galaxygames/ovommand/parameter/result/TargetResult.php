@@ -10,11 +10,11 @@ use pocketmine\player\Player;
 use pocketmine\Server;
 
 class TargetResult extends BaseResult{
-	public const string TARGET_ALL = "@a";
-	public const string TARGET_ENTITIES = "@e";
-	public const string TARGET_NEAREST_PLAYER = "@p";
-	public const string TARGET_RANDOM_PLAYER = "@r";
-	public const string TARGET_SELF = "@s";
+	public const TARGET_ALL = "@a";
+	public const TARGET_ENTITIES = "@e";
+	public const TARGET_NEAREST_PLAYER = "@p";
+	public const TARGET_RANDOM_PLAYER = "@r";
+	public const TARGET_SELF = "@s";
 
 	protected string $target;
 
