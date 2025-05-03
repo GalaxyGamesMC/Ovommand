@@ -11,13 +11,31 @@
 ## About
 Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
 
+## Getting Started
+
+
+
+## License
+
 ## Issues:
 1. - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
 2. - [ ] `isBlockPos` current do nothing in CoordinateResult
 3. - [ ] Allow users to decide how the subcommand aliases are handled (multiple overloads vs packed enum)
 4. - [ ] Command namespace system (as vanilla addon) and duplicate command name.
 
+<hr><p align="center">
+<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
+<sup>This project is under construction....</sup>
+</p>
 
+
+
+
+
+
+
+
+<details> <summary>Show useless dumps</summary>
 
 Enums system:
 
@@ -39,13 +57,6 @@ Enums system:
 | Can alias be written by others? (Before server starts, Protected)     |    NO     |    NO     |
 | Can alias be written by others? (After server starts, not Protected)  |    YES    |    NO     |
 | Can alias be written by others? (After server starts, Protected)      |    NO     |    NO     |
-
-
-
-
-
-
-<details> <summary>Show useless dumps</summary>
 
 TODO:
 - [x] make reasonable enum that handle it value correctly (string -> value)
@@ -83,8 +94,6 @@ Self note:
 - Two enums, one soft and one hard could have a same name
 - Enum name could be set to anything, not just ascii / UTF-8
 
-</details>
-
 
 :x:
 :heavy_check_mark:
@@ -95,7 +104,5 @@ Self note:
 |&check;|_|&cross;|
 |&#x2611;|&#x2610;|&#x2612;|
 
-<hr><p align="center">
-<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
-<sup>This project is under construction....</sup>
-</p>
+
+</details>
