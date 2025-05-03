@@ -37,7 +37,7 @@ abstract class BaseSubCommand extends Ovommand{
 
 	/** @return list<string> */
 	public function getAliases() : array{
-		return [];
+		return [...$this->visibleAliases, ...$this->hiddenAliases];
 	}
 
 	/** @return list<string> */

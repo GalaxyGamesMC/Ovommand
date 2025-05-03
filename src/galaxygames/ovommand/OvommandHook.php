@@ -89,7 +89,7 @@ final class OvommandHook implements IHookable{
 			GlobalHookPool::addHook(self::$instance);
 			self::$enumManager = new EnumManager(self::$instance);
 			// stop other plugins from calling redundant calls
-			if (isset(GlobalEnumPool::getHookerRegisteredSoftEnums(self::$instance)[DefaultEnums::ONLINE_PLAYERS->value])) {
+			if (GlobalEnumPool::isHardEnumRegistered(DefaultEnums::ONLINE_PLAYERS->value)) {
 				try {
 					$pluginManager = Server::getInstance()->getPluginManager();
 					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
@@ -115,9 +115,8 @@ final class OvommandHook implements IHookable{
 	/** @return CommandOverload[] */
 	private static function generateOverloads(CommandSender $sender, Ovommand $command) : array{
 		$overloads = [];
-
 		foreach ($command->getSubCommands() as $label => $subCommand) {
-			if ($subCommand->isAliases($label) || !$subCommand->testPermissionSilent($sender)) { //get origin label
+			if ($subCommand->getName() !== $label || !$subCommand->testPermissionSilent($sender)) { //get origin label
 				continue;
 			}
 			foreach ($subCommand->getConstraints() as $constraint) {
@@ -126,11 +125,7 @@ final class OvommandHook implements IHookable{
 				}
 			}
 			$enumName = "aliases#" . spl_object_id($subCommand);
-			$scParams = [CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName, [$label]), 1)];
-			$subCommandVisibleAliases = $subCommand->getVisibleAliases();
-			foreach ($subCommandVisibleAliases as $i => $alias) {
-				$scParams[] = CommandParameter::enum($subCommand->getName(), new CommandEnum($enumName . "_" . ++$i, [$label, ...array_values($subCommandVisibleAliases)]), 1);
-			}
+			$scParams = [CommandParameter::enum($label, new CommandEnum($enumName, [$label, ...$subCommand->getVisibleAliases()]), 1)];
 			$overloadList = self::generateOverloads($sender, $subCommand);
 			if (!empty($overloadList)) {
 				foreach ($overloadList as $overload) {
@@ -143,7 +138,6 @@ final class OvommandHook implements IHookable{
 		foreach ($command->getOverloads() as $parameters) {
 			$overloads[] =  new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
 		}
-
 		return $overloads;
 	}
 

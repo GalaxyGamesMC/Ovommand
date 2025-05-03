@@ -109,8 +109,6 @@ abstract class Ovommand extends Command implements IOvommand{
 		if ($paramCount !== 0 && !$this->hasOverloads()) {
 			return [];
 		}
-		/** @var BaseResult[][] $successResults */
-		$successResults = [];
 		/** @var BaseResult[][] $failedResults */
 		$failedResults = [];
 		$finalId = 0;
@@ -122,21 +120,21 @@ abstract class Ovommand extends Command implements IOvommand{
 			$matchPoint = 0;
 			foreach ($parameters as $parameter) {
 				$span = $parameter->getSpanLength();
-				$p = 1;
 				$parameterName = $parameter->getName();
+				$parameterAmount = $parameter->hasCompactParameter() ? 1 : $span;
 				do {
-					$params = array_slice($rawParams, $offset, $p);
+					$params = array_slice($rawParams, $offset, $parameterAmount);
  					$result = $parameter->parse($params);
 					$results[$parameterName] = $result;
-					if ($result instanceof BrokenSyntaxResult && $p !== $span) {
-						$p++;
+					if ($result instanceof BrokenSyntaxResult && $parameterAmount !== $span) {
+						$parameterAmount++;
 						continue;
 					}
 					break;
-				} while ($p <= $span);
-				$offset += $p;
+				} while ($parameterAmount <= $span);
+				$offset += $parameterAmount;
 				if ($parameter->hasCompactParameter()) {
-					$result->setParsedPoint($p);
+					$result->setParsedPoint($parameterAmount);
 				}
 				if ($result instanceof BrokenSyntaxResult) {
 					$hasFailed = true;
@@ -146,7 +144,7 @@ abstract class Ovommand extends Command implements IOvommand{
 				if ($offset === $paramCount + 1 && $parameter->isOptional()) {
 					break;
 				}
-				$matchPoint += $p;
+				$matchPoint += $parameterAmount;
 			}
 			if (($paramCount > $matchPoint) && !$hasFailed) {
 				$hasFailed = true;
@@ -154,7 +152,7 @@ abstract class Ovommand extends Command implements IOvommand{
 					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 			}
 			if (!$hasFailed) {
-				return $results;
+				return $results; // return first success result
 			} else {
 				if ($matchPoint > $finalId) {
 					$finalId = $matchPoint;
@@ -229,9 +227,13 @@ abstract class Ovommand extends Command implements IOvommand{
 	/** @return list<string> */
 	public function generateUsageList() : array{
 		$usages = [];
-		foreach ($this->subCommands as $k => $subCommand) {
-			if ($k === $subCommand->getName()) {
-				array_push($usages, ...array_map(static fn(string $in) => $k . " " . $in, $subCommand->generateUsageList()));
+		foreach ($this->subCommands as $name => $subCommand) {
+			if ($name === $subCommand->getName()) {
+				$subCommandUsageList = $subCommand->generateUsageList();
+				array_push($usages, ...array_map(static fn(string $input) => "$name $input", $subCommandUsageList));
+				foreach ($subCommand->getVisibleAliases() as $alias) {
+					array_push($usages, ...array_map(static fn(string $input) => "$alias $input", $subCommandUsageList));
+				}
 			}
 		}
 		foreach ($this->overloads as $parameters) {

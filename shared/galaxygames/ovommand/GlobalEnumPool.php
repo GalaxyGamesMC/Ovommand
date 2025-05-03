@@ -34,7 +34,6 @@ final class GlobalEnumPool{
 			}
 			if (isset($enumPool[$eName])) {
 				if ($enum->isDefault()) {
-					printf("Enum with the same name is already existed, but it is default enum, so it will be overwritten!\n");
 					continue;
 				}
 				throw new OvommandEnumPoolException("Enum with the same name is already existed!", OvommandEnumPoolException::ENUM_ALREADY_EXISTED);
@@ -60,6 +59,14 @@ final class GlobalEnumPool{
 			return $enum->isProtected() ? $enum->asProtected() : $enum;
 		}
 		return null;
+	}
+
+	public static function isHardEnumRegistered(string $key) : bool{
+		return isset(self::$hardEnums[$key]);
+	}
+
+	public static function isSoftEnumRegistered(string $key) : bool{
+		return isset(self::$softEnums[$key]);
 	}
 
 	/** @return array<string,IDynamicEnum> */
