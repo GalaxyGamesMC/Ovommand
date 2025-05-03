@@ -1,6 +1,13 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/GalaxyGamesMC/Ovommand
-build-by-default: true
 branches:
 - main
-projects: []
+projects:
+  Ovommand:
+    model: virion
+    type: library
+    lint:
+      phpstan: true
+    libs:
+      - src: Muqsit/SimplePacketHandler/SimplePacketHandler
+        version: ^0.1.5
 ...
