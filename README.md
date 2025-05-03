@@ -1,18 +1,17 @@
 <p align="center">
 <a href="https://github.com/GalaxyGamesMC/Ovommand"><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/white/ovommand.svg" width="125" height="125">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/ovommand.svg" width="125" height="125">
-  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/ovommand.svg" width="125" height="125">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/white/short/ovommand.svg" width="125" height="88">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/black/short/ovommand.svg" width="125" height="88">
+  <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/short/ovommand.svg" width="125" height="88">
 </picture></a><br>
 <b>a feature-rich virion framework to handle commands for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b><br>
-Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.
-
+Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
 <a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">📔Docs</a>⠀⠀<a href="https://github.com/idumpster/OvoTest">🔌Demo plugin</a> 
 </p>
 
-<div style="text-align: left; letter-spacing: 1.5em;">
-  <h1>Subcommands a :l</h1>
-</div>
+<h1>Commando<img src="https://raw.githubusercontent.com/CortexPE/Commando/master/commando.png" height="64" width="64" align="left"></img>&nbsp;<img src="https://poggit.pmmp.io/ci.shield/CortexPE/Commando/~"></img></h1>
+<br/>
+
 
 
 # Ovommand
