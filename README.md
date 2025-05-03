@@ -5,16 +5,12 @@
   <img alt="ovo_logo" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/blue/short/ovommand.svg" width="125" height="88">
 </picture></a><br>
 <b>a feature-rich virion framework to handle commands for <a href="https://github.com/pmmp/PocketMine-MP">PocketMine-MP</a></b><br>
-Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
 <a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">📔Docs</a>⠀⠀<a href="https://github.com/idumpster/OvoTest">🔌Demo plugin</a> 
 </p>
 
-<h1>Commando<img src="https://raw.githubusercontent.com/CortexPE/Commando/master/commando.png" height="64" width="64" align="left"></img>&nbsp;<img src="https://poggit.pmmp.io/ci.shield/CortexPE/Commando/~"></img></h1>
-<br/>
+## About
+Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
 
-
-
-# Ovommand
 ## Issues:
 1. - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
 2. - [ ] `isBlockPos` current do nothing in CoordinateResult
