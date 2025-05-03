@@ -5,7 +5,8 @@
   "license": "GPL-3.0",
   "minimum-stability": "dev",
   "require": {
-    "muqsit/simple-packet-handler": "^0.1.5"
+    "muqsit/simple-packet-handler": "^0.1.5",
+    "php": "^8.2"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.12",
