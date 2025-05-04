@@ -8,8 +8,20 @@
 📔<a href="https://github.com/GalaxyGamesMC/Ovommand/wiki">Docs</a>⠀⠀🔌<a href="https://github.com/idumpster/OvoTest">Demo plugin</a> 
 </p>
 
-## About
+## 📖 Introduction
 Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
+<blockquote>
+
+  [!IMPORTANT]
+
+  <strong>IMPORTANT</strong><br>
+  Please note that this project is still at a very early stage and has not yet been released officially, and interfaces
+  may be added or removed without notice. Please do not use Ovommand in a production!
+<p align="center">
+<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
+<sup>This project is under construction....</sup>
+</p>
+</blockquote>
 
 ### Features
 1. - [x] Custom command with rich customizability
@@ -32,14 +44,15 @@ Ovommand is a command parsing and handling framework for PocketMine-MP. It made 
 - [PMMP](https://github.com//pmmp/PocketMine-MP) 5.27.0 or higher
 - [simple-packet-handler](https://github.com/Muqsit/SimplePacketHandler) 0.1.5 or higher
 ## Getting Started
-<p align="center">
-<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
-<sup>This project is under construction....</sup>
-</p>
-
 ## Contributing
 Yes, please...
+
+## Note
+### A. Namespace system
+1) If plugin A has `namespace: ns` set in `plugin.yml` then <br>
+a) plugin A has `force namespace`
 <hr>
+
 ## Issues:
 1. - [ ] `$returnRaw` in `BaseResult` is confusing and useless?
 2. - [ ] `isBlockPos` current do nothing in CoordinateResult
