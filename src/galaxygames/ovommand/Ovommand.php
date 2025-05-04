@@ -28,9 +28,10 @@ abstract class Ovommand extends Command implements IOvommand{
 	protected array $subCommands = [];
 	/** @var BaseParameter[][] */
 	protected array $overloads = [];
-	protected int $currentOverloadId = 0;
-	protected bool $doSendingSyntaxWarning = true;
-	protected bool $doSendingUsageMessage = true;
+	private int $currentOverloadId = 0;
+	protected bool $doSendingSyntaxWarning = false;
+	protected bool $doSendingUsageMessage = false;
+	protected bool $doCompactSubCommandAliases = false;
 
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
@@ -52,18 +53,16 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function registerSubCommands(BaseSubCommand ...$subCommands) : void{
 		foreach ($subCommands as $subCommand) {
 			$subName = $subCommand->getName();
-			if (!isset($this->subCommands[$subName])) {
-				$this->subCommands[$subName] = $subCommand->setParent($this);
-				$aliases = [...$subCommand->getVisibleAliases(), ...$subCommand->getHiddenAliases()];
-				foreach ($aliases as $alias) {
-					if (!isset($this->subCommands[$alias])) {
-						$this->subCommands[$alias] = $subCommand;
-					} else {
-						throw new CommandException(MessageParser::EXCEPTION_SUB_COMMAND_DUPLICATE_ALIAS->translate(["alias" => $alias]), CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
-					}
-				}
-			} else {
+			if (isset($this->subCommands[$subName])) {
 				throw new CommandException(MessageParser::EXCEPTION_SUB_COMMAND_DUPLICATE_NAME->translate(["subName" => $subName]), CommandException::SUB_COMMAND_DUPLICATE_NAME);
+			}
+			$this->subCommands[$subName] = $subCommand->setParent($this);
+			$aliases = [...$subCommand->getVisibleAliases(), ...$subCommand->getHiddenAliases()];
+			foreach ($aliases as $alias) {
+				if (isset($this->subCommands[$alias])) {
+					throw new CommandException(MessageParser::EXCEPTION_SUB_COMMAND_DUPLICATE_ALIAS->translate(["alias" => $alias]), CommandException::SUB_COMMAND_DUPLICATE_ALIAS);
+				}
+				$this->subCommands[$alias] = $subCommand;
 			}
 		}
 	}
@@ -165,17 +164,10 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/** @return BaseParameter[][] */
-	public function getOverloads() : array{
-		return $this->overloads;
-	}
+	public function getOverloads() : array{ return $this->overloads; }
+	public function hasOverloads() : bool{ return !empty($this->overloads); }
 
-	public function hasOverloads() : bool{
-		return !empty($this->overloads);
-	}
-
-	public function doHandleRawResult() : bool{
-		return true;
-	}
+	public function doHandleRawResult() : bool{ return true; }
 
 	/**
 	 * @param list<string> $args
@@ -186,12 +178,11 @@ abstract class Ovommand extends Command implements IOvommand{
 			return;
 		}
 		foreach ($this->constraints as $constraint) {
-			if ($constraint->test($sender, $commandLabel, $args)) {
-				$constraint->onSuccess($sender, $commandLabel, $args);
-			} else {
+			if (!$constraint->test($sender, $commandLabel, $args)) {
 				$constraint->onFailure($sender, $commandLabel, $args);
 				return;
 			}
+			$constraint->onSuccess($sender, $commandLabel, $args);
 		}
 		if (empty($args)) {
 			if ($this->onPreRun($sender, [])) {
@@ -199,16 +190,15 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 			return;
 		}
-		$preLabel === "" ? $preLabel = $commandLabel : $preLabel .= " " . $commandLabel;
+		$preLabel = $preLabel === "" ? $commandLabel : "$preLabel $commandLabel";
 		$label = $args[0];
 		if (isset($this->subCommands[$label])) {
-			$execute = $this->subCommands[$label];
 			array_shift($args);
-			$execute->execute($sender, $label, $args, $preLabel);
+			$this->subCommands[$label]->execute($sender, $label, $args, $preLabel);
 		} else {
-			$passArgs = $this->parseParameters($args);
+			$parsedArgs = $this->parseParameters($args);
 			$totalPoint = 0;
-			foreach ($passArgs as $passArg) {
+			foreach ($parsedArgs as $passArg) {
 				if (!$passArg instanceof BrokenSyntaxResult) {
 					$preLabel .= Utils::implode(array_slice($args, $totalPoint, $passArg->getParsedPoint()));
 				} else {
@@ -218,8 +208,8 @@ abstract class Ovommand extends Command implements IOvommand{
 			}
 			$args = array_slice($args, $totalPoint);
 
-			if ($this->onPreRun($sender, $passArgs, $args)) {
-				$this->onRun($sender, $commandLabel, $passArgs);
+			if ($this->onPreRun($sender, $parsedArgs, $args)) {
+				$this->onRun($sender, $commandLabel, $parsedArgs);
 			}
 		}
 	}
@@ -280,23 +270,16 @@ abstract class Ovommand extends Command implements IOvommand{
 	}
 
 	/** Called when the sender don't have the permissions to execute the command / sub commands, return false to confirm the rejection */
-	public function onPermissionRejected(CommandSender $sender) : bool{
-		return false;
-	}
+	public function onPermissionRejected(CommandSender $sender) : bool{ return false; }
 
 	/** @param BaseResult[] $args */
 	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
 
 	abstract protected function setup() : void;
 
-	public function addConstraint(BaseConstraint $constraint) : void{
-		$this->constraints[] = $constraint;
-	}
-
+	public function addConstraint(BaseConstraint $constraint) : void{ $this->constraints[] = $constraint; }
 	/** @return BaseConstraint[] */
-	public function getConstraints() : array{
-		return $this->constraints;
-	}
+	public function getConstraints() : array{ return $this->constraints; }
 
 	public function getUsage() : string{
 		$usage = $this->usageMessage;
@@ -306,21 +289,11 @@ abstract class Ovommand extends Command implements IOvommand{
 		return $usage;
 	}
 
-	public function getOwningPlugin() : Plugin{
-		return OvommandHook::getOwnedPlugin();
-	}
-
-	public function getCurrentOverloadId() : int{
-		return $this->currentOverloadId;
-	}
-
-	public function doSendingSyntaxWarning() : bool{
-		return $this->doSendingSyntaxWarning;
-	}
-
-	public function doSendingUsageMessage() : bool{
-		return $this->doSendingUsageMessage;
-	}
+	public function getOwningPlugin() : Plugin{ return OvommandHook::getOwnedPlugin(); }
+	public function getCurrentOverloadId() : int{ return $this->currentOverloadId; }
+	public function doSendingSyntaxWarning() : bool{ return $this->doSendingSyntaxWarning; }
+	public function doSendingUsageMessage() : bool{ return $this->doSendingUsageMessage; }
+	public function doCompactSubCommandAliases() : bool { return $this->doCompactSubCommandAliases; }
 
 	public function setDoSendingSyntaxWarning(bool $doSendingSyntaxWarning = true) : Ovommand{
 		$this->doSendingSyntaxWarning = $doSendingSyntaxWarning;
@@ -329,6 +302,11 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	public function setDoSendingUsageMessage(bool $doSendingUsageMessage = true) : Ovommand{
 		$this->doSendingUsageMessage = $doSendingUsageMessage;
+		return $this;
+	}
+
+	public function setDoCompactSubCommandAliases(bool $doCompactSubCommandAliases = true) : Ovommand {
+		$this->doCompactSubCommandAliases = $doCompactSubCommandAliases;
 		return $this;
 	}
 }

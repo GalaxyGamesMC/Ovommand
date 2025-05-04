@@ -20,16 +20,14 @@ enum DefaultEnums : string{
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
 				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
-				isProtected: true,
-				isDefault: true
+				isProtected: true, isDefault: true
 			),
 			self::VANILLA_GAMEMODE => new HardEnum($this->value,
 				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
 				["survival" => "s", "creative" => "c", "adventure" => "a"],
-				isProtected: true,
-				isDefault: true
+				isProtected: true, isDefault: true
 			),
-			self::ONLINE_PLAYERS => new SoftEnum("OnlinePlayers",isDefault: true)
+			self::ONLINE_PLAYERS => new SoftEnum("OnlinePlayers", isProtected: true, isDefault: true)
 		};
 	}
 }

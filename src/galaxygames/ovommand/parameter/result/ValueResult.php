@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace galaxygames\ovommand\parameter\result;
 
-class ValueResult extends BaseResult{
+class ValueResult extends BaseResult implements \shared\galaxygames\ovommand\fetus\result\ISucceedResult{
 	public function __construct(protected mixed $value){}
 
 	public static function create(mixed $value) : self{

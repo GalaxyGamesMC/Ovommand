@@ -32,7 +32,7 @@ final class EnumManager{
 			}
 		}
 		try {
-			GlobalEnumPool::addEnums(OvommandHook::getInstance(), ...$enums);
+			GlobalEnumPool::addEnums($this->ovommandHook, ...$enums);
 		} catch (OvommandEnumPoolException $e) {
 			match ($e->getCode()) {
 				OvommandEnumPoolException::ENUM_ALREADY_EXISTED => throw new EnumException(MessageParser::EXCEPTION_ENUM_ALREADY_EXISTED->value, EnumException::ENUM_ALREADY_EXISTED),
@@ -57,9 +57,5 @@ final class EnumManager{
 
 	public function getEnum(DefaultEnums|string $enumName, bool $isSoft = false) : IDynamicEnum|IStaticEnum|ProtectedEnum|null{
 		return $isSoft ? $this->getSoftEnum($enumName) : $this->getHardEnum($enumName);
-	}
-
-	public function getOvommandHook() : OvommandHook{
-		return $this->ovommandHook;
 	}
 }

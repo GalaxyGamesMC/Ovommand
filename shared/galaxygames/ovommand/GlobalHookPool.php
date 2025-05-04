@@ -40,10 +40,10 @@ class GlobalHookPool{
 	public static function getHook(Plugin $plugin) : IHookable{
 		$pid = spl_object_id($plugin);
 		if (!isset(self::$hooks[$pid])) {
-			throw new \InvalidArgumentException("The ovommandHook of the plugin ($pid), named '" . $plugin->getName() . "', is not registered!");
+			throw new \InvalidArgumentException("The OvommandHook of the plugin ($pid), named '{$plugin->getName()}' is not registered!");
 		}
 		if (self::$hooks[$pid]::isPrivate()) {
-			throw new OvommandHookException("OvommandHook is private"); //TODO: change msg
+			throw new OvommandHookException("The OvommandHook of the plugin ($pid), named '{$plugin->getName()}' is not public.");
 		}
 		return self::$hooks[$pid];
 	}

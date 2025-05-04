@@ -56,14 +56,15 @@ final class OvommandHook implements IHookable{
 	private static OvommandHook $instance;
 	private static Plugin $plugin;
 	private static bool $privacy = false;
+	private static ?string $namespace = null;
 
 	public static function getInstance() : OvommandHook{
 		return self::$instance ?? self::register(self::getOwnedPlugin());
 	}
 
-	public static function register(Plugin $plugin, bool $private = false) : self{
+	public static function register(Plugin $plugin, bool $private = false, ?string $namespace = null) : self{
 		if (!self::isRegistered() || self::$plugin->isEnabled()) {
-			$interceptor = SimplePacketHandler::createInterceptor($plugin);
+			$interceptor = SimplePacketHandler::createInterceptor($plugin, EventPriority::HIGHEST);
 			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
 				$player = $target->getPlayer();
 				if ($player === null) {
@@ -89,19 +90,25 @@ final class OvommandHook implements IHookable{
 			GlobalHookPool::addHook(self::$instance);
 			self::$enumManager = new EnumManager(self::$instance);
 			// stop other plugins from calling redundant calls
-			if (GlobalEnumPool::isHardEnumRegistered(DefaultEnums::ONLINE_PLAYERS->value)) {
+			if (GlobalEnumPool::isSoftEnumRegistered(DefaultEnums::ONLINE_PLAYERS->value)) {
 				try {
 					$pluginManager = Server::getInstance()->getPluginManager();
 					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
 						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
 						if ($enum instanceof IDynamicEnum) {
 							$enum->addValue($event->getPlayer()->getName());
+							printf("Add %s to %s\n", $event->getPlayer()->getName(), $enum->getName());
+						} else {
+							printf("WTF 1");
 						}
 					}, EventPriority::NORMAL, $plugin);
 					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
 						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
 						if ($enum instanceof IDynamicEnum) {
 							$enum->removeValue($event->getPlayer()->getName());
+							printf("Remove %s to %s\n", $event->getPlayer()->getName(), $enum->getName());
+						} else {
+							printf("WTF 2");
 						}
 					}, EventPriority::NORMAL, $plugin);
 				} catch (\ReflectionException $e) {
@@ -124,15 +131,27 @@ final class OvommandHook implements IHookable{
 					continue 2;
 				}
 			}
-			$enumName = "aliases#" . spl_object_id($subCommand);
-			$scParams = [CommandParameter::enum($label, new CommandEnum($enumName, [$label, ...$subCommand->getVisibleAliases()]), 1)];
+			$enumName = "scmd#" . spl_object_id($subCommand);
+			$vAliasList = $subCommand->getVisibleAliases();
+			$scParam = CommandParameter::enum($label, new CommandEnum($enumName, [$label]), 1);
 			$overloadList = self::generateOverloads($sender, $subCommand);
-			if (!empty($overloadList)) {
-				foreach ($overloadList as $overload) {
-					$overloads[] = new CommandOverload(false, [...$scParams, ...$overload->getParameters()]);
+			if (empty($overloadList)) {
+				$overloads[] = new CommandOverload(false, [$scParam]);
+				foreach ($vAliasList as $alias) {
+					$overloads[] = new CommandOverload(false, [
+						CommandParameter::enum($label, new CommandEnum($enumName . $alias, [$alias]), 1)
+					]);
 				}
 			} else {
-				$overloads[] = new CommandOverload(false, $scParams);
+				foreach ($overloadList as $overload) {
+					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
+					foreach ($vAliasList as $alias) {
+						$overloads[] = new CommandOverload(false, [
+							CommandParameter::enum($label, new CommandEnum($enumName . $alias, [$alias]), 1)
+							, ...$overload->getParameters()
+						]);
+					}
+				}
 			}
 		}
 		foreach ($command->getOverloads() as $parameters) {
@@ -141,22 +160,14 @@ final class OvommandHook implements IHookable{
 		return $overloads;
 	}
 
-	public static function isRegistered() : bool{
-		return isset(self::$plugin);
-	}
-
-	public static function getEnumManager() : EnumManager{
-		return self::$enumManager;
-	}
+	public static function isRegistered() : bool{ return isset(self::$plugin); }
+	public static function isPrivate() : bool{ return self::$privacy; }
+	public static function getEnumManager() : EnumManager{ return self::$enumManager; }
 
 	public static function getOwnedPlugin() : Plugin{
 		if (!self::isRegistered()) {
 			throw new OvommandHookException(MessageParser::EXCEPTION_OVOMMANDHOOK_NOT_REGISTERED->value);
 		}
 		return self::$plugin;
-	}
-
-	public static function isPrivate() : bool{
-		return self::$privacy;
 	}
 }

@@ -43,20 +43,40 @@ final class GlobalEnumPool{
 		}
 	}
 
+	/**
+	 * Retrieves a hard enum based on the enum name. If the enum is protected and the hook is not the owner, it returned
+	 * a protected/copy version of the enum.
+	 *
+	 * @param string     $key      The hard enum name.
+	 * @param ?IHookable $hookable The optional hookable instance for permission verification, default=null
+	 *
+	 * @return ?IStaticEnum|ProtectedEnum Returns the hard enum as an `IStaticEnum` or `ProtectedEnum`, or `null` if no
+	 * 									  enum with that name is found.
+	 */
 	public static function getHardEnum(string $key, ?IHookable $hookable = null) : IStaticEnum | ProtectedEnum | null{
 		$eHook = self::$hardEnumHooker[$key] ?? null;
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
 			$enum = self::$hardEnums[$key];
-			return $enum->isProtected() ? $enum->asProtected() : $enum;
+			return $enum->isProtected() && $eHook !== $hookable ? $enum->asProtected() : $enum;
 		}
 		return null;
 	}
 
+	/**
+	 * Retrieves a hard enum based on the enum name. If the enum is protected and the hook is not the owner, it returned
+	 * a protected/copy version of the enum.
+	 *
+	 * @param string 	 $key      The soft enum name.
+	 * @param ?IHookable $hookable The optional hookable instance for permission verification, default=null
+	 *
+	 * @return ?IDynamicEnum|ProtectedEnum Returns the soft enum as an `IDynamicEnum` or `ProtectedEnum`, or `null` if
+	 * 									   no enum with that name is found.
+	 */
 	public static function getSoftEnum(string $key, ?IHookable $hookable = null) : IDynamicEnum | ProtectedEnum | null{
 		$eHook = self::$softEnumHooker[$key] ?? null;
 		if ($eHook !== null && ($eHook === $hookable || !$eHook::isPrivate())) {
 			$enum = self::$softEnums[$key];
-			return $enum->isProtected() ? $enum->asProtected() : $enum;
+			return $enum->isProtected() && $eHook !== $hookable ? $enum->asProtected() : $enum;
 		}
 		return null;
 	}
