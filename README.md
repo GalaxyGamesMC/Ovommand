@@ -13,14 +13,10 @@ Ovommand is a command parsing and handling framework for PocketMine-MP. It made 
 <blockquote>
 
   [!IMPORTANT]
-
-  <strong>IMPORTANT</strong><br>
   Please note that this project is still at a very early stage and has not yet been released officially, and interfaces
   may be added or removed without notice. Please do not use Ovommand in a production!
-<p align="center">
-<img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
-<sup>This project is under construction....</sup>
-</p>
+<p align="center"> <img alt="ovo_warning" src="https://raw.githubusercontent.com/idumpster/image/main/ovommand/svg/yellow/short/ovommand_stupon.svg" width="65" height="45"><br>
+<sup>This project is under construction....</sup></p>
 </blockquote>
 
 ### Features
