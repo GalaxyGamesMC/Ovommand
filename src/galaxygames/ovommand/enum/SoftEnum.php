@@ -12,16 +12,10 @@ use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 class SoftEnum extends BaseEnum implements IDynamicEnum{
 
 	public function encode() : CommandEnum{
-		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)], true);
+		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->visibleAliases)], true);
 	}
 
-	public function removeValue(string $key) : void{
-		$this->removeValues([$key]);
-	}
-
-	public function removeValuesBySpreading(string ...$keys) : void{
-		$this->removeValues($keys);
-	}
+	public function removeValue(string ...$key) : void{ $this->removeValues($key); }
 
 	/** @param string[] $keys */
 	public function removeValues(array $keys) : void{
@@ -34,7 +28,7 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 		}
 		if (!empty($updates)) {
 			$this->hiddenAliases = array_diff($this->hiddenAliases, $updates);
-			$this->showAliases = array_diff($this->showAliases, $updates);
+			$this->visibleAliases = array_diff($this->visibleAliases, $updates);
 			$this->update($updates, UpdateSoftEnumPacket::TYPE_REMOVE);
 		}
 	}
@@ -61,11 +55,11 @@ class SoftEnum extends BaseEnum implements IDynamicEnum{
 			}
 		}
 		if (!empty($updates)) {
-			$oldShowAliases = $this->showAliases;
+			$oldShowAliases = $this->visibleAliases;
 			$this->addAliases($showAliases);
 			$this->addAliases($hiddenAliases, true);
 			// We can also give them the full $this->showAliases too, this might be changed in the near future
-			$this->update([...$updates, ...array_diff($this->showAliases, $oldShowAliases)], UpdateSoftEnumPacket::TYPE_ADD);
+			$this->update([...$updates, ...array_diff($this->visibleAliases, $oldShowAliases)], UpdateSoftEnumPacket::TYPE_ADD);
 		}
 	}
 

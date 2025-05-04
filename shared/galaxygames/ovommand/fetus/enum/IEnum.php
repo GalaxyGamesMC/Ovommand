@@ -11,13 +11,12 @@ interface IEnum{
 	public function encode() : CommandEnum;
 	public function isSoft() : bool;
 	public function getValue(string $key) : mixed;
-	public function removeValue(string $key) : void;
-	public function removeValuesBySpreading(string ...$keys) : void;
+	public function removeValue(string ...$key) : void;
 	/** @param string[] $keys */
 	public function removeValues(array $keys) : void;
 	public function getRawValues() : array;
 	public function getHiddenAliases() : array;
-	public function getShowAliases() : array;
+	public function getVisibleAliases() : array;
 
 	/** @param array<string, string|string[]> $aliases */
 	public function addAliases(array $aliases, bool $isHidden = false) : void;

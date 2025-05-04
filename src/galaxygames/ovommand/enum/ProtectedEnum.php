@@ -15,11 +15,8 @@ class ProtectedEnum extends \shared\galaxygames\ovommand\fetus\enum\ProtectedEnu
 		throw new EnumException(MessageParser::EXCEPTION_ENUM_REMOVE_PROTECTED_ALIAS->translate(['enumName' => $this->getName()]), EnumException::ENUM_EDIT_PROTECTED_ENUM);
 	}
 
-	public function removeValue(string $key) : void{
+	public function removeValue(string ...$key) : void{
 		$this->removeValues([]);
-	}
-	public function removeValuesBySpreading(string ...$keys) : void{
-		$this->removeValues($keys);
 	}
 
 	/** @param string[] $keys */

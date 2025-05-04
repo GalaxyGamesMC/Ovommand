@@ -11,7 +11,7 @@ use shared\galaxygames\ovommand\fetus\enum\IStaticEnum;
 
 class HardEnum extends BaseEnum implements IStaticEnum{
 	public function encode() : CommandEnum{
-		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->showAliases)]);
+		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->visibleAliases)]);
 	}
 
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
@@ -28,13 +28,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 		parent::removeAliases( $aliases, $isHidden);
 	}
 
-	public function removeValue(string $key) : void{
-		$this->removeValues([$key]);
-	}
-
-	public function removeValuesBySpreading(string ...$keys) : void{
-		$this->removeValues($keys);
-	}
+	public function removeValue(string ...$key) : void{ $this->removeValues($key); }
 
 	public function removeValues(array $keys) : void{
 		if (Server::getInstance()->getTick() !== 0) {
@@ -49,7 +43,7 @@ class HardEnum extends BaseEnum implements IStaticEnum{
 		}
 		if (count($updates) !== 0) {
 			$this->hiddenAliases = array_diff($this->hiddenAliases, $updates);
-			$this->showAliases = array_diff($this->showAliases, $updates);
+			$this->visibleAliases = array_diff($this->visibleAliases, $updates);
 		}
 	}
 

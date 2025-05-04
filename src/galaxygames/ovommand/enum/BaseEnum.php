@@ -11,10 +11,10 @@ abstract class BaseEnum extends OvommandEnum{
 	/**
 	 * @param string $name The name of the enum, E.g: [parameterName: enumName]
 	 * @param array<string, mixed> $values The input values of an enum
-	 * @param array<string, string|string[]> $showAliases The aliases for values, but they will show and have auto-hint ingame!
+	 * @param array<string, string|string[]> $visibleAliases The aliases for values, but they will be visible and have auto-hint ingame!
 	 * @param array<string, string|string[]> $hiddenAliases The aliases for values, but they won't show or have auto-hint ingame!
 	 */
-	public function __construct(protected string $name, array $values = [], array $showAliases = [], array $hiddenAliases = [], protected bool $isProtected = false, protected bool $isDefault = false){
+	public function __construct(protected string $name, array $values = [], array $visibleAliases = [], array $hiddenAliases = [], protected bool $isProtected = false, protected bool $isDefault = false){
 		foreach ($values as $key => $value) {
 			if (!is_string($key)) {
 				throw new EnumException(MessageParser::EXCEPTION_ENUM_INVALID_VALUE_NAME_TYPE->value, EnumException::ENUM_INVALID_VALUE_NAME_TYPE);
@@ -24,18 +24,18 @@ abstract class BaseEnum extends OvommandEnum{
 			}
 		}
 		$this->values = $values;
-		$this->addAliases($showAliases);
+		$this->addAliases($visibleAliases);
 		$this->addAliases($hiddenAliases, true);
 	}
 
 	public function addAliases(array $aliases, bool $isHidden = false) : void{
-		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
+		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->visibleAliases;
 		foreach ($aliases as $key => $alias) {
 			if (is_string($alias)) {
 				if (!isset($this->values[$key])) {
 					throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_UNKNOWN_KEY->translate(["aliasName" => $alias, "key" => $key]), EnumException::ENUM_ALIAS_UNKNOWN_KEY);
 				}
-				if (isset($this->showAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
+				if (isset($this->visibleAliases[$alias]) || isset($this->hiddenAliases[$alias])) {
 					throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_REGISTERED->translate(["aliasName" => $alias]), EnumException::ENUM_ALIAS_REGISTERED);
 				}
 				$aliasesList[$alias] = $key;
@@ -47,7 +47,7 @@ abstract class BaseEnum extends OvommandEnum{
 					if (!is_string($a)) {
 						throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_UNKNOWN_TYPE->translate(["key" => $key, "type" => gettype($a)]), EnumException::ENUM_ALIAS_UNKNOWN_TYPE);
 					}
-					if (isset($this->showAliases[$a]) || isset($this->hiddenAliases[$a])) {
+					if (isset($this->visibleAliases[$a]) || isset($this->hiddenAliases[$a])) {
 						throw new EnumException(MessageParser::EXCEPTION_ENUM_ALIAS_REGISTERED->translate(["aliasName" => $a]), EnumException::ENUM_ALIAS_REGISTERED);
 					}
 					$aliasesList[$a] = $key;
@@ -59,19 +59,19 @@ abstract class BaseEnum extends OvommandEnum{
 	}
 
 	public function removeAliases(array $aliases, bool $isHidden = false) : void{
-		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->showAliases;
+		$isHidden ? $aliasesList = &$this->hiddenAliases : $aliasesList = &$this->visibleAliases;
 		foreach ($aliases as $alias) {
 			unset($aliasesList[$alias]);
 		}
 	}
 
 	public function getValue(string $key) : mixed{
-		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
+		$parentKey = $this->visibleAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
 		return $this->values[$parentKey] ?? null; //What if null is bound with the key :c
 	}
 
 	public function hasValue(string $key) : bool{
-		$parentKey = $this->showAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
+		$parentKey = $this->visibleAliases[$key] ?? $this->hiddenAliases[$key] ?? $key;
 		return isset($this->values[$parentKey]);
 	}
 

@@ -13,24 +13,15 @@ abstract class OvommandEnum implements IEnum{
 	/** @var string[] */
 	protected array $hiddenAliases = [];
 	/** @var string[] */
-	protected array $showAliases = [];
+	protected array $visibleAliases = [];
 	protected bool $isDefault = false;
 	protected bool $isProtected = false;
 
-	public function isProtected() : bool{
-		return $this->isProtected;
-	}
-
+	final public function isDefault() : bool{ return $this->isDefault; }
+	public function isProtected() : bool{ return $this->isProtected; }
 	abstract public function asProtected() : ProtectedEnum;
 
-	final public function getName() : string{
-		return $this->name;
-	}
-
-	final public function isDefault() : bool{
-		return $this->isDefault;
-	}
-
+	final public function getName() : string{ return $this->name; }
 	abstract public function encode() : CommandEnum;
 	abstract public function getValue(string $key) : mixed;
 
@@ -43,17 +34,9 @@ abstract class OvommandEnum implements IEnum{
 	}
 
 	/** @return array<string, mixed> */
-	public function getRawValues() : array{
-		return $this->values;
-	}
-
+	public function getRawValues() : array{ return $this->values; }
 	/** @return string[] */
-	public function getHiddenAliases() : array{
-		return $this->hiddenAliases;
-	}
-
+	public function getHiddenAliases() : array{ return $this->hiddenAliases; }
 	/** @return string[] */
-	public function getShowAliases() : array{
-		return $this->showAliases;
-	}
+	public function getVisibleAliases() : array{ return $this->visibleAliases; }
 }
