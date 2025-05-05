@@ -65,23 +65,28 @@ final class OvommandHook implements IHookable{
 	public static function register(Plugin $plugin, bool $private = false, ?string $namespace = null) : self{
 		if (!self::isRegistered() || self::$plugin->isEnabled()) {
 			$interceptor = SimplePacketHandler::createInterceptor($plugin, EventPriority::HIGHEST);
-			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
+			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) use ($plugin) : bool{
 				$player = $target->getPlayer();
 				if ($player === null) {
 					return false;
 				}
+				$dump = print_r($packet, true);
+				file_put_contents("D:\\pmmp\\Ovommand\\dump\\packet\\{$player->getName()}_{$plugin->getName()}_packet_before.txt", $dump);
 				$commandMap = Server::getInstance()->getCommandMap();
 				foreach ($packet->commandData as $name => $commandData) {
 					$command = $commandMap->getCommand($name);
-					if ($command instanceof BaseCommand) {
-						foreach ($command->getConstraints() as $constraint) {
-							if (!$constraint->isVisibleTo($player)) {
-								continue 2;
-							}
-						}
-						$commandData->overloads = self::generateOverloads($player, $command);
+					if (!$command instanceof BaseCommand) {
+						continue;
 					}
+					foreach ($command->getConstraints() as $constraint) {
+						if (!$constraint->isVisibleTo($player)) {
+							continue 2;
+						}
+					}
+					$commandData->overloads = self::generateOverloads($player, $command);
 				}
+				$dump = print_r($packet, true);
+				file_put_contents("D:\\pmmp\\Ovommand\\dump\\packet\\{$player->getName()}_{$plugin->getName()}packet_after.txt", $dump);
 				return true;
 			});
 			self::$privacy = $private;
@@ -89,31 +94,20 @@ final class OvommandHook implements IHookable{
 			self::$instance = new self;
 			GlobalHookPool::addHook(self::$instance);
 			self::$enumManager = new EnumManager(self::$instance);
-			// stop other plugins from calling redundant calls
-			if (GlobalEnumPool::isSoftEnumRegistered(DefaultEnums::ONLINE_PLAYERS->value)) {
-				try {
-					$pluginManager = Server::getInstance()->getPluginManager();
-					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event){
-						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-						if ($enum instanceof IDynamicEnum) {
-							$enum->addValue($event->getPlayer()->getName());
-							printf("Add %s to %s\n", $event->getPlayer()->getName(), $enum->getName());
-						} else {
-							printf("WTF 1");
-						}
+			try {
+				$pluginManager = Server::getInstance()->getPluginManager();
+				$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
+				// only the plugin registered that default enum is allowed to update the enum
+				if ($enum instanceof IDynamicEnum) {
+					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event) use ($enum, $plugin){
+						$enum->addValue($event->getPlayer()->getName());
 					}, EventPriority::NORMAL, $plugin);
-					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event){
-						$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-						if ($enum instanceof IDynamicEnum) {
-							$enum->removeValue($event->getPlayer()->getName());
-							printf("Remove %s to %s\n", $event->getPlayer()->getName(), $enum->getName());
-						} else {
-							printf("WTF 2");
-						}
+					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) use ($enum, $plugin) {
+						$enum->removeValue($event->getPlayer()->getName());
 					}, EventPriority::NORMAL, $plugin);
-				} catch (\ReflectionException $e) {
-					$plugin->getLogger()->logException($e);
 				}
+			} catch (\ReflectionException $e) {
+				$plugin->getLogger()->logException($e);
 			}
 		}
 		return self::$instance;
