@@ -1,0 +1,2764 @@
+pocketmine\network\mcpe\protocol\AvailableCommandsPacket Object
+(
+    [senderSubId] => 0
+    [recipientSubId] => 0
+    [commandData] => Array
+        (
+            [ban] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => ban
+                    [description] => Prevents the specified player from using this server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [ban-ip] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => ban-ip
+                    [description] => Prevents the specified IP address from using this server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [banlist] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => banlist
+                    [description] => View all players banned from this server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [clear] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => clear
+                    [description] => Clears items from player inventory
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [defaultgamemode] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => defaultgamemode
+                    [description] => Set the default gamemode
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [deop] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => deop
+                    [description] => Takes the specified player's operator status
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [difficulty] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => difficulty
+                    [description] => Sets the game difficulty
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [effect] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => effect
+                    [description] => Adds/Removes effects on players
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [enchant] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => enchant
+                    [description] => Adds enchantments on items
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [gamemode] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => gamemode
+                    [description] => Changes the player to a specific game mode
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [gc] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => gc
+                    [description] => Fires garbage collection tasks
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [give] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => give
+                    [description] => Gives the specified player a certain amount of items
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [kick] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => kick
+                    [description] => Removes the specified player from the server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [kill] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => kill
+                    [description] => Commit suicide or kill other players
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => KillAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => suicide
+                                    [1] => kill
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [list] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => list
+                    [description] => Lists all online players
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [me] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => me
+                    [description] => Performs the specified action in chat
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [op] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => op
+                    [description] => Gives the specified player operator status
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [pardon] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => pardon
+                    [description] => Allows the specified player to use this server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PardonAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => unban
+                                    [1] => pardon
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [pardon-ip] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => pardon-ip
+                    [description] => Allows the specified IP address to use this server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Pardon-ipAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => unban-ip
+                                    [1] => pardon-ip
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [particle] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => particle
+                    [description] => Adds particles to a world
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [plugins] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => plugins
+                    [description] => Gets a list of plugins running on the server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PluginsAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => pl
+                                    [1] => plugins
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [save-all] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => save-all
+                    [description] => Saves the server to disk
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [save-off] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => save-off
+                    [description] => Disables server autosaving
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [save-on] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => save-on
+                    [description] => Enables server autosaving
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [say] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => say
+                    [description] => Broadcasts the given message as the sender
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [seed] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => seed
+                    [description] => Shows the world seed
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [setworldspawn] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => setworldspawn
+                    [description] => Sets a world's spawn point. If no coordinates are specified, the player's coordinates will be used.
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [spawnpoint] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => spawnpoint
+                    [description] => Sets a player's spawn point
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [status] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => status
+                    [description] => Reads back the server's performance.
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [stop] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => stop
+                    [description] => Stops the server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [tp] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => tp
+                    [description] => Teleports the given player (or yourself) to another player or coordinates
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => TpAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => teleport
+                                    [1] => tp
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [tell] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => tell
+                    [description] => Sends a private message to the given player
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => TellAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => w
+                                    [1] => msg
+                                    [2] => tell
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [time] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => time
+                    [description] => Changes the time on each world
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [timings] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => timings
+                    [description] => Records timings to see performance of the server.
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [title] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => title
+                    [description] => Controls screen titles
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [transferserver] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => transferserver
+                    [description] => Transfer yourself to another server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [version] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => version
+                    [description] => Gets the version of this server including any plugins in use
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => VersionAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => ver
+                                    [1] => about
+                                    [2] => version
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [whitelist] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => whitelist
+                    [description] => Manages the list of players allowed to use this server
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [xp] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => xp
+                    [description] => Adds or removes player experience
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => 
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => args
+                                                    [paramType] => 1048646
+                                                    [isOptional] => 1
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [test] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => test
+                    [description] => Test ovo command
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => TestAliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => t
+                                    [1] => ovo
+                                    [2] => test
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => second
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182934
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => second
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => mode
+                                                    [paramType] => 1048584
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937alias1
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => second
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182934
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => second
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => mode
+                                                    [paramType] => 1048584
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => second
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182934
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => second
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => BLABLA
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [3] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937alias1
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => second
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182934
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => second
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => BLABLA
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [4] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => third
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182927
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => third
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sound
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => sound
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => meow cat
+                                                                    [1] => goof
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 1
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [5] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937alias1
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => third
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182927
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => third
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sound
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => sound
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => meow cat
+                                                                    [1] => goof
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 1
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [6] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => a
+                                                    [paramType] => 1048641
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => aa
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PMGameMode
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => survival
+                                                                    [1] => creative
+                                                                    [2] => adventure
+                                                                    [3] => spectator
+                                                                    [4] => s
+                                                                    [5] => c
+                                                                    [6] => a
+                                                                    [7] => v
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [7] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937alias1
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => a
+                                                    [paramType] => 1048641
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => aa
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PMGameMode
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => survival
+                                                                    [1] => creative
+                                                                    [2] => adventure
+                                                                    [3] => spectator
+                                                                    [4] => s
+                                                                    [5] => c
+                                                                    [6] => a
+                                                                    [7] => v
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [8] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => b
+                                                    [paramType] => 1048641
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => online
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => OnlinePlayers
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 1
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [3] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => pmGamemode
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PMGameMode
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => survival
+                                                                    [1] => creative
+                                                                    [2] => adventure
+                                                                    [3] => spectator
+                                                                    [4] => s
+                                                                    [5] => c
+                                                                    [6] => a
+                                                                    [7] => v
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [9] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub1
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182937alias1
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias1
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => b
+                                                    [paramType] => 1048641
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => online
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => OnlinePlayers
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 1
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [3] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => pmGamemode
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PMGameMode
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => survival
+                                                                    [1] => creative
+                                                                    [2] => adventure
+                                                                    [3] => spectator
+                                                                    [4] => s
+                                                                    [5] => c
+                                                                    [6] => a
+                                                                    [7] => v
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [10] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => c
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [11] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => d
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => dd
+                                                    [paramType] => 1048577
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+            [test2] => pocketmine\network\mcpe\protocol\types\command\CommandData Object
+                (
+                    [name] => test2
+                    [description] => Test ovo command
+                    [flags] => 0
+                    [permission] => 0
+                    [aliases] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                        (
+                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Test2Aliases
+                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                (
+                                    [0] => t2
+                                    [1] => ovo2
+                                    [2] => test2
+                                )
+
+                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                        )
+
+                    [overloads] => Array
+                        (
+                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub2
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#210735
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub2
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => second
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182853
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => second
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => no madam
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub2
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#210735alias2
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias2
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => second
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#182853
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => second
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => no madam
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub2
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#210735
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub2
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => a
+                                                    [paramType] => 1048641
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => aa
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PMGameMode
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => survival
+                                                                    [1] => creative
+                                                                    [2] => adventure
+                                                                    [3] => spectator
+                                                                    [4] => s
+                                                                    [5] => c
+                                                                    [6] => a
+                                                                    [7] => v
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [3] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub2
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#210735alias2
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias2
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => a
+                                                    [paramType] => 1048641
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => 
+                                                    [postfix] => 
+                                                )
+
+                                            [2] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => aa
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => PMGameMode
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => survival
+                                                                    [1] => creative
+                                                                    [2] => adventure
+                                                                    [3] => spectator
+                                                                    [4] => s
+                                                                    [5] => c
+                                                                    [6] => a
+                                                                    [7] => v
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [4] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub2
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#210735
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => sub2
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => yes madam
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [5] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sub2
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 1
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => scmd#210735alias2
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => alias2
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                            [1] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => yes madam
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [6] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => c
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Boolean
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => true
+                                                                    [1] => false
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                            [7] => pocketmine\network\mcpe\protocol\types\command\CommandOverload Object
+                                (
+                                    [chaining:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => 
+                                    [parameters:pocketmine\network\mcpe\protocol\types\command\CommandOverload:private] => Array
+                                        (
+                                            [0] => pocketmine\network\mcpe\protocol\types\command\CommandParameter Object
+                                                (
+                                                    [paramName] => sound
+                                                    [paramType] => 3145728
+                                                    [isOptional] => 
+                                                    [flags] => 0
+                                                    [enum] => pocketmine\network\mcpe\protocol\types\command\CommandEnum Object
+                                                        (
+                                                            [enumName:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => sound
+                                                            [enumValues:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => Array
+                                                                (
+                                                                    [0] => meow cat
+                                                                    [1] => goof
+                                                                )
+
+                                                            [isSoft:pocketmine\network\mcpe\protocol\types\command\CommandEnum:private] => 1
+                                                        )
+
+                                                    [postfix] => 
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                    [chainedSubCommandData] => Array
+                        (
+                        )
+
+                )
+
+        )
+
+    [hardcodedEnums] => Array
+        (
+        )
+
+    [softEnums] => Array
+        (
+        )
+
+    [enumConstraints] => Array
+        (
+        )
+
+)
