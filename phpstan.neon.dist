@@ -1,8 +1,10 @@
 parameters:
-    level: 8
-    excludePaths:
-    paths:
-        - src
+	level: 8
+	excludePaths:
+	paths:
+		- src
 
 includes:
-    - ./phpstan-baseline.neon
+	- ./phpstan-baseline.neon
+
+treatPhpDocTypesAsCertain: false
