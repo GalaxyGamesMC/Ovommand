@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         php:
-          - "8.3"
+          - "8.2"
     steps:
       - name: Build and prepare PHP cache
         uses: pmmp/setup-php-action@main
@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         php:
-          - "8.3"
+          - "8.2"
     steps:
       - uses: actions/checkout@v4
       - uses: pmmp/setup-php-action@main
