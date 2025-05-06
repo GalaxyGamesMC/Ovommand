@@ -5,16 +5,17 @@ namespace galaxygames\ovommand\parameter;
 
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
+use galaxygames\ovommand\utils\Utils;
 use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
 use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 
 class StringEnumParameter extends BaseParameter{
-	/** @var string[] */
+	/** @var list<string> */
 	protected array $values;
 	/** @param string[] $values */
 	public function __construct(string $name, array $values, bool $optional = false, int $flag = 0){
 		parent::__construct($name, $optional, $flag);
-		$this->values = array_unique($values);
+		$this->values = Utils::uniqueList($this->values);
 	}
 
 	public function getValueName() : string{ return "enum#" . spl_object_id($this); }

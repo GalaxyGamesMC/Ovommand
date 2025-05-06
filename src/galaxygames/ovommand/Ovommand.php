@@ -36,7 +36,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
 
-		$this->setAliases(array_values(array_unique($aliases)));
+		$this->setAliases(Utils::uniqueList($aliases));
 		if ($permission !== null) {
 			$this->setPermission($permission);
 		}
@@ -171,7 +171,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function doHandleRawResult() : bool{ return true; }
 
 	/**
-	 * @param string[] $args
+	 * @param list<string> $args
 	 * @param string $preLabel Return a string combined of its parent-label with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
