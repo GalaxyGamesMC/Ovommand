@@ -17,7 +17,10 @@ class Utils{
 		return $separator . implode($sub_separator . $separator, $input);
 	}
 
-	/** @return list<string> */
+	/**
+	 * @param array<string> $input
+	 * @return list<string>
+	 */
 	public static function uniqueList(array $input) : array{
 		return array_values(array_unique($input));
 	}
