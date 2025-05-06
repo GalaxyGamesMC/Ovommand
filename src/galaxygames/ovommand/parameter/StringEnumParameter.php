@@ -15,7 +15,7 @@ class StringEnumParameter extends BaseParameter{
 	/** @param string[] $values */
 	public function __construct(string $name, array $values, bool $optional = false, int $flag = 0){
 		parent::__construct($name, $optional, $flag);
-		$this->values = Utils::uniqueList($this->values);
+		$this->values = Utils::uniqueList($values);
 	}
 
 	public function getValueName() : string{ return "enum#" . spl_object_id($this); }
