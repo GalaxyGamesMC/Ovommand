@@ -35,7 +35,7 @@ abstract class BaseParameter implements IParameter{
 
 	abstract public function getNetworkType() : ParameterTypes;
 
-	/** @param list<string> $parameters */
+	/** @param string[] $parameters */
 	public function parse(array $parameters) : IResult{
 		$cParam = count($parameters);
 		$span = $this->getSpanLength();
