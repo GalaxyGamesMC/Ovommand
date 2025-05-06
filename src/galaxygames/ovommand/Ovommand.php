@@ -19,7 +19,6 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use shared\galaxygames\ovommand\fetus\BaseConstraint;
 use shared\galaxygames\ovommand\fetus\IOvommand;
-use shared\galaxygames\ovommand\fetus\result\IResult;
 
 abstract class Ovommand extends Command implements IOvommand{
 	/** @var BaseConstraint[] */
@@ -101,7 +100,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	 * Parses raw input parameters, validating their format and structure. Returns the first successful match or the most
 	 * progressed failed result, while handling optional, compact, and error scenarios.
 	 * @param string[] $rawParams
-	 * @return array<string, IResult>
+	 * @return array<string, BaseResult>
 	 */
 	public function parseParameters(array $rawParams) : array{
 		$paramCount = count($rawParams);
@@ -241,7 +240,7 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * Checks for syntax errors in arguments, sends warnings if enabled, and returns `false` to halt or `true` to proceed.
-	 * @param IResult[] $args Parsed results
+	 * @param BaseResult[] $args Parsed results
 	 * @param list<string> $nonParsedArgs Arguments that hadn't got parsed, mostly due to a failed result from the parsing.
 	 */
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = []) : bool{
@@ -273,7 +272,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	/** Called when the sender doesn't have the permissions to execute the command / sub commands, return false to confirm the rejection */
 	public function onPermissionRejected(CommandSender $sender) : bool{ return false; }
 
-	/** @param IResult[] $args */
+	/** @param BaseResult[] $args */
 	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
 	abstract protected function setup() : void;
 
