@@ -10,7 +10,6 @@ use pocketmine\Server;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 
 class SoftEnum extends BaseEnum implements IDynamicEnum{
-
 	public function encode() : CommandEnum{
 		return new CommandEnum($this->name, [...array_keys($this->values), ...array_keys($this->visibleAliases)], true);
 	}

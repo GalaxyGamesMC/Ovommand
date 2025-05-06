@@ -13,9 +13,7 @@ use shared\galaxygames\ovommand\fetus\enum\ProtectedEnum;
 use shared\galaxygames\ovommand\GlobalEnumPool;
 
 final class EnumManager{
-	public function __construct(private readonly OvommandHook $ovommandHook){
-		$this->initDefaultEnums();
-	}
+	public function __construct(private readonly OvommandHook $ovommandHook){ $this->initDefaultEnums(); }
 
 	private function initDefaultEnums() : void{
 		GlobalEnumPool::addEnums($this->ovommandHook, ...array_map(static fn(DefaultEnums $enum) => $enum->encode(), DefaultEnums::cases()));

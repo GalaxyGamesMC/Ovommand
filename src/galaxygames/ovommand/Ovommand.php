@@ -36,7 +36,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function __construct(string $name, Translatable|string $description = "", ?string $permission = null, Translatable|string|null $usageMessage = null, array $aliases = []){
 		parent::__construct($name, $description, "", $aliases);
 
-		$this->setAliases(array_unique($aliases));
+		$this->setAliases(array_values(array_unique($aliases)));
 		if ($permission !== null) {
 			$this->setPermission($permission);
 		}
