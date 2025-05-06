@@ -18,7 +18,7 @@ class StringEnumParameter extends BaseParameter{
 		$this->values = Utils::uniqueList($values);
 	}
 
-	public function getValueName() : string{ return "enum#" . spl_object_id($this); }
+	public function getValueName() : string{ return "ovo_enum#" . spl_object_id($this); }
 	public function getNetworkType() : ParameterTypes{ return ParameterTypes::ENUM; }
 
 	public function encodeEnum() : CommandEnum{
@@ -27,9 +27,8 @@ class StringEnumParameter extends BaseParameter{
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$in = implode(" ", $parameters);
-		$enumValue = $this->values[$in] ?? null;
-		if ($enumValue !== null) {
-			return ValueResult::create($enumValue);
+		if (in_array($in, $this->values, true)) {
+			return ValueResult::create($in);
 		}
 		return BrokenSyntaxResult::create($in);
 	}
