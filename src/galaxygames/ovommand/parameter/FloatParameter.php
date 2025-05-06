@@ -7,10 +7,7 @@ use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 
 class FloatParameter extends BaseParameter{
-	public function getNetworkType() : ParameterTypes{
-		return ParameterTypes::FLOAT;
-	}
-
+	public function getNetworkType() : ParameterTypes{ return ParameterTypes::FLOAT; }
 	public function getValueName() : string{ return "float"; }
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{

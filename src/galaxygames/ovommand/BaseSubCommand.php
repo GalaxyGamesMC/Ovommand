@@ -35,24 +35,13 @@ abstract class BaseSubCommand extends Ovommand{
 		return in_array($input, $this->visibleAliases, true);
 	}
 
-	/** @return list<string> */
-	public function getAliases() : array{
-		return [...$this->visibleAliases, ...$this->hiddenAliases];
-	}
-
-	/** @return list<string> */
-	public function getHiddenAliases() : array{
-		return $this->hiddenAliases;
-	}
-
-	/** @return list<string> */
-	public function getVisibleAliases() : array{
-		return $this->visibleAliases;
-	}
-
-	public function getParent() : ?Ovommand{
-		return $this->parent;
-	}
+	/** @return string[] */
+	public function getAliases() : array{ return [...$this->visibleAliases, ...$this->hiddenAliases]; }
+	/** @return string[] */
+	public function getHiddenAliases() : array{ return $this->hiddenAliases; }
+	/** @return string[] */
+	public function getVisibleAliases() : array{ return $this->visibleAliases; }
+	public function getParent() : ?Ovommand{ return $this->parent; }
 
 	public function setParent(Ovommand $parent) : self{
 		$this->parent = $parent;

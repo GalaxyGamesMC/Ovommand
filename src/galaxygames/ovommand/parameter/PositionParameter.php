@@ -8,14 +8,9 @@ use galaxygames\ovommand\parameter\result\CoordinateResult;
 
 class PositionParameter extends BaseParameter{
 	public function getValueName() : string{ return "x y z"; }
-
-	public function getNetworkType() : ParameterTypes{
-		return ParameterTypes::POSITION;
-	}
-
-	public function hasCompactParameter() : bool{
-		return true;
-	}
+	public function getNetworkType() : ParameterTypes{ return ParameterTypes::POSITION; }
+	public function hasCompactParameter() : bool{ return true; }
+	public function getSpanLength() : int{ return 3; }
 
 	public function parse(array $parameters) : CoordinateResult|BrokenSyntaxResult{
 		$parameter = implode(" ", $parameters);
@@ -64,9 +59,5 @@ class PositionParameter extends BaseParameter{
 				->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS)->setMatchedParameter(3);
 		}
 		return CoordinateResult::fromData((float) $matches[3][0], (float) $matches[3][1], (float) $matches[3][2], $xType, $yType, $zType);
-	}
-
-	public function getSpanLength() : int{
-		return 3;
 	}
 }

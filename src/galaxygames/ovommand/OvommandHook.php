@@ -56,7 +56,7 @@ final class OvommandHook implements IHookable{
 	private static OvommandHook $instance;
 	private static Plugin $plugin;
 	private static bool $privacy = false;
-	private static ?string $namespace = null;
+//	private static ?string $namespace = null;
 
 	public static function getInstance() : OvommandHook{
 		return self::$instance ?? self::register(self::getOwnedPlugin());
@@ -99,10 +99,10 @@ final class OvommandHook implements IHookable{
 				$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
 				// only the plugin registered that default enum is allowed to update the enum
 				if ($enum instanceof IDynamicEnum) {
-					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event) use ($enum, $plugin){
+					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event) use ($enum) {
 						$enum->addValue($event->getPlayer()->getName());
 					}, EventPriority::NORMAL, $plugin);
-					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) use ($enum, $plugin) {
+					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) use ($enum) {
 						$enum->removeValue($event->getPlayer()->getName());
 					}, EventPriority::NORMAL, $plugin);
 				}

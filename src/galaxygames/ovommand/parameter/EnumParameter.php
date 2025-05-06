@@ -29,17 +29,9 @@ class EnumParameter extends BaseParameter{
 		parent::__construct($name, $optional, $flag);
 	}
 
-	public function getValueName() : string{
-		return $this->enum->getName();
-	}
-
-	public function getNetworkType() : ParameterTypes{
-		return $this->isSoft() ? ParameterTypes::SOFT_ENUM : ParameterTypes::ENUM;
-	}
-
-	public function isSoft() : bool{
-		return $this->enum->isSoft();
-	}
+	public function getValueName() : string{ return $this->enum->getName(); }
+	public function getNetworkType() : ParameterTypes{ return $this->isSoft() ? ParameterTypes::SOFT_ENUM : ParameterTypes::ENUM; }
+	public function isSoft() : bool{ return $this->enum->isSoft(); }
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$result = parent::parse($parameters);

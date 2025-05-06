@@ -13,26 +13,29 @@ use shared\galaxygames\ovommand\fetus\result\IResult;
 
 abstract class BaseParameter implements IParameter{
 	protected int $flag = 0;
-	/** if this was true, value will not give the parsed results but the raw parameters store in Result */
+	// set to true, then params will not give the parsed results but the raw parameters store in Result
 	protected bool $returnRaw = false;
 
-	final public function getName() : string{
-		return $this->name;
-	}
+	final public function getName() : string{ return $this->name; }
+	/**
+	 * some parameters have 2 or more spans, but may only require one as those spans can be written in one span! <br>
+	 * EG: these input parameters are valid for position: `~~~`, `~~ ~`, `~ ~ ~`
+	 */
+	public function hasCompactParameter() : bool{ return false; }
+	public function getSpanLength() : int{ return 1; }
+	public function getFlag() : int{ return $this->flag; }
+	public function isReturnRaw() : bool{ return $this->returnRaw; }
 
 	public function __construct(protected string $name, protected bool $optional = false, int $flag = 0){
 		$this->setFlag($flag);
 	}
 
 	abstract public function getValueName() : string;
-
-	public function isOptional() : bool{
-		return $this->optional;
-	}
+	public function isOptional() : bool{ return $this->optional; }
 
 	abstract public function getNetworkType() : ParameterTypes;
 
-	/** @param string[] $parameters */
+	/** @param list<string> $parameters */
 	public function parse(array $parameters) : IResult{
 		$cParam = count($parameters);
 		$span = $this->getSpanLength();
@@ -43,11 +46,6 @@ abstract class BaseParameter implements IParameter{
 		};
 	}
 
-	/** Some parameters have 2 or more span but only one can fulfil the required!, like PositionParameter where (~~~ | ~~ ~ | ~ ~ ~) are all acceptable*/
-	public function hasCompactParameter() : bool{
-		return false;
-	}
-
 	private function setFlag(int $flag) : void{
 		$this->flag = match ($flag) {
 			0, 1 => $flag,
@@ -55,23 +53,12 @@ abstract class BaseParameter implements IParameter{
 		};
 	}
 
-	public function getSpanLength() : int{
-		return 1;
-	}
-
-	public function getFlag() : int{
-		return $this->flag;
+	public function returnRaw(bool $returnRaw = true) : self{
+		$this->returnRaw = $returnRaw;
+		return $this;
 	}
 
 	public function getNetworkParameterData() : CommandParameter{
 		return CommandParameter::standard($this->name, $this->getNetworkType()->value(), $this->flag, $this->optional);
-	}
-
-	public function isReturnRaw() : bool{
-		return $this->returnRaw;
-	}
-
-	public function returnRaw(bool $returnRaw = true) : void{
-		$this->returnRaw = $returnRaw;
 	}
 }

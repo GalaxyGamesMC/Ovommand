@@ -8,10 +8,7 @@ use galaxygames\ovommand\parameter\result\ValueResult;
 
 class StringParameter extends BaseParameter{
 	public function getValueName() : string{ return "string"; }
-
-	public function getNetworkType() : ParameterTypes{
-		return ParameterTypes::STRING;
-	}
+	public function getNetworkType() : ParameterTypes{ return ParameterTypes::STRING; }
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
 		$result = parent::parse($parameters);

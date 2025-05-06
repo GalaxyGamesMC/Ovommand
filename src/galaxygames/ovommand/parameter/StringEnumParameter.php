@@ -11,21 +11,14 @@ use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 class StringEnumParameter extends BaseParameter{
 	/** @var string[] */
 	protected array $values;
-	/**
-	 * @param string[] $values
-	 */
+	/** @param string[] $values */
 	public function __construct(string $name, array $values, bool $optional = false, int $flag = 0){
 		parent::__construct($name, $optional, $flag);
 		$this->values = array_unique($values);
 	}
 
-	public function getValueName() : string{
-		return "enum#" . spl_object_id($this);
-	}
-
-	public function getNetworkType() : ParameterTypes{
-		return ParameterTypes::ENUM;
-	}
+	public function getValueName() : string{ return "enum#" . spl_object_id($this); }
+	public function getNetworkType() : ParameterTypes{ return ParameterTypes::ENUM; }
 
 	public function encodeEnum() : CommandEnum{
 		return new CommandEnum($this->getValueName(), $this->values);

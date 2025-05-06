@@ -75,7 +75,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	/**
 	 * Registers parameters as an overloading, keeping the input order and enforcing rules: no non-optional after optional,
 	 * no parameters after `TextParameter`.
-	 * @param list<BaseParameter> $parameters
+	 * @param BaseParameter ...$parameters
 	 */
 	public function registerParameters(BaseParameter ...$parameters) : void{
 		$hasOptionalParameter = false;
@@ -100,7 +100,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	/**
 	 * Parses raw input parameters, validating their format and structure. Returns the first successful match or the most
 	 * progressed failed result, while handling optional, compact, and error scenarios.
-	 * @param list<string> $rawParams
+	 * @param string[] $rawParams
 	 * @return array<string, IResult>
 	 */
 	public function parseParameters(array $rawParams) : array{
@@ -170,7 +170,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function doHandleRawResult() : bool{ return true; }
 
 	/**
-	 * @param list<string> $args
+	 * @param string[] $args
 	 * @param string $preLabel Return a string combined of its parent-label with the current label
 	 */
 	final public function execute(CommandSender $sender, string $commandLabel, array $args, string $preLabel = "") : void{
@@ -240,7 +240,7 @@ abstract class Ovommand extends Command implements IOvommand{
 
 	/**
 	 * Checks for syntax errors in arguments, sends warnings if enabled, and returns `false` to halt or `true` to proceed.
-	 * @param BaseResult[] $args Parsed results
+	 * @param IResult[] $args Parsed results
 	 * @param list<string> $nonParsedArgs Arguments that hadn't got parsed, mostly due to failed result from the parsing.
 	 */
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = []) : bool{
@@ -269,12 +269,11 @@ abstract class Ovommand extends Command implements IOvommand{
 		return true;
 	}
 
-	/** Called when the sender don't have the permissions to execute the command / sub commands, return false to confirm the rejection */
+	/** Called when the sender doesn't have the permissions to execute the command / sub commands, return false to confirm the rejection */
 	public function onPermissionRejected(CommandSender $sender) : bool{ return false; }
 
-	/** @param BaseResult[] $args */
+	/** @param IResult[] $args */
 	abstract public function onRun(CommandSender $sender, string $label, array $args) : void;
-
 	abstract protected function setup() : void;
 
 	public function addConstraint(BaseConstraint $constraint) : void{ $this->constraints[] = $constraint; }
