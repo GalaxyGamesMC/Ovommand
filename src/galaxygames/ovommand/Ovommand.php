@@ -114,6 +114,7 @@ abstract class Ovommand extends Command implements IOvommand{
 
 		foreach ($this->overloads as $parameters) {
 			$offset = 0;
+			/** @var BaseResult[] $results */
 			$results = [];
 			$hasFailed = false;
 			$matchPoint = 0;
@@ -151,7 +152,7 @@ abstract class Ovommand extends Command implements IOvommand{
 					->setCode(BrokenSyntaxResult::CODE_TOO_MUCH_INPUTS);
 			}
 			if (!$hasFailed) {
-				return $results; // return first success result
+				return $results; // return the first success result
 			} else {
 				if ($matchPoint > $finalId) {
 					$finalId = $matchPoint;
@@ -241,7 +242,7 @@ abstract class Ovommand extends Command implements IOvommand{
 	/**
 	 * Checks for syntax errors in arguments, sends warnings if enabled, and returns `false` to halt or `true` to proceed.
 	 * @param IResult[] $args Parsed results
-	 * @param list<string> $nonParsedArgs Arguments that hadn't got parsed, mostly due to failed result from the parsing.
+	 * @param list<string> $nonParsedArgs Arguments that hadn't got parsed, mostly due to a failed result from the parsing.
 	 */
 	public function onPreRun(CommandSender $sender, array $args, array $nonParsedArgs = []) : bool{
 		foreach ($args as $arg) {
