@@ -10,6 +10,9 @@
 
 ## 📖 Introduction
 Ovommand is a command parsing and handling framework for PocketMine-MP. It made it easy for defining, registering, and executing commands with complex parameter structures, validation, and hierarchical organization.<br>
+> [!IMPORTANT]
+> This branch was for the upcoming change in PMMP's upcoming PR [#6685](https://github.com/pmmp/PocketMine-MP/pull/6685) related to command aliases, etc 
+
 <blockquote>
 
   [!IMPORTANT]
