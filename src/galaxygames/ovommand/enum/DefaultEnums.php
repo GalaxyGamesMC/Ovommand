@@ -17,13 +17,13 @@ enum DefaultEnums : string{
 		return match ($this) {
 			self::BOOLEAN => new HardEnum($this->value, ["true" => true, "false" => false], isProtected: true, isDefault: true),
 			self::PM_GAMEMODE => new HardEnum($this->value,
-				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
+				["survival" => GameMode::SURVIVAL, "creative" => GameMode::CREATIVE, "adventure" => GameMode::ADVENTURE, "spectator" => GameMode::SPECTATOR],
 				["survival" => "s", "creative" => "c", "adventure" => "a", "spectator" => "v"],
 				["survival" => "0", "creative" => "1", "adventure" => "2", "spectator" => "3"],
 				isProtected: true, isDefault: true
 			),
 			self::VANILLA_GAMEMODE => new HardEnum($this->value,
-				["survival" => GameMode::SURVIVAL(), "creative" => GameMode::CREATIVE(), "adventure" => GameMode::ADVENTURE(), "spectator" => GameMode::SPECTATOR()],
+				["survival" => GameMode::SURVIVAL, "creative" => GameMode::CREATIVE, "adventure" => GameMode::ADVENTURE, "spectator" => GameMode::SPECTATOR],
 				["survival" => "s", "creative" => "c", "adventure" => "a"],
 				isProtected: true, isDefault: true
 			),
