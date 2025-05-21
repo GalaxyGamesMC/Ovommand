@@ -25,7 +25,6 @@ enum ParameterTypes{
 	case VALUE;
 	case WILDCARD_INT;
 	case WILDCARD_TARGET;
-
 	case ENUM;
 	case SOFT_ENUM;
 

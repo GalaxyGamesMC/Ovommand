@@ -32,7 +32,6 @@ namespace galaxygames\ovommand;
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
 use galaxygames\ovommand\utils\Messages;
-use galaxygames\ovommand\utils\OvommandHelper;
 use muqsit\simplepackethandler\SimplePacketHandler;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;
@@ -44,13 +43,14 @@ use pocketmine\Server;
 use shared\galaxygames\ovommand\exception\OvommandHookException;
 use shared\galaxygames\ovommand\fetus\enum\IDynamicEnum;
 use shared\galaxygames\ovommand\fetus\IHookable;
+use shared\galaxygames\ovommand\fetus\IOvommand;
 use shared\galaxygames\ovommand\GlobalHookPool;
 
 final class OvommandHook implements IHookable{
 	private static EnumManager $enumManager;
 	private static OvommandHook $instance;
 	private static Plugin $plugin;
-	private static bool $privacy = false;
+	private static bool $isPrivate = false;
 
 	public static function getInstance() : OvommandHook{
 		return self::$instance ?? self::register(self::getOwnedPlugin());
@@ -58,7 +58,7 @@ final class OvommandHook implements IHookable{
 
 	public static function register(Plugin $plugin, bool $private = false) : self{
 		if (!self::isRegistered() || self::$plugin->isEnabled()) {
-			self::$privacy = $private;
+			self::$isPrivate = $private;
 			self::$plugin = $plugin;
 			self::$instance = new self;
 			GlobalHookPool::addHook(self::$instance);
@@ -74,37 +74,39 @@ final class OvommandHook implements IHookable{
 					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) use ($enum) {
 						$enum->removeValue($event->getPlayer()->getName());
 					}, EventPriority::NORMAL, $plugin);
+
+					// a bit hacky, but should work? as long as the plugin is loaded before the server starts
+					$interceptor = SimplePacketHandler::createInterceptor($plugin, EventPriority::HIGHEST);
+					$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
+						$player = $target->getPlayer();
+						if ($player === null) {
+							return false;
+						}
+						$commandMap = Server::getInstance()->getCommandMap();
+						foreach ($packet->commandData as $name => $commandData) {
+							$command = $commandMap->getCommand($name);
+							if (!$command instanceof IOvommand) {
+								continue;
+							}
+							foreach ($command->getConstraints() as $constraint) {
+								if (!$constraint->constraint($player, $name, [])) {
+									continue 2;
+								}
+							}
+							$commandData->overloads = $command->generateOverloads($player);
+						}
+						return true;
+					});
 				}
 			} catch (\ReflectionException $e) {
 				$plugin->getLogger()->logException($e);
 			}
-			$interceptor = SimplePacketHandler::createInterceptor($plugin, EventPriority::HIGHEST);
-			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
-				$player = $target->getPlayer();
-				if ($player === null) {
-					return false;
-				}
-				$commandMap = Server::getInstance()->getCommandMap();
-				foreach ($packet->commandData as $name => $commandData) {
-					$command = $commandMap->getCommand($name);
-					if (!$command instanceof Ovommand) {
-						continue;
-					}
-					foreach ($command->getConstraints() as $constraint) {
-						if (!$constraint->isVisibleTo($player)) {
-							continue 2;
-						}
-					}
-					$commandData->overloads = OvommandHelper::generateOverloads($player, $command);
-				}
-				return true;
-			});
 		}
 		return self::$instance;
 	}
 
 	public static function isRegistered() : bool{ return isset(self::$plugin); }
-	public static function isPrivate() : bool{ return self::$privacy; }
+	public static function isPrivate() : bool{ return self::$isPrivate; }
 	public static function getEnumManager() : EnumManager{ return self::$enumManager; }
 
 	public static function getOwnedPlugin() : Plugin{

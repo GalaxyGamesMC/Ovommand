@@ -18,7 +18,7 @@ class OvommandHelper{
 				continue;
 			}
 			foreach ($subCommand->getConstraints() as $constraint) {
-				if (!$constraint->isVisibleTo($sender)) {
+				if (!$constraint->constraint($sender, $label, [])) {
 					continue 2;
 				}
 			}

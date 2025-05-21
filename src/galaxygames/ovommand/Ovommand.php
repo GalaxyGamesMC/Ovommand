@@ -11,6 +11,7 @@ use galaxygames\ovommand\parameter\result\BaseResult;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\utils\BrokenSyntaxHelper;
 use galaxygames\ovommand\utils\Messages;
+use galaxygames\ovommand\utils\OvommandHelper;
 use galaxygames\ovommand\utils\Utils;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -174,7 +175,7 @@ abstract class Ovommand extends Command implements IOvommand{
 			return;
 		}
 		foreach ($this->constraints as $constraint) {
-			if (!$constraint->test($sender, $commandLabel, $args)) {
+			if (!$constraint->constraint($sender, $commandLabel, $args)) {
 				$constraint->onFailure($sender, $commandLabel, $args);
 				return;
 			}
@@ -289,5 +290,9 @@ abstract class Ovommand extends Command implements IOvommand{
 	public function setDoCompactSubCommandAliases(bool $doCompactSubCommandAliases = true) : Ovommand {
 		$this->doCompactSubCommandAliases = $doCompactSubCommandAliases;
 		return $this;
+	}
+
+	public function generateOverloads(CommandSender $sender) : array{
+		return OvommandHelper::generateOverloads($sender, $this);
 	}
 }
