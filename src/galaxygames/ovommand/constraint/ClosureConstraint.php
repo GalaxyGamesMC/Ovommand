@@ -8,14 +8,23 @@ use pocketmine\utils\Utils;
 use shared\galaxygames\ovommand\fetus\BaseConstraint;
 use shared\galaxygames\ovommand\fetus\IOvommand;
 
+/**
+ * @phpstan-type TConstraintClosure \Closure(CommandSender $sender, string $label, string[] $args) : bool
+ * @phpstan-type TFeedbackClosure \Closure(CommandSender $sendder, string $labels, string[] $args) : void
+ */
 class ClosureConstraint extends BaseConstraint{
-	/** @var ?\Closure(CommandSender, string, string[]) : bool */
+	/** @var ?TConstraintClosure */
 	private ?\Closure $constraintClosure;
-	/** @var ?\Closure(CommandSender, string, string[]) : void */
+	/** @var ?TFeedbackClosure */
 	private ?\Closure $successClosure;
-	/** @var ?\Closure(CommandSender, string, string[]) : void */
+	/** @var ?TFeedbackClosure */
 	private ?\Closure $failureClosure;
 
+	/**
+	 * @phpstan-param ?TConstraintClosure $constraintClosure
+	 * @phpstan-param ?TFeedbackClosure $failureClosure
+	 * @phpstan-param ?TFeedbackClosure $successClosure
+	 */
 	public function __construct(IOvommand $ovommand, ?\Closure $constraintClosure = null, ?\Closure $failureClosure = null, ?\Closure $successClosure = null){
 		parent::__construct($ovommand);
 		if ($constraintClosure !== null) {

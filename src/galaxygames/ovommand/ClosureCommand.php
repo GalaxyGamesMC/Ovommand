@@ -14,11 +14,11 @@ use pocketmine\utils\Utils;
  * @phpstan-type TRunClosure \Closure(Ovommand $command, string $label, BaseResult[] $args) : void
  */
 class ClosureCommand extends Ovommand{
-	/** @var ?TSetupClosure $setupClosure */
+	/** @var ?TSetupClosure */
 	private ?\Closure $setupClosure;
-	/** @var ?TPreRunClosure $preRunClosure */
+	/** @var ?TPreRunClosure */
 	private ?\Closure $preRunClosure;
-	/** @var ?TRunClosure $runClosure*/
+	/** @var ?TRunClosure */
 	private ?\Closure $runClosure;
 
 	/**
