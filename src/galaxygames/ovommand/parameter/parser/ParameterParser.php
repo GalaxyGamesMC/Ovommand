@@ -8,9 +8,9 @@ use galaxygames\ovommand\parameter\result\CoordinateResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 
 /**
- * @phpstan-type TypeRCapture array{string,int<-1,max>}
- * @phpstan-type TypeRMatch array<TypeRCapture>
- * @phpstan-type TypeRMatchAll array<TypeRMatch>
+ * @phpstan-type TRCapture array{string,int<-1,max>}
+ * @phpstan-type TRMatch array<TRCapture>
+ * @phpstan-type TRMatchAll array<TRMatch>
  */
 class ParameterParser{
 	public const REGEX_FLOAT = "/([^\d+-.]*)([+-]?\d*\.?\d+)(.*)/";
@@ -26,7 +26,7 @@ class ParameterParser{
 		if (!preg_match(self::REGEX_FLOAT, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		/** @var TypeRMatch $matches */
+		/** @var TRMatch $matches */
 		$preInvalid = !empty(ltrim($matches[1][0]));
 		if ($preInvalid) {
 			return BrokenSyntaxResult::create($value, $matches[1][0], $matches[1][1], expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
@@ -42,7 +42,7 @@ class ParameterParser{
 		if (!preg_match(self::REGEX_INT, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		/** @var TypeRMatch $matches */
+		/** @var TRMatch $matches */
 		$preInvalid = !empty(ltrim($matches[1][0]));
 		if ($preInvalid) {
 			return BrokenSyntaxResult::create($value, $matches[1][0], $matches[1][1], expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
@@ -58,7 +58,7 @@ class ParameterParser{
 		if (!preg_match(self::REGEX_INT2, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		/** @var TypeRMatch $matches */
+		/** @var TRMatch $matches */
 		$preInvalid = !empty($matches[1][0]);
 		if ($preInvalid) {
 			return BrokenSyntaxResult::create($value, $matches[1][0], $matches[1][1], expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
@@ -74,7 +74,7 @@ class ParameterParser{
 		if (!preg_match(self::REGEX_INT3, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		/** @var TypeRMatch $matches */
+		/** @var TRMatch $matches */
 		$preInvalid = !empty($matches[1][0]);
 		if ($preInvalid) {
 			return BrokenSyntaxResult::create($value, $matches[1][0], $matches[1][1], expectedType: "float")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
@@ -98,7 +98,7 @@ class ParameterParser{
 		if (!preg_match_all(self::REGEX_BLOCK_POSITION, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "position")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX); // only do this with input being a continuous word
 		}
-		/** @var TypeRMatchAll $matches */
+		/** @var TRMatchAll $matches */
 //		dump($matches);
 		$matchCount = count($matches[0]);
 		if ($matchCount < 3) {
@@ -142,7 +142,7 @@ class ParameterParser{
 		if (!preg_match_all(self::REGEX_POSITION, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "position")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX); // only do this with input being a continuous word
 		}
-		/** @var TypeRMatchAll $matches */
+		/** @var TRMatchAll $matches */
 		$matchCount = count($matches[0]);
 		if ($matchCount < 3) {
 			return BrokenSyntaxResult::create($value, "", strlen($value), expectedType: "position")->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
@@ -187,7 +187,7 @@ class ParameterParser{
 //		if (!preg_match_all("/([^\d\s~^+-]*(?:[+-]+[^\d~]+)?)([~^]?[+-]?\d+\.?\d*|[~^])([^\d\s~^+-]*(?:[+-]+[^\d~]+)?)/", $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "position")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		/** @var TypeRMatchAll $matches */
+		/** @var TRMatchAll $matches */
 		$matchCount = count($matches[0]);
 		if ($matchCount < 3) {
 			return BrokenSyntaxResult::create($value, "", strlen($value), expectedType: "position")->setCode(BrokenSyntaxResult::CODE_NOT_ENOUGH_INPUTS);
@@ -230,7 +230,7 @@ class ParameterParser{
 		if (!preg_match_all(self::REGEX_POSITION3, $value, $matches, PREG_OFFSET_CAPTURE)) {
 			return BrokenSyntaxResult::create($value, expectedType: "position")->setCode(BrokenSyntaxResult::CODE_BROKEN_SYNTAX);
 		}
-		/** @var TypeRMatchAll $matches */
+		/** @var TRMatchAll $matches */
 //		dump($matches);
 		$matchCount = count($matches[0]);
 		if ($matchCount < 3) {

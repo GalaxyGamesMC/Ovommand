@@ -28,7 +28,7 @@ class StringEnumParameter extends BaseParameter{
 	}
 
 	public function parse(array $parameters) : ValueResult|BrokenSyntaxResult{
-		$in = implode(" ", $parameters);
+		$in = implode(' ', $parameters);
 		if (in_array($in, $this->values, true)) {
 			return ValueResult::create($in);
 		}

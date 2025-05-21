@@ -5,6 +5,7 @@ namespace galaxygames\ovommand\parameter\default;
 
 use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\parameter\ParameterTypes;
+use galaxygames\ovommand\parameter\parser\ParameterParser;
 use galaxygames\ovommand\parameter\result\BrokenSyntaxResult;
 use galaxygames\ovommand\parameter\result\ValueResult;
 
@@ -17,9 +18,6 @@ class FloatParameter extends BaseParameter{
 		if ($result instanceof BrokenSyntaxResult) {
 			return $result;
 		}
-		if (is_numeric($parameters[0])) {
-			return ValueResult::create((float) $parameters[0]);
-		}
-		return BrokenSyntaxResult::create($parameters[0], $parameters[0]);
+		return ParameterParser::parseFloat($parameters[0]);
 	}
 }
