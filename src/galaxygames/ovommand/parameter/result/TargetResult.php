@@ -9,7 +9,7 @@ use pocketmine\entity\Living;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
-class TargetResult extends BaseResult implements \shared\galaxygames\ovommand\fetus\result\ISucceedResult{
+class TargetResult extends BaseResult{
 	public const TARGET_ALL = "@a";
 	public const TARGET_ENTITIES = "@e";
 	public const TARGET_NEAREST_PLAYER = "@p";

@@ -8,7 +8,7 @@ use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\world\Position;
 
-final class CoordinateResult extends BaseResult implements \shared\galaxygames\ovommand\fetus\result\ISucceedResult{
+class CoordinateResult extends BaseResult{
 	public const TYPE_DEFAULT = 0; //number
 	public const TYPE_RELATIVE = 1; //tilde notation
 	public const TYPE_LOCAL = 2; //caret notation
