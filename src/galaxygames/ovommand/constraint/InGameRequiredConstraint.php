@@ -10,17 +10,13 @@ use pocketmine\utils\TextFormat;
 use shared\galaxygames\ovommand\fetus\BaseConstraint;
 
 class InGameRequiredConstraint extends BaseConstraint{
-	public function test(CommandSender $sender, string $aliasUsed, array $args) : bool{
-		return $this->isVisibleTo($sender);
-	}
-
-	public function onFailure(CommandSender $sender, string $aliasUsed, array $args) : void{
-		$sender->sendMessage(TextFormat::RED . Messages::CONSTRAINT_INGAME_FAILURE->value);
-	}
-
-	public function isVisibleTo(CommandSender $sender) : bool{
+	public function constraint(CommandSender $sender, string $label, array $args) : bool{
 		return $sender instanceof Player;
 	}
 
-	public function onSuccess(CommandSender $sender, string $aliasUsed, array $args) : void{}
+	public function onFailure(CommandSender $sender, string $label, array $args) : void{
+		$sender->sendMessage(TextFormat::RED . Messages::CONSTRAINT_INGAME_FAILURE->value);
+	}
+
+	public function onSuccess(CommandSender $sender, string $label, array $args) : void{}
 }

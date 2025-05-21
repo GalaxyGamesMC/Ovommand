@@ -17,14 +17,11 @@ abstract class BaseConstraint{
 	}
 
 	/** @param string[] $args */
-	abstract public function test(CommandSender $sender, string $aliasUsed, array $args) : bool;
-
+	abstract public function constraint(CommandSender $sender, string $label, array $args) : bool;
 	/** @param string[] $args */
-	abstract public function onSuccess(CommandSender $sender, string $aliasUsed, array $args) : void;
+	abstract public function onSuccess(CommandSender $sender, string $label, array $args) : void;
 	/** @param string[] $args */
-	abstract public function onFailure(CommandSender $sender, string $aliasUsed, array $args) : void;
-
-	abstract public function isVisibleTo(CommandSender $sender) : bool;
+	abstract public function onFailure(CommandSender $sender, string $label, array $args) : void;
 
 	public function setOvommand(IOvommand $ovommand) : void{
 		$this->ovommand = $ovommand;
