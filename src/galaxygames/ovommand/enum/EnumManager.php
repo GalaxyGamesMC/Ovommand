@@ -25,7 +25,7 @@ final class EnumManager{
 			if ($enum->isDefault()) {
 				throw new EnumException(Messages::EXCEPTION_ENUM_INVALID_DEFAULT->translate(["enumName" => $enumName]), EnumException::ENUM_INVALID_DEFAULT);
 			}
-			if (trim($enumName) === '') {
+			if (ltrim($enumName) === '') {
 				throw new EnumException(Messages::EXCEPTION_ENUM_EMPTY_NAME->value, EnumException::ENUM_EMPTY_NAME);
 			}
 		}

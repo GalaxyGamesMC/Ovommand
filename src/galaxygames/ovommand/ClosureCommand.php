@@ -9,22 +9,22 @@ use pocketmine\lang\Translatable;
 use pocketmine\utils\Utils;
 
 /**
- * @phpstan-type TypeOvoSetupClosure \Closure(Ovommand $command) : void
- * @phpstan-type TypeOvoPreRunClosure \Closure(Ovommand $command, CommandSender $sender, BaseResult[] $args, list<string> $nonParsedArgs) : bool
- * @phpstan-type TypeOvoRunClosure \Closure(Ovommand $command, string $label, BaseResult[] $args) : void
+ * @phpstan-type TSetupClosure \Closure(Ovommand $command) : void
+ * @phpstan-type TPreRunClosure \Closure(Ovommand $command, CommandSender $sender, BaseResult[] $args, list<string> $nonParsedArgs) : bool
+ * @phpstan-type TRunClosure \Closure(Ovommand $command, string $label, BaseResult[] $args) : void
  */
 class ClosureCommand extends Ovommand{
-	/** @phpstan-var ?TypeOvoSetupClosure $setupClosure */
+	/** @var ?TSetupClosure $setupClosure */
 	private ?\Closure $setupClosure;
-	/** @phpstan-var ?TypeOvoPreRunClosure $preRunClosure */
+	/** @var ?TPreRunClosure $preRunClosure */
 	private ?\Closure $preRunClosure;
-	/** @phpstan-var ?TypeOvoRunClosure $runClosure*/
+	/** @var ?TRunClosure $runClosure*/
 	private ?\Closure $runClosure;
 
 	/**
-	 * @phpstan-param ?TypeOvoSetupClosure $setupClosure
-	 * @phpstan-param ?TypeOvoPreRunClosure $preRunClosure
-	 * @phpstan-param ?TypeOvoRunClosure $runClosure
+	 * @phpstan-param ?TSetupClosure $setupClosure
+	 * @phpstan-param ?TPreRunClosure $preRunClosure
+	 * @phpstan-param ?TRunClosure $runClosure
 	 */
 	public function __construct(
 		Translatable|string $description = "", Translatable|string|null $usageMessage = null, ?string $permission = null,

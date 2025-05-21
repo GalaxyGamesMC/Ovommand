@@ -40,7 +40,7 @@ class BrokenSyntaxHelper{
 	}
 
 	private static function createSyntaxMessage(string $previous, string $brokenSyntax, string $after) : string {
-		return Messages::GENERIC_SYNTAX_MESSAGE_OVO->translate([
+		return Messages::GENERIC_SYNTAX_MESSAGE_OVOMMAND->translate([
 			self::MESSAGE_TAG_PREVIOUS => $previous,
 			self::MESSAGE_TAG_BROKEN_SYNTAX => $brokenSyntax,
 			self::MESSAGE_TAG_AFTER => $after

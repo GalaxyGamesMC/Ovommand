@@ -31,18 +31,14 @@ namespace galaxygames\ovommand;
 
 use galaxygames\ovommand\enum\DefaultEnums;
 use galaxygames\ovommand\enum\EnumManager;
-use galaxygames\ovommand\parameter\BaseParameter;
 use galaxygames\ovommand\utils\Messages;
+use galaxygames\ovommand\utils\OvommandHelper;
 use muqsit\simplepackethandler\SimplePacketHandler;
-use pocketmine\command\CommandSender;
 use pocketmine\event\EventPriority;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\protocol\AvailableCommandsPacket;
-use pocketmine\network\mcpe\protocol\types\command\CommandEnum;
-use pocketmine\network\mcpe\protocol\types\command\CommandOverload;
-use pocketmine\network\mcpe\protocol\types\command\CommandParameter;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use shared\galaxygames\ovommand\exception\OvommandHookException;
@@ -60,16 +56,34 @@ final class OvommandHook implements IHookable{
 		return self::$instance ?? self::register(self::getOwnedPlugin());
 	}
 
-	public static function register(Plugin $plugin, bool $private = false, ?string $namespace = null) : self{
+	public static function register(Plugin $plugin, bool $private = false) : self{
 		if (!self::isRegistered() || self::$plugin->isEnabled()) {
+			self::$privacy = $private;
+			self::$plugin = $plugin;
+			self::$instance = new self;
+			GlobalHookPool::addHook(self::$instance);
+			self::$enumManager = new EnumManager(self::$instance);
+			try {
+				$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
+				// only the first plugin that registered the default enums is allowed to update the default enum
+				if ($enum instanceof IDynamicEnum) {
+					$pluginManager = Server::getInstance()->getPluginManager();
+					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event) use ($enum) {
+						$enum->addValue($event->getPlayer()->getName());
+					}, EventPriority::NORMAL, $plugin);
+					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) use ($enum) {
+						$enum->removeValue($event->getPlayer()->getName());
+					}, EventPriority::NORMAL, $plugin);
+				}
+			} catch (\ReflectionException $e) {
+				$plugin->getLogger()->logException($e);
+			}
 			$interceptor = SimplePacketHandler::createInterceptor($plugin, EventPriority::HIGHEST);
-			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) use ($plugin) : bool{
+			$interceptor->interceptOutgoing(function(AvailableCommandsPacket $packet, NetworkSession $target) : bool{
 				$player = $target->getPlayer();
 				if ($player === null) {
 					return false;
 				}
-				$dump = print_r($packet, true);
-				file_put_contents("D:\\pmmp\\Ovommand\\dump\\packet\\{$player->getName()}_{$plugin->getName()}_packet_before.txt", $dump);
 				$commandMap = Server::getInstance()->getCommandMap();
 				foreach ($packet->commandData as $name => $commandData) {
 					$command = $commandMap->getCommand($name);
@@ -81,63 +95,12 @@ final class OvommandHook implements IHookable{
 							continue 2;
 						}
 					}
-					$commandData->overloads = self::generateOverloads($player, $command);
+					$commandData->overloads = OvommandHelper::generateOverloads($player, $command);
 				}
-				$dump = print_r($packet, true);
-				file_put_contents("D:\\pmmp\\Ovommand\\dump\\packet\\{$player->getName()}_{$plugin->getName()}packet_after.txt", $dump);
 				return true;
 			});
-			self::$privacy = $private;
-			self::$plugin = $plugin;
-			self::$instance = new self;
-			GlobalHookPool::addHook(self::$instance);
-			self::$enumManager = new EnumManager(self::$instance);
-			try {
-				$pluginManager = Server::getInstance()->getPluginManager();
-				$enum = self::$enumManager->getSoftEnum(DefaultEnums::ONLINE_PLAYERS);
-				// only the plugin registered that default enum is allowed to update the enum
-				if ($enum instanceof IDynamicEnum) {
-					$pluginManager->registerEvent(PlayerJoinEvent::class, function(PlayerJoinEvent $event) use ($enum) {
-						$enum->addValue($event->getPlayer()->getName());
-					}, EventPriority::NORMAL, $plugin);
-					$pluginManager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) use ($enum) {
-						$enum->removeValue($event->getPlayer()->getName());
-					}, EventPriority::NORMAL, $plugin);
-				}
-			} catch (\ReflectionException $e) {
-				$plugin->getLogger()->logException($e);
-			}
 		}
 		return self::$instance;
-	}
-
-	/** @return CommandOverload[] */
-	private static function generateOverloads(CommandSender $sender, Ovommand $command) : array{
-		$overloads = [];
-		foreach ($command->getSubCommands() as $label => $subCommand) {
-			if (!$subCommand->testPermissionSilent($sender)) {
-				continue;
-			}
-			foreach ($subCommand->getConstraints() as $constraint) {
-				if (!$constraint->isVisibleTo($sender)) {
-					continue 2;
-				}
-			}
-			$enumName = "scmd#" . spl_object_id($subCommand);
-			$scParam = CommandParameter::enum($label, new CommandEnum($enumName, [$label]), 1);
-			$overloadList = self::generateOverloads($sender, $subCommand);
-			if (empty($overloadList)) {
-				$overloads[] = new CommandOverload(false, [$scParam]);
-			} else {
-				foreach ($overloadList as $overload) {
-					$overloads[] = new CommandOverload(false, [$scParam, ...$overload->getParameters()]);
-				}
-			}
-		}
-		foreach ($command->getOverloads() as $parameters) {
-			$overloads[] =  new CommandOverload(false, array_map(static fn(BaseParameter $parameter) : CommandParameter => $parameter->getNetworkParameterData(), $parameters));
-		}
-		return $overloads;
 	}
 
 	public static function isRegistered() : bool{ return isset(self::$plugin); }

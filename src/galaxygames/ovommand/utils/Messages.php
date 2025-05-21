@@ -5,7 +5,7 @@ namespace galaxygames\ovommand\utils;
 
 enum Messages : string{
 	case GENERIC_SYNTAX_MESSAGE_VANILLA = "commands.generic.syntax";
-	case GENERIC_SYNTAX_MESSAGE_OVO = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
+	case GENERIC_SYNTAX_MESSAGE_OVOMMAND = "Syntax error: Unexpected \"{broken_syntax}\": at \"{previous}>>{broken_syntax}<<{after}\"";
 
 	case EXCEPTION_ENUM_EMPTY_NAME = "Enum's name cannot be empty!";
 	case EXCEPTION_ENUM_NULL_VALUE = "Enum's values cannot be null!";

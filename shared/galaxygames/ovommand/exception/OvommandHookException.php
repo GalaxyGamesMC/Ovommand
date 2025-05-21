@@ -5,4 +5,6 @@ namespace shared\galaxygames\ovommand\exception;
 
 use shared\galaxygames\ovommand\fetus\OvommandException;
 
-class OvommandHookException extends OvommandException{}
+class OvommandHookException extends OvommandException{
+
+}
